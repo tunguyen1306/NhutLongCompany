@@ -73,5 +73,9 @@ namespace NhutLongCompany.Controllers
             return View("Login");
         }
 
+        public ActionResult Home()
+        {
+            return View();
+        }
     }
 }
