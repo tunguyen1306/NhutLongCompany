@@ -1,0 +1,644 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"> </script>
+    <script type="text/javascript">
+            $(document).ready(function() {
+                var jsondata = '[{"NAME":"1. Giấy Carbonless - 3 liên - 50 bộ/cuốn - Khổ A4 - Nhiều màu","ID":"1"},' +
+                    '{"NAME":"2. Giấy Carbonless - 3 liên - 50 bộ/cuốn - Khổ A4 - 2 màu","ID":"2"},' +
+                    '{"NAME":"3. Giấy Carbonless - 2 liên - 50 bộ/cuốn - Khổ A4 - Nhiều màu","ID":"3"},' +
+                    '{"NAME":"4. Giấy Carbonless - 2 liên - 50 bộ/cuốn - Khổ A4 - 2 màu","ID":"4"},' +
+                    '{"NAME":"5. Giấy Carbonless - 3 liên - 50 bộ/cuốn - Khổ A5 - Nhiều màu","ID":"5"},' +
+                    '{"NAME":"6. Giấy Carbonless - 3 liên - 50 bộ/cuốn - Khổ A5 - 2 màu","ID":"6"},' +
+                    '{"NAME":"7. Giấy Carbonless - 2 liên - 50 bộ/cuốn - Khổ A5 - Nhiều màu","ID":"7"},' +
+                    '{"NAME":"8. Giấy Carbonless - 2 liên - 50 bộ/cuốn - Khổ A5 - 2 màu","ID":"8"}]';
+                var item = JSON.parse(jsondata);
+                var $select = $('#name');
+                $(item).each(function() {
+                    var option = '<option style="font-size:20px;" value="' + this.ID + '">' + this.NAME + '</option>';
+                    $select.append(option);
+                });
+
+
+            });
+
+            $(function change() {
+                $("#name").on("change", function() {
+
+                    if ($(this).val() == 1) {
+                        $('#dongia').text('350000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('350000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('325000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('300000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('300000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('240000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('220000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('210000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('200000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                            $('#dongia').text('190000');
+                        }
+                    }
+                    if ($(this).val() == 2) {
+                        $('#dongia').text('340000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('340000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('315000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('290000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('290000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('230000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('210000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('200000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('190000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                            $('#dongia').text('180000');
+                        }
+                    }
+                    if ($(this).val() == 3) {
+                        $('#dongia').text('320000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('320000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('295000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('270000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('270000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('210000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('190000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('180000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('170000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                            $('#dongia').text('160000');
+                        }
+                    }
+                    if ($(this).val() == 4) {
+                        $('#dongia').text('310000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('310000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('285000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('260000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('260000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('200000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('180000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('170000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('160000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                            $('#dongia').text('150000');
+                        }
+                    }
+                    if ($(this).val() == 5) {
+                        $('#dongia').text('280000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('280000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('260000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('240000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('240000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('192000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('176000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('168000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('160000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                            $('#dongia').text('152000');
+                        }
+                    }
+                    if ($(this).val() == 6) {
+                        $('#dongia').text('272000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('272000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('252000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('232000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('232000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('184000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('168000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('160000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('152000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                            $('#dongia').text('144000');
+                        }
+                    }
+                    if ($(this).val() == 7) {
+                        $('#dongia').text('256000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('256000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('236000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('216000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('216000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('168000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('152000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('144000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('136000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                            $('#dongia').text('128000');
+                        }
+                    }
+                    if ($(this).val() == 8) {
+                        $('#dongia').text('248000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('248000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('228000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('208000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('208000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('160000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('144000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('136000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('128000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                            $('#dongia').text('120000');
+                        }
+                    }
+                    total();
+                }).trigger("change");
+            });
+
+            function total() {
+                var sl = $('#soluong').val();
+                var dg = $('#dongia').text();
+
+                $('#thanhtien').text(tien(sl * dg)+'.VND');
+            }
+
+            $(document).ready(function() {
+                $("#soluong").change(function() {
+                    if ($('#name').val() == 1) {
+                        $('#dongia').text('350000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('350000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('325000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('300000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('300000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('240000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('220000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('210000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('200000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                            $('#dongia').text('190000');
+                        }
+                    }
+                    if ($('#name').val() == 2) {
+                        $('#dongia').text('340000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('340000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('315000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('290000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('290000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('230000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('210000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('200000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('190000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                            $('#dongia').text('180000');
+                        }
+                    }
+                    if ($('#name').val() == 3) {
+                        $('#dongia').text('320000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('320000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('295000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('270000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('270000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('210000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('190000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('180000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('170000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                            $('#dongia').text('160000');
+                        }
+                    }
+                    if ($('#name').val() == 4) {
+                        $('#dongia').text('310000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('310000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('285000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('260000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('260000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('200000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('180000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('170000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('160000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                            $('#dongia').text('150000');
+                        }
+                    }
+                    if ($('#name').val() == 5) {
+                        $('#dongia').text('280000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('280000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('260000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('240000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('240000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('192000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('176000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('168000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('160000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                            $('#dongia').text('152000');
+                        }
+                    }
+                    if ($('#name').val() == 6) {
+                        $('#dongia').text('272000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('272000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('252000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('232000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('232000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('184000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('168000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('160000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('152000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                            $('#dongia').text('144000');
+                        }
+                    }
+                    if ($('#name').val() == 7) {
+                        $('#dongia').text('256000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('256000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('236000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('216000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('216000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('168000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('152000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('144000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('136000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                            $('#dongia').text('128000');
+                        }
+                    }
+                    if ($('#name').val() == 8) {
+                        $('#dongia').text('248000');
+                        if ($('#soluong').val() == 1) {
+                            $('#dongia').text('248000');
+                        }
+                        if ($('#soluong').val() == 2) {
+                            $('#dongia').text('228000');
+                        }
+                        if ($('#soluong').val() == 3) {
+                            $('#dongia').text('208000');
+                        }
+                        if ($('#soluong').val() == 4) {
+                            $('#dongia').text('208000');
+                        }
+                        if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                            $('#dongia').text('160000');
+                        }
+                        if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                            $('#dongia').text('144000');
+                        }
+                        if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                            $('#dongia').text('136000');
+                        }
+                        if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                            $('#dongia').text('128000');
+                        }
+                        if ($('#soluong').val() > 50) {
+                          $('#dongia').text(120000);
+                        }
+                    }
+                    total();
+                });
+            });
+            function tien(val) {
+                while (/(\d+)(\d{3})/.test(val.toString())) {
+                    val = val.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                }
+                return val;
+            }
+    </script>
+    <style>
+        /*
+        Generic Styling, for Desktops/Laptops
+        */
+        table {
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        /* Zebra striping */
+
+        tr:nth-of-type(odd) {
+            background: #eee;
+        }
+
+        th {
+            background: #333;
+            color: white;
+            font-weight: bold;
+        }
+
+        td, th {
+            border: 1px solid #ccc;
+            padding: 6px;
+            text-align: left;
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Hóa đơn</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+
+                    <select id="name" style="height: 35px;" name="selctor"></select>
+
+                </td>
+                <td>
+                    <input type="text" style="height: 35px;font-size: 20px" id="soluong" value="1" />
+                </td>
+                <td>
+
+                    <span id="dongia"></span>
+                </td>
+                <td>
+                    <span id="thanhtien"></span>
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <span style="color: red;text-align: right;">( Giá trên chưa bao gồm thuế VAT -10%)</span>
+
+
+
+                </td>
+
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>
+                    Họ và tên
+                </td>
+                <td>
+                    <input type="text" style="height: 35px;font-size: 20px" id="hovaten" />
+
+                </td>
+                <td></td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    Email
+                </td>
+                <td>
+                    <input type="text" style="height: 35px;font-size: 20px" id="email" />
+
+                </td>
+                <td>
+                    <input type="submit" style="height: 35px;border-color: blue;color: red;background-color: yellow;font-weight: bold;" value="Đặt hàng" />
+                </td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    Số điện thoại
+                </td>
+                <td>
+                    <input type="text" style="height: 35px;font-size: 20px" id="sodt" />
+
+                </td>
+                <td></td>
+
+            </tr>
+
+        </tbody>
+    </table>
+
+</body>
+</html>

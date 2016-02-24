@@ -120,7 +120,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NavbarController.cs" />
     <Compile Include="Domain\Data.cs" />
     <Compile Include="Global.asax.cs">
@@ -142,6 +144,7 @@
       <DependentUpon>DataWeb.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Navbar.cs" />
+    <Compile Include="Models\SendMail.cs" />
     <Compile Include="Models\tbl_BaoGia.cs">
       <DependentUpon>DataWeb.tt</DependentUpon>
     </Compile>
@@ -607,6 +610,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\sb-admin-2.css" />
     <Content Include="Content\timeline.css" />
+    <Content Include="DonGia.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -983,6 +987,14 @@
     <Content Include="Views\Customers\Edit.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Customers\DetailCustomers.cshtml" />
+    <Content Include="Views\Login\Create.cshtml" />
+    <Content Include="Views\Login\Delete.cshtml" />
+    <Content Include="Views\Login\Details.cshtml" />
+    <Content Include="Views\Login\Edit.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Email\index.cshtml" />
+    <Content Include="Views\Email\success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

