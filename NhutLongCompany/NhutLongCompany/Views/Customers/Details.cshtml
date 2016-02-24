@@ -1,0 +1,131 @@
+﻿@model NhutLongCompany.Models.tbl_Customers
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbl_Customers</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameCustomers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameCustomers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChucvuCustomers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChucvuCustomers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CongTyCustomers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CongTyCustomers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CodeCustomers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodeCustomers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailCustomers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailCustomers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneCustomers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneCustomers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FaxCustomers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FaxCustomers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiachiCustomers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiachiCustomers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MasothueCustomers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MasothueCustomers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusCustomers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusCustomers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDateCustomers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDateCustomers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifyDateCustomers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifyDateCustomers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateUserCustomers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateUserCustomers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifyUserCustomers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifyUserCustomers)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IDCustomers }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

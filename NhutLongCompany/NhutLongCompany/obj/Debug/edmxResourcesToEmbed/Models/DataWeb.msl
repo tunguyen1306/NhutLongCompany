@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="NhutLongCompanyModelStoreContainer" CdmEntityContainer="NhutLongCompanyEntities">
+    <EntitySetMapping Name="tbl_BaoGia">
+      <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_BaoGia">
+        <MappingFragment StoreEntitySet="tbl_BaoGia">
+          <ScalarProperty Name="ID_BaoGia" ColumnName="ID_BaoGia" />
+          <ScalarProperty Name="ID_Customers" ColumnName="ID_Customers" />
+          <ScalarProperty Name="BaoGia_ID_Default" ColumnName="BaoGia_ID_Default" />
+          <ScalarProperty Name="TongTien" ColumnName="TongTien" />
+          <ScalarProperty Name="LamMau" ColumnName="LamMau" />
+          <ScalarProperty Name="NgayCoMau" ColumnName="NgayCoMau" />
+          <ScalarProperty Name="NgayBaoGia" ColumnName="NgayBaoGia" />
+          <ScalarProperty Name="DuyetBaoGia" ColumnName="DuyetBaoGia" />
+          <ScalarProperty Name="CodeDonHang" ColumnName="CodeDonHang" />
+          <ScalarProperty Name="NgayBatDauDuKien" ColumnName="NgayBatDauDuKien" />
+          <ScalarProperty Name="NgayKetThucDuKien" ColumnName="NgayKetThucDuKien" />
+          <ScalarProperty Name="NgayBatDauThucTe" ColumnName="NgayBatDauThucTe" />
+          <ScalarProperty Name="NgayKetThucThucTe" ColumnName="NgayKetThucThucTe" />
+          <ScalarProperty Name="NgayGiao" ColumnName="NgayGiao" />
+          <ScalarProperty Name="QuyTrinh" ColumnName="QuyTrinh" />
+          <ScalarProperty Name="ChiTietQuyTrinh" ColumnName="ChiTietQuyTrinh" />
+          <ScalarProperty Name="LanBaoGia" ColumnName="LanBaoGia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_BaoGiaChiTiet">
+      <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_BaoGiaChiTiet">
+        <MappingFragment StoreEntitySet="tbl_BaoGiaChiTiet">
+          <ScalarProperty Name="ID_BaoGiaChiTiet" ColumnName="ID_BaoGiaChiTiet" />
+          <ScalarProperty Name="ID_BaoGia" ColumnName="ID_BaoGia" />
+          <ScalarProperty Name="ID_SanPham" ColumnName="ID_SanPham" />
+          <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+          <ScalarProperty Name="Tien" ColumnName="Tien" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Customers">
+      <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Customers">
+        <MappingFragment StoreEntitySet="tbl_Customers">
+          <ScalarProperty Name="IDCustomers" ColumnName="IDCustomers" />
+          <ScalarProperty Name="NameCustomers" ColumnName="NameCustomers" />
+          <ScalarProperty Name="ChucvuCustomers" ColumnName="ChucvuCustomers" />
+          <ScalarProperty Name="CongTyCustomers" ColumnName="CongTyCustomers" />
+          <ScalarProperty Name="CodeCustomers" ColumnName="CodeCustomers" />
+          <ScalarProperty Name="EmailCustomers" ColumnName="EmailCustomers" />
+          <ScalarProperty Name="PhoneCustomers" ColumnName="PhoneCustomers" />
+          <ScalarProperty Name="FaxCustomers" ColumnName="FaxCustomers" />
+          <ScalarProperty Name="DiachiCustomers" ColumnName="DiachiCustomers" />
+          <ScalarProperty Name="MasothueCustomers" ColumnName="MasothueCustomers" />
+          <ScalarProperty Name="StatusCustomers" ColumnName="StatusCustomers" />
+          <ScalarProperty Name="CreateDateCustomers" ColumnName="CreateDateCustomers" />
+          <ScalarProperty Name="ModifyDateCustomers" ColumnName="ModifyDateCustomers" />
+          <ScalarProperty Name="CreateUserCustomers" ColumnName="CreateUserCustomers" />
+          <ScalarProperty Name="ModifyUserCustomers" ColumnName="ModifyUserCustomers" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_OrderTem">
+      <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem">
+        <MappingFragment StoreEntitySet="tbl_OrderTem">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="date_begin" ColumnName="date_begin" />
+          <ScalarProperty Name="date_end" ColumnName="date_end" />
+          <ScalarProperty Name="date_begin_plan" ColumnName="date_begin_plan" />
+          <ScalarProperty Name="date_end_plan" ColumnName="date_end_plan" />
+          <ScalarProperty Name="date_deliver" ColumnName="date_deliver" />
+          <ScalarProperty Name="address_deliver" ColumnName="address_deliver" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="create_date" ColumnName="create_date" />
+          <ScalarProperty Name="create_user" ColumnName="create_user" />
+          <ScalarProperty Name="update_date" ColumnName="update_date" />
+          <ScalarProperty Name="update_user" ColumnName="update_user" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_OrderTem_BaoGia">
+      <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem_BaoGia">
+        <MappingFragment StoreEntitySet="tbl_OrderTem_BaoGia">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+          <ScalarProperty Name="total_money" ColumnName="total_money" />
+          <ScalarProperty Name="date_begin" ColumnName="date_begin" />
+          <ScalarProperty Name="date_end" ColumnName="date_end" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="offset" ColumnName="offset" />
+          <ScalarProperty Name="note" ColumnName="note" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_OrderTem_BaoGia_Detail">
+      <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem_BaoGia_Detail">
+        <MappingFragment StoreEntitySet="tbl_OrderTem_BaoGia_Detail">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="baogia_id" ColumnName="baogia_id" />
+          <ScalarProperty Name="sanpam_id" ColumnName="sanpam_id" />
+          <ScalarProperty Name="soluong" ColumnName="soluong" />
+          <ScalarProperty Name="money" ColumnName="money" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Products">
+      <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Products">
+        <MappingFragment StoreEntitySet="tbl_Products">
+          <ScalarProperty Name="ID_Products" ColumnName="ID_Products" />
+          <ScalarProperty Name="NameProducts" ColumnName="NameProducts" />
+          <ScalarProperty Name="SolopProducts" ColumnName="SolopProducts" />
+          <ScalarProperty Name="LoaigiayProducts" ColumnName="LoaigiayProducts" />
+          <ScalarProperty Name="OffsetFlexoProducts" ColumnName="OffsetFlexoProducts" />
+          <ScalarProperty Name="DanKimProducts" ColumnName="DanKimProducts" />
+          <ScalarProperty Name="GiaProducts" ColumnName="GiaProducts" />
+          <ScalarProperty Name="CreatedDateProducts" ColumnName="CreatedDateProducts" />
+          <ScalarProperty Name="ModifyDateProducts" ColumnName="ModifyDateProducts" />
+          <ScalarProperty Name="CreateUserProducts" ColumnName="CreateUserProducts" />
+          <ScalarProperty Name="ModifyUserProducts" ColumnName="ModifyUserProducts" />
+          <ScalarProperty Name="StatusProducts" ColumnName="StatusProducts" />
+          <ScalarProperty Name="CodeProducts" ColumnName="CodeProducts" />
+          <ScalarProperty Name="QuyCachProducts" ColumnName="QuyCachProducts" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_QuyTrinh">
+      <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_QuyTrinh">
+        <MappingFragment StoreEntitySet="tbl_QuyTrinh">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_BaoGiaDetail" ColumnName="ID_BaoGiaDetail" />
+          <ScalarProperty Name="TenBuoc" ColumnName="TenBuoc" />
+          <ScalarProperty Name="ThuTu" ColumnName="ThuTu" />
+          <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+          <ScalarProperty Name="NgayBatDau_DK" ColumnName="NgayBatDau_DK" />
+          <ScalarProperty Name="NgayKetThuc_DK" ColumnName="NgayKetThuc_DK" />
+          <ScalarProperty Name="NgayBatDau_TT" ColumnName="NgayBatDau_TT" />
+          <ScalarProperty Name="NgayKetThuc_TT" ColumnName="NgayKetThuc_TT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_User">
+      <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_User">
+        <MappingFragment StoreEntitySet="tbl_User">
+          <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+          <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

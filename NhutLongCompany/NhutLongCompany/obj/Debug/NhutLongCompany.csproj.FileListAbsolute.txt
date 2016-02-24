@@ -24,3 +24,7 @@ D:\Dropbox\Cong Ty\NhutLong\NhutLongCompany\NhutLongCompany\NhutLongCompany\bin\
 D:\Dropbox\Cong Ty\NhutLong\NhutLongCompany\NhutLongCompany\NhutLongCompany\obj\Debug\NhutLongCompany.csprojResolveAssemblyReference.cache
 D:\Dropbox\Cong Ty\NhutLong\NhutLongCompany\NhutLongCompany\NhutLongCompany\obj\Debug\sb-admin-2.Web.dll
 D:\Dropbox\Cong Ty\NhutLong\NhutLongCompany\NhutLongCompany\NhutLongCompany\obj\Debug\sb-admin-2.Web.pdb
+D:\Dropbox\Cong Ty\NhutLong\NhutLongCompany\NhutLongCompany\NhutLongCompany\bin\EntityFramework.dll
+D:\Dropbox\Cong Ty\NhutLong\NhutLongCompany\NhutLongCompany\NhutLongCompany\bin\EntityFramework.SqlServer.dll
+D:\Dropbox\Cong Ty\NhutLong\NhutLongCompany\NhutLongCompany\NhutLongCompany\bin\EntityFramework.xml
+D:\Dropbox\Cong Ty\NhutLong\NhutLongCompany\NhutLongCompany\NhutLongCompany\bin\EntityFramework.SqlServer.xml

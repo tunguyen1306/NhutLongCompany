@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NhutLongCompanyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tbl_BaoGia">
+    <Key>
+      <PropertyRef Name="ID_BaoGia" />
+    </Key>
+    <Property Name="ID_BaoGia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Customers" Type="Int32" />
+    <Property Name="BaoGia_ID_Default" Type="Int32" />
+    <Property Name="TongTien" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LamMau" Type="Int32" />
+    <Property Name="NgayCoMau" Type="DateTime" Precision="3" />
+    <Property Name="NgayBaoGia" Type="DateTime" Precision="3" />
+    <Property Name="DuyetBaoGia" Type="Int32" />
+    <Property Name="CodeDonHang" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="NgayBatDauDuKien" Type="DateTime" Precision="3" />
+    <Property Name="NgayKetThucDuKien" Type="DateTime" Precision="3" />
+    <Property Name="NgayBatDauThucTe" Type="DateTime" Precision="3" />
+    <Property Name="NgayKetThucThucTe" Type="DateTime" Precision="3" />
+    <Property Name="NgayGiao" Type="DateTime" Precision="3" />
+    <Property Name="QuyTrinh" Type="Int32" />
+    <Property Name="ChiTietQuyTrinh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LanBaoGia" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tbl_BaoGiaChiTiet">
+    <Key>
+      <PropertyRef Name="ID_BaoGiaChiTiet" />
+    </Key>
+    <Property Name="ID_BaoGiaChiTiet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_BaoGia" Type="Int32" />
+    <Property Name="ID_SanPham" Type="Int32" />
+    <Property Name="SoLuong" Type="Int32" />
+    <Property Name="Tien" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tbl_Customers">
+    <Key>
+      <PropertyRef Name="IDCustomers" />
+    </Key>
+    <Property Name="IDCustomers" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NameCustomers" Type="String" MaxLength="225" FixedLength="false" Unicode="true" />
+    <Property Name="ChucvuCustomers" Type="String" MaxLength="225" FixedLength="false" Unicode="true" />
+    <Property Name="CongTyCustomers" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CodeCustomers" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EmailCustomers" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneCustomers" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="FaxCustomers" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="DiachiCustomers" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="MasothueCustomers" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StatusCustomers" Type="Int32" />
+    <Property Name="CreateDateCustomers" Type="DateTime" Precision="3" />
+    <Property Name="ModifyDateCustomers" Type="DateTime" Precision="3" />
+    <Property Name="CreateUserCustomers" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifyUserCustomers" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tbl_OrderTem">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="customer_id" Type="Int32" />
+    <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="date_begin" Type="DateTime" Precision="3" />
+    <Property Name="date_end" Type="DateTime" Precision="3" />
+    <Property Name="date_begin_plan" Type="DateTime" Precision="3" />
+    <Property Name="date_end_plan" Type="DateTime" Precision="3" />
+    <Property Name="date_deliver" Type="DateTime" Precision="3" />
+    <Property Name="address_deliver" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="status" Type="Int32" />
+    <Property Name="create_date" Type="DateTime" Precision="3" />
+    <Property Name="create_user" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="update_user" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tbl_OrderTem_BaoGia">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="order_id" Type="Int32" />
+    <Property Name="total_money" Type="Double" />
+    <Property Name="date_begin" Type="DateTime" Precision="3" />
+    <Property Name="date_end" Type="DateTime" Precision="3" />
+    <Property Name="status" Type="Int32" />
+    <Property Name="offset" Type="Int32" />
+    <Property Name="note" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tbl_OrderTem_BaoGia_Detail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="baogia_id" Type="Int32" />
+    <Property Name="sanpam_id" Type="Int32" />
+    <Property Name="soluong" Type="Int32" />
+    <Property Name="money" Type="Double" />
+  </EntityType>
+  <EntityType Name="tbl_Products">
+    <Key>
+      <PropertyRef Name="ID_Products" />
+    </Key>
+    <Property Name="ID_Products" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NameProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="SolopProducts" Type="Int32" />
+    <Property Name="LoaigiayProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="OffsetFlexoProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DanKimProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GiaProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDateProducts" Type="DateTime" Precision="3" />
+    <Property Name="ModifyDateProducts" Type="DateTime" Precision="3" />
+    <Property Name="CreateUserProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ModifyUserProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="StatusProducts" Type="Int32" />
+    <Property Name="CodeProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="QuyCachProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tbl_QuyTrinh">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_BaoGiaDetail" Type="Int32" Nullable="false" />
+    <Property Name="TenBuoc" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ThuTu" Type="Int32" />
+    <Property Name="TrangThai" Type="Int32" />
+    <Property Name="NgayBatDau_DK" Type="DateTime" Precision="3" />
+    <Property Name="NgayKetThuc_DK" Type="DateTime" Precision="3" />
+    <Property Name="NgayBatDau_TT" Type="DateTime" Precision="3" />
+    <Property Name="NgayKetThuc_TT" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="tbl_User">
+    <Key>
+      <PropertyRef Name="IDUser" />
+    </Key>
+    <Property Name="IDUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="FullName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifyUser" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="CreateUser" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="NhutLongCompanyEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tbl_BaoGia" EntityType="Self.tbl_BaoGia" />
+    <EntitySet Name="tbl_BaoGiaChiTiet" EntityType="Self.tbl_BaoGiaChiTiet" />
+    <EntitySet Name="tbl_Customers" EntityType="Self.tbl_Customers" />
+    <EntitySet Name="tbl_OrderTem" EntityType="Self.tbl_OrderTem" />
+    <EntitySet Name="tbl_OrderTem_BaoGia" EntityType="Self.tbl_OrderTem_BaoGia" />
+    <EntitySet Name="tbl_OrderTem_BaoGia_Detail" EntityType="Self.tbl_OrderTem_BaoGia_Detail" />
+    <EntitySet Name="tbl_Products" EntityType="Self.tbl_Products" />
+    <EntitySet Name="tbl_QuyTrinh" EntityType="Self.tbl_QuyTrinh" />
+    <EntitySet Name="tbl_User" EntityType="Self.tbl_User" />
+  </EntityContainer>
+</Schema>

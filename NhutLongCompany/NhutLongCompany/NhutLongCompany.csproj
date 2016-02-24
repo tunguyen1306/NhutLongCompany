@@ -39,10 +39,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -111,13 +119,56 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NavbarController.cs" />
     <Compile Include="Domain\Data.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataWeb.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataWeb.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataWeb.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataWeb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataWeb.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Navbar.cs" />
+    <Compile Include="Models\tbl_BaoGia.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_BaoGiaChiTiet.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Customers.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_OrderTem.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_OrderTem_BaoGia.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_OrderTem_BaoGia_Detail.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Products.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_QuyTrinh.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_User.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -866,6 +917,23 @@
     <Content Include="Content\less\mixins.less" />
     <Content Include="Content\less\sb-admin-2.less" />
     <Content Include="Content\less\variables.less" />
+    <EntityDeploy Include="Models\DataWeb.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DataWeb.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DataWeb.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DataWeb.edmx</DependentUpon>
+      <LastGenOutput>DataWeb.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DataWeb.edmx.diagram">
+      <DependentUpon>DataWeb.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\DataWeb.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DataWeb.edmx</DependentUpon>
+      <LastGenOutput>DataWeb.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CusWeb.js" />
     <Content Include="Scripts\flot-data.js" />
@@ -909,6 +977,12 @@
     <Content Include="Views\Home\Blank.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
+    <Content Include="Views\Customers\Create.cshtml" />
+    <Content Include="Views\Customers\Delete.cshtml" />
+    <Content Include="Views\Customers\Details.cshtml" />
+    <Content Include="Views\Customers\Edit.cshtml" />
+    <Content Include="Views\Customers\Index.cshtml" />
+    <Content Include="Views\Customers\DetailCustomers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -919,6 +993,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -939,8 +1016,6 @@
           <DevelopmentServerPort>29128</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:29128/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:29128/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
