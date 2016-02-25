@@ -136,7 +136,8 @@ namespace NhutLongCompany.Controllers
         public ActionResult Login(string username, string password)
         {
 
-            var data = db.tbl_User.Where(x => x.Username == username && x.Password == password).Select(x => new { x.Username }).FirstOrDefault();
+            var data = db.tbl_User.Where(x => x.Username == username && x.Password == password).Select(x => new { x.Username,x.FullName}).FirstOrDefault();
+           
 
             Session["username"] = data.Username;
             if (data != null)
@@ -145,7 +146,12 @@ namespace NhutLongCompany.Controllers
             }
             return View();
         }
-
+        public ActionResult Logout()
+        {
+            Session.Remove("username");
+            Session.Clear();
+            return RedirectToAction("Login", "Login");
+        }
 
     }
 }

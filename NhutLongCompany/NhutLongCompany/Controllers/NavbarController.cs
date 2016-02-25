@@ -14,6 +14,8 @@ namespace NhutLongCompany.Controllers
         public ActionResult Index()
         {
             var data = new Data();
+
+            ViewBag.ten = Session["username"];
             return PartialView("_Navbar", data.navbarItems().ToList());
         }
     }
