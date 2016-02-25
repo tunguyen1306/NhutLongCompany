@@ -22,10 +22,17 @@
         <div class="panel panel-default">
 
             <div class="panel-heading">
-              
-                <a class="btn btn-primary pull-right" href="@Url.Action("Index")">Quay lại</a>
-                <label>Mã khách hàng:</label><label style="color: red;">@Model.CodeCustomers</label>
-                @ViewData["tu"]
+                <div class="row">
+                    <div class="col-lg-6"><label>Mã khách hàng:</label><label style="color: red;">@Model.CodeCustomers</label></div>
+                    <div class="col-lg-6"><a class="btn btn-primary pull-right" href="@Url.Action("Index")">Quay lại</a></div>
+                    
+                    
+                </div>
+           
+                  <div style="color: red;">@ViewBag.thongbao</div>
+                  
+                   
+             
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">

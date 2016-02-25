@@ -13,7 +13,7 @@ namespace NhutLongCompany.Controllers
     public class CustomersController : Controller
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();
-        public int ck=0;
+        private int ck { get; set; }
 
         // GET: Customers
         public ActionResult Index()
@@ -31,13 +31,14 @@ namespace NhutLongCompany.Controllers
                 return RedirectToAction("Login", "Login");
             }
             tbl_Customers tblCustomers = db.tbl_Customers.Find(id);
-            if (ck==1)
+            if ((string) Session["ck"] =="1")
             {
-                ViewData["tu"] = "Khách hàng có đơn hàng không được xóa";
+                ViewBag.thongbao = "Khách hàng có đơn hàng không được xóa";
+                Session["ck"] = "0";
             }
             else
             {
-                ViewData["tu"] = "";
+                ViewBag.thongbao = "";
             }
             return View("DetailCustomers",tblCustomers);
         }
@@ -131,7 +132,7 @@ namespace NhutLongCompany.Controllers
         // GET: Customers/Delete/5
         public ActionResult Delete(int? id)
         {
-
+           
             if (Session["username"] == null)
             {
                 return RedirectToAction("Login", "Login");
@@ -141,9 +142,8 @@ namespace NhutLongCompany.Controllers
                      select datadh;
             if (qr.ToList().Count > 0)
             {
-
-               
-                ck = 1;
+                Session["ck"] = "1";
+                
                 return RedirectToAction("DetailCustomers", new { id });
             }
             else
@@ -152,7 +152,7 @@ namespace NhutLongCompany.Controllers
                 tbl_Customers tbl_Customers = db.tbl_Customers.Find(id);
                 db.tbl_Customers.Remove(tbl_Customers);
                 db.SaveChanges();
-                ck = 0;
+                Session["ck"] ="0";
             }
            
             return RedirectToAction("Index");

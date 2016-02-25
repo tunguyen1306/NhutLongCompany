@@ -141,7 +141,7 @@ namespace NhutLongCompany.Controllers
             Session["username"] = data.Username;
             if (data != null)
             {
-                return RedirectToAction("Index", "Customers");
+                return RedirectToAction("Home", "Home");
             }
             return View();
         }
