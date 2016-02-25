@@ -1,0 +1,73 @@
+﻿@model NhutLongCompany.Models.tbl_OrderTem_BaoGia
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>tbl_OrderTem_BaoGia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.order_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.order_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total_money)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total_money)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_begin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_begin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_end)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_end)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.offset)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.offset)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default" /> |
+            @Html.ActionLink("hủy", "Index")
+        </div>
+    }
+</div>

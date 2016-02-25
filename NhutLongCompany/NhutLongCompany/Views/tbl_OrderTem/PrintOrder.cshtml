@@ -1,0 +1,198 @@
+﻿
+﻿
+﻿@using NhutLongCompany.Models
+
+﻿@model NhutLongCompany.Models.DonHangView
+
+
+@{
+    ViewBag.Title = "PrintOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- /.row -->
+@using (Html.BeginForm())
+{
+  
+
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-5 print-header print-header-title">
+                Bảng báo giá
+            </div>
+            <div class="col-xs-4 print-header">
+                Số: @Model.code  <br>
+                Ngày: @(DateTime.Now.ToString("dd/MM/yyyy"))
+                
+           
+         
+            </div>
+            <div class="col-xs-3 text-right">
+                <img src="/images/mvl.png">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 print-line"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4"><span class="print-label">Kính gửi:</span> @Model.Customer.NameCustomers</div>
+            <div class="col-xs-4"><span class="print-label">Điện thoại:</span> @Model.Customer.PhoneCustomers</div>
+            <div class="col-xs-4"><span class="print-label">Mã KH:</span> @Model.Customer.CodeCustomers</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 print-line"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-4"><span class="print-label">Công ty:</span> @Model.Customer.CongTyCustomers</div>
+            <div class="col-xs-4"><span class="print-label">Fax:</span> @Model.Customer.FaxCustomers</div>
+            <div class="col-xs-4"><span class="print-label">MST:</span> @Model.Customer.MasothueCustomers</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 print-line"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-8"><span class="print-label">Địa chỉ:</span> @Model.Customer.DiachiCustomers</div>
+            <div class="col-xs-4"><span class="print-label">Email:</span> @Model.Customer.EmailCustomers</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 print-line"></div>
+        </div>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Sản phẩm</th>
+                    @foreach (var item in Model.BaoGiaTemView.PrintTen)
+                    {
+                        <th> @item</th>
+                    }
+                  
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Số lớp</td>
+                    @foreach (var item in Model.BaoGiaTemView.PrintSoLop)
+                    {
+                        <td> @item</td>
+                    }
+                </tr>
+                <tr>
+                    <td>Loại giấy</td>
+                    @foreach (var item in Model.BaoGiaTemView.PrintLoaiGiay)
+                    {
+                        <td> @item</td>
+                    }
+                </tr>
+                <tr>
+                    <td>Ofset/Flexo</td>
+                   @foreach (var item in Model.BaoGiaTemView.PrintOffset_Flexo)
+                   {
+                    <td> @item</td>
+                   }
+                </tr>
+                <tr>
+                    <td>Dán/Kim</td>
+                    @foreach (var item in Model.BaoGiaTemView.PrintDan_Kim)
+                    {
+                        <td> @item</td>
+                    }
+                </tr>
+                <tr>
+                    <td>Số lượng</td>
+                    @foreach (var item in Model.BaoGiaTemView.PrintSoLuong)
+                    {
+                        <td> @item</td>
+                    }
+                </tr>
+                <tr>
+                    <td>Đơn giá</td>
+                    @foreach (var item in Model.BaoGiaTemView.PrintDonGia)
+                    {
+                        <td> @item.ToString("n2") đ</td>
+                    }
+                </tr>
+                <tr>
+                    <td>Thành tiền</td>
+                    @foreach (var item in Model.BaoGiaTemView.PrintThanhTien)
+                    {
+                        <td> @item.ToString("n2") đ</td>
+                    }
+                </tr>
+                <tr>
+                    <td>Tổng cộng</td>
+                    <td class="print-price" colspan="2">
+                        @Model.BaoGiaTemView.total_money.Value.ToString("n2") ₫
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="print-vat">
+            Giá trên chưa bao gồm phí vận chuyển, chưa bao gồm 10% VAT.
+        </div>
+        <div class="print-section">
+            Thời gian giao hàng:
+        </div>
+        <ul>
+            <li>Trong vòng  
+            @if (Model.BaoGiaTemView.status.Value == 1 && Model.date_end_plan.HasValue)
+            {
+                <span>@((int)Model.date_end_plan.Value.Subtract(Model.date_begin_plan.Value).TotalDays)</span>
+            }
+            else
+            {
+               @("(chưa cập nhật)")
+            } ngày kể từ ngày Quý khách hàng ký duyệt mẫu
+            </li>
+            <li>Nhận hàng tại 103 Dương Bá Trạc Quận 8</li>
+        </ul>
+
+        <div class="print-section">
+            Phương thức thanh toán:
+        </div>
+        <ul>
+            <li>Bên bán xuất hoá đơn VAT cho bên mua</li>
+            <li>Thanh toán trong vòng 8 ngày kể từ ngày giao hàng</li>
+            <li>Thanh toán bằng tiền mặt hoặc chuyển khoản</li>
+        </ul>
+        <div class="page-break"></div>
+        <div class="print-thank">
+            Xin cám ơn sự quan tâm của Quý Công ty và mong sớm nhận được đơn đặt hàng từ Quý Công ty<br>
+            Trân trọng kính chào.
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="print-signature">
+                    Nguyễn Long Giang
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="print-stamp">
+                    Quý khách hàng vui lòng ký xác nhận<br>
+                    đặt hàng và fax: 072 3722 095<br>
+                    Ngày ..... tháng ..... năm 2015<br> <br><br><br>
+                    Họ tên: .............................................
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 print-line"></div>
+        </div>
+        <div class="print-footer">
+            <div class="print-footer-company">
+                Công ty TNHH MINH VIỆT LONG
+            </div>
+            <div class="print-footer-address">
+                Nhà máy: 255, Ấp Đồng Tâm, Xã Long Trạch, Huyện Cần Đước, Tỉnh Long An Tel: 072 3722 095 Fax: 072 3722 095<br>
+                Văn phòng: 103 đường 715 Tạ Quang Bửu, Q.8, TP. HCM Tel: 08 3852 0166 Fax: 08 3852 0266<br>
+                Email: baobiminhvietlong@gmail.com Web: thungbaobi.com
+            </div>
+        </div>
+    </div>
+}

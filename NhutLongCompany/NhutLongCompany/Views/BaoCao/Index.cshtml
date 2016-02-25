@@ -1,0 +1,327 @@
+﻿@using NhutLongCompany.Models
+@model IEnumerable<DonHangView>
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Báo cáo sản xuất</h2>
+
+
+
+@using (Html.BeginForm())
+{
+  
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    foreach (var itemDH in Model)
+    {
+        /**/
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Mã khách hàng:<b>@itemDH.Customer.CodeCustomers</b><br />
+            Tên khách hàng:<b>@itemDH.Customer.NameCustomers</b><br />
+            Công ty:<b>@itemDH.Customer.CongTyCustomers</b>
+        </div>
+        <div class="panel-body">
+            <div class="row form-horizontal">
+                <input type="hidden" value="@itemDH.action" name="action" id="action">
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Mã đơn hàng</label>
+                        <div class="col-md-8">
+                            @Html.HiddenFor(model => itemDH.code)
+                            @itemDH.code
+                            @Html.HiddenFor(model => itemDH.customer_id)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Trạng thái</label>
+                        <div class="col-md-8">
+                            @Html.HiddenFor(model => itemDH.status)
+                            @if (itemDH.status == 0)
+                            {
+                                <span>Đang báo giá</span>
+                            }
+                            @if (itemDH.status == 1)
+                            {
+                                <span>Đưa vào sản xuất</span>
+                            }
+                            @if (itemDH.status == 2)
+                            {
+                                <span>Kế hoạch sản xuất</span>
+                            }
+                            @if (itemDH.status == 3)
+                            {
+                                <span>Tiến hành sản xuất</span>
+                            }
+                            @if (itemDH.status == 4)
+                            {
+                                <span>Kết thúc sản xuất</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Ngày bắt đầu dự kiến</label>
+                        <div class="col-md-8">
+
+                            @(itemDH.date_begin_plan.HasValue ? itemDH.date_begin_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Ngày kết thúc dự kiến</label>
+                        <div class="col-md-8">
+                            @(itemDH.date_end_plan.HasValue ? itemDH.date_end_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Ngày bắt đầu thực tế</label>
+                        <div class="col-md-8">
+
+                            @(itemDH.date_begin.HasValue ? itemDH.date_begin.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Ngày kết thúc thực tế</label>
+                        <div class="col-md-8">
+
+                            @(itemDH.date_end.HasValue ? itemDH.date_end.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Thời gian dự kiến còn lại</label>
+                        <div class="col-md-8">
+                            @(itemDH.date_end.HasValue ? DateTime.Parse( itemDH.date_end_plan.Value.ToShortDateString()).Subtract(DateTime.Parse(itemDH.date_end.Value.ToShortDateString())).TotalDays: DateTime.Parse(itemDH.date_end_plan.Value.ToShortDateString()).Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays)
+                        </div>
+                    </div>
+                </div>
+
+
+
+                
+            </div>
+            
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="dataTable_wrapper">
+                        <table class="table table-bordered ">
+                            <tbody>
+                                @for (int j = 0; j < itemDH.BaoGiaTemView.BaoGiaTemDetailViews.Count; j++)
+                                {
+
+                                    var count = 0;
+                                    var item = itemDH.BaoGiaTemView.BaoGiaTemDetailViews[j];
+                                    if (j == 0)
+                                    {
+
+                                        <tr>
+
+                                            @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                                            {
+
+                                                <th class="cusfontsize2" colspan="2">Bắt đầu - Kết thúc</th>
+
+                                            }
+
+
+                                        </tr>
+                                    }
+
+
+                                    if (!item.OffsetFlexoProducts.Equals("Offset"))
+                                    {
+
+                                        if (count == 0)
+                                        {
+                                            count++;
+                                            <tr>
+
+                                                @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                                                {
+                                                    tbl_QuyTrinh itemQT = item.QuyTrinhs[i];
+                                                    <th colspan="2" class="cusfontsize2">@itemQT.TenBuoc</th>
+                                                }
+                                            </tr>
+                                        }
+                                        <tr>
+
+                                            <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].id" value="@item.id" />
+                                            <th colspan="20" class="cusfontsize2">@item.NameProducts</th>
+                                        </tr>
+
+
+                                            <tr>
+                                                @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                                                {
+
+                                                    <td colspan="2" class="cusfontsize1  cusdk">
+                                                        <span>@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("dd/MM/yyyy") : "")</span>
+
+                                                    </td>
+
+                                                }
+                                            </tr>
+                                        if (itemDH.status >= 3)
+                                        {
+                                          
+                                                <tr style="background-color:red;">
+                                                    @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                                                    {
+                                                        var color = "red";
+                                                        var color_char = "yellow";
+                                                        if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                                        {
+                                                            color = "blue";
+                                                            color_char = "white";
+                                                        }
+                                                        else
+                                                        {
+                                                            if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                                            {
+                                                                color = "yellow";
+                                                                color_char = "red";
+                                                            }
+                                                        }
+                                                        <td colspan="2" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
+
+                                                            <span>@(item.QuyTrinhs[i].NgayBatDau_TT.HasValue ? item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_TT.HasValue ? item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy") : "")</span>
+
+                                                        </td>
+
+
+                                                    }
+                                                </tr>
+                                        }
+                                    }
+
+
+                                }
+
+                                @for (int j = 0; j < itemDH.BaoGiaTemView.BaoGiaTemDetailViews.Count; j++)
+                                {
+
+                                    var count = 0;
+                                    var item = itemDH.BaoGiaTemView.BaoGiaTemDetailViews[j];
+                                    if (item.OffsetFlexoProducts.Equals("Offset"))
+                                    {
+                                        if (count == 0)
+                                        {
+                                            count++;
+                                            <tr>
+
+                                                @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                                                {
+                                                    tbl_QuyTrinh itemQT = item.QuyTrinhs[i];
+                                                    <th colspan="2" class="cusfontsize2">@itemQT.TenBuoc</th>
+                                                }
+
+
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].id" value="@item.id" />
+                                            <th colspan="20" class="cusfontsize2">@item.NameProducts</th>
+                                        </tr>
+
+
+                                            <tr>
+                                                @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                                                {
+
+                                                    <td colspan="2" class="cusfontsize1  cusdk">
+                                                        <span>@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("dd/MM/yyyy") : "")</span>
+
+                                                    </td>
+
+
+                                                }
+                                            </tr>
+                                        if (itemDH.status >= 3)
+                                        {
+                                            
+
+                                                <tr style="background-color:red;">
+                                                    @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                                                    {
+                                                        var color = "red";
+                                                        var color_char = "yellow";
+                                                        if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                                        {
+                                                            color = "blue";
+                                                            color_char = "white";
+                                                        }
+                                                        else
+                                                        {
+                                                            if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                                            {
+                                                                color = "yellow";
+                                                                color_char = "red";
+                                                            }
+                                                        }
+                                                        <td colspan="2" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
+
+                                                            <span>@(item.QuyTrinhs[i].NgayBatDau_TT.HasValue ? item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_TT.HasValue ? item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy") : "")</span>
+
+                                                        </td>
+
+
+                                                    }
+                                                </tr>
+
+                                        }
+                                    }
+
+
+                                }
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            
+            <!-- /.row (nested) -->
+        </div>
+    </div>
+      
+    }
+
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<style>
+    .table td {
+        text-align: center;
+    }
+
+    .table th {
+        text-align: center;
+    }
+</style>

@@ -1,0 +1,51 @@
+﻿@model NhutLongCompany.Models.tbl_OrderTem_BaoGia_Detail
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbl_OrderTem_BaoGia_Detail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.baogia_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.baogia_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sanpam_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sanpam_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.soluong)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.soluong)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.money)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.money)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

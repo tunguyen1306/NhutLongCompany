@@ -10,40 +10,21 @@ using NhutLongCompany.Models;
 
 namespace NhutLongCompany.Controllers
 {
-    public class CustomersController : Controller
+    public class tbl_OrderTem_BaoGiaController : Controller
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();
-        public int ck=0;
 
-        // GET: Customers
+        // GET: tbl_OrderTem_BaoGia
         public ActionResult Index()
         {
             if (Session["username"] == null)
             {
                 return RedirectToAction("Login", "Login");
             }
-            return View(db.tbl_Customers.ToList());
-        }
-        public ActionResult DetailCustomers(int id)
-        {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            tbl_Customers tblCustomers = db.tbl_Customers.Find(id);
-            if (ck==1)
-            {
-                ViewData["tu"] = "Khách hàng có đơn hàng không được xóa";
-            }
-            else
-            {
-                ViewData["tu"] = "";
-            }
-            return View("DetailCustomers",tblCustomers);
+            return View(db.tbl_OrderTem_BaoGia.ToList());
         }
 
-
-        // GET: Customers/Details/5
+        // GET: tbl_OrderTem_BaoGia/Details/5
         public ActionResult Details(int? id)
         {
             if (Session["username"] == null)
@@ -54,26 +35,30 @@ namespace NhutLongCompany.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tbl_Customers tbl_Customers = db.tbl_Customers.Find(id);
-            if (tbl_Customers == null)
+            tbl_OrderTem_BaoGia tbl_OrderTem_BaoGia = db.tbl_OrderTem_BaoGia.Find(id);
+            if (tbl_OrderTem_BaoGia == null)
             {
                 return HttpNotFound();
             }
-            return View(tbl_Customers);
+            return View(tbl_OrderTem_BaoGia);
         }
 
-        // GET: Customers/Create
+        // GET: tbl_OrderTem_BaoGia/Create
         public ActionResult Create()
         {
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             return View();
         }
 
-        // POST: Customers/Create
+        // POST: tbl_OrderTem_BaoGia/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IDCustomers,NameCustomers,ChucvuCustomers,CongTyCustomers,CodeCustomers,EmailCustomers,PhoneCustomers,FaxCustomers,DiachiCustomers,MasothueCustomers,StatusCustomers,CreateDateCustomers,ModifyDateCustomers,CreateUserCustomers,ModifyUserCustomers")] tbl_Customers tbl_Customers)
+        public ActionResult Create([Bind(Include = "id,order_id,total_money,date_begin,date_end,status,offset")] tbl_OrderTem_BaoGia tbl_OrderTem_BaoGia)
         {
             if (Session["username"] == null)
             {
@@ -81,15 +66,15 @@ namespace NhutLongCompany.Controllers
             }
             if (ModelState.IsValid)
             {
-                db.tbl_Customers.Add(tbl_Customers);
+                db.tbl_OrderTem_BaoGia.Add(tbl_OrderTem_BaoGia);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(tbl_Customers);
+            return View(tbl_OrderTem_BaoGia);
         }
 
-        // GET: Customers/Edit/5
+        // GET: tbl_OrderTem_BaoGia/Edit/5
         public ActionResult Edit(int? id)
         {
             if (Session["username"] == null)
@@ -100,20 +85,20 @@ namespace NhutLongCompany.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tbl_Customers tbl_Customers = db.tbl_Customers.Find(id);
-            if (tbl_Customers == null)
+            tbl_OrderTem_BaoGia tbl_OrderTem_BaoGia = db.tbl_OrderTem_BaoGia.Find(id);
+            if (tbl_OrderTem_BaoGia == null)
             {
                 return HttpNotFound();
             }
-            return View(tbl_Customers);
+            return View(tbl_OrderTem_BaoGia);
         }
 
-        // POST: Customers/Edit/5
+        // POST: tbl_OrderTem_BaoGia/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDCustomers,NameCustomers,ChucvuCustomers,CongTyCustomers,CodeCustomers,EmailCustomers,PhoneCustomers,FaxCustomers,DiachiCustomers,MasothueCustomers,StatusCustomers,CreateDateCustomers,ModifyDateCustomers,CreateUserCustomers,ModifyUserCustomers")] tbl_Customers tbl_Customers)
+        public ActionResult Edit([Bind(Include = "id,order_id,total_money,date_begin,date_end,status,offset")] tbl_OrderTem_BaoGia tbl_OrderTem_BaoGia)
         {
             if (Session["username"] == null)
             {
@@ -121,45 +106,33 @@ namespace NhutLongCompany.Controllers
             }
             if (ModelState.IsValid)
             {
-                db.Entry(tbl_Customers).State = EntityState.Modified;
+                db.Entry(tbl_OrderTem_BaoGia).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(tbl_Customers);
+            return View(tbl_OrderTem_BaoGia);
         }
 
-        // GET: Customers/Delete/5
+        // GET: tbl_OrderTem_BaoGia/Delete/5
         public ActionResult Delete(int? id)
         {
-
             if (Session["username"] == null)
             {
                 return RedirectToAction("Login", "Login");
             }
-            var qr = from datadh in db.tbl_OrderTem
-                     where datadh.customer_id == id
-                     select datadh;
-            if (qr.ToList().Count > 0)
+            if (id == null)
             {
-
-               
-                ck = 1;
-                return RedirectToAction("DetailCustomers", new { id });
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            else
+            tbl_OrderTem_BaoGia tbl_OrderTem_BaoGia = db.tbl_OrderTem_BaoGia.Find(id);
+            if (tbl_OrderTem_BaoGia == null)
             {
-               
-                tbl_Customers tbl_Customers = db.tbl_Customers.Find(id);
-                db.tbl_Customers.Remove(tbl_Customers);
-                db.SaveChanges();
-                ck = 0;
+                return HttpNotFound();
             }
-           
-            return RedirectToAction("Index");
-
+            return View(tbl_OrderTem_BaoGia);
         }
 
-        // POST: Customers/Delete/5
+        // POST: tbl_OrderTem_BaoGia/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -168,8 +141,8 @@ namespace NhutLongCompany.Controllers
             {
                 return RedirectToAction("Login", "Login");
             }
-            tbl_Customers tbl_Customers = db.tbl_Customers.Find(id);
-            db.tbl_Customers.Remove(tbl_Customers);
+            tbl_OrderTem_BaoGia tbl_OrderTem_BaoGia = db.tbl_OrderTem_BaoGia.Find(id);
+            db.tbl_OrderTem_BaoGia.Remove(tbl_OrderTem_BaoGia);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

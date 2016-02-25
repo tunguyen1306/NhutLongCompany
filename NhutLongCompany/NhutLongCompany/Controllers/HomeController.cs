@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using NhutLongCompany.Models;
 
 namespace NhutLongCompany.Controllers
 {
     public class HomeController : Controller
     {
+        private NhutLongCompanyEntities db=new NhutLongCompanyEntities();
         public ActionResult Index()
         {
             return View();
@@ -75,6 +77,8 @@ namespace NhutLongCompany.Controllers
 
         public ActionResult Home()
         {
+            var qr = (from data in db.tbl_Customers select data).ToList().Count();
+            ViewBag.count = qr;
             return View();
         }
     }

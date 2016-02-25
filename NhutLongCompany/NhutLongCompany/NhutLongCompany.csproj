@@ -119,15 +119,26 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaoCaoController.cs" />
+    <Compile Include="Controllers\BaoGiaController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NavbarController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\QuyTrinhController.cs" />
+    <Compile Include="Controllers\SanXuatController.cs" />
+    <Compile Include="Controllers\tbl_OrderTemController.cs" />
+    <Compile Include="Controllers\tbl_OrderTem_BaoGiaController.cs" />
+    <Compile Include="Controllers\tbl_OrderTem_BaoGia_DetailController.cs" />
     <Compile Include="Domain\Data.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BaoGiaColumn.cs" />
+    <Compile Include="Models\BaoGiaTemDetailView.cs" />
+    <Compile Include="Models\BaoGiaTemView.cs" />
     <Compile Include="Models\DataWeb.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -143,6 +154,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataWeb.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\DonHangView.cs" />
+    <Compile Include="Models\LoaiGiay.cs" />
     <Compile Include="Models\Navbar.cs" />
     <Compile Include="Models\SendMail.cs" />
     <Compile Include="Models\tbl_BaoGia.cs">
@@ -996,6 +1009,37 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Email\index.cshtml" />
     <Content Include="Views\Email\success.cshtml" />
+    <Content Include="Views\BaoCao\Index.cshtml" />
+    <Content Include="Views\BaoGia\BaoGiaCus.cshtml" />
+    <Content Include="Views\BaoGia\Create.cshtml" />
+    <Content Include="Views\BaoGia\Delete.cshtml" />
+    <Content Include="Views\BaoGia\Details.cshtml" />
+    <Content Include="Views\BaoGia\Edit.cshtml" />
+    <Content Include="Views\BaoGia\Index.cshtml" />
+    <Content Include="Views\Products\Create.cshtml" />
+    <Content Include="Views\Products\Delete.cshtml" />
+    <Content Include="Views\Products\Details.cshtml" />
+    <Content Include="Views\Products\Edit.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\QuyTrinh\Index.cshtml" />
+    <Content Include="Views\SanXuat\Edit.cshtml" />
+    <Content Include="Views\SanXuat\Index.cshtml" />
+    <Content Include="Views\tbl_OrderTem\Create.cshtml" />
+    <Content Include="Views\tbl_OrderTem\Delete.cshtml" />
+    <Content Include="Views\tbl_OrderTem\Details.cshtml" />
+    <Content Include="Views\tbl_OrderTem\Edit.cshtml" />
+    <Content Include="Views\tbl_OrderTem\Index.cshtml" />
+    <Content Include="Views\tbl_OrderTem\PrintOrder.cshtml" />
+    <Content Include="Views\tbl_OrderTem_BaoGia\Create.cshtml" />
+    <Content Include="Views\tbl_OrderTem_BaoGia\Delete.cshtml" />
+    <Content Include="Views\tbl_OrderTem_BaoGia\Details.cshtml" />
+    <Content Include="Views\tbl_OrderTem_BaoGia\Edit.cshtml" />
+    <Content Include="Views\tbl_OrderTem_BaoGia\Index.cshtml" />
+    <Content Include="Views\tbl_OrderTem_BaoGia_Detail\Create.cshtml" />
+    <Content Include="Views\tbl_OrderTem_BaoGia_Detail\Delete.cshtml" />
+    <Content Include="Views\tbl_OrderTem_BaoGia_Detail\Details.cshtml" />
+    <Content Include="Views\tbl_OrderTem_BaoGia_Detail\Edit.cshtml" />
+    <Content Include="Views\tbl_OrderTem_BaoGia_Detail\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

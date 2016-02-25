@@ -1,0 +1,421 @@
+﻿@model NhutLongCompany.Models.DonHangView
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Thêm báo giá</h2>
+
+<script type="text/javascript">
+    function numberParse(nStr) {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+    $(document).ready(function () {
+        $("input[type=number]").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                // Allow: Ctrl+A, Command+A
+                (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: home, end, left, right, down, up
+                (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+
+    });
+    function updateProduct(el) {
+
+        //if ($('.NameProducts1').val() == '' || ($('.SolopProducts1').val() < 0)  || ($('select[name=LoaigiayProducts]').val() == 0) || ($('.QuyCachProducts1').val() == '') || ($('.GiaProducts1').val() < 0)) {
+        //    $('.NameProducts1').after('<label class="errorLabel lblNameProducts">Nhập tên sản phẩm</label>');
+        //    $('.QuyCachProducts1').after('<label class="errorLabel lblQuyCachProducts">Nhập quy cách</label>');
+        //    $('.SolopProducts1').after('<label class="errorLabel lblSolopProducts">Số lớp phải lớn hơn 0</label>');
+        //    $('.GiaProducts1').after('<label class="errorLabel lblGiaProducts">Giá phải lớn hơn 0</label>');
+        //    $('.LoaigiayProducts1').after('<label class="errorLabel lblLoaigiayProducts">Chọn loại giấy</label>');
+
+        //}
+        var m = 0;
+        if ($('.NameProducts1').val() == '') {
+            $('.lblNameProducts').addClass('hidden');
+            $('.NameProducts1').after('<label class="errorLabel lblNameProducts">Nhập tên sản phẩm</label>');
+
+            m++;
+        } else {
+            $('.lblNameProducts').addClass('hidden');
+        }
+
+        if ($('.QuyCachProducts1').val() == '') {
+            $('.lblQuyCachProducts').addClass('hidden');
+            $('.QuyCachProducts1').after('<label class="errorLabel lblQuyCachProducts">Nhập quy cách</label>');
+            m++;
+        } else {
+            $('.lblQuyCachProducts').addClass('hidden');
+        }
+
+        if ($('.SolopProducts1').val() <= 0) {
+            $('.lblSolopProducts').addClass('hidden');
+            $('.SolopProducts1').after('<label class="errorLabel lblSolopProducts">Số lớp phải lớn hơn 0</label>');
+            m++;
+        } else {
+            $('.lblSolopProducts').addClass('hidden');
+        }
+        if ($('.GiaProducts1').val() <= 0) {
+            $('.lblGiaProducts').addClass('hidden');
+            $('.GiaProducts1').after('<label class="errorLabel lblGiaProducts">Giá phải lớn hơn 0</label>');
+            m++;
+        } else {
+            $('.lblGiaProducts').addClass('hidden');
+        }
+        if ($('select[name=LoaigiayProducts]').val() == 0) {
+            $('.lblLoaigiayProducts').addClass('hidden');
+            $('.LoaigiayProducts1').after('<label class="errorLabel lblLoaigiayProducts">Chọn loại giấy</label>');
+            m++;
+        } else {
+            $('.lblLoaigiayProducts').addClass('hidden');
+        }
+        if (m == 0) {
+
+            $('.lblNameProducts').addClass('hidden');
+            $('.lblQuyCachProducts').addClass('hidden');
+            $('.lblGiaProducts').addClass('hidden');
+            $('.lblSolopProducts').addClass('hidden');
+            $('.lblLoaigiayProducts').addClass('hidden');
+            var id = new Date().getTime();
+            var tr = $(el).parents('tr').eq(0);
+            var trdata = "<tr id='ext_" + id + "'><input name='BaoGiaTemView.BaoGiaTemDetailViews.Index' value='" + id + "' type='hidden'/>";
+            tr.find('.form-control').each(function () {
+                if ($(this).attr('name') == 'SoLuong') {
+                    trdata += "<td><input class='form-control text-box single-line updateSL " + this.name + "'  min='1' value='" + this.value + "' type='number' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "'/></td>";
+                } else {
+                    var text = this.value;
+                    if ($(this).attr('name') == 'GiaProducts') {
+                        text = numberParse(this.value) + " đ";
+                    }
+                    trdata += "<td>" + text + "<input class='" + this.name + "' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "' value='" + this.value + "' type='hidden'/></td>";
+                }
+                this.value = $(this).attr('default-value');
+            });
+            trdata += "<td><input type='submit' style='float: left; margin-left: 10px' value='Xóa' class='btn btn-primary' onclick='delProduct(this); return false;' /></td></tr>";
+            $(el).parents('tbody').eq(0).append(trdata);
+            updateMoney(el);
+            updateEvent();
+
+        }
+
+
+
+    }
+    function updateEvent() {
+        $('.updateSL').on("change", function () {
+            updateMoney(this);
+        });
+        $("input[type=number]").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                // Allow: Ctrl+A, Command+A
+                (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: home, end, left, right, down, up
+                (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+    }
+
+    function delProduct(el) {
+        var tr = $(el).parents('tr').eq(0);
+        tr.remove();
+        updateMoney(el);
+        updateEvent();
+    }
+
+    function updateMoney(el) {
+        var money = 0;
+        $(el).parents('.body_data').eq(0).find('tr').each(function () {
+            if ($(this).attr('id') != null) {
+
+                money += parseInt($(this).find('.SoLuong').eq(0).val()) * parseFloat($(this).find('.GiaProducts').eq(0).val());
+            }
+        });
+        $('.BaoGiaTemView_total_money').val(money);
+        $('#BaoGiaTemView_total_money').text(numberParse(money));
+    }
+
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Mã khách hàng:<b>@Model.Customer.CodeCustomers</b><br />
+            Tên khách hàng:<b>@Model.Customer.NameCustomers</b><br />
+            Công ty:<b>@Model.Customer.CongTyCustomers</b>
+        </div>
+        <div class="panel-body">
+            <div class="row form-horizontal">
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Mã đơn hàng</label>
+                        <div class="col-md-8">
+                            @Html.HiddenFor(model => model.code)
+                            @Model.code
+                            @Html.HiddenFor(model => model.customer_id)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Trạng thái</label>
+                        <div class="col-md-8">
+                            @Html.HiddenFor(model => model.status)
+                            Tạo báo giá
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Ngày bắt đầu dự kiến</label>
+                        <div class="col-md-8">
+                            @Html.HiddenFor(model => model.date_begin_plan)
+                            Chưa cập nhập
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Ngày kết thúc dự kiến</label>
+                        <div class="col-md-8">
+                            @Html.HiddenFor(model => model.date_end_plan)
+                            Chưa cập nhập
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Ngày bắt đầu thực tế</label>
+                        <div class="col-md-8">
+                            @Html.HiddenFor(model => model.date_begin)
+                            Chưa cập nhập
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Ngày kết thúc thực tế</label>
+                        <div class="col-md-8">
+                            @Html.HiddenFor(model => model.date_end)
+                            Chưa cập nhập
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-12">
+                    <div class="form-group" style="text-align: center">
+                        <input type="submit" value="Thêm mới" class="btn btn-primary" />
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.row (nested) -->
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <span style="margin-left: 10px;line-height:33px">Báo giá lần 1</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 form-horizontal">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4" for="date_begin">Ngày bất đầu</label>
+                            <div class="col-md-8">
+
+                                <input class="form-control date" data-val="true" data-val-date="The field date_begin must be a date." name="BaoGiaTemView.date_begin" value="@DateTime.Now.ToString("MM/dd/yyyy")" type="hidden">
+                                @DateTime.Now.ToString("MM/dd/yyyy")
+
+                              
+                                <input class="form-control date" data-val="true" data-val-date="The field date_begin must be a date." name="BaoGiaTemView.date_begin" value="@DateTime.Now.ToString("MM/dd/yyyy")" type="hidden">
+                                @DateTime.Now.ToString("dd/MM/yyyy")
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label class="col-md-4" for="total_money">Tổng tiền</label>
+                            <div class="col-md-8">
+                                <input class="form-control BaoGiaTemView_total_money" data-val="true" data-val-number="The field total_money must be a number." name="BaoGiaTemView.total_money" value="" type="hidden">
+                                <span id="BaoGiaTemView_total_money">0</span> đ
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4" for="date_end">Ngày kết thúc</label>
+                            <div class="col-md-8">
+                                <input class="form-control date" data-val="true" data-val-date="The field date_end must be a date." name="BaoGiaTemView.date_end" value="" type="hidden">
+                                Chờ cập nhật
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4" for="status">Trạng thái</label>
+                            <div class="col-md-8">
+                                Tạo mới báo giá
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4">Quy trình</label>
+                            <div class="col-md-8">
+                                @Html.HiddenFor(model => model.BaoGiaTemView.flow)
+                                Chưa cập nhập
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th width="150px" align="center" valign="middle">
+
+                                    Tên sản phẩm
+                                </th>
+                                <th width="100px" align="center" valign="middle">
+                                    Số lớp
+                                </th>
+                                <th width="*" align="center" valign="middle">
+                                    Loại giấy
+                                </th>
+                                <th width="100px" align="center" valign="middle">
+                                    Offset/Flexo
+                                </th>
+                                <th width="130px" align="center" valign="middle">
+                                    Dán/Kim
+                                </th>
+                                <th width="150px" align="center" valign="middle">
+                                    Quy Cách
+                                </th>
+                                <th width="150px" align="center" valign="middle">
+                                    Giá
+                                </th>
+                                <th width="100px" align="center" valign="middle">
+                                    Số lượng
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody class="body_data">
+                            <tr>
+                                <td align="center">
+                                    <input class="form-control text-box single-line NameProducts1" default-value="" name="NameProducts" type="text">
+
+                                </td>
+                                <td align="center">
+                                    <input class="form-control text-box single-line SolopProducts1" value="1" default-value="1" min="1" name="SolopProducts" type="number">
+
+
+                                </td>
+                                <td align="center">
+                                    <select name="LoaigiayProducts" default-value="0" class="form-control valid LoaigiayProducts1">
+                                        <option value="0">Chọn loại giấy</option>
+                                        <option value="3 lớp: 2 Vàng 1 Xeo">3 lớp: 2 Vàng 1 Xeo</option>
+                                        <option value="3 lớp: 1 Trắng 1 Xeo 1 Vàng">3 lớp: 1 Trắng 1 Xeo 1 Vàng</option>
+                                        <option value="3 lớp: 1 Đài Loan 1 Xeo 1 Vàng">3 lớp: 1 Đài Loan 1 Xeo 1 Vàng</option>
+                                        <option value="5 lớp: 2 Vàng 3 Xeo">5 lớp: 2 Vàng 3 Xeo</option>
+                                        <option value="5 lớp: 1 Trắng 1 Vàng 3 Xeo">5 lớp: 1 Trắng 1 Vàng 3 Xeo</option>
+                                        <option value="5 lớp: 1 Đài Loan 1 Vàng 3 Xeo">5 lớp: 1 Đài Loan 1 Vàng 3 Xeo</option>
+                                        <option value="2 lớp: 1 Vàng 1 Xeo - sóng E">2 lớp: 1 Vàng 1 Xeo - sóng E</option>
+                                        <option value="2 lớp: 1 Vàng 1 Xeo - sóng C">2 lớp: 1 Vàng 1 Xeo - sóng C</option>
+                                        <option value="2 lớp: 1 Trắng 1 Xeo - sóng E">2 lớp: 1 Trắng 1 Xeo - sóng E</option>
+                                    </select>
+
+
+                                </td>
+                                <td align="center">
+                                    <select name="OffsetFlexoProducts" default-value="Offset" class="form-control">
+                                        <option value="Offset">Offset</option>
+                                        <option value="Flexo">Flexo</option>
+                                    </select>
+                                </td>
+                                <td align="center">
+                                    <select name="DanKimProducts" default-value="Dán keo" class="form-control">
+                                        <option value="Dán keo">Dán keo</option>
+                                        <option value="Đóng kim">Đóng kim</option>
+                                    </select>
+                                </td>
+                                <td align="center">
+                                    <input class="form-control text-box single-line QuyCachProducts1" default-value="" name="QuyCachProducts" type="text">
+
+                                </td>
+
+                                <td align="center">
+                                    <input class="form-control text-box single-line GiaProducts1" name="GiaProducts" step="500" min="0" default-value="0" value="0" type="number">
+
+                                </td>
+                                <td align="center">
+                                    <input class="form-control text-box single-line" default-value="1" min="1" name="SoLuong" value="1" type="number">
+                                </td>
+                                <td align="center"><input type="submit" style="float: left; margin-left: 10px" value="Thêm" class="btn btn-primary" onclick="updateProduct(this); return false;" /></td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<style>
+    .table td {
+        text-align: center;
+    }
+
+    .table th {
+        text-align: center;
+    }
+</style>
+

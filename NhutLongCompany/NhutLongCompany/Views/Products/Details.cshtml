@@ -1,0 +1,116 @@
+﻿@model NhutLongCompany.Models.tbl_Products
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbl_Products</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameProducts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameProducts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SolopProducts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SolopProducts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoaigiayProducts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaigiayProducts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OffsetFlexoProducts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OffsetFlexoProducts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DanKimProducts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DanKimProducts)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GiaProducts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GiaProducts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDateProducts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDateProducts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifyDateProducts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifyDateProducts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateUserProducts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateUserProducts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifyUserProducts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifyUserProducts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusProducts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusProducts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CodeProducts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodeProducts)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.ID_Products }) |
+    @Html.ActionLink("Hủy", "Index")
+</p>

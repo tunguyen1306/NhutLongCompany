@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Trang chủ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -14,27 +15,29 @@
 
 <div class="row">
     <div class="col-lg-3"></div>
-    <div class="col-lg-3"><div class="panel panel-primary">
-    <a href="@Url.Action("Index","Customers")">
-        <div class="panel-heading">
-            <div class="row">
-                <div class="col-xs-3">
-                    <i class="fa fa-users fa-5x"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                    <div class="huge">Khách Hàng</div>
+    <div class="col-lg-3">
+        <div class="panel panel-primary">
+                  <a href="@Url.Action("Index","Customers")">
+                      <div class="panel-heading">
+                          <div class="row">
+                              <div class="col-xs-3">
+                                  <i class="fa fa-users fa-5x"></i>
+                              </div>
+                              <div class="col-xs-9 text-right">
+                                  <div class="huge">@ViewBag.count</div>
 
-                </div>
-            </div>
-        </div>
+                              </div>
+                          </div>
+                      </div>
 
-        <div class="panel-footer">
-            <span class="pull-left">Xem chi tiết</span>
-            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-            <div class="clearfix"></div>
-        </div>
-    </a>
-</div></div>
+                      <div class="panel-footer">
+                          <span class="pull-left cusnamehome">Khách hàng</span>
+                          <span class="pull-right"><i class="fa fa-arrow-circle-right fa-2x"></i></span>
+                          <div class="clearfix"></div>
+                      </div>
+                  </a>
+              </div>
+    </div>
     <div class="col-lg-3"><div class="panel panel-green">
     <a href="#">
         <div class="panel-heading">
@@ -43,15 +46,15 @@
                     <i class="fa fa-file-o fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                    <div class="huge">Báo Giá</div>
+                    <div class="huge">124</div>
 
                 </div>
             </div>
         </div>
 
         <div class="panel-footer">
-            <span class="pull-left">Xem chi tiết</span>
-            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+            <span class="pull-left cusnamehome">Báo Giá</span>
+            <span class="pull-right"><i class="fa fa-arrow-circle-right fa-2x"></i></span>
             <div class="clearfix"></div>
         </div>
     </a>
@@ -60,27 +63,29 @@
 </div>
 <div class="row">
     <div class="col-lg-3"></div>
-    <div class="col-lg-3"><div class="panel panel-yellow ">
-    <a href="#">
-        <div class="panel-heading">
-            <div class="row">
-                <div class="col-xs-3">
-                    <i class="fa fa-shopping-cart fa-5x"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                    <div class="huge">Sản Phẩm</div>
+    <div class="col-lg-3">
+        <div class="panel panel-yellow ">
+                  <a href="#">
+                      <div class="panel-heading">
+                          <div class="row">
+                              <div class="col-xs-3">
+                                  <i class="fa fa-shopping-cart fa-5x"></i>
+                              </div>
+                              <div class="col-xs-9 text-right">
+                                  <div class="huge">123</div>
 
-                </div>
-            </div>
-        </div>
+                              </div>
+                          </div>
+                      </div>
 
-        <div class="panel-footer">
-            <span class="pull-left">Xem chi tiết</span>
-            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-            <div class="clearfix"></div>
-        </div>
-    </a>
-</div></div>
+                      <div class="panel-footer">
+                          <span class="pull-left cusnamehome">Sản Phẩm</span>
+                          <span class="pull-right"><i class="fa fa-arrow-circle-right fa-2x"></i></span>
+                          <div class="clearfix"></div>
+                      </div>
+                  </a>
+              </div>
+    </div>
     <div class="col-lg-3"><div class="panel panel-red">
     <a href="#">
         <div class="panel-heading">
@@ -89,15 +94,15 @@
                     <i class="fa fa-gears fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                    <div class="huge">Sản Xuất</div>
+                    <div class="huge">12</div>
 
                 </div>
             </div>
         </div>
 
         <div class="panel-footer">
-            <span class="pull-left">Xem chi tiết</span>
-            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+            <span class="pull-left cusnamehome">Sản Xuất</span>
+            <span class="pull-right"><i class="fa fa-arrow-circle-right fa-2x"></i></span>
             <div class="clearfix"></div>
         </div>
     </a>

@@ -2,48 +2,31 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using NhutLongCompany.Domain;
 using NhutLongCompany.Models;
 
 namespace NhutLongCompany.Controllers
 {
-    public class CustomersController : Controller
+    public class ProductsController : Controller
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();
-        public int ck=0;
 
-        // GET: Customers
+        // GET: Products
         public ActionResult Index()
         {
-            if (Session["username"] == null)
+            if (Session["username"]==null)
             {
                 return RedirectToAction("Login", "Login");
             }
-            return View(db.tbl_Customers.ToList());
-        }
-        public ActionResult DetailCustomers(int id)
-        {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            tbl_Customers tblCustomers = db.tbl_Customers.Find(id);
-            if (ck==1)
-            {
-                ViewData["tu"] = "Khách hàng có đơn hàng không được xóa";
-            }
-            else
-            {
-                ViewData["tu"] = "";
-            }
-            return View("DetailCustomers",tblCustomers);
+            return View(db.tbl_Products.ToList());
         }
 
-
-        // GET: Customers/Details/5
+        // GET: Products/Details/5
         public ActionResult Details(int? id)
         {
             if (Session["username"] == null)
@@ -54,26 +37,30 @@ namespace NhutLongCompany.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tbl_Customers tbl_Customers = db.tbl_Customers.Find(id);
-            if (tbl_Customers == null)
+            tbl_Products tbl_Products = db.tbl_Products.Find(id);
+            if (tbl_Products == null)
             {
                 return HttpNotFound();
             }
-            return View(tbl_Customers);
+            return View(tbl_Products);
         }
-
-        // GET: Customers/Create
+      
+        // GET: Products/Create
         public ActionResult Create()
         {
+            
+        
             return View();
         }
 
-        // POST: Customers/Create
+       
+
+        // POST: Products/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IDCustomers,NameCustomers,ChucvuCustomers,CongTyCustomers,CodeCustomers,EmailCustomers,PhoneCustomers,FaxCustomers,DiachiCustomers,MasothueCustomers,StatusCustomers,CreateDateCustomers,ModifyDateCustomers,CreateUserCustomers,ModifyUserCustomers")] tbl_Customers tbl_Customers)
+        public ActionResult Create([Bind(Include = "ID_Products,NameProducts,SolopProducts,QuyCachProducts,LoaigiayProducts,OffsetFlexoProducts,DanKimProducts,GiaProducts,CreatedDateProducts,ModifyDateProducts,CreateUserProducts,ModifyUserProducts,StatusProducts,CodeProducts")] tbl_Products tbl_Products)
         {
             if (Session["username"] == null)
             {
@@ -81,15 +68,15 @@ namespace NhutLongCompany.Controllers
             }
             if (ModelState.IsValid)
             {
-                db.tbl_Customers.Add(tbl_Customers);
+                db.tbl_Products.Add(tbl_Products);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(tbl_Customers);
+            return View(tbl_Products);
         }
 
-        // GET: Customers/Edit/5
+        // GET: Products/Edit/5
         public ActionResult Edit(int? id)
         {
             if (Session["username"] == null)
@@ -100,20 +87,20 @@ namespace NhutLongCompany.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tbl_Customers tbl_Customers = db.tbl_Customers.Find(id);
-            if (tbl_Customers == null)
+            tbl_Products tbl_Products = db.tbl_Products.Find(id);
+            if (tbl_Products == null)
             {
                 return HttpNotFound();
             }
-            return View(tbl_Customers);
+            return View(tbl_Products);
         }
 
-        // POST: Customers/Edit/5
+        // POST: Products/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDCustomers,NameCustomers,ChucvuCustomers,CongTyCustomers,CodeCustomers,EmailCustomers,PhoneCustomers,FaxCustomers,DiachiCustomers,MasothueCustomers,StatusCustomers,CreateDateCustomers,ModifyDateCustomers,CreateUserCustomers,ModifyUserCustomers")] tbl_Customers tbl_Customers)
+        public ActionResult Edit([Bind(Include = "ID_Products,NameProducts,SolopProducts,QuyCachProducts,LoaigiayProducts,OffsetFlexoProducts,DanKimProducts,GiaProducts,CreatedDateProducts,ModifyDateProducts,CreateUserProducts,ModifyUserProducts,StatusProducts,CodeProducts")] tbl_Products tbl_Products)
         {
             if (Session["username"] == null)
             {
@@ -121,45 +108,33 @@ namespace NhutLongCompany.Controllers
             }
             if (ModelState.IsValid)
             {
-                db.Entry(tbl_Customers).State = EntityState.Modified;
+                db.Entry(tbl_Products).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(tbl_Customers);
+            return View(tbl_Products);
         }
 
-        // GET: Customers/Delete/5
+        // GET: Products/Delete/5
         public ActionResult Delete(int? id)
         {
-
             if (Session["username"] == null)
             {
                 return RedirectToAction("Login", "Login");
             }
-            var qr = from datadh in db.tbl_OrderTem
-                     where datadh.customer_id == id
-                     select datadh;
-            if (qr.ToList().Count > 0)
+            if (id == null)
             {
-
-               
-                ck = 1;
-                return RedirectToAction("DetailCustomers", new { id });
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            else
+            tbl_Products tbl_Products = db.tbl_Products.Find(id);
+            if (tbl_Products == null)
             {
-               
-                tbl_Customers tbl_Customers = db.tbl_Customers.Find(id);
-                db.tbl_Customers.Remove(tbl_Customers);
-                db.SaveChanges();
-                ck = 0;
+                return HttpNotFound();
             }
-           
-            return RedirectToAction("Index");
-
+            return View(tbl_Products);
         }
 
-        // POST: Customers/Delete/5
+        // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -168,12 +143,12 @@ namespace NhutLongCompany.Controllers
             {
                 return RedirectToAction("Login", "Login");
             }
-            tbl_Customers tbl_Customers = db.tbl_Customers.Find(id);
-            db.tbl_Customers.Remove(tbl_Customers);
+            tbl_Products tbl_Products = db.tbl_Products.Find(id);
+            db.tbl_Products.Remove(tbl_Products);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

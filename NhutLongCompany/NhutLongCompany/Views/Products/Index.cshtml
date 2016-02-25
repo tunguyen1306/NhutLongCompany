@@ -1,0 +1,125 @@
+﻿@using NhutLongCompany.Models
+@model IEnumerable<NhutLongCompany.Models.tbl_Products>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Thông Tin sản phẩm</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                @Html.ActionLink("Thêm sản phẩm", "Create", "", new { @class = "btn btn-primary" })
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+
+                <div class="dataTable_wrapper">
+
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Mã sản phẩm
+                                </th>
+                                <th>
+                                   Tên sản phẩm
+                                </th>
+                                <th>
+                                   Số lớp
+                                </th>
+                                <th>
+                                    Loại giấy
+                                </th>
+                                <th>
+                                    Offset/Flexo
+                                </th>
+                                <th>
+                                    Dán/Kim
+                                </th>
+                                <th>
+                                    Quy Cách
+                                </th>
+                              
+                                <th>
+                                    Giá
+                                </th>
+                                <th>
+                                    Ngày tạo
+                                </th>
+                                <th>Trạng thái</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (tbl_Products item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CodeProducts)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NameProducts)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SolopProducts)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LoaigiayProducts)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.OffsetFlexoProducts)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DanKimProducts)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.QuyCachProducts)
+
+                                    </td>
+                                 
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.GiaProducts)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedDateProducts)
+                                    </td>
+                                    <td>
+                                    @(item.StatusProducts == 1 ? "Hoạt động" : "Không hoạt động")
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Sửa", "Edit", new { id = item.ID_Products }, htmlAttributes: new { @class = "btn btn-outline btn-primary btn-xs" })
+
+                                        @Html.ActionLink("Xóa", "Delete", new { id = item.ID_Products }, htmlAttributes: new { @class = "btn btn-outline btn-primary btn-xs" })
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->

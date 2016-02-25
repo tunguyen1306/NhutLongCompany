@@ -1,0 +1,67 @@
+﻿@model NhutLongCompany.Models.tbl_OrderTem_BaoGia
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbl_OrderTem_BaoGia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.order_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.order_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total_money)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total_money)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_begin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_begin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_end)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_end)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.offset)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.offset)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Hủy", "Index")
+</p>
