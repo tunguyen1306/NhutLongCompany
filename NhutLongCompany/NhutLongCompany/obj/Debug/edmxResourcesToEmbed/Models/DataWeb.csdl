@@ -81,8 +81,9 @@
     <Property Name="date_begin" Type="DateTime" Precision="3" />
     <Property Name="date_end" Type="DateTime" Precision="3" />
     <Property Name="status" Type="Int32" />
-    <Property Name="offset" Type="Int32" />
     <Property Name="note" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="commission" Type="Int32" />
+    <Property Name="commission_monney" Type="Double" />
   </EntityType>
   <EntityType Name="tbl_OrderTem_BaoGia_Detail">
     <Key>
@@ -93,6 +94,9 @@
     <Property Name="sanpam_id" Type="Int32" />
     <Property Name="soluong" Type="Int32" />
     <Property Name="money" Type="Double" />
+    <Property Name="design" Type="Int32" />
+    <Property Name="design_img" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="design_date" Type="DateTime" Precision="0" />
   </EntityType>
   <EntityType Name="tbl_Products">
     <Key>

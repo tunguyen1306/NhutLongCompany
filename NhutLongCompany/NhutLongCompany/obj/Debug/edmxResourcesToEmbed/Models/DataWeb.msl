@@ -79,13 +79,14 @@
     <EntitySetMapping Name="tbl_OrderTem_BaoGia">
       <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem_BaoGia">
         <MappingFragment StoreEntitySet="tbl_OrderTem_BaoGia">
+          <ScalarProperty Name="commission_monney" ColumnName="commission_monney" />
+          <ScalarProperty Name="commission" ColumnName="commission" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="order_id" ColumnName="order_id" />
           <ScalarProperty Name="total_money" ColumnName="total_money" />
           <ScalarProperty Name="date_begin" ColumnName="date_begin" />
           <ScalarProperty Name="date_end" ColumnName="date_end" />
           <ScalarProperty Name="status" ColumnName="status" />
-          <ScalarProperty Name="offset" ColumnName="offset" />
           <ScalarProperty Name="note" ColumnName="note" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -93,6 +94,9 @@
     <EntitySetMapping Name="tbl_OrderTem_BaoGia_Detail">
       <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem_BaoGia_Detail">
         <MappingFragment StoreEntitySet="tbl_OrderTem_BaoGia_Detail">
+          <ScalarProperty Name="design_date" ColumnName="design_date" />
+          <ScalarProperty Name="design_img" ColumnName="design_img" />
+          <ScalarProperty Name="design" ColumnName="design" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="baogia_id" ColumnName="baogia_id" />
           <ScalarProperty Name="sanpam_id" ColumnName="sanpam_id" />

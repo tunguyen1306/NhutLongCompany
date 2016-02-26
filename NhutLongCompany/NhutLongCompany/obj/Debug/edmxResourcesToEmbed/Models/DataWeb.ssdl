@@ -81,8 +81,9 @@
     <Property Name="date_begin" Type="datetime" />
     <Property Name="date_end" Type="datetime" />
     <Property Name="status" Type="int" />
-    <Property Name="offset" Type="int" />
     <Property Name="note" Type="nvarchar" MaxLength="200" />
+    <Property Name="commission" Type="int" />
+    <Property Name="commission_monney" Type="float" />
   </EntityType>
   <EntityType Name="tbl_OrderTem_BaoGia_Detail">
     <Key>
@@ -93,6 +94,9 @@
     <Property Name="sanpam_id" Type="int" />
     <Property Name="soluong" Type="int" />
     <Property Name="money" Type="float" />
+    <Property Name="design" Type="int" />
+    <Property Name="design_img" Type="nvarchar" MaxLength="200" />
+    <Property Name="design_date" Type="date" />
   </EntityType>
   <EntityType Name="tbl_Products">
     <Key>

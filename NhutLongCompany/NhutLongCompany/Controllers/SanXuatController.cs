@@ -21,22 +21,21 @@ namespace NhutLongCompany.Controllers
             }
 
             var qr = (from data in db.tbl_OrderTem
-                join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
-                where data.status >= 1
-                orderby data.update_date descending
+                      join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
+                      where data.status >= 1
                       select new DonHangView
-                {
-                    id = data.id,
-                    customer_id = cus.IDCustomers,
-                    Customer = cus,
-                    code=data.code,
-                    date_begin_plan = data.date_begin_plan,
-                    date_end_plan = data.date_end_plan,
-                    status = data.status
-                        
+                      {
+                          id = data.id,
+                          customer_id = cus.IDCustomers,
+                          Customer = cus,
+                          code = data.code,
+                          date_begin_plan = data.date_begin_plan,
+                          date_end_plan = data.date_end_plan,
+                          status = data.status
 
-                    
-                });
+
+
+                      });
 
             return View(qr.ToList());
         }
@@ -74,7 +73,7 @@ namespace NhutLongCompany.Controllers
                 for (int i = 1; i < lisBG.Count; i++)
                 {
                     var item = lisBG[i];
-                    BaoGiaTemView temBG = new BaoGiaTemView { note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, offset = item.offset, order_id = item.order_id, status = item.status, total_money = item.total_money };
+                    BaoGiaTemView temBG = new BaoGiaTemView { note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, order_id = item.order_id, status = item.status, total_money = item.total_money };
                     var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
                                          join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
                                          where u.baogia_id.Value.Equals(temBG.id)
@@ -89,7 +88,7 @@ namespace NhutLongCompany.Controllers
             lisBG = queryBaoGia.ToList<tbl_OrderTem_BaoGia>();
             foreach (var item in lisBG)
             {
-                BaoGiaTemView temBG = new BaoGiaTemView {  note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, offset = item.offset, order_id = item.order_id, status = item.status, total_money = item.total_money };
+                BaoGiaTemView temBG = new BaoGiaTemView { note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, order_id = item.order_id, status = item.status, total_money = item.total_money };
                 var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
                                      join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
                                      where u.baogia_id.Value.Equals(temBG.id)
@@ -104,9 +103,9 @@ namespace NhutLongCompany.Controllers
                 break;
             }
 
-         
 
-           var list = from tt in db.tbl_Customers where tt.IDCustomers == d.customer_id select tt;
+
+            var list = from tt in db.tbl_Customers where tt.IDCustomers == d.customer_id select tt;
             d.Customer = list.ToList()[0];
             return View(d);
         }
@@ -133,7 +132,7 @@ namespace NhutLongCompany.Controllers
             {
                 donHang.action = 0;
                 tbl_OrderTem order = db.tbl_OrderTem.Find(donHang.id);
-                if (donHang.status.Value==3)
+                if (donHang.status.Value == 3)
                 {
                     order.date_begin = DateTime.Now;
                 }
@@ -142,41 +141,19 @@ namespace NhutLongCompany.Controllers
                     order.date_end = DateTime.Now;
                 }
                 order.status = donHang.status.Value;
-
-                
-                order.update_date = DateTime.Now;
-                order.update_user = Session["username"].ToString();
-                db.Entry(order).State = EntityState.Modified;
-                db.SaveChanges();
-
                 db.Entry(order).State = EntityState.Modified;
                 db.SaveChanges();
 
             }
             if (donHang.action == 6)
             {
-                tbl_OrderTem order = db.tbl_OrderTem.Find(donHang.id);
-                order.update_date = DateTime.Now;
-                order.update_user = Session["username"].ToString();
-                db.Entry(order).State = EntityState.Modified;
-                db.SaveChanges();
-
                 foreach (var item in donHang.BaoGiaTemView.BaoGiaTemDetailViews)
                 {
                     foreach (var itemSP in item.QuyTrinhs)
                     {
-                        tbl_QuyTrinh tbQT= db.tbl_QuyTrinh.Find(itemSP.ID);
+                        tbl_QuyTrinh tbQT = db.tbl_QuyTrinh.Find(itemSP.ID);
                         tbQT.NgayBatDau_DK = itemSP.NgayBatDau_DK;
                         tbQT.NgayKetThuc_DK = itemSP.NgayKetThuc_DK;
-                        if (itemSP.NgayBatDau_DK.HasValue && itemSP.NgayKetThuc_DK.HasValue)
-                        {
-                            tbQT.TrangThai = 1;
-                            
-                        }
-                        else
-                        {
-                            tbQT.TrangThai = 0;
-                        }
                         db.Entry(tbQT).State = EntityState.Modified;
                     }
                     db.SaveChanges();
@@ -184,12 +161,6 @@ namespace NhutLongCompany.Controllers
             }
             if (donHang.action == 7)
             {
-                tbl_OrderTem order = db.tbl_OrderTem.Find(donHang.id);
-                order.update_date = DateTime.Now;
-                order.update_user = Session["username"].ToString();
-                db.Entry(order).State = EntityState.Modified;
-                db.SaveChanges();
-
                 foreach (var item in donHang.BaoGiaTemView.BaoGiaTemDetailViews)
                 {
                     foreach (var itemSP in item.QuyTrinhs)
@@ -197,18 +168,6 @@ namespace NhutLongCompany.Controllers
                         tbl_QuyTrinh tbQT = db.tbl_QuyTrinh.Find(itemSP.ID);
                         tbQT.NgayBatDau_TT = itemSP.NgayBatDau_TT;
                         tbQT.NgayKetThuc_TT = itemSP.NgayKetThuc_TT;
-                        if (itemSP.NgayBatDau_TT.HasValue && itemSP.NgayKetThuc_TT.HasValue)
-                        {
-                            tbQT.TrangThai = 3;
-
-                        }
-                        else if (itemSP.NgayBatDau_TT.HasValue && !itemSP.NgayKetThuc_TT.HasValue)
-                        {
-                            tbQT.TrangThai = 2;
-                        }else
-                        {
-                            tbQT.TrangThai = 1;
-                        }
                         db.Entry(tbQT).State = EntityState.Modified;
                     }
                     db.SaveChanges();
@@ -232,7 +191,7 @@ namespace NhutLongCompany.Controllers
                 for (int i = 1; i < lisBG.Count; i++)
                 {
                     var item = lisBG[i];
-                    BaoGiaTemView temBG = new BaoGiaTemView {  note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, offset = item.offset, order_id = item.order_id, status = item.status, total_money = item.total_money };
+                    BaoGiaTemView temBG = new BaoGiaTemView { note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, order_id = item.order_id, status = item.status, total_money = item.total_money };
                     var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
                                          join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
                                          where u.baogia_id.Value.Equals(temBG.id)
@@ -247,7 +206,7 @@ namespace NhutLongCompany.Controllers
             lisBG = queryBaoGia.ToList<tbl_OrderTem_BaoGia>();
             foreach (var item in lisBG)
             {
-                BaoGiaTemView temBG = new BaoGiaTemView {  note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, offset = item.offset, order_id = item.order_id, status = item.status, total_money = item.total_money };
+                BaoGiaTemView temBG = new BaoGiaTemView { note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, order_id = item.order_id, status = item.status, total_money = item.total_money };
                 var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
                                      join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
                                      where u.baogia_id.Value.Equals(temBG.id)

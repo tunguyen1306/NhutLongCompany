@@ -1,15 +1,61 @@
 ﻿@using NhutLongCompany.Models
 @model DonHangView
-
 @{
     ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_1.cshtml";
 }
 
-<h2>Chỉnh sửa Đơn hàng</h2>
+<h2> </h2>
 
 
 <script type="text/javascript">
+
+    function UpdateTK() {
+        if ($('#date_tk').val() == "") {
+            alert("Vui lòng chọn ngày!")
+            return;
+        }
+        var data = new FormData();
+        data.append('id', $('#id_tk').val());
+        data.append('date', $('#date_tk').val());
+        if ($('#image_tk').val() != "") {
+            if (document.getElementById('image_tk').files.length > 0) {
+                data.append('file', document.getElementById('image_tk').files[0]);
+            }
+        }
+        $.ajax({
+            url: '@Url.Action("UpdateDesign", "tbl_OrderTem")',
+            type: 'POST',
+            cache: false,
+            contentType: false,
+            processData: false,
+            // contentType: 'multipart/form-data; charset=utf-8',
+            data: data,
+            success: function (result) {
+                alert('Cập nhật thàn công!');
+                var text = reformatDate($('#date_tk').val());
+                if ($('#image_tk').val() != "") {
+                    if (document.getElementById('image_tk').files.length > 0) {
+                        var text = '<a href="/Upload/ThietKe/' + $('#id_tk').val() + '_' + $('#image_tk').val() + '" target="_blank">' + reformatDate($('#date_tk').val()) + '</a>';
+
+                    }
+                }
+                $('#id_update_tk_' + $('#id_tk').val()).text(text);
+                $('#id_update_tk_' + $('#id_tk').val() + "_value").val(2);
+                $('#modal-container-tk').modal('hide');
+                $('#id_tk').val("");
+                $('#date_tk').val("");
+                $('#image_tk').val("");
+            },
+            error: function () {
+                alert('Cập nhật thất bại!');
+            }
+        });
+    }
+    function UpdatePopupViewTK(el, id) {
+        $('#id_tk').val(id);
+    }
+
     function numberParse(nStr) {
         nStr += '';
         x = nStr.split('.');
@@ -21,7 +67,39 @@
         }
         return x1 + x2;
     }
+    function reformatDate(strMMDDYYYY) {
+        var arr = strMMDDYYYY.split("/");
+        if (arr.length == 3) {
+            return arr[1] + "/" + arr[0] + "/" + arr[2]
+        }
+        return strMMDDYYYY;
+    }
+
     function UpdateResultBaoGia(status) {
+
+        if (status == 1) {
+            var ck = true;
+            $('.input_tk_value').each(function () {
+                if ($(this).val() == "1") {
+                    ck = false;
+                    return;
+                }
+            });
+            if (!ck) {
+                alert("Vui lòng cập nhập tất cả thiết kế!");
+                $('#modal-container').modal('hide');
+                return;
+            }
+            if ($('#date_deliver').val() == "") {
+                alert("Vui lòng chọn ngày giao hàng!");
+                return;
+            }
+            if ($('#address_deliver').val() == "") {
+                alert("Vui lòng chọn địa chỉ giao hàng!");
+                return;
+            }
+
+        }
         $('#baogia_status').val(status);
         $("#action").val(3);
         document.forms[0].submit();
@@ -39,14 +117,14 @@
     }
 
     function UpdateStatusOrder(status) {
-      
+
         $('#status').val(status);
         $("#action").val(4);
         document.forms[0].submit();
     }
 
-    $(document).ready(function() {
-        $("input[type=number]").keydown(function(e) {
+    $(document).ready(function () {
+        $("input[type=number]").keydown(function (e) {
             // Allow: backspace, delete, tab, escape, enter and .
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
                 // Allow: Ctrl+A, Command+A
@@ -113,14 +191,14 @@
             $('.lblLoaigiayProducts').addClass('hidden');
             var id = new Date().getTime();
             var tr = $(el).parents('tr').eq(0);
-            var trdata = "<tr id='ext_" + id + "'><input name='BaoGiaTemView.BaoGiaTemDetailViews.Index' value='" + id + "' type='hidden'/>";
-            tr.find('.form-control').each(function() {
+            var trdata = "<tr class='tr_edit' id='ext_" + id + "'><input name='BaoGiaTemView.BaoGiaTemDetailViews.Index' value='" + id + "' type='hidden'/>";
+            tr.find('.form-control').each(function () {
                 if ($(this).attr('name') == 'SoLuong') {
                     trdata += "<td><input class='form-control text-box single-line updateSL " + this.name + "'  min='1' value='" + this.value + "' type='number' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "'/></td>";
                 } else {
                     var text = this.value;
                     if ($(this).attr('name') == 'GiaProducts') {
-                        text = numberParse(this.value)+" đ";
+                        text = numberParse(this.value) + " đ";
                     }
                     trdata += "<td>" + text + "<input class='" + this.name + "' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "' value='" + this.value + "' type='hidden'/></td>";
                 }
@@ -134,10 +212,10 @@
     }
 
     function updateEvent() {
-        $('.updateSL').on("change", function() {
+        $('.updateSL').on("change", function () {
             updateMoney(this);
         });
-        $("input[type=number]").keydown(function(e) {
+        $("input[type=number]").keydown(function (e) {
             // Allow: backspace, delete, tab, escape, enter and .
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
                 // Allow: Ctrl+A, Command+A
@@ -163,7 +241,7 @@
 
     function updateMoney(el) {
         var money = 0;
-        $(el).parents('.body_data').eq(0).find('tr').each(function() {
+        $(el).parents('.body_data').eq(0).find('tr').each(function () {
             if ($(this).attr('id') != null) {
 
                 money += parseInt($(this).find('.SoLuong').eq(0).val()) * parseFloat($(this).find('.GiaProducts').eq(0).val());
@@ -179,22 +257,20 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            Mã khách hàng:<b>@Model.Customer.CodeCustomers</b><br />
-            Tên khách hàng:<b>@Model.Customer.NameCustomers</b><br />
-            Công ty:<b>@Model.Customer.CongTyCustomers</b>
+            Chỉnh sửa Đơn hàng
         </div>
         <div class="panel-body">
             <div class="row form-horizontal">
-                <input type="hidden" value="@Model.action" name="action" id="action" >
+                <input type="hidden" value="@Model.action" name="action" id="action">
 
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label class="col-md-4">Mã đơn hàng</label>
-                        <div class="col-md-8">
+                        <label class="control-label col-md-4">Mã đơn hàng</label>
+                        <div class="col-md-8" style="padding-top:7px">
                             @Html.HiddenFor(model => model.code)
                             @Model.code
                             @Html.HiddenFor(model => model.customer_id)
@@ -203,8 +279,8 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label class="col-md-4">Trạng thái</label>
-                        <div class="col-md-8">
+                        <label class="control-label col-md-4">Trạng thái</label>
+                        <div class="col-md-8" style="padding-top:7px">
                             @Html.HiddenFor(model => model.status)
                             @if (Model.status == 0)
                             {
@@ -225,62 +301,145 @@
                             @if (Model.status == 4)
                             {
                                 <span>Kết thúc sản xuất</span>
-                            }                           
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label class="col-md-4">Ngày bắt đầu dự kiến</label>
-                        <div class="col-md-8">
-
-                            @(Model.date_begin_plan.HasValue ? Model.date_begin_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
-
+                            }
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label class="col-md-4">Ngày kết thúc dự kiến</label>
-                        <div class="col-md-8"> 
-                            @(Model.date_end_plan.HasValue ? Model.date_end_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
+                        <label class="control-label col-md-4">Ngày giao hàng</label>
+                        <div class="col-md-8" style="padding-top:7px">
+
+                            @(Model.date_deliver.HasValue ? Model.date_deliver.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
 
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label class="col-md-4">Ngày bắt đầu thực tế</label>
-                        <div class="col-md-8">
-                           
-                            @(Model.date_begin.HasValue ? Model.date_begin.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label class="col-md-4">Ngày kết thúc thực tế</label>
-                        <div class="col-md-8">
-                           
-                            @(Model.date_end.HasValue ? Model.date_end.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
+                        <label class="control-label col-md-4">Địa chỉ giao hàng</label>
+                        <div class="col-md-8" style="padding-top:7px">
+                            @(!String.IsNullOrEmpty(Model.address_deliver) ? Model.address_deliver : "Chưa cập nhập")
+
                         </div>
                     </div>
                 </div>
 
-                
-                
-              
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Thông tin khách hàng</label>
+                        <div class="col-md-10" style="padding-top:7px">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        @Html.HiddenFor(model => model.customer_id)
+                                        <span style="padding-left:7px">@Model.Customer.NameCustomers</span>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12 form-horizontal">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-4">Mã số</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" disabled class="form-control text-box single-line valid" value="@(Model.Customer != null ? Model.Customer.CodeCustomers : ""  )" id="customer_id_MS">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-4">Công ty</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" disabled id="customer_id_Cty" value="@(Model.Customer != null ? Model.Customer.CongTyCustomers : ""  )" class="form-control text-box single-line valid">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-4">Email</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" disabled id="customer_id_Email" value="@(Model.Customer != null ? Model.Customer.EmailCustomers : ""  )" class="form-control text-box single-line valid">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-4">Địa chỉ</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" disabled id="customer_id_Address" value="@(Model.Customer != null ? Model.Customer.DiachiCustomers : ""  )" class="form-control text-box single-line">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                @*<div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4">Ngày bắt đầu dự kiến</label>
+                            <div class="col-md-8">
+
+                                @(Model.date_begin_plan.HasValue ? Model.date_begin_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4">Ngày kết thúc dự kiến</label>
+                            <div class="col-md-8">
+                                @(Model.date_end_plan.HasValue ? Model.date_end_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4">Ngày bắt đầu thực tế</label>
+                            <div class="col-md-8">
+
+                                @(Model.date_begin.HasValue ? Model.date_begin.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4">Ngày kết thúc thực tế</label>
+                            <div class="col-md-8">
+
+                                @(Model.date_end.HasValue ? Model.date_end.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
+                            </div>
+                        </div>
+                    </div>*@
+
+
+
+
                 @*<div class="col-lg-12">
-                    <div class="form-group" style="text-align:center">
-                       
-                        <input type="submit" value="Cập nhật" class="btn btn-primary" />
-                        <a class="btn btn-primary" href="@Url.Action("Index", "BaoGia", new { id = 1 })">
-                            Hủy
-                        </a>
-                    </div>
+                        <div class="form-group" style="text-align:center">
 
-                </div>*@
+                            <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                            <a class="btn btn-primary" href="@Url.Action("Index", "BaoGia", new { id = 1 })">
+                                Hủy
+                            </a>
+                        </div>
+
+                    </div>*@
             </div>
             <!-- /.row (nested) -->
         </div>
@@ -293,7 +452,7 @@
             <div class="panel-heading">
                 <div class="row">
                     <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count + 2)</span>
-                    <input type="submit" style="float: right; margin-right: 10px" value="Cập nhật" class="btn btn-primary" onclick="SubmitAddNewBaoGia();return false; "/>
+                    <input type="submit" style="float: right; margin-right: 10px" value="Cập nhật" class="btn btn-primary" onclick="SubmitAddNewBaoGia();return false;" />
                 </div>
             </div>
 
@@ -302,8 +461,8 @@
                     <div class="col-lg-12 form-horizontal">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label class="col-md-4" for="date_begin">Ngày bất đầu</label>
-                                <div class="col-md-8">
+                                <label class="control-label col-md-4" for="date_begin">Ngày bất đầu</label>
+                                <div class="col-md-8" style="padding-top:7px">
                                     <input class="form-control date" data-val="true" data-val-date="The field date_begin must be a date." name="BaoGiaTemView.date_begin" value="@DateTime.Now.ToString("dd/MM/yyyy")" type="hidden">
                                     @DateTime.Now.ToString("dd/MM/yyyy")
                                 </div>
@@ -312,8 +471,8 @@
 
                             <div class="form-group">
 
-                                <label class="col-md-4" for="total_money">Tổng tiền</label>
-                                <div class="col-md-8">
+                                <label class="control-label col-md-4" for="total_money">Tổng tiền</label>
+                                <div class="col-md-8" style="padding-top:7px">
                                     <input class="form-control BaoGiaTemView_total_money" data-val="true" data-val-number="The field total_money must be a number." name="BaoGiaTemView.total_money" value="" type="hidden">
                                     <span id="BaoGiaTemView_total_money">0</span> đ
                                 </div>
@@ -322,23 +481,23 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label class="col-md-4" for="date_end">Ngày kết thúc</label>
-                                <div class="col-md-8">
+                                <label class="control-label col-md-4" for="date_end">Ngày kết thúc</label>
+                                <div class="col-md-8" style="padding-top:7px">
                                     <input class="form-control date" data-val="true" data-val-date="The field date_end must be a date." name="BaoGiaTemView.date_end" value="" type="hidden">
                                     Chờ cập nhật
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4" for="status">Trạng thái</label>
-                                <div class="col-md-8">
+                                <label class="control-label col-md-4" for="status">Trạng thái</label>
+                                <div class="col-md-8" style="padding-top:7px">
                                     Tạo mới báo giá
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label class="col-md-4">Quy trình</label>
-                                <div class="col-md-8">
+                                <label class="control-label col-md-4">Hoa hồng</label>
+                                <div class="col-md-8" style="padding-top:7px">
                                     Chưa cập nhập
                                 </div>
                             </div>
@@ -375,6 +534,9 @@
                                     </th>
                                     <th width="100px" align="center" valign="middle">
                                         Số lượng
+                                    </th>
+                                    <th width="80px" align="center" valign="middle">
+                                        Thiết kế
                                     </th>
                                     <th></th>
                                 </tr>
@@ -424,6 +586,12 @@
                                     <td align="center">
                                         <input class="form-control text-box single-line SoLuong1" default-value="1" min="1" name="SoLuong" value="1" type="number">
                                     </td>
+                                    <td align="center">
+                                        <select name="Design" default-value="0" class="form-control">
+                                            <option value="0">N</option>
+                                            <option value="1">Y</option>
+                                        </select>
+                                    </td>
                                     <td align="center"><input type="submit" style="float: left; margin-left: 10px" value="Thêm" class="btn btn-primary" onclick=" updateProduct(this); return false; " /></td>
 
                                 </tr>
@@ -440,20 +608,20 @@
         <div class="panel-heading">
             <div class="row">
                 <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count + 1)</span>
-             
-                @Html.ActionLink("In báo giá", "PrintOrder",new{ id=Model.BaoGiaTemView.id}, htmlAttributes: new { @class = "btn btn-primary", @target = "_bank", @style="float: right; margin-right: 10px" })
-                
+
+                @Html.ActionLink("In báo giá", "PrintOrder", new { id = Model.BaoGiaTemView.id }, htmlAttributes: new { @class = "btn btn-primary", @target = "_bank", @style = "float: right; margin-right: 10px" })
+
                 @if (Model.BaoGiaTemView.status.Value == 0)
                 {
-                    <input type="button"  data-toggle="modal" data-target="#modal-container"  style="float: right; margin-right: 10px" value="Cập nhật kết quả" class="btn btn-primary" />
+                    <input type="button" data-target="#modal-container" data-toggle="modal" style="float: right; margin-right: 10px" value="Cập nhật kết quả" class="btn btn-primary" />
                 }
                 @if (Model.BaoGiaTemView.status.Value == 2 && Model.action == 0)
                 {
-                    <input type="submit" style="float: right; margin-right: 10px" value="Thêm mới báo giá" class="btn btn-primary" onclick=" AddNewBaoGia(); return false; " />
+                    <input type="submit" style="float: right; margin-right: 10px" value="Thêm mới báo giá" class="btn btn-primary" onclick="AddNewBaoGia(); return false; " />
                 }
                 @if (Model.BaoGiaTemView.status.Value == 1 && Model.status == 0)
                 {
-                    <input type="button" data-toggle="modal" data-target="#modal-container-donhang" style="float: right; margin-right: 10px" value="Đưa vào sản xuất" class="btn btn-primary" />
+                    <input type="button" onclick="UpdateStatusOrder(1); return false;" style="float: right; margin-right: 10px" value="Đưa vào sản xuất" class="btn btn-primary" />
                 }
             </div>
         </div>
@@ -513,7 +681,14 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Hoa hồng</label>
+                            <div class="col-md-8" style="padding-top:7px">
+                                @(Model.BaoGiaTemView.commission.HasValue ? (Model.BaoGiaTemView.commission.Value == 1 ? "Có" : "Không") : "Chưa cập nhật")
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -548,23 +723,52 @@
                                 <th>
                                     Số lượng
                                 </th>
-
+                                <th>
+                                    Thiết kế
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="body_data">
                             @foreach (BaoGiaTemDetailView item in Model.BaoGiaTemView.BaoGiaTemDetailViews)
                             {
-                                <tr >
+                                <tr>
                                     <td>@item.NameProducts</td>
                                     <td>@item.SolopProducts</td>
                                     <td>@item.LoaigiayProducts</td>
                                     <td>@item.OffsetFlexoProducts</td>
                                     <td>@item.DanKimProducts</td>
                                     <td>@item.QuyCachProducts</td>
-                                    <td>@double.Parse( item.GiaProducts).ToString("n2") đ</td>
-                                    <td>@item.SoLuong</td>
-                                </tr>
-                            }                            
+                                    <td>@double.Parse(item.GiaProducts).ToString("n2") đ</td>
+                                    <td>
+                                        @item.SoLuong
+                                    <input id="id_update_tk_@(item.id)_value" class="input_tk_value" type="hidden" value="@(item.Design.HasValue==true?(item.Design.Value+""):"0")" />
+                                </td>
+                                <td id="id_update_tk_@item.id">
+                                    @if (!item.Design.HasValue || item.Design.Value == 0)
+                                    {
+                                        @("N")           }
+                                    else if (item.Design.Value == 2)
+                                    {
+                                        if (!String.IsNullOrEmpty(item.Design_Img))
+                                        {
+                                            <a href="/Upload/ThietKe/@(item.id)_@(item.Design_Img)" target="_blank">@item.Design_Date.Value.ToString("dd/MM/yyyy")</a>
+                                        }
+                                        else
+                                        {
+                                            @item.Design_Date.Value.ToString("dd/MM/yyyy")
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <input type="button" onclick="UpdatePopupViewTK(this,@item.id);return false;" class="btn btn-primary" value="Update" data-target="#modal-container-tk" data-toggle="modal">
+                                    }
+
+
+
+
+                                </td>
+                            </tr>
+                            }
                         </tbody>
                     </table>
 
@@ -582,11 +786,11 @@
                 <div class="row">
                     <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count - i)</span>
 
-                    @Html.ActionLink("In báo giá", "PrintOrder", new { id = Model.BaoGiaTemViews[i].id }, htmlAttributes: new { @class = "btn btn-primary",@target="_bank", @style = "float: right; margin-right: 10px" })
+                    @Html.ActionLink("In báo giá", "PrintOrder", new { id = Model.BaoGiaTemViews[i].id }, htmlAttributes: new { @class = "btn btn-primary", @target = "_bank", @style = "float: right; margin-right: 10px" })
 
 
 
-                   
+
                 </div>
             </div>
             <div class="panel-body">
@@ -646,7 +850,14 @@
                                 </div>
                             </div>
                         </div>
-                      
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Hoa hồng</label>
+                                <div class="col-md-8" style="padding-top:7px">
+                                    @(Model.BaoGiaTemViews[i].commission.HasValue ? (Model.BaoGiaTemViews[i].commission.Value == 1 ? "Có" : "Không") : "Chưa cập nhật")
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -679,6 +890,9 @@
                                     <th>
                                         Số lượng
                                     </th>
+                                    <th>
+                                        Thiết kế
+                                    </th>
 
                                 </tr>
                             </thead>
@@ -694,7 +908,28 @@
                                         <td>@item.QuyCachProducts</td>
                                         <td>@double.Parse(item.GiaProducts).ToString("n2") đ</td>
                                         <td>@item.SoLuong</td>
-                                    </tr>
+                                        <td>
+                                            @if (!item.Design.HasValue || item.Design.Value == 0)
+                                            {
+                                                @("N")
+                                            }
+                                            else if (item.Design.Value == 2)
+                                            {
+                                                if (!String.IsNullOrEmpty(item.Design_Img))
+                                                {
+                                                    <a href="/Upload/ThietKe/@(item.id)_@(item.Design_Img)" target="_blank">@item.Design_Date.Value.ToString("dd/MM/yyyy")</a>
+                                                }
+                                                else
+                                                {
+                                                    @item.Design_Date.Value.ToString("dd/MM/yyyy")
+                                                }
+                                            }
+                                            else
+                                            {
+                                                @("Chưa cập nhập")
+                                            }
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
@@ -712,17 +947,34 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    Cập nhật plan
+                    Cập nhật kết quả báo giá
                 </div>
                 <div class="modal-body">
-                    <textarea class="form-control" id="baogia_note" name="BaoGiaTemView.note" placeholder="Try to input multiple lines here...">@Model.BaoGiaTemView.note</textarea>
+                    <div class="form-group">
+                        <label for="usr">Ngày giao hàng :</label>
+                        @Html.EditorFor(model => model.date_deliver, new { htmlAttributes = new { @class = "form-control date" } })
+                    </div>
+                    <div class="form-group">
+                        <label for="usr">Địa chỉ giao hàng :</label>
+                        @Html.EditorFor(model => model.address_deliver, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="form-group">
+                        <label for="usr">Commission :</label>
+                        <label class="radio-inline"><input name="BaoGiaTemView.commission" type="radio" checked="checked" value="0"> Không</label>
+                        <label class="radio-inline"><input name="BaoGiaTemView.commission" type="radio" value="1"> Có</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="usr">Ghi chú :</label>
+                        <textarea class="form-control" name="BaoGiaTemView.note" placeholder="Try to input multiple lines here...">@Model.BaoGiaTemView.note</textarea>
+                    </div>
+
                     <input type="hidden" id="baogia_status" name="BaoGiaTemView.status" value="@Model.BaoGiaTemView.status" />
                     <input type="hidden" id="baogia_id" name="BaoGiaTemView.id" value="@Model.BaoGiaTemView.id" />
                 </div>
                 <div class="modal-footer">
                     <div class="bootstrap-dialog-footer-buttons">
-                        <button class="btn btn-primary" onclick=" UpdateResultBaoGia(1); return false; ">Đồng ý</button>
-                        <button class="btn btn-warning"  onclick=" UpdateResultBaoGia(2); return false; ">Từ chối</button>
+                        <button class="btn btn-primary" onclick="UpdateResultBaoGia(1); return false; ">Đồng ý</button>
+                        <button class="btn btn-danger" onclick="UpdateResultBaoGia(2); return false; ">Từ chối</button>
                     </div>
                 </div>
             </div>
@@ -730,26 +982,27 @@
     </div>
 
 
-    <div id="modal-container-donhang" class="modal fade" tabindex="-1" role="dialog">
+    <div id="modal-container-tk" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" style="width:400px" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    Cập nhật thời gian kế hoạch
+                    Cập nhật thiết kế
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="usr">Ngày bắt đầu :</label>
-                        @Html.EditorFor(model => model.date_begin_plan, new {htmlAttributes = new {@class = "form-control date"}})
+                        <input id="id_tk" type="hidden" value="" />
+                        <label for="usr">Ngày giao thiết kế :</label>
+                        <input type="datetime" value="" id="date_tk" name="date_tk" class="form-control date text-box single-line">
                     </div>
                     <div class="form-group">
-                        <label for="pwd">Ngày kết thúc :</label>
-                        @Html.EditorFor(model => model.date_end_plan, new {htmlAttributes = new {@class = "form-control date"}})
+                        <label for="pwd">Hình thiết kế :</label>
+                        <input type="file" id="image_tk" accept="image/*" name="image_tk">
                     </div>
-                   
+
                 </div>
                 <div class="modal-footer">
                     <div class="bootstrap-dialog-footer-buttons">
-                        <button class="btn btn-primary" onclick="UpdateStatusOrder(1); return false; ">Update</button>                   
+                        <button class="btn btn-primary" onclick="UpdateTK();return false;">Update</button>
                     </div>
                 </div>
             </div>
@@ -763,7 +1016,15 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 <style>
-    .table td { text-align: center; }
+    .table td {
+        text-align: center;
+    }
 
-    .table th { text-align: center; }
+    .table th {
+        text-align: center;
+    }
+
+    .tr_edit > td {
+        line-height: 34px !important;
+    }
 </style>

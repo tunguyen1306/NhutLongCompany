@@ -13,13 +13,11 @@ namespace NhutLongCompany.Models
         public Nullable<System.DateTime> date_begin { get; set; }
         public Nullable<System.DateTime> date_end { get; set; }
         public Nullable<int> status { get; set; }
-        public Nullable<int> offset { get; set; }
         public List<BaoGiaTemDetailView> BaoGiaTemDetailViews { get; set; }
         public String note { get; set; }
+        public Nullable<int> commission { get; set; }
+        public Nullable<double> commission_money { get; set; }
 
-        public Nullable<int> flow { get; set; }
-
-      
 
         public List<String> PrintTen { get; set; }
         public List<int> PrintSoLop { get; set; }
@@ -41,16 +39,17 @@ namespace NhutLongCompany.Models
             PrintDonGia = new List<double>();
             PrintThanhTien = new List<double>();
             for (int i = 0; i < BaoGiaTemDetailViews.Count; i++)
-            { var item = BaoGiaTemDetailViews[i];
+            {
+                var item = BaoGiaTemDetailViews[i];
                 PrintTen.Add(item.NameProducts);
                 PrintSoLop.Add(item.SolopProducts.Value);
                 PrintLoaiGiay.Add(item.LoaigiayProducts);
                 PrintOffset_Flexo.Add(item.OffsetFlexoProducts);
                 PrintDan_Kim.Add(item.DanKimProducts);
                 PrintSoLuong.Add(item.SoLuong);
-                PrintDonGia.Add(double.Parse( item.GiaProducts));
-                PrintThanhTien.Add(double.Parse(item.GiaProducts)* item.SoLuong);
-              
+                PrintDonGia.Add(double.Parse(item.GiaProducts));
+                PrintThanhTien.Add(double.Parse(item.GiaProducts) * item.SoLuong);
+
             }
         }
     }
