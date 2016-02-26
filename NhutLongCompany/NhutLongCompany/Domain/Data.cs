@@ -17,7 +17,7 @@ namespace NhutLongCompany.Domain
             menu.Add(new Navbar { Id = 4, nameOption = "Sản xuất", controller = "Sanxuat", action = "Index", imageClass = "fa fa-gears fa-2x", status = true, isParent = false, parentId = 0 });
             menu.Add(new Navbar { Id = 5, nameOption = "Báo Giá", controller = "Sanxuat", action = "Index", imageClass = "fa fa-file-o fa-2x", status = true, isParent = false, parentId = 0 });
             
-
+           
             return menu.ToList();
         }
     }
