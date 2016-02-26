@@ -1,4 +1,78 @@
-﻿.cuslogo{
+﻿.print-header {
+    margin-top: 70px;
+}
+.print-header-title {
+    color: #ff0000;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 66px;
+    text-transform: uppercase;
+}
+.print-line {
+    border-top: 1px solid #1816dd;
+    margin-bottom: 7px;
+    margin-top: 7px;
+}
+.text-right {
+    text-align: right;
+}
+.print-label {
+    color: #ff0000;
+}
+.print-footer {
+    color: #ff0000;
+    text-align: center;
+}
+.print-footer-company {
+    font-weight: bold;
+}
+.print-footer-address {
+    font-size: 12px;
+}
+.print-section {
+    color: #3e3de2;
+    font-size: 17px;
+    font-weight: bold;
+    margin-top: 15px;
+    text-transform: uppercase;
+}
+ul li {
+    color: #3e3de2;
+}
+.print-vat {
+    color: #3e3de2;
+    font-style: italic;
+    font-weight: bold;
+    text-align: right;
+}
+.page-break {
+    page-break-after: always;
+}
+.print-thank {
+    color: #3e3de2;
+}
+.print-signature {
+    color: #3e3de2;
+    margin-top: 140px;
+    text-transform: uppercase;
+}
+.table-bordered {
+    margin-top: 15px;
+}
+.print-price {
+    display: table-cell;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+.print-stamp {
+    border: 1px solid #ff0000;
+    color: #ff0000;
+    float: right;
+    padding: 10px;
+    width: 270px;
+}
+.cuslogo{
     margin-bottom: 10px;
     
 }
