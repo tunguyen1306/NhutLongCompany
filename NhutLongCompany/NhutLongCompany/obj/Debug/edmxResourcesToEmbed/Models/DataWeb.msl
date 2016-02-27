@@ -94,6 +94,7 @@
     <EntitySetMapping Name="tbl_OrderTem_BaoGia_Detail">
       <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem_BaoGia_Detail">
         <MappingFragment StoreEntitySet="tbl_OrderTem_BaoGia_Detail">
+          <ScalarProperty Name="step_index" ColumnName="step_index" />
           <ScalarProperty Name="design_date" ColumnName="design_date" />
           <ScalarProperty Name="design_img" ColumnName="design_img" />
           <ScalarProperty Name="design" ColumnName="design" />

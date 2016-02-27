@@ -97,6 +97,7 @@
     <Property Name="design" Type="Int32" />
     <Property Name="design_img" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="design_date" Type="DateTime" Precision="0" />
+    <Property Name="step_index" Type="Int32" />
   </EntityType>
   <EntityType Name="tbl_Products">
     <Key>

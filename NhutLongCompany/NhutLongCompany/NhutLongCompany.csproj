@@ -958,6 +958,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-sortable.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1040,6 +1041,7 @@
     <Content Include="Views\tbl_OrderTem_BaoGia_Detail\Details.cshtml" />
     <Content Include="Views\tbl_OrderTem_BaoGia_Detail\Edit.cshtml" />
     <Content Include="Views\tbl_OrderTem_BaoGia_Detail\Index.cshtml" />
+    <Content Include="Views\SanXuat\IndexSanXuat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

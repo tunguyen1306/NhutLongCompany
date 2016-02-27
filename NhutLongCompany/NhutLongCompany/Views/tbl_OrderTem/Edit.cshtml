@@ -5,9 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2> </h2>
-
-
 <script type="text/javascript">
 
     function UpdateTK() {
@@ -199,6 +196,9 @@
                     var text = this.value;
                     if ($(this).attr('name') == 'GiaProducts') {
                         text = numberParse(this.value) + " đ";
+                    }
+                    if ($(this).attr('name') == 'Design') {
+                        text = this.value == 1 ? "Y" : "N";
                     }
                     trdata += "<td>" + text + "<input class='" + this.name + "' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "' value='" + this.value + "' type='hidden'/></td>";
                 }

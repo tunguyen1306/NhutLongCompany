@@ -28,5 +28,8 @@ namespace NhutLongCompany.Models
         public Nullable<int> Design { get; set; }
         public String Design_Img { get; set; }
         public Nullable<DateTime> Design_Date { get; set; }
+
+        public Nullable<int> Timer { get; set; }
+        public Nullable<System.DateTime> date_deliver { get; set; }
     }
 }

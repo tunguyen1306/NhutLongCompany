@@ -97,6 +97,7 @@
     <Property Name="design" Type="int" />
     <Property Name="design_img" Type="nvarchar" MaxLength="200" />
     <Property Name="design_date" Type="date" />
+    <Property Name="step_index" Type="int" />
   </EntityType>
   <EntityType Name="tbl_Products">
     <Key>
