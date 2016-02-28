@@ -55,6 +55,5 @@ E:\Loc\1. LAPTRINH\19.NhutLongCompany\NhutLongCompany\NhutLongCompany\NhutLongCo
 E:\Loc\1. LAPTRINH\19.NhutLongCompany\NhutLongCompany\NhutLongCompany\NhutLongCompany\bin\System.Web.WebPages.Razor.xml
 E:\Loc\1. LAPTRINH\19.NhutLongCompany\NhutLongCompany\NhutLongCompany\NhutLongCompany\bin\Antlr3.Runtime.pdb
 E:\Loc\1. LAPTRINH\19.NhutLongCompany\NhutLongCompany\NhutLongCompany\NhutLongCompany\bin\Newtonsoft.Json.xml
-E:\Loc\1. LAPTRINH\19.NhutLongCompany\NhutLongCompany\NhutLongCompany\NhutLongCompany\obj\Debug\NhutLongCompany.csprojResolveAssemblyReference.cache
 E:\Loc\1. LAPTRINH\19.NhutLongCompany\NhutLongCompany\NhutLongCompany\NhutLongCompany\obj\Debug\sb-admin-2.Web.dll
 E:\Loc\1. LAPTRINH\19.NhutLongCompany\NhutLongCompany\NhutLongCompany\NhutLongCompany\obj\Debug\sb-admin-2.Web.pdb
