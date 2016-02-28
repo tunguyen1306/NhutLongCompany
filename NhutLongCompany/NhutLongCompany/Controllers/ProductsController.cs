@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Security.Permissions;
 using System.Web;
 using System.Web.Mvc;
 using NhutLongCompany.Domain;
@@ -22,8 +23,19 @@ namespace NhutLongCompany.Controllers
             if (Session["username"] == null)
             {
                 return RedirectToAction("Login", "Login");
+               
             }
-            return View(db.tbl_Products.ToList());
+            var qr = (from data in db.tbl_OrderTem_BaoGia_Detail
+                      join datapro in db.tbl_Products on data.sanpam_id equals datapro.ID_Products
+                      where data.status==1
+                select new BaoGiaTemDetailView
+                {
+                    NameProducts = datapro.NameProducts,
+                    CodeProducts = datapro.CodeProducts,
+                    Date_Working = data.date_working
+                    
+                });
+            return View(qr.ToList());
         }
 
         // GET: Products/Details/5

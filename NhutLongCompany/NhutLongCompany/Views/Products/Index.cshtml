@@ -1,9 +1,20 @@
 ﻿@using NhutLongCompany.Models
-@model IEnumerable<NhutLongCompany.Models.tbl_Products>
+@model IEnumerable<BaoGiaTemDetailView>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+     NhutLongCompanyEntities db = new NhutLongCompanyEntities();
+     var qr = (from data in db.tbl_OrderTem_BaoGia_Detail
+               join datapro in db.tbl_Products on data.sanpam_id equals datapro.ID_Products
+               where data.status == 2
+               select new BaoGiaTemDetailView
+               {
+                   NameProducts = datapro.NameProducts,
+                   CodeProducts = datapro.CodeProducts,
+                   Date_Working = data.date_working
+
+               });
 }
 
 
@@ -28,11 +39,12 @@
             <div class="panel-body">
 
                 <div class="dataTable_wrapper">
-
-                    <table class="table table-striped table-bordered table-hover dataTables-example" >
+                    <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                             <tr>
-
+                                <th>
+                                    Mã sản phẩm
+                                </th>
                                 <th>
                                     Tên sản phẩm
                                 </th>
@@ -45,22 +57,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (tbl_Products item in Model)
+                            @foreach (var item in Model)
                             {
                                 <tr>
-
+                                    <td>@Html.DisplayFor(modelItem => item.CodeProducts)</td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.NameProducts)
 
                                     </td>
-                                    <td></td>
+                                    <td>@Html.DisplayFor(modelItem => item.Date_Working)</td>
                                     <td></td>
                                 </tr>
                             }
 
                         </tbody>
-                    </table>
-                </div>
+                    </table> </div>
 
             </div>
             <!-- /.panel-body -->
@@ -83,7 +94,9 @@
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                             <tr>
-
+                                <th>
+                                    Mã sản phẩm
+                                </th>
                                 <th>
                                     Tên sản phẩm
                                 </th>
@@ -96,15 +109,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (tbl_Products item in Model)
+                            @foreach (var item in qr.ToList())
                             {
                                 <tr>
-
+                                    <td>@Html.DisplayFor(modelItem => item.CodeProducts)</td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.NameProducts)
 
                                     </td>
-                                    <td></td>
+                                    <td>@Html.DisplayFor(modelItem => item.Date_Working)</td>
                                     <td></td>
                                 </tr>
                             }
