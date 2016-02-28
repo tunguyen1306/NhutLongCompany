@@ -85,3 +85,35 @@ ul li {
 .cusnamehome {
     font-size: 25px;
 }
+
+.cusfontsize {
+    font-size: 15px;
+}.cusfontsize1 {
+    font-size: 11px;
+    padding-left: 0 !important;
+}
+ .cusfontsize2 {
+    font-size: 12px;
+}
+ .cusmodal {
+     width: 260px;
+ }
+ .cushover:hover {
+    background-color: yellow;
+}
+
+ .cusint {
+    background-color: blue;
+     color: white;
+     font-weight: bold;
+}
+ .custt {
+     background-color: #a7eefb;
+     color: red;
+     font-weight: bold;
+ }
+ .cusdk {
+      background-color: #84fff8;
+      color: red;
+       font-weight: bold;
+ }
