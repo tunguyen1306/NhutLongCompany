@@ -120,14 +120,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaoCaoController.cs" />
-    <Compile Include="Controllers\BaoGiaController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NavbarController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
-    <Compile Include="Controllers\QuyTrinhController.cs" />
     <Compile Include="Controllers\SanXuatController.cs" />
     <Compile Include="Controllers\tbl_OrderTemController.cs" />
     <Compile Include="Controllers\tbl_OrderTem_BaoGiaController.cs" />
@@ -158,12 +156,6 @@
     <Compile Include="Models\LoaiGiay.cs" />
     <Compile Include="Models\Navbar.cs" />
     <Compile Include="Models\SendMail.cs" />
-    <Compile Include="Models\tbl_BaoGia.cs">
-      <DependentUpon>DataWeb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbl_BaoGiaChiTiet.cs">
-      <DependentUpon>DataWeb.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\tbl_Customers.cs">
       <DependentUpon>DataWeb.tt</DependentUpon>
     </Compile>
@@ -180,6 +172,9 @@
       <DependentUpon>DataWeb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_QuyTrinh.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Stack.cs">
       <DependentUpon>DataWeb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_User.cs">
@@ -964,6 +959,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\morris-data.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -1011,18 +1007,11 @@
     <Content Include="Views\Email\index.cshtml" />
     <Content Include="Views\Email\success.cshtml" />
     <Content Include="Views\BaoCao\Index.cshtml" />
-    <Content Include="Views\BaoGia\BaoGiaCus.cshtml" />
-    <Content Include="Views\BaoGia\Create.cshtml" />
-    <Content Include="Views\BaoGia\Delete.cshtml" />
-    <Content Include="Views\BaoGia\Details.cshtml" />
-    <Content Include="Views\BaoGia\Edit.cshtml" />
-    <Content Include="Views\BaoGia\Index.cshtml" />
     <Content Include="Views\Products\Create.cshtml" />
     <Content Include="Views\Products\Delete.cshtml" />
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
-    <Content Include="Views\QuyTrinh\Index.cshtml" />
     <Content Include="Views\SanXuat\Edit.cshtml" />
     <Content Include="Views\SanXuat\Index.cshtml" />
     <Content Include="Views\tbl_OrderTem\Create.cshtml" />
@@ -1042,6 +1031,9 @@
     <Content Include="Views\tbl_OrderTem_BaoGia_Detail\Edit.cshtml" />
     <Content Include="Views\tbl_OrderTem_BaoGia_Detail\Index.cshtml" />
     <Content Include="Views\SanXuat\IndexSanXuat.cshtml" />
+    <Content Include="Views\SanXuat\IndexSanXuatByDate.cshtml" />
+    <Content Include="Views\SanXuat\UpdateFlowProduct.cshtml" />
+    <Content Include="Views\SanXuat\ViewFlowProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

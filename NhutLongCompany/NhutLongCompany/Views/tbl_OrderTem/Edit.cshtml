@@ -1,9 +1,13 @@
 ﻿@using NhutLongCompany.Models
 @model DonHangView
+
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<h2> </h2>
+
 
 <script type="text/javascript">
 
@@ -37,7 +41,7 @@
 
                     }
                 }
-                $('#id_update_tk_' + $('#id_tk').val()).text(text);
+                $('#id_update_tk_' + $('#id_tk').val()).html(text);
                 $('#id_update_tk_' + $('#id_tk').val() + "_value").val(2);
                 $('#modal-container-tk').modal('hide');
                 $('#id_tk').val("");

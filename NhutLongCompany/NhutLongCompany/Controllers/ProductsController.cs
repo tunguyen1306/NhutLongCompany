@@ -19,7 +19,7 @@ namespace NhutLongCompany.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            if (Session["username"]==null)
+            if (Session["username"] == null)
             {
                 return RedirectToAction("Login", "Login");
             }
@@ -44,16 +44,16 @@ namespace NhutLongCompany.Controllers
             }
             return View(tbl_Products);
         }
-      
+
         // GET: Products/Create
         public ActionResult Create()
         {
-            
-        
+
+
             return View();
         }
 
-       
+
 
         // POST: Products/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -148,7 +148,7 @@ namespace NhutLongCompany.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

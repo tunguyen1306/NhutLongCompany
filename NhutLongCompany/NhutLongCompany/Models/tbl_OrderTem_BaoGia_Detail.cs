@@ -23,5 +23,7 @@ namespace NhutLongCompany.Models
         public string design_img { get; set; }
         public Nullable<System.DateTime> design_date { get; set; }
         public Nullable<int> step_index { get; set; }
+        public Nullable<System.DateTime> date_working { get; set; }
+        public Nullable<int> status { get; set; }
     }
 }

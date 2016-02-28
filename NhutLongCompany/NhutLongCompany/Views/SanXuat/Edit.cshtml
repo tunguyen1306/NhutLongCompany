@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Quy trình sản xuất</h2>
+<h2> </h2>
 
 
 <script type="text/javascript">
@@ -29,47 +29,18 @@
         }
         return strMMDDYYYY;
     }
-
-
-
     function SubmitUpdatePlan() {
-       
-       
-            $("#action").val(6);
-            document.forms[0].submit();
-      
+        $("#action").val(6);
+        document.forms[0].submit();
     }
     function SubmitUpdateTT() {
-
-
-        
-            $("#action").val(7);
-            document.forms[0].submit();
-      
+        $("#action").val(7);
+        document.forms[0].submit();
     }
     function UpdateStatusOrder(status) {
-      
-        var val = true;
-        $('.status_all_item').each(function () {
-            if ((status == 3 && ($(this).val() == 0 || $(this).val() == "0"))||(status == 4 && ($(this).val() != 3 || $(this).val() != "3"))) {
-                val = false;
-                return;
-            } 
-        });        
-        if (val) {
-            $('#status').val(status);
-            $("#action").val(5);
-            document.forms[0].submit();
-        }
-        else {
-            if (status==3) {
-                alert("Vui lòng nhập đầy đủ thông tin kế hoạch thực hiện!");
-            }
-            if (status == 4) {
-                alert("Vui lòng nhập đầy đủ thông tin thực hiện!");
-            }
-        }
-
+        $('#status').val(status);
+        $("#action").val(5);
+        document.forms[0].submit();
     }
 
 
@@ -83,18 +54,18 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            Mã khách hàng:<b>@Model.Customer.CodeCustomers</b><br />
-            Tên khách hàng:<b>@Model.Customer.NameCustomers</b><br />
-            Công ty:<b>@Model.Customer.CongTyCustomers</b>
+            Quy trình sản xuất
         </div>
         <div class="panel-body">
+
+
             <div class="row form-horizontal">
                 <input type="hidden" value="@Model.action" name="action" id="action">
 
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label class="col-md-4">Mã đơn hàng</label>
-                        <div class="col-md-8">
+                        <label class="control-label col-md-4">Mã đơn hàng</label>
+                        <div class="col-md-8" style="padding-top:7px">
                             @Html.HiddenFor(model => model.code)
                             @Model.code
                             @Html.HiddenFor(model => model.customer_id)
@@ -103,8 +74,8 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label class="col-md-4">Trạng thái</label>
-                        <div class="col-md-8">
+                        <label class="control-label col-md-4">Trạng thái</label>
+                        <div class="col-md-8" style="padding-top:7px">
                             @Html.HiddenFor(model => model.status)
                             @if (Model.status == 0)
                             {
@@ -129,61 +100,150 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label class="col-md-4">Ngày bắt đầu dự kiến</label>
-                        <div class="col-md-8">
+                        <label class="control-label col-md-4">Ngày giao hàng</label>
+                        <div class="col-md-8" style="padding-top:7px">
 
-                            @(Model.date_begin_plan.HasValue ? Model.date_begin_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
+                            @(Model.date_deliver.HasValue ? Model.date_deliver.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
 
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label class="col-md-4">Ngày kết thúc dự kiến</label>
-                        <div class="col-md-8">
-                            @(Model.date_end_plan.HasValue ? Model.date_end_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
+                        <label class="control-label col-md-4">Địa chỉ giao hàng</label>
+                        <div class="col-md-8" style="padding-top:7px">
+                            @(!String.IsNullOrEmpty(Model.address_deliver) ? Model.address_deliver : "Chưa cập nhập")
 
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+
+
+                <div class="col-lg-12">
                     <div class="form-group">
-                        <label class="col-md-4">Ngày bắt đầu thực tế</label>
-                        <div class="col-md-8">
+                        <label class="control-label col-md-2">Thông tin khách hàng</label>
+                        <div class="col-md-10" style="padding-top:7px">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        @Html.HiddenFor(model => model.customer_id)
+                                        <span style="padding-left:7px">@Model.Customer.NameCustomers</span>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12 form-horizontal">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-4">Mã số</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" disabled class="form-control text-box single-line valid" value="@(Model.Customer != null ? Model.Customer.CodeCustomers : ""  )" id="customer_id_MS">
 
-                            @(Model.date_begin.HasValue ? Model.date_begin.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-4">Công ty</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" disabled id="customer_id_Cty" value="@(Model.Customer != null ? Model.Customer.CongTyCustomers : ""  )" class="form-control text-box single-line valid">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-4">Email</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" disabled id="customer_id_Email" value="@(Model.Customer != null ? Model.Customer.EmailCustomers : ""  )" class="form-control text-box single-line valid">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-4">Địa chỉ</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" disabled id="customer_id_Address" value="@(Model.Customer != null ? Model.Customer.DiachiCustomers : ""  )" class="form-control text-box single-line">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label class="col-md-4">Ngày kết thúc thực tế</label>
-                        <div class="col-md-8">
 
-                            @(Model.date_end.HasValue ? Model.date_end.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
+
+
+
+
+
+                @*<div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4">Ngày bắt đầu dự kiến</label>
+                            <div class="col-md-8">
+
+                                @(Model.date_begin_plan.HasValue ? Model.date_begin_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
+
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4">Ngày kết thúc dự kiến</label>
+                            <div class="col-md-8">
+                                @(Model.date_end_plan.HasValue ? Model.date_end_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4">Ngày bắt đầu thực tế</label>
+                            <div class="col-md-8">
+
+                                @(Model.date_begin.HasValue ? Model.date_begin.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4">Ngày kết thúc thực tế</label>
+                            <div class="col-md-8">
+
+                                @(Model.date_end.HasValue ? Model.date_end.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
+                            </div>
+                        </div>
+                    </div>*@
+
+
+
+
 
 
 
 
                 <div class="col-lg-12">
                     <div class="form-group" style="text-align: center">
+                        @*@if (Model.status.Value == 1)
+                            {
+                                <input type="submit" value="Tiếp nhận sản xuất" class="btn btn-primary" onclick=" UpdateStatusOrder(2); return false; " />
+                            }*@
                         @if (Model.status.Value == 1)
                         {
-                            <input type="submit" value="Tiếp nhận sản xuất" class="btn btn-primary" onclick=" UpdateStatusOrder(2); return false; " />
-                        }
-                        @if (Model.status.Value == 2)
-                        {
-                            <input type="submit" value="Tiến hành sản xuất" class="btn btn-primary" onclick=" UpdateStatusOrder(3); return false; " />
+                            <input type="submit" value="Tiến hành sản xuất" class="btn btn-primary" data-toggle="modal" data-target="#modal-container-ngaythicong" onclick="return false; " />
                         }
                         @if (Model.status.Value == 3)
                         {
-                            <input type="submit" value="Kết thúc đơn hàng" class="btn btn-primary" onclick=" UpdateStatusOrder(4); return false; " />
+                            <input type="submit" value="Kết thúc đơn hàng" class="btn btn-primary" onclick="UpdateStatusOrder(4);return false;" />
                         }
                         <a class="btn btn-primary" href="@Url.Action("Index", "SanXuat")">
                             Quay lại
@@ -193,28 +253,27 @@
                 </div>
             </div>
             <!-- /.row (nested) -->
+
+
         </div>
     </div>
-    if (Model.status >= 2)
+    if (Model.status >= 3)
     {
-
-
-
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
                     <span style="margin-left: 10px; line-height: 33px">Cập nhật kế hoạch sản xuất</span>
-                    @if (Model.status == 2 )
+                    @if (Model.status == 2)
                     {
                         <input type="submit" style="float: right; margin-right: 10px" value="Cập nhật" class="btn btn-primary" onclick="SubmitUpdatePlan();return false;" />
                         <button type="button" style="display:none" id="update_plan" class="btn btn-danger" data-toggle="modal" data-target="#modal-container-donhang">Thêm Ngày</button>
                     }
                     @if (Model.status == 3)
                     {
-                        <input type="submit" style="float: right; margin-right: 10px" value="Cập nhật" class="btn btn-primary" onclick="SubmitUpdateTT(); return false;" />
+                        <input type="submit" style="float: right; margin-right: 10px" value="Cập nhật" class="btn btn-primary" onclick="SubmitUpdateTT();return false;" />
                         <button type="button" style="display:none" id="update_plan" class="btn btn-danger" data-toggle="modal" data-target="#modal-container-donhang">Thêm Ngày</button>
                     }
-                   
+
                 </div>
             </div>
             <div class="panel-body">
@@ -225,14 +284,14 @@
                                 <tbody>
                                     @for (int j = 0; j < Model.BaoGiaTemView.BaoGiaTemDetailViews.Count; j++)
                                     {
-                                     
+
                                         var count = 0;
                                         var item = Model.BaoGiaTemView.BaoGiaTemDetailViews[j];
                                         if (j == 0)
                                         {
-                                          
+
                                             <tr>
-                                               
+
                                                 @for (int i = 0; i < item.QuyTrinhs.Count; i++)
                                                 {
 
@@ -261,39 +320,43 @@
                                                 </tr>
                                             }
                                             <tr>
-                                              
+
                                                 <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].id" value="@item.id" />
                                                 <th colspan="20" class="cusfontsize2">@item.NameProducts</th>
                                             </tr>
 
-                                           
-                                            <tr>
-                                                @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                                {
-                                                    if (Model.status == 2)
+
+                                            if (false)
+                                            {
+                                                <tr>
+                                                    @for (int i = 0; i < item.QuyTrinhs.Count; i++)
                                                     {
-                                                        <td onclick="loadPopup(this,'@(item.QuyTrinhs[i].ID)_flow_DK')" colspan="2" class="cusfontsize1 cushover cusdk">
-                                                            <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].ID" value="@item.QuyTrinhs[i].ID" />
-                                                            <input type="hidden" id="@(item.QuyTrinhs[i].ID)_flow_DK_begin" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].NgayBatDau_DK" value="@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("MM/dd/yyyy") : "")" />
-                                                            <input type="hidden" id="@(item.QuyTrinhs[i].ID)_flow_DK_end" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].NgayKetThuc_DK" value="@(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("MM/dd/yyyy") : "")" />
-                                                            <input type="hidden"  class="status_all_item" id="@(item.QuyTrinhs[i].ID)_flow_DK_tt" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].TrangThai" value="@(item.QuyTrinhs[i].TrangThai)" />
+                                                        if (Model.status == 2)
+                                                        {
+                                                            <td onclick="loadPopup(this,'@(item.QuyTrinhs[i].ID)_flow_DK')" colspan="2" class="cusfontsize1 cushover cusdk">
+                                                                <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].ID" value="@item.QuyTrinhs[i].ID" />
+                                                                <input type="hidden" id="@(item.QuyTrinhs[i].ID)_flow_DK_begin" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].NgayBatDau_DK" value="@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("MM/dd/yyyy") : "")" />
+                                                                <input type="hidden" id="@(item.QuyTrinhs[i].ID)_flow_DK_end" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].NgayKetThuc_DK" value="@(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("MM/dd/yyyy") : "")" />
 
 
 
 
-                                                            <span id="@(item.QuyTrinhs[i].ID)_flow_DK">@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("dd/MM/yyyy") : "")</span>
+                                                                <span id="@(item.QuyTrinhs[i].ID)_flow_DK">@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("dd/MM/yyyy") : "")</span>
 
-                                                        </td>
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td colspan="2" class="cusfontsize1  cusdk">
+                                                                <span>@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("dd/MM/yyyy") : "")</span>
+
+                                                            </td>
+                                                        }
                                                     }
-                                                    else
-                                                    {
-                                                        <td colspan="2" class="cusfontsize1  cusdk">
-                                                            <span>@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("dd/MM/yyyy") : "")</span>
+                                                </tr>
+                                            }
 
-                                                        </td>
-                                                    }
-                                                }
-                                            </tr>
+
                                             if (Model.status >= 3)
                                             {
                                                 <tr>
@@ -306,8 +369,6 @@
                                                                 <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].ID" value="@item.QuyTrinhs[i].ID" />
                                                                 <input type="hidden" id="@(item.QuyTrinhs[i].ID)_flow_TT_begin" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].NgayBatDau_TT" value="@(item.QuyTrinhs[i].NgayBatDau_TT.HasValue? item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("MM/dd/yyyy"):"")" />
                                                                 <input type="hidden" id="@(item.QuyTrinhs[i].ID)_flow_TT_end" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].NgayKetThuc_TT" value="@(item.QuyTrinhs[i].NgayKetThuc_TT.HasValue?item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("MM/dd/yyyy"):"")" />
-                                                                <input type="hidden" class="status_all_item" id="@(item.QuyTrinhs[i].ID)_flow_TT_tt" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].TrangThai" value="@(item.QuyTrinhs[i].TrangThai)" />
-
                                                                 <span id="@(item.QuyTrinhs[i].ID)_flow_TT">@(item.QuyTrinhs[i].NgayBatDau_TT.HasValue ? item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_TT.HasValue ? item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy") : "")</span>
 
                                                             </td>
@@ -352,37 +413,40 @@
                                             }
                                             <tr>
                                                 <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].id" value="@item.id" />
-                                                <th colspan="20"  class="cusfontsize2">@item.NameProducts</th>
+                                                <th colspan="20" class="cusfontsize2">@item.NameProducts</th>
                                             </tr>
 
-                                            
-                                            <tr>
-                                                @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                                {
-                                                    if (Model.status == 2)
+                                            if (false)
+                                            {
+                                                <tr>
+                                                    @for (int i = 0; i < item.QuyTrinhs.Count; i++)
                                                     {
-                                                        <td onclick="loadPopup(this,'@(item.QuyTrinhs[i].ID)_flow_DK')" colspan="2" class="cusfontsize1 cushover cusdk">
-                                                            <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].ID" value="@item.QuyTrinhs[i].ID" />
-                                                            <input type="hidden" id="@(item.QuyTrinhs[i].ID)_flow_DK_begin" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].NgayBatDau_DK" value="@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("MM/dd/yyyy") : "")" />
-                                                            <input type="hidden" id="@(item.QuyTrinhs[i].ID)_flow_DK_end" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].NgayKetThuc_DK" value="@(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("MM/dd/yyyy") : "")" />
-                                                            <input type="hidden"  class="status_all_item" id="@(item.QuyTrinhs[i].ID)_flow_DK_tt" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].TrangThai" value="@(item.QuyTrinhs[i].TrangThai)" />
+                                                        if (Model.status == 2)
+                                                        {
+                                                            <td onclick="loadPopup(this,'@(item.QuyTrinhs[i].ID)_flow_DK')" colspan="2" class="cusfontsize1 cushover cusdk">
+                                                                <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].ID" value="@item.QuyTrinhs[i].ID" />
+                                                                <input type="hidden" id="@(item.QuyTrinhs[i].ID)_flow_DK_begin" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].NgayBatDau_DK" value="@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("MM/dd/yyyy") : "")" />
+                                                                <input type="hidden" id="@(item.QuyTrinhs[i].ID)_flow_DK_end" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].NgayKetThuc_DK" value="@(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("MM/dd/yyyy") : "")" />
 
 
 
-                                                            <span id="@(item.QuyTrinhs[i].ID)_flow_DK">@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("dd/MM/yyyy") : "")</span>
 
-                                                        </td>
+                                                                <span id="@(item.QuyTrinhs[i].ID)_flow_DK">@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("dd/MM/yyyy") : "")</span>
+
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td colspan="2" class="cusfontsize1  cusdk">
+                                                                <span>@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("dd/MM/yyyy") : "")</span>
+
+                                                            </td>
+                                                        }
+
                                                     }
-                                                    else
-                                                    {
-                                                        <td colspan="2" class="cusfontsize1  cusdk">
-                                                            <span>@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("dd/MM/yyyy") : "")</span>
+                                                </tr>
+                                            }
 
-                                                        </td>
-                                                    }
-
-                                                }
-                                            </tr>
                                             if (Model.status >= 3)
                                             {
                                                 <tr>
@@ -395,7 +459,6 @@
                                                                 <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].ID" value="@item.QuyTrinhs[i].ID" />
                                                                 <input type="hidden" id="@(item.QuyTrinhs[i].ID)_flow_TT_begin" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].NgayBatDau_TT" value="@(item.QuyTrinhs[i].NgayBatDau_TT.HasValue? item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("MM/dd/yyyy"):"")" />
                                                                 <input type="hidden" id="@(item.QuyTrinhs[i].ID)_flow_TT_end" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].NgayKetThuc_TT" value="@(item.QuyTrinhs[i].NgayKetThuc_TT.HasValue?item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("MM/dd/yyyy"):"")" />
-                                                                <input  class="status_all_item" type="hidden" id="@(item.QuyTrinhs[i].ID)_flow_TT_tt" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].QuyTrinhs[@i].TrangThai" value="@(item.QuyTrinhs[i].TrangThai)" />
                                                                 <span id="@(item.QuyTrinhs[i].ID)_flow_TT">@(item.QuyTrinhs[i].NgayBatDau_TT.HasValue ? item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_TT.HasValue ? item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy") : "")</span>
 
                                                             </td>
@@ -431,6 +494,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
+                @Html.HiddenFor(model => model.BaoGiaTemView.id)
                 <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count + 1)</span>
             </div>
         </div>
@@ -490,7 +554,14 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Hoa hồng</label>
+                            <div class="col-md-8" style="padding-top:7px">
+                                @(Model.BaoGiaTemView.commission.HasValue ? (Model.BaoGiaTemView.commission.Value == 1 ? "Có" : "Không") : "Chưa cập nhật")
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -525,7 +596,9 @@
                                 <th>
                                     Số lượng
                                 </th>
-
+                                <th>
+                                    Thiết kế
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="body_data">
@@ -539,7 +612,34 @@
                                     <td>@item.DanKimProducts</td>
                                     <td>@item.QuyCachProducts</td>
                                     <td>@double.Parse(item.GiaProducts).ToString("n2") đ</td>
-                                    <td>@item.SoLuong</td>
+                                    <td>
+                                        @item.SoLuong
+                                        <input id="id_update_tk_@(item.id)_value" class="input_tk_value" type="hidden" value="@(item.Design.HasValue==true?(item.Design.Value+""):"0")" />
+                                    </td>
+                                    <td id="id_update_tk_@item.id">
+                                        @if (!item.Design.HasValue || item.Design.Value == 0)
+                                        {
+                                            @("N")           }
+                                        else if (item.Design.Value == 2)
+                                        {
+                                            if (!String.IsNullOrEmpty(item.Design_Img))
+                                            {
+                                                <a href="/Upload/ThietKe/@(item.id)_@(item.Design_Img)" target="_blank">@item.Design_Date.Value.ToString("dd/MM/yyyy")</a>
+                                            }
+                                            else
+                                            {
+                                                @item.Design_Date.Value.ToString("dd/MM/yyyy")
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <input type="button" onclick="UpdatePopupViewTK(this,@item.id);return false;" class="btn btn-primary" value="Update" data-target="#modal-container-tk" data-toggle="modal">
+                                        }
+
+
+
+
+                                    </td>
                                 </tr>
                             }
                         </tbody>
@@ -548,6 +648,7 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+
 
         </div>
     </div>
@@ -580,6 +681,32 @@
             </div>
         </div>
     </div>
+
+
+
+    <div id="modal-container-ngaythicong" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" style="width:400px" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Thời gian bắt đầu thực hiện
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" name="date_begin" class="form-control date" value="@DateTime.Now.ToString("MM/dd/yyyy")" />
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="bootstrap-dialog-footer-buttons">
+                        <button class="btn btn-primary" data-dismiss="modal" onclick="UpdateStatusOrder(3); return false;">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 }
 

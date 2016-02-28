@@ -5,38 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="NhutLongCompanyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="tbl_BaoGia">
-          <Key>
-            <PropertyRef Name="ID_BaoGia" />
-          </Key>
-          <Property Name="ID_BaoGia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ID_Customers" Type="int" />
-          <Property Name="BaoGia_ID_Default" Type="int" />
-          <Property Name="TongTien" Type="varchar" MaxLength="50" />
-          <Property Name="LamMau" Type="int" />
-          <Property Name="NgayCoMau" Type="datetime" />
-          <Property Name="NgayBaoGia" Type="datetime" />
-          <Property Name="DuyetBaoGia" Type="int" />
-          <Property Name="CodeDonHang" Type="varchar" MaxLength="50" />
-          <Property Name="NgayBatDauDuKien" Type="datetime" />
-          <Property Name="NgayKetThucDuKien" Type="datetime" />
-          <Property Name="NgayBatDauThucTe" Type="datetime" />
-          <Property Name="NgayKetThucThucTe" Type="datetime" />
-          <Property Name="NgayGiao" Type="datetime" />
-          <Property Name="QuyTrinh" Type="int" />
-          <Property Name="ChiTietQuyTrinh" Type="ntext" />
-          <Property Name="LanBaoGia" Type="int" />
-        </EntityType>
-        <EntityType Name="tbl_BaoGiaChiTiet">
-          <Key>
-            <PropertyRef Name="ID_BaoGiaChiTiet" />
-          </Key>
-          <Property Name="ID_BaoGiaChiTiet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ID_BaoGia" Type="int" />
-          <Property Name="ID_SanPham" Type="int" />
-          <Property Name="SoLuong" Type="int" />
-          <Property Name="Tien" Type="varchar" MaxLength="50" />
-        </EntityType>
         <EntityType Name="tbl_Customers">
           <Key>
             <PropertyRef Name="IDCustomers" />
@@ -103,6 +71,8 @@
           <Property Name="design_img" Type="nvarchar" MaxLength="200" />
           <Property Name="design_date" Type="date" />
           <Property Name="step_index" Type="int" />
+          <Property Name="date_working" Type="date" />
+          <Property Name="status" Type="int" />
         </EntityType>
         <EntityType Name="tbl_Products">
           <Key>
@@ -137,6 +107,14 @@
           <Property Name="NgayBatDau_TT" Type="datetime" />
           <Property Name="NgayKetThuc_TT" Type="datetime" />
         </EntityType>
+        <EntityType Name="tbl_Stack">
+          <Key>
+            <PropertyRef Name="baoGia_detail_id" />
+          </Key>
+          <Property Name="baoGia_detail_id" Type="int" Nullable="false" />
+          <Property Name="index_view" Type="int" />
+          <Property Name="date_create" Type="date" />
+        </EntityType>
         <EntityType Name="tbl_User">
           <Key>
             <PropertyRef Name="IDUser" />
@@ -152,52 +130,19 @@
           <Property Name="Password" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityContainer Name="NhutLongCompanyModelStoreContainer">
-          <EntitySet Name="tbl_BaoGia" EntityType="Self.tbl_BaoGia" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tbl_BaoGiaChiTiet" EntityType="Self.tbl_BaoGiaChiTiet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Customers" EntityType="Self.tbl_Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_OrderTem" EntityType="Self.tbl_OrderTem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_OrderTem_BaoGia" EntityType="Self.tbl_OrderTem_BaoGia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_OrderTem_BaoGia_Detail" EntityType="Self.tbl_OrderTem_BaoGia_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Products" EntityType="Self.tbl_Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_QuyTrinh" EntityType="Self.tbl_QuyTrinh" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Stack" EntityType="Self.tbl_Stack" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_User" EntityType="Self.tbl_User" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NhutLongCompanyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="tbl_BaoGia">
-          <Key>
-            <PropertyRef Name="ID_BaoGia" />
-          </Key>
-          <Property Name="ID_BaoGia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ID_Customers" Type="Int32" />
-          <Property Name="BaoGia_ID_Default" Type="Int32" />
-          <Property Name="TongTien" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LamMau" Type="Int32" />
-          <Property Name="NgayCoMau" Type="DateTime" Precision="3" />
-          <Property Name="NgayBaoGia" Type="DateTime" Precision="3" />
-          <Property Name="DuyetBaoGia" Type="Int32" />
-          <Property Name="CodeDonHang" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NgayBatDauDuKien" Type="DateTime" Precision="3" />
-          <Property Name="NgayKetThucDuKien" Type="DateTime" Precision="3" />
-          <Property Name="NgayBatDauThucTe" Type="DateTime" Precision="3" />
-          <Property Name="NgayKetThucThucTe" Type="DateTime" Precision="3" />
-          <Property Name="NgayGiao" Type="DateTime" Precision="3" />
-          <Property Name="QuyTrinh" Type="Int32" />
-          <Property Name="ChiTietQuyTrinh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LanBaoGia" Type="Int32" />
-        </EntityType>
-        <EntityType Name="tbl_BaoGiaChiTiet">
-          <Key>
-            <PropertyRef Name="ID_BaoGiaChiTiet" />
-          </Key>
-          <Property Name="ID_BaoGiaChiTiet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ID_BaoGia" Type="Int32" />
-          <Property Name="ID_SanPham" Type="Int32" />
-          <Property Name="SoLuong" Type="Int32" />
-          <Property Name="Tien" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="tbl_Customers">
           <Key>
             <PropertyRef Name="IDCustomers" />
@@ -264,6 +209,8 @@
           <Property Name="design_img" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="design_date" Type="DateTime" Precision="0" />
           <Property Name="step_index" Type="Int32" />
+          <Property Name="date_working" Type="DateTime" Precision="0" />
+          <Property Name="status" Type="Int32" />
         </EntityType>
         <EntityType Name="tbl_Products">
           <Key>
@@ -313,8 +260,6 @@
           <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="NhutLongCompanyEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tbl_BaoGia" EntityType="Self.tbl_BaoGia" />
-          <EntitySet Name="tbl_BaoGiaChiTiet" EntityType="Self.tbl_BaoGiaChiTiet" />
           <EntitySet Name="tbl_Customers" EntityType="Self.tbl_Customers" />
           <EntitySet Name="tbl_OrderTem" EntityType="Self.tbl_OrderTem" />
           <EntitySet Name="tbl_OrderTem_BaoGia" EntityType="Self.tbl_OrderTem_BaoGia" />
@@ -322,47 +267,22 @@
           <EntitySet Name="tbl_Products" EntityType="Self.tbl_Products" />
           <EntitySet Name="tbl_QuyTrinh" EntityType="Self.tbl_QuyTrinh" />
           <EntitySet Name="tbl_User" EntityType="Self.tbl_User" />
+          <EntitySet Name="tbl_Stack" EntityType="NhutLongCompanyModel.tbl_Stack" />
         </EntityContainer>
+        <EntityType Name="tbl_Stack">
+          <Key>
+            <PropertyRef Name="baoGia_detail_id" />
+          </Key>
+          <Property Name="baoGia_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="index_view" Type="Int32" />
+          <Property Name="date_create" Type="DateTime" Precision="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="NhutLongCompanyModelStoreContainer" CdmEntityContainer="NhutLongCompanyEntities">
-          <EntitySetMapping Name="tbl_BaoGia">
-            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_BaoGia">
-              <MappingFragment StoreEntitySet="tbl_BaoGia">
-                <ScalarProperty Name="ID_BaoGia" ColumnName="ID_BaoGia" />
-                <ScalarProperty Name="ID_Customers" ColumnName="ID_Customers" />
-                <ScalarProperty Name="BaoGia_ID_Default" ColumnName="BaoGia_ID_Default" />
-                <ScalarProperty Name="TongTien" ColumnName="TongTien" />
-                <ScalarProperty Name="LamMau" ColumnName="LamMau" />
-                <ScalarProperty Name="NgayCoMau" ColumnName="NgayCoMau" />
-                <ScalarProperty Name="NgayBaoGia" ColumnName="NgayBaoGia" />
-                <ScalarProperty Name="DuyetBaoGia" ColumnName="DuyetBaoGia" />
-                <ScalarProperty Name="CodeDonHang" ColumnName="CodeDonHang" />
-                <ScalarProperty Name="NgayBatDauDuKien" ColumnName="NgayBatDauDuKien" />
-                <ScalarProperty Name="NgayKetThucDuKien" ColumnName="NgayKetThucDuKien" />
-                <ScalarProperty Name="NgayBatDauThucTe" ColumnName="NgayBatDauThucTe" />
-                <ScalarProperty Name="NgayKetThucThucTe" ColumnName="NgayKetThucThucTe" />
-                <ScalarProperty Name="NgayGiao" ColumnName="NgayGiao" />
-                <ScalarProperty Name="QuyTrinh" ColumnName="QuyTrinh" />
-                <ScalarProperty Name="ChiTietQuyTrinh" ColumnName="ChiTietQuyTrinh" />
-                <ScalarProperty Name="LanBaoGia" ColumnName="LanBaoGia" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_BaoGiaChiTiet">
-            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_BaoGiaChiTiet">
-              <MappingFragment StoreEntitySet="tbl_BaoGiaChiTiet">
-                <ScalarProperty Name="ID_BaoGiaChiTiet" ColumnName="ID_BaoGiaChiTiet" />
-                <ScalarProperty Name="ID_BaoGia" ColumnName="ID_BaoGia" />
-                <ScalarProperty Name="ID_SanPham" ColumnName="ID_SanPham" />
-                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
-                <ScalarProperty Name="Tien" ColumnName="Tien" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbl_Customers">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Customers">
               <MappingFragment StoreEntitySet="tbl_Customers">
@@ -422,6 +342,8 @@
           <EntitySetMapping Name="tbl_OrderTem_BaoGia_Detail">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem_BaoGia_Detail">
               <MappingFragment StoreEntitySet="tbl_OrderTem_BaoGia_Detail">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="date_working" ColumnName="date_working" />
                 <ScalarProperty Name="step_index" ColumnName="step_index" />
                 <ScalarProperty Name="design_date" ColumnName="design_date" />
                 <ScalarProperty Name="design_img" ColumnName="design_img" />
@@ -481,6 +403,15 @@
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Stack">
+            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Stack">
+              <MappingFragment StoreEntitySet="tbl_Stack">
+                <ScalarProperty Name="date_create" ColumnName="date_create" />
+                <ScalarProperty Name="index_view" ColumnName="index_view" />
+                <ScalarProperty Name="baoGia_detail_id" ColumnName="baoGia_detail_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

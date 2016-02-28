@@ -8,217 +8,118 @@
 <h2> </h2>
 
 
+<script>
+    function UpdateQuyTrinh(pre, id, flowid, status) {
+        if (pre != 2) {
+            alert("Vui lòng cập nhật TUẦN TỰ từ trái sang phải!")
+            return;
+
+        }
+        var layout = $('#ajax_update_' + id);
+        $.ajax({
+            url: '@Url.Action("UpdateFlowProduct", "SanXuat")',
+            data: { 'id': id, 'idflow': flowid, 'status': status },
+            cache: false,
+            type: "POST",
+            dataType: "html",
+            success: function (data, textStatus, XMLHttpRequest) {
+
+                layout.html(data);
+            }
+        });
+    }
+    function UpdateStack(id, order) {
+        var jsonObject = {
+            "id": id,
+            "order": order
+        };
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UpdateStack", "SanXuat")',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(jsonObject),
+            success: function (data) {
+                //alert(data);
+            },
+            failure: function (errMsg) {
+                // alert(errMsg);
+            }
+        });
+    }
+    function Reload(el, id, date) {
+        $(el).attr('disabled', '')
+        $(el).val("Loading .....")
+        if (date == null) {
+            var layout = $('#' + id);
+            $.ajax({
+                url: '@Url.Action("IndexSanXuatByDate", "SanXuat")',
+
+                cache: false,
+                type: "POST",
+                dataType: "html",
+                success: function (data, textStatus, XMLHttpRequest) {
+                    layout.html(data);
+                    moveEvent();
+                    $(el).removeAttr("disabled");
+                    $(el).val("Reload");
+                }
+            });
+        }
+        else {
+            var layout = $('#' + id);
+            $.ajax({
+                url: '@Url.Action("IndexSanXuatByDate", "SanXuat")',
+                cache: false,
+                data: { 'date': date },
+                type: "POST",
+                dataType: "html",
+                success: function (data, textStatus, XMLHttpRequest) {
+                    layout.html(data);
+                    moveEvent();
+                    $(el).removeAttr("disabled");
+                    $(el).val("Reload");
+                }
+            });
+        }
+
+    }
+</script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <span style="margin-left: 10px; line-height: 33px">Sản phẩm sản xuất (hiện tại)</span>
+                    <input type="button" onclick="Reload(this, 'today',null); return false;" style="float: right; margin-right: 10px" value="Reload" class="btn btn-primary reload" />
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body" id="today">
+                @{Html.RenderAction("IndexSanXuatByDate", "SanXuat");}
+
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
 
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
-                    <span style="margin-left: 10px; line-height: 33px">Sản phẩm đang sản xuất</span>
+                    <span style="margin-left: 10px; line-height: 33px">Sản phẩm sản xuất (ngày mai)</span>
+                    <input type="button" onclick="Reload(this,'tomorrow','@(DateTime.Parse( DateTime.Now.AddDays(1).ToShortDateString()))'); return false;" style="float: right; margin-right: 10px" value="Reload" class="btn btn-primary" />
                 </div>
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body">
-                <div class="dataTable_wrapper">
-                    <table class="table table-bordered ">
+            <div class="panel-body" id="tomorrow">
 
-                        <tbody>
-                            <tr>
-
-                                <th colspan="18">
-                                    Quy trình 1
-                                </th>
-                            </tr>
-                            @{
-                                var countQT = 0;
-                            }
-
-                            @for (int j = 0; j < Model.ToList().Count(); j++)
-                            {
-                                var item = Model.ToList()[j];
-                                if (!item.OffsetFlexoProducts.Equals("Offset"))
-                                {
-
-                                    if (countQT == 0)
-                                    {
-                                        countQT++;
-                                        <tr>
-                                            @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                            {
-                                                var itemQT = item.QuyTrinhs[i];
-                                                <th colspan="2" width="@((float)100 / (float)9)%" class="cusfontsize2">@itemQT.TenBuoc</th>
-                                            }
-                                        </tr>
-                                    }
-
-
-                                    <tr>
-
-                                        <td class="cusfontsize2" colspan="18">
-                                            @item.NameProducts
-                                            <input type="hidden" value="@item.id" />
-                                        </td>
-                                    </tr>
-
-
-
-
-                                    <tr style="background-color:red;">
-                                        @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                        {
-                                            var color = "red";
-                                            var color_char = "yellow";
-                                            if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                            {
-                                                color = "blue";
-                                                color_char = "white";
-                                            }
-                                            else
-                                            {
-                                                if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                {
-                                                    color = "yellow";
-                                                    color_char = "red";
-                                                }
-                                            }
-                                            <td colspan="2" width="@((float)100 / (float)9)" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
-
-                                                <span>
-                                                    @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
-                                                    {
-                                                        @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
-                                                    }
-                                                    else
-                                                    {
-                                                        <span style="cursor:pointer" onclick="UpdateQuyTrinh(@item.id,@item.QuyTrinhs[i].ID,1)">Update</span>
-                                                    }
-                                                    @("-")
-                                                    @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                    {
-                                                        @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
-                                                    }
-                                                    else
-                                                    {
-                                                        <span style="cursor:pointer" onclick="UpdateQuyTrinh(@item.id,@item.QuyTrinhs[i].ID,2)">Update</span>
-                                                    }
-                                                </span>
-                                            </td>
-
-
-                                        }
-                                    </tr>
-                                }
-
-                            }
-
-
-
-
-
-                        </tbody>
-                    </table>
-
-                    <table class="table table-bordered ">
-
-                        <tbody>
-                            <tr>
-
-                                <th colspan="18">
-                                    Quy trình 2
-                                </th>
-                            </tr>
-                            @{
-                                countQT = 0;
-                            }
-
-                            @for (int j = 0; j < Model.ToList().Count(); j++)
-                            {
-                                var item = Model.ToList()[j];
-                                if (item.OffsetFlexoProducts.Equals("Offset"))
-                                {
-
-                                    if (countQT == 0)
-                                    {
-                                        countQT++;
-                                        <tr>
-                                            @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                            {
-                                                var itemQT = item.QuyTrinhs[i];
-                                                <th colspan="2" width="@((float)100 / (float)9)%" class="cusfontsize2">@itemQT.TenBuoc</th>
-                                            }
-                                        </tr>
-                                    }
-
-
-                                    <tr>
-
-                                        <td class="cusfontsize2" colspan="18">
-                                            @item.NameProducts
-                                            <input type="hidden" value="@item.id" />
-                                        </td>
-                                    </tr>
-
-
-
-
-                                    <tr style="background-color:red;">
-                                        @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                        {
-                                            var color = "red";
-                                            var color_char = "yellow";
-                                            if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                            {
-                                                color = "blue";
-                                                color_char = "white";
-                                            }
-                                            else
-                                            {
-                                                if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                {
-                                                    color = "yellow";
-                                                    color_char = "red";
-                                                }
-                                            }
-                                            <td colspan="2" width="@((float)100 / (float)9)" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
-
-                                                <span>
-                                                    @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
-                                                    {
-                                                        @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
-                                                    }
-                                                    else
-                                                    {
-                                                        <span style="cursor:pointer" onclick="UpdateQuyTrinh(@item.id,@item.QuyTrinhs[i].ID,1)">Update</span>
-                                                    }
-                                                    @("-")
-                                                    @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                    {
-                                                        @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
-                                                    }
-                                                    else
-                                                    {
-                                                        <span style="cursor:pointer" onclick="UpdateQuyTrinh(@item.id,@item.QuyTrinhs[i].ID,2)">Update</span>
-                                                    }
-                                                </span>
-                                            </td>
-
-
-                                        }
-                                    </tr>
-                                }
-
-                            }
-
-
-
-
-
-                        </tbody>
-                    </table>
-
-
-
-                </div>
+                @{Html.RenderAction("IndexSanXuatByDate", "SanXuat", new { date = DateTime.Parse(DateTime.Now.AddDays(1).ToShortDateString()) });}
 
             </div>
             <!-- /.panel-body -->
@@ -260,26 +161,103 @@
             /** Define arrowhead **/
         }
 </style>
-<script src="~/Scripts/jquery-sortable.js"></script>
+
 <script>
-    $(document).ready(function myfunction() {
-        var adjustment;
+    function updateMoveIcon() {
+        $('.move-down').each(function () {
+            var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
+            var item_product = $(this).parents(".move_product")[0];
+            var item_flow = $('#' + item_product.id.replace('_product', ''))[0];
+            var item_next = $(item_flow).next();
 
-        $("ol.simple_with_animation").sortable({
-            group: 'simple_with_animation',
-            pullPlaceholder: false,
-            handle: 'i.icon-move',
-            // animation on drop
-
-
-            // set $item relative to cursor position
-            onDragStart: function ($item, container, _super) {
-                if (!container.options.drop)
-                    $item.clone().insertAfter($item);
-                _super($item, container);
+            if (item_next.length == 0) {
+                $(this).css('display', 'none');
             }
-
+            else {
+                $(this).css('display', '');
+            }
         });
+
+        $('.move-up').each(function () {
+            var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
+            var item_product = $(this).parents(".move_product")[0];
+            var item_flow = $('#' + item_product.id.replace('_product', ''))[0];
+            var item_prev = $(item_product).prev();
+            if (item_prev.length == 0 || item_prev.eq(0).hasClass('not_move')) {
+                $(this).css('display', 'none');
+            }
+            else {
+                $(this).css('display', '');
+            }
+        });
+    }
+    function swapElements(elm1, elm2) {
+        var parent1, next1,
+            parent2, next2;
+
+        parent1 = elm1.parentNode;
+        next1 = elm1.nextSibling;
+        parent2 = elm2.parentNode;
+        next2 = elm2.nextSibling;
+
+        parent1.insertBefore(elm2, next1);
+        parent2.insertBefore(elm1, next2);
+    }
+    function moveEvent() {
+        $('.move-down').on("click", function () {
+            var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
+            var item_product = $(this).parents(".move_product")[0];
+            var item_flow = $('#' + item_product.id.replace('_product', ''))[0];
+            var item_next = $(item_flow).next();
+            if (item_next.length > 0) {
+                var next_dataindex = item_next.eq(0).attr('data-index');
+                var item_product_next = item_next[0];
+                var item_flow_next = $('#' + item_product_next.id.replace('_product', ''))[0];
+                $(item_product).attr('data-index', next_dataindex);
+                $(item_product_next).attr('data-index', dataindex);
+
+                UpdateStack(item_flow.id.replace('ajax_update_', ''), next_dataindex);
+                UpdateStack(item_flow_next.id.replace('ajax_update_', ''), dataindex);
+
+                swapElements(item_product, item_product_next);
+                swapElements(item_flow, item_flow_next);
+
+            }
+            updateMoveIcon();
+        });
+        $('.move-up').on("click", function () {
+
+
+            var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
+            var item_product = $(this).parents(".move_product")[0];
+            var item_flow = $('#' + item_product.id.replace('_product', ''))[0];
+            var item_prev = $(item_product).prev();
+            if (item_prev.length > 0) {
+
+                var item_flow_prev = item_prev[0];
+                var item_product_prev = $('#' + item_flow_prev.id + '_product')[0];
+                var prev_dataindex = $(item_product_prev).eq(0).attr('data-index');
+                $(item_product).attr('data-index', prev_dataindex);
+                $(item_product_prev).attr('data-index', dataindex);
+
+                UpdateStack(item_flow.id.replace('ajax_update_', ''), prev_dataindex);
+                UpdateStack(item_flow_prev.id.replace('ajax_update_', ''), dataindex);
+
+                swapElements(item_product, item_product_prev);
+                swapElements(item_flow, item_flow_prev);
+
+            }
+            updateMoveIcon();
+
+        })
+
+        updateMoveIcon();
+    }
+    $(document).ready(function () {
+
+
+        moveEvent();
+
 
     });
 

@@ -1,0 +1,202 @@
+﻿@model IEnumerable<NhutLongCompany.Models.BaoGiaTemDetailView>
+<div class="dataTable_wrapper">
+    <table class="table table-bordered ">
+        <tbody>
+            <tr>
+
+                <th colspan="18">
+                    Quy trình 1
+                </th>
+            </tr>
+            @{
+                var countQT = 0;
+            }
+
+            @for (int j = 0; j < Model.ToList().Count(); j++)
+            {
+                var item = Model.ToList()[j];
+                if (!item.OffsetFlexoProducts.Equals("Offset"))
+                {
+
+                    if (countQT == 0)
+                    {
+                        countQT++;
+                        <tr class="not_move">
+                            @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                            {
+                                var itemQT = item.QuyTrinhs[i];
+                                <th colspan="2" width="@((float)100 / (float)9)%" class="cusfontsize2">@itemQT.TenBuoc</th>
+                            }
+                        </tr>
+                    }
+
+
+                    <tr id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
+
+                        <td class="cusfontsize2" colspan="18" style="position:relative">
+
+                            <span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:10px;top:5px;"></span>
+                            <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 10px;top: 15px;"></span>
+                            @item.NameProducts <i>
+                                (Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))
+                                <input type="hidden" value="@item.id" />
+                            </i>
+                        </td>
+                    </tr>
+
+
+
+
+                    <tr id="ajax_update_@item.id" class="move" style="background-color:red;">
+                        @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                        {
+                            var color = "red";
+                            var color_char = "yellow";
+                            if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                            {
+                                color = "blue";
+                                color_char = "white";
+                            }
+                            else
+                            {
+                                if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                {
+                                    color = "yellow";
+                                    color_char = "red";
+                                }
+                            }
+                            <td colspan="2" width="@((float)100 / (float)9)" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
+
+                                <span>
+                                    @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
+                                    {
+                                        @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    else
+                                    {
+                                        <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Update</span>
+                                    }
+                                    @("-")
+                                    @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                    {
+                                        @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    else
+                                    {
+                                        <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"0"),@item.id,@item.QuyTrinhs[i].ID,2)">Update</span>
+                                    }
+                                </span>
+                            </td>
+
+
+                        }
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+
+    <table class="table table-bordered ">
+
+        <tbody>
+            <tr>
+
+                <th colspan="18">
+                    Quy trình 2
+                </th>
+            </tr>
+            @{
+                countQT = 0;
+            }
+
+            @for (int j = 0; j < Model.ToList().Count(); j++)
+            {
+                var item = Model.ToList()[j];
+                if (item.OffsetFlexoProducts.Equals("Offset"))
+                {
+
+                    if (countQT == 0)
+                    {
+                        countQT++;
+                        <tr class="not_move">
+                            @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                            {
+                                var itemQT = item.QuyTrinhs[i];
+                                <th colspan="2" width="@((float)100 / (float)9)%" class="cusfontsize2">@itemQT.TenBuoc</th>
+                            }
+                        </tr>
+                    }
+
+
+                    <tr id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
+
+                        <td class="cusfontsize2" colspan="18" style="position:relative">
+                            <span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:10px;top:5px;"></span>
+                            <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 10px;top: 15px;"></span>
+                            @item.NameProducts <i>(Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))</i>
+                            <input type="hidden" value="@item.id" />
+                        </td>
+                    </tr>
+                    <tr id="ajax_update_@item.id" class="move" style="background-color:red;">
+                        @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                        {
+                            var color = "red";
+                            var color_char = "yellow";
+                            if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                            {
+                                color = "blue";
+                                color_char = "white";
+                            }
+                            else
+                            {
+                                if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                {
+                                    color = "yellow";
+                                    color_char = "red";
+                                }
+                            }
+                            <td colspan="2" width="@((float)100 / (float)9)" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
+
+                                <span>
+                                    @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
+                                    {
+                                        @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    else
+                                    {
+                                        <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Update</span>
+                                    }
+                                    @("-")
+                                    @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                    {
+                                        @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    else
+                                    {
+                                        <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)">Update</span>
+                                    }
+                                </span>
+                            </td>
+
+
+                        }
+                    </tr>
+                }
+
+            }
+
+
+
+
+
+        </tbody>
+    </table>
+
+
+
+</div>
+
+
+
+

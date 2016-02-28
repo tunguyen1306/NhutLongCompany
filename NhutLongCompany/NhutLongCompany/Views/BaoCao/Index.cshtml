@@ -24,24 +24,27 @@
                 Công ty:<b>@itemDH.Customer.CongTyCustomers</b>
             </div>
             <div class="panel-body">
+
+
+
                 <div class="row form-horizontal">
                     <input type="hidden" value="@itemDH.action" name="action" id="action">
 
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label class="col-md-4">Mã đơn hàng</label>
-                            <div class="col-md-8">
-                                @Html.HiddenFor(model => itemDH.code)
+                            <label class="control-label col-md-4">Mã đơn hàng</label>
+                            <div class="col-md-8" style="padding-top:7px">
+
                                 @itemDH.code
-                                @Html.HiddenFor(model => itemDH.customer_id)
+
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label class="col-md-4">Trạng thái</label>
-                            <div class="col-md-8">
-                                @Html.HiddenFor(model => itemDH.status)
+                            <label class="control-label col-md-4">Trạng thái</label>
+                            <div class="col-md-8" style="padding-top:7px">
+
                                 @if (itemDH.status == 0)
                                 {
                                     <span>Đang báo giá</span>
@@ -65,123 +68,194 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label class="col-md-4">Ngày bắt đầu dự kiến</label>
-                            <div class="col-md-8">
+                            <label class="control-label col-md-4">Ngày giao hàng</label>
+                            <div class="col-md-8" style="padding-top:7px">
 
-                                @(itemDH.date_begin_plan.HasValue ? itemDH.date_begin_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
+                                @(itemDH.date_deliver.HasValue ? itemDH.date_deliver.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
 
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label class="col-md-4">Ngày kết thúc dự kiến</label>
-                            <div class="col-md-8">
-                                @(itemDH.date_end_plan.HasValue ? itemDH.date_end_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
+                            <label class="control-label col-md-4">Địa chỉ giao hàng</label>
+                            <div class="col-md-8" style="padding-top:7px">
+                                @(!String.IsNullOrEmpty(itemDH.address_deliver) ? itemDH.address_deliver : "Chưa cập nhập")
 
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="col-md-4">Ngày bắt đầu thực tế</label>
-                            <div class="col-md-8">
 
-                                @(itemDH.date_begin.HasValue ? itemDH.date_begin.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="col-md-4">Ngày kết thúc thực tế</label>
-                            <div class="col-md-8">
 
-                                @(itemDH.date_end.HasValue ? itemDH.date_end.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="form-group">
-                            <label class="col-md-4">Thời gian dự kiến còn lại</label>
-                            <div class="col-md-8">
-                                @(itemDH.date_end.HasValue ? DateTime.Parse(itemDH.date_end_plan.Value.ToShortDateString()).Subtract(DateTime.Parse(itemDH.date_end.Value.ToShortDateString())).TotalDays : DateTime.Parse(itemDH.date_end_plan.Value.ToShortDateString()).Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays)
+                            <label class="control-label col-md-2">Thông tin khách hàng</label>
+                            <div class="col-md-10" style="padding-top:7px">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="row">
+
+                                            <span style="padding-left:7px">@itemDH.Customer.NameCustomers</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-12 form-horizontal">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="col-md-4">Mã số</label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" disabled class="form-control text-box single-line valid" value="@(itemDH.Customer != null ? itemDH.Customer.CodeCustomers : ""  )" id="customer_id_MS">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="col-md-4">Công ty</label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" disabled id="customer_id_Cty" value="@(itemDH.Customer != null ? itemDH.Customer.CongTyCustomers : ""  )" class="form-control text-box single-line valid">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="col-md-4">Email</label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" disabled id="customer_id_Email" value="@(itemDH.Customer != null ? itemDH.Customer.EmailCustomers : ""  )" class="form-control text-box single-line valid">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="col-md-4">Địa chỉ</label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" disabled id="customer_id_Address" value="@(itemDH.Customer != null ? itemDH.Customer.DiachiCustomers : ""  )" class="form-control text-box single-line">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
+
+
+
+
+
+
+                    @*<div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4">Ngày bắt đầu dự kiến</label>
+                                <div class="col-md-8">
+
+                                    @(Model.date_begin_plan.HasValue ? Model.date_begin_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4">Ngày kết thúc dự kiến</label>
+                                <div class="col-md-8">
+                                    @(Model.date_end_plan.HasValue ? Model.date_end_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4">Ngày bắt đầu thực tế</label>
+                                <div class="col-md-8">
+
+                                    @(Model.date_begin.HasValue ? Model.date_begin.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4">Ngày kết thúc thực tế</label>
+                                <div class="col-md-8">
+
+                                    @(Model.date_end.HasValue ? Model.date_end.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
+                                </div>
+                            </div>
+                        </div>*@
+
+
+
+
+
 
 
 
 
                 </div>
+                <!-- /.row (nested) -->
 
 
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="dataTable_wrapper">
-                            <table class="table table-bordered ">
-                                <tbody>
-                                    @for (int j = 0; j < itemDH.BaoGiaTemView.BaoGiaTemDetailViews.Count; j++)
-                                    {
+                            <div class="dataTable_wrapper">
+                                <table class="table table-bordered ">
+                                    <tbody>
 
-                                        var count = 0;
-                                        var item = itemDH.BaoGiaTemView.BaoGiaTemDetailViews[j];
-                                        if (j == 0)
-                                        {
-
-                                            <tr>
-
-                                                @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                                {
-
-                                                    <th class="cusfontsize2" colspan="2">Bắt đầu - Kết thúc</th>
-
-                                                }
-
-
-                                            </tr>
+                                        @{
+        var countQT = 0;
                                         }
 
-
-                                        if (!item.OffsetFlexoProducts.Equals("Offset"))
+                                        @for (int j = 0; j < itemDH.BaoGiaTemView.BaoGiaTemDetailViews.ToList().Count(); j++)
                                         {
-
-                                            if (count == 0)
+                                            var item = itemDH.BaoGiaTemView.BaoGiaTemDetailViews.ToList()[j];
+                                            if (!item.OffsetFlexoProducts.Equals("Offset"))
                                             {
-                                                count++;
-                                                <tr>
 
-                                                    @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                                    {
-                                                        var itemQT = item.QuyTrinhs[i];
-                                                        <th colspan="2" class="cusfontsize2">@itemQT.TenBuoc</th>
-                                                    }
-                                                </tr>
-                                            }
-                                            <tr>
-
-                                                <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].id" value="@item.id" />
-                                                <th colspan="20" class="cusfontsize2">@item.NameProducts</th>
-                                            </tr>
-
-
-                                            <tr>
-                                                @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                                                if (countQT == 0)
                                                 {
+                                                    countQT++;
+                                                    <tr>
 
-                                                    <td colspan="2" class="cusfontsize1  cusdk">
-                                                        <span>@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("dd/MM/yyyy") : "")</span>
-
-                                                    </td>
-
+                                                        <th colspan="18">
+                                                            Quy trình 1
+                                                        </th>
+                                                    </tr>
+                                                    <tr class="not_move">
+                                                        @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                                                        {
+                                                            var itemQT = item.QuyTrinhs[i];
+                                                            <th colspan="2" width="@((float)100 / (float)9)%" class="cusfontsize2">@itemQT.TenBuoc</th>
+                                                        }
+                                                    </tr>
                                                 }
-                                            </tr>
-                                            if (itemDH.status >= 3)
-                                            {
 
-                                                <tr style="background-color:red;">
+
+                                                <tr id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
+
+                                                    <td class="cusfontsize2" colspan="18" style="position:relative">
+
+
+                                                        @item.NameProducts <i>
+                                                            (Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))
+                                                            <input type="hidden" value="@item.id" />
+                                                        </i>
+                                                    </td>
+                                                </tr>
+
+
+
+
+                                                <tr id="ajax_update_@item.id" class="move" style="background-color:red;">
                                                     @for (int i = 0; i < item.QuyTrinhs.Count; i++)
                                                     {
                                                         var color = "red";
@@ -199,63 +273,80 @@
                                                                 color_char = "red";
                                                             }
                                                         }
-                                                        <td colspan="2" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
+                                                        <td colspan="2" width="@((float)100 / (float)9)" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
 
-                                                            <span>@(item.QuyTrinhs[i].NgayBatDau_TT.HasValue ? item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_TT.HasValue ? item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy") : "")</span>
-
+                                                            <span>
+                                                                @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
+                                                                {
+                                                                    @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Update</span>
+                                                                }
+                                                                @("-")
+                                                                @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                                                {
+                                                                    @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"0"),@item.id,@item.QuyTrinhs[i].ID,2)">Update</span>
+                                                                }
+                                                            </span>
                                                         </td>
 
 
                                                     }
                                                 </tr>
                                             }
+
                                         }
-                                    }
+                                    </tbody>
+                                </table>
 
-                                    @for (int j = 0; j < itemDH.BaoGiaTemView.BaoGiaTemDetailViews.Count; j++)
-                                    {
+                                <table class="table table-bordered ">
 
-                                        var count = 0;
-                                        var item = itemDH.BaoGiaTemView.BaoGiaTemDetailViews[j];
-                                        if (item.OffsetFlexoProducts.Equals("Offset"))
+                                    <tbody>
+
+                                        @{
+        countQT = 0;
+                                        }
+
+                                        @for (int j = 0; j < itemDH.BaoGiaTemView.BaoGiaTemDetailViews.ToList().Count(); j++)
                                         {
-                                            if (count == 0)
+                                            var item = itemDH.BaoGiaTemView.BaoGiaTemDetailViews.ToList()[j];
+                                            if (item.OffsetFlexoProducts.Equals("Offset"))
                                             {
-                                                count++;
-                                                <tr>
 
-                                                    @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                                    {
-                                                        var itemQT = item.QuyTrinhs[i];
-                                                        <th colspan="2" class="cusfontsize2">@itemQT.TenBuoc</th>
-                                                    }
-
-
-                                                </tr>
-                                            }
-                                            <tr>
-                                                <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews[@j].id" value="@item.id" />
-                                                <th colspan="20" class="cusfontsize2">@item.NameProducts</th>
-                                            </tr>
-
-
-                                            <tr>
-                                                @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                                                if (countQT == 0)
                                                 {
+                                                    countQT++;
+                                                    <tr>
 
-                                                    <td colspan="2" class="cusfontsize1  cusdk">
-                                                        <span>@(item.QuyTrinhs[i].NgayBatDau_DK.HasValue ? item.QuyTrinhs[i].NgayBatDau_DK.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_DK.HasValue ? item.QuyTrinhs[i].NgayKetThuc_DK.Value.ToString("dd/MM/yyyy") : "")</span>
-
-                                                    </td>
-
-
+                                                        <th colspan="18">
+                                                            Quy trình 2
+                                                        </th>
+                                                    </tr>
+                                                    <tr class="not_move">
+                                                        @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                                                        {
+                                                            var itemQT = item.QuyTrinhs[i];
+                                                            <th colspan="2" width="@((float)100 / (float)9)%" class="cusfontsize2">@itemQT.TenBuoc</th>
+                                                        }
+                                                    </tr>
                                                 }
-                                            </tr>
-                                            if (itemDH.status >= 3)
-                                            {
 
 
-                                                <tr style="background-color:red;">
+                                                <tr id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
+
+                                                    <td class="cusfontsize2" colspan="18" style="position:relative">
+
+                                                        @item.NameProducts <i>(Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))</i>
+                                                        <input type="hidden" value="@item.id" />
+                                                    </td>
+                                                </tr>
+                                                <tr id="ajax_update_@item.id" class="move" style="background-color:red;">
                                                     @for (int i = 0; i < item.QuyTrinhs.Count; i++)
                                                     {
                                                         var color = "red";
@@ -273,23 +364,47 @@
                                                                 color_char = "red";
                                                             }
                                                         }
-                                                        <td colspan="2" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
+                                                        <td colspan="2" width="@((float)100 / (float)9)" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
 
-                                                            <span>@(item.QuyTrinhs[i].NgayBatDau_TT.HasValue ? item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy") : "") - @(item.QuyTrinhs[i].NgayKetThuc_TT.HasValue ? item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy") : "")</span>
-
+                                                            <span>
+                                                                @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
+                                                                {
+                                                                    @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Update</span>
+                                                                }
+                                                                @("-")
+                                                                @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                                                {
+                                                                    @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)">Update</span>
+                                                                }
+                                                            </span>
                                                         </td>
 
 
                                                     }
                                                 </tr>
-
                                             }
+
                                         }
 
 
-                                    }
-                                </tbody>
-                            </table>
+
+
+
+                                    </tbody>
+                                </table>
+
+
+
+                            </div>
+
 
 
                         </div>

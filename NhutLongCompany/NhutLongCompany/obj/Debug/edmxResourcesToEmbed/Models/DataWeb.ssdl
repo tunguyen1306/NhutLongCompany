@@ -1,37 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="NhutLongCompanyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="tbl_BaoGia">
-    <Key>
-      <PropertyRef Name="ID_BaoGia" />
-    </Key>
-    <Property Name="ID_BaoGia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ID_Customers" Type="int" />
-    <Property Name="BaoGia_ID_Default" Type="int" />
-    <Property Name="TongTien" Type="varchar" MaxLength="50" />
-    <Property Name="LamMau" Type="int" />
-    <Property Name="NgayCoMau" Type="datetime" />
-    <Property Name="NgayBaoGia" Type="datetime" />
-    <Property Name="DuyetBaoGia" Type="int" />
-    <Property Name="CodeDonHang" Type="varchar" MaxLength="50" />
-    <Property Name="NgayBatDauDuKien" Type="datetime" />
-    <Property Name="NgayKetThucDuKien" Type="datetime" />
-    <Property Name="NgayBatDauThucTe" Type="datetime" />
-    <Property Name="NgayKetThucThucTe" Type="datetime" />
-    <Property Name="NgayGiao" Type="datetime" />
-    <Property Name="QuyTrinh" Type="int" />
-    <Property Name="ChiTietQuyTrinh" Type="ntext" />
-    <Property Name="LanBaoGia" Type="int" />
-  </EntityType>
-  <EntityType Name="tbl_BaoGiaChiTiet">
-    <Key>
-      <PropertyRef Name="ID_BaoGiaChiTiet" />
-    </Key>
-    <Property Name="ID_BaoGiaChiTiet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ID_BaoGia" Type="int" />
-    <Property Name="ID_SanPham" Type="int" />
-    <Property Name="SoLuong" Type="int" />
-    <Property Name="Tien" Type="varchar" MaxLength="50" />
-  </EntityType>
   <EntityType Name="tbl_Customers">
     <Key>
       <PropertyRef Name="IDCustomers" />
@@ -98,6 +66,8 @@
     <Property Name="design_img" Type="nvarchar" MaxLength="200" />
     <Property Name="design_date" Type="date" />
     <Property Name="step_index" Type="int" />
+    <Property Name="date_working" Type="date" />
+    <Property Name="status" Type="int" />
   </EntityType>
   <EntityType Name="tbl_Products">
     <Key>
@@ -132,6 +102,14 @@
     <Property Name="NgayBatDau_TT" Type="datetime" />
     <Property Name="NgayKetThuc_TT" Type="datetime" />
   </EntityType>
+  <EntityType Name="tbl_Stack">
+    <Key>
+      <PropertyRef Name="baoGia_detail_id" />
+    </Key>
+    <Property Name="baoGia_detail_id" Type="int" Nullable="false" />
+    <Property Name="index_view" Type="int" />
+    <Property Name="date_create" Type="date" />
+  </EntityType>
   <EntityType Name="tbl_User">
     <Key>
       <PropertyRef Name="IDUser" />
@@ -147,14 +125,13 @@
     <Property Name="Password" Type="nvarchar" MaxLength="250" />
   </EntityType>
   <EntityContainer Name="NhutLongCompanyModelStoreContainer">
-    <EntitySet Name="tbl_BaoGia" EntityType="Self.tbl_BaoGia" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tbl_BaoGiaChiTiet" EntityType="Self.tbl_BaoGiaChiTiet" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_Customers" EntityType="Self.tbl_Customers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_OrderTem" EntityType="Self.tbl_OrderTem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_OrderTem_BaoGia" EntityType="Self.tbl_OrderTem_BaoGia" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_OrderTem_BaoGia_Detail" EntityType="Self.tbl_OrderTem_BaoGia_Detail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_Products" EntityType="Self.tbl_Products" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_QuyTrinh" EntityType="Self.tbl_QuyTrinh" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Stack" EntityType="Self.tbl_Stack" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_User" EntityType="Self.tbl_User" Schema="dbo" store:Type="Tables" />
   </EntityContainer>
 </Schema>

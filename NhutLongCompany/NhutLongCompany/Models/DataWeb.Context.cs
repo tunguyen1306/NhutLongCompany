@@ -25,8 +25,6 @@ namespace NhutLongCompany.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<tbl_BaoGia> tbl_BaoGia { get; set; }
-        public virtual DbSet<tbl_BaoGiaChiTiet> tbl_BaoGiaChiTiet { get; set; }
         public virtual DbSet<tbl_Customers> tbl_Customers { get; set; }
         public virtual DbSet<tbl_OrderTem> tbl_OrderTem { get; set; }
         public virtual DbSet<tbl_OrderTem_BaoGia> tbl_OrderTem_BaoGia { get; set; }
@@ -34,5 +32,6 @@ namespace NhutLongCompany.Models
         public virtual DbSet<tbl_Products> tbl_Products { get; set; }
         public virtual DbSet<tbl_QuyTrinh> tbl_QuyTrinh { get; set; }
         public virtual DbSet<tbl_User> tbl_User { get; set; }
+        public virtual DbSet<tbl_Stack> tbl_Stack { get; set; }
     }
 }

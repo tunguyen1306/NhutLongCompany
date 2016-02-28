@@ -1,37 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="NhutLongCompanyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="tbl_BaoGia">
-    <Key>
-      <PropertyRef Name="ID_BaoGia" />
-    </Key>
-    <Property Name="ID_BaoGia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ID_Customers" Type="Int32" />
-    <Property Name="BaoGia_ID_Default" Type="Int32" />
-    <Property Name="TongTien" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="LamMau" Type="Int32" />
-    <Property Name="NgayCoMau" Type="DateTime" Precision="3" />
-    <Property Name="NgayBaoGia" Type="DateTime" Precision="3" />
-    <Property Name="DuyetBaoGia" Type="Int32" />
-    <Property Name="CodeDonHang" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="NgayBatDauDuKien" Type="DateTime" Precision="3" />
-    <Property Name="NgayKetThucDuKien" Type="DateTime" Precision="3" />
-    <Property Name="NgayBatDauThucTe" Type="DateTime" Precision="3" />
-    <Property Name="NgayKetThucThucTe" Type="DateTime" Precision="3" />
-    <Property Name="NgayGiao" Type="DateTime" Precision="3" />
-    <Property Name="QuyTrinh" Type="Int32" />
-    <Property Name="ChiTietQuyTrinh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="LanBaoGia" Type="Int32" />
-  </EntityType>
-  <EntityType Name="tbl_BaoGiaChiTiet">
-    <Key>
-      <PropertyRef Name="ID_BaoGiaChiTiet" />
-    </Key>
-    <Property Name="ID_BaoGiaChiTiet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ID_BaoGia" Type="Int32" />
-    <Property Name="ID_SanPham" Type="Int32" />
-    <Property Name="SoLuong" Type="Int32" />
-    <Property Name="Tien" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-  </EntityType>
   <EntityType Name="tbl_Customers">
     <Key>
       <PropertyRef Name="IDCustomers" />
@@ -98,6 +66,8 @@
     <Property Name="design_img" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="design_date" Type="DateTime" Precision="0" />
     <Property Name="step_index" Type="Int32" />
+    <Property Name="date_working" Type="DateTime" Precision="0" />
+    <Property Name="status" Type="Int32" />
   </EntityType>
   <EntityType Name="tbl_Products">
     <Key>
@@ -147,8 +117,6 @@
     <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityContainer Name="NhutLongCompanyEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="tbl_BaoGia" EntityType="Self.tbl_BaoGia" />
-    <EntitySet Name="tbl_BaoGiaChiTiet" EntityType="Self.tbl_BaoGiaChiTiet" />
     <EntitySet Name="tbl_Customers" EntityType="Self.tbl_Customers" />
     <EntitySet Name="tbl_OrderTem" EntityType="Self.tbl_OrderTem" />
     <EntitySet Name="tbl_OrderTem_BaoGia" EntityType="Self.tbl_OrderTem_BaoGia" />
@@ -156,5 +124,14 @@
     <EntitySet Name="tbl_Products" EntityType="Self.tbl_Products" />
     <EntitySet Name="tbl_QuyTrinh" EntityType="Self.tbl_QuyTrinh" />
     <EntitySet Name="tbl_User" EntityType="Self.tbl_User" />
+    <EntitySet Name="tbl_Stack" EntityType="NhutLongCompanyModel.tbl_Stack" />
   </EntityContainer>
+  <EntityType Name="tbl_Stack">
+    <Key>
+      <PropertyRef Name="baoGia_detail_id" />
+    </Key>
+    <Property Name="baoGia_detail_id" Type="Int32" Nullable="false" />
+    <Property Name="index_view" Type="Int32" />
+    <Property Name="date_create" Type="DateTime" Precision="0" />
+  </EntityType>
 </Schema>

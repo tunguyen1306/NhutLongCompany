@@ -1,5 +1,4 @@
-﻿
-﻿
+﻿﻿
 ﻿@using NhutLongCompany.Models
 
 ﻿@model NhutLongCompany.Models.DonHangView
@@ -14,7 +13,7 @@
 <!-- /.row -->
 @using (Html.BeginForm())
 {
-  
+
 
     @Html.AntiForgeryToken()
     <div class="container">
@@ -25,9 +24,9 @@
             <div class="col-xs-4 print-header">
                 Số: @Model.code  <br>
                 Ngày: @(DateTime.Now.ToString("dd/MM/yyyy"))
-                
-           
-         
+
+
+
             </div>
             <div class="col-xs-3 text-right">
                 <img src="/images/mvl.png">
@@ -70,7 +69,7 @@
                     {
                         <th> @item</th>
                     }
-                  
+
                 </tr>
             </thead>
             <tbody>
@@ -90,10 +89,10 @@
                 </tr>
                 <tr>
                     <td>Ofset/Flexo</td>
-                   @foreach (var item in Model.BaoGiaTemView.PrintOffset_Flexo)
-                   {
-                    <td> @item</td>
-                   }
+                    @foreach (var item in Model.BaoGiaTemView.PrintOffset_Flexo)
+                    {
+                        <td> @item</td>
+                    }
                 </tr>
                 <tr>
                     <td>Dán/Kim</td>
@@ -139,17 +138,18 @@
             Thời gian giao hàng:
         </div>
         <ul>
-            <li>Trong vòng  
-            @if (Model.BaoGiaTemView.status.Value == 1 && Model.date_end_plan.HasValue)
-            {
-                <span>@((int)Model.date_end_plan.Value.Subtract(Model.date_begin_plan.Value).TotalDays)</span>
-            }
-            else
-            {
-               @("(chưa cập nhật)")
-            } ngày kể từ ngày Quý khách hàng ký duyệt mẫu
+            <li>
+                Trong vòng
+                @if (Model.BaoGiaTemView.status.Value == 1 && Model.date_deliver.HasValue)
+                {
+                    <span>@((int)Model.date_deliver.Value.Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays)</span>
+                }
+                else
+                {
+                    @("(chưa cập nhật)")
+                } ngày kể từ ngày Quý khách hàng ký duyệt mẫu
             </li>
-            <li>Nhận hàng tại <span style="color: red">@Model.BaoGiaTemView.address_deliver</span></li>
+            <li>Nhận hàng tại 103 Dương Bá Trạc Quận 8</li>
         </ul>
 
         <div class="print-section">
