@@ -85,5 +85,23 @@ namespace NhutLongCompany.Controllers
             ViewBag.count = qr;
             return View();
         }
+        public ActionResult HomeBaoGia()
+        {
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            
+            return View();
+        }
+        public ActionResult HomeSanXuat()
+        {
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            return View();
+        }
     }
 }
