@@ -14,7 +14,7 @@ namespace NhutLongCompany.Controllers
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();
 
-        public ActionResult Index(int id)
+        public ActionResult Index()
         {
             if (Session["username"] == null)
             {
@@ -22,15 +22,15 @@ namespace NhutLongCompany.Controllers
             }
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
-                      where data.customer_id == id
+                      where data.status >=0
                       select new DonHangView
                       {
                           id = data.id,
                           customer_id = cus.IDCustomers,
                           Customer = cus,
                           code = data.code,
-                          date_begin = data.date_begin,
-                          date_end = data.date_end,
+                          date_deliver = data.date_deliver,
+                          address_deliver = data.address_deliver,
                           status = data.status
                       });
             return View(qr.ToList());

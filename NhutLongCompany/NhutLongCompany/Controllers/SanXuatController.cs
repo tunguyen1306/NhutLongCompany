@@ -22,19 +22,41 @@ namespace NhutLongCompany.Controllers
 
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
-                      where data.status >= 1
+                      where data.status == 2
                       select new DonHangView
                       {
                           id = data.id,
                           customer_id = cus.IDCustomers,
                           Customer = cus,
                           code = data.code,
-                          date_begin_plan = data.date_begin_plan,
-                          date_end_plan = data.date_end_plan,
+                          date_deliver = data.date_deliver,
+                          address_deliver = data.address_deliver,
                           status = data.status
+                      });
+
+            return View(qr.ToList());
+        }
 
 
+        public ActionResult IndexSX()
+        {
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
 
+            var qr = (from data in db.tbl_OrderTem
+                      join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
+                      where data.status == 3
+                      select new DonHangView
+                      {
+                          id = data.id,
+                          customer_id = cus.IDCustomers,
+                          Customer = cus,
+                          code = data.code,
+                          date_deliver = data.date_deliver,
+                          address_deliver = data.address_deliver,
+                          status = data.status
                       });
 
             return View(qr.ToList());

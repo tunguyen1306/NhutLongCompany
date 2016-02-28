@@ -77,6 +77,10 @@ namespace NhutLongCompany.Controllers
 
         public ActionResult Home()
         {
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             var qr = (from data in db.tbl_Customers select data).ToList().Count();
             ViewBag.count = qr;
             return View();

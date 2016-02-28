@@ -3,10 +3,9 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Tiếp nhận sản xuất</h1>
+        <h1 class="page-header">Đang sản xuất</h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -18,12 +17,12 @@
 
         <div class="panel panel-default">
 
-          
+
             <!-- /.panel-heading -->
             <div class="panel-body">
 
                 <div class="dataTable_wrapper">
-                    <table class="table table-striped table-bordered table-hover" >
+                    <table class="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>
@@ -34,6 +33,9 @@
                                 </th>
                                 <th>
                                     Ngày giao hàng
+                                </th>
+                                <th>
+                                    Đại chỉ giao hàng
                                 </th>
                                 <th>
                                     Thời gian còn lại
@@ -48,6 +50,19 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
+                                var songay = (int)item.date_deliver.Value.Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays;
+                                var color_for = "black";
+                                var color = "";
+                                if (songay<0)
+                                {
+                                    color = "red";
+                                    color_for = "yellow";
+                                }
+                                else if (songay < 2)
+                                {
+                                    color = "yellow";
+                                    color_for = "red";
+                                }
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.code)
@@ -60,6 +75,9 @@
                                         @(item.date_deliver.HasValue ? item.date_deliver.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")
                                     </td>
                                     <td>
+                                        @(item.date_deliver.HasValue ? item.address_deliver : "Chưa cập nhật")
+                                    </td>
+                                    <td style="background:@color ;color:@color_for ;">
                                         @((int)item.date_deliver.Value.Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays)
                                     </td>
                                     <td>
@@ -91,7 +109,7 @@
                                     <td>
 
                                         @Html.ActionLink("Sửa", "Edit", new { id = item.id }, htmlAttributes: new { @class = "btn btn-outline btn-primary btn-xs" })
-                                        
+
                                     </td>
                                 </tr>
                             }

@@ -29,10 +29,10 @@
                                     Tên khách hàng
                                 </th>
                                 <th>
-                                    Ngày bắt đầu DK
+                                    Ngày giao hàng
                                 </th>
                                 <th>
-                                    Ngày kết thúc DK
+                                   Địa chỉ giao hàng
                                 </th>
                                 <th>
                                     Trạng thái
@@ -53,10 +53,10 @@
 
                                     </td>
                                     <td>
-                                        @(item.date_begin_plan.HasValue ? item.date_begin_plan.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")
+                                        @(item.date_deliver.HasValue ? item.date_deliver.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")
                                     </td>
                                     <td>
-                                        @(item.date_end_plan.HasValue ? item.date_end_plan.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")
+                                        @(item.date_deliver.HasValue ? item.address_deliver : "Chưa cập nhật")
                                     </td>
                                     <td>
 

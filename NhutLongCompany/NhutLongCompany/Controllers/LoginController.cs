@@ -129,6 +129,16 @@ namespace NhutLongCompany.Controllers
 
         public ActionResult Login()
         {
+
+            var data = db.tbl_User.Where(x => x.Username == "admin@gmail.com" && x.Password == "1234").Select(x => new { x.Username, x.FullName }).FirstOrDefault();
+
+
+            Session["username"] = data.Username;
+            if (data != null)
+            {
+                return RedirectToAction("Home", "Home");
+            }
+
             return View();
         }
 
