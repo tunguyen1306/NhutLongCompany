@@ -222,7 +222,7 @@
                                                                       <option @((Model.customer_id.HasValue && item.IDCustomers == Model.customer_id.Value) ? "selected=\"selected\"" : "") value="@(item.IDCustomers + "-" + item.CodeCustomers + "-" + item.CongTyCustomers + "-" + item.EmailCustomers + "-" + item.DiachiCustomers)">@item.NameCustomers</option>
                                                                   }
                                                               </select></div>
-                                        <div class="col-lg-6"><a class="btn btn-primary" href="@Url.Action("Index", "Customers")">Thêm mới khách hàng</a></div>
+                                        <div class="col-lg-6"><a class="btn btn-primary pull-right" href="@Url.Action("Index", "Customers")">Thêm mới khách hàng</a></div>
                                         @Html.HiddenFor(model => model.customer_id)
                                        
                                        
