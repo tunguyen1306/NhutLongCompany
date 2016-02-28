@@ -615,6 +615,7 @@
     <Content Include="bower_components\raphael\license.txt" />
     <Content Include="bower_components\raphael\raphael-min.js" />
     <Content Include="bower_components\raphael\raphael.js" />
+    <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CusWeb.css" />
@@ -626,6 +627,7 @@
     <Content Include="Global.asax" />
     <Content Include="images\mvl.png" />
     <Content Include="images\nhutlong.png" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="bower_components\bootstrap-social\.bower.json" />
