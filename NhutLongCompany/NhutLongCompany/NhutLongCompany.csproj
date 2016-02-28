@@ -1040,13 +1040,13 @@
     <Content Include="Views\SanXuat\UpdateFlowProduct.cshtml" />
     <Content Include="Views\SanXuat\ViewFlowProduct.cshtml" />
     <Content Include="Views\SanXuat\IndexSX.cshtml" />
-<<<<<<< HEAD
+
     <Content Include="Views\Home\HomeBaoGia.cshtml" />
     <Content Include="Views\Home\HomeSanXuat.cshtml" />
-=======
+
     <Content Include="Views\tbl_OrderTem\EditBaoGia.cshtml" />
     <Content Include="Views\tbl_OrderTem\IndexBaoGia.cshtml" />
->>>>>>> b9c5a63ae1558be08975f0f43f06f3cbf77a821d
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
