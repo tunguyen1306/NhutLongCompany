@@ -22,7 +22,7 @@ namespace NhutLongCompany.Controllers
 
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
-                      where data.status == 2
+                      where data.status == 1
                       select new DonHangView
                       {
                           id = data.id,
