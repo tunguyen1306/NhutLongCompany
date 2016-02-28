@@ -57,3 +57,4 @@ E:\Loc\1. LAPTRINH\19.NhutLongCompany\NhutLongCompany\NhutLongCompany\NhutLongCo
 E:\Loc\1. LAPTRINH\19.NhutLongCompany\NhutLongCompany\NhutLongCompany\NhutLongCompany\bin\Newtonsoft.Json.xml
 E:\Loc\1. LAPTRINH\19.NhutLongCompany\NhutLongCompany\NhutLongCompany\NhutLongCompany\obj\Debug\sb-admin-2.Web.dll
 E:\Loc\1. LAPTRINH\19.NhutLongCompany\NhutLongCompany\NhutLongCompany\NhutLongCompany\obj\Debug\sb-admin-2.Web.pdb
+E:\Loc\1. LAPTRINH\19.NhutLongCompany\NhutLongCompany\NhutLongCompany\NhutLongCompany\obj\Debug\NhutLongCompany.csprojResolveAssemblyReference.cache

@@ -1,0 +1,985 @@
+﻿@using NhutLongCompany.Models
+@model DonHangView
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2> </h2>
+
+
+<script type="text/javascript">
+
+    function UpdateTK() {
+        if ($('#date_tk').val() == "") {
+            alert("Vui lòng chọn ngày!")
+            return;
+        }
+        var data = new FormData();
+        data.append('id', $('#id_tk').val());
+        data.append('date', $('#date_tk').val());
+        if ($('#image_tk').val() != "") {
+            if (document.getElementById('image_tk').files.length > 0) {
+                data.append('file', document.getElementById('image_tk').files[0]);
+            }
+        }
+        $.ajax({
+            url: '@Url.Action("UpdateDesign", "tbl_OrderTem")',
+            type: 'POST',
+            cache: false,
+            contentType: false,
+            processData: false,
+            // contentType: 'multipart/form-data; charset=utf-8',
+            data: data,
+            success: function (result) {
+                alert('Cập nhật thàn công!');
+                var text = reformatDate($('#date_tk').val());
+                if ($('#image_tk').val() != "") {
+                    if (document.getElementById('image_tk').files.length > 0) {
+                        var text = '<a href="/Upload/ThietKe/' + $('#id_tk').val() + '_' + $('#image_tk').val() + '" target="_blank">' + reformatDate($('#date_tk').val()) + '</a>';
+
+                    }
+                }
+                $('#id_update_tk_' + $('#id_tk').val()).html(text);
+                $('#id_update_tk_' + $('#id_tk').val() + "_value").val(2);
+                $('#modal-container-tk').modal('hide');
+                $('#id_tk').val("");
+                $('#date_tk').val("");
+                $('#image_tk').val("");
+            },
+            error: function () {
+                alert('Cập nhật thất bại!');
+            }
+        });
+    }
+    function UpdatePopupViewTK(el, id) {
+        $('#id_tk').val(id);
+    }
+
+    function numberParse(nStr) {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+    function reformatDate(strMMDDYYYY) {
+        var arr = strMMDDYYYY.split("/");
+        if (arr.length == 3) {
+            return arr[1] + "/" + arr[0] + "/" + arr[2]
+        }
+        return strMMDDYYYY;
+    }
+
+    function UpdateResultBaoGia(status) {
+
+        if (status == 1) {
+            var ck = true;
+            $('.input_tk_value').each(function () {
+                if ($(this).val() == "1") {
+                    ck = false;
+                    return;
+                }
+            });
+            if (!ck) {
+                alert("Vui lòng cập nhập tất cả thiết kế!");
+                $('#modal-container').modal('hide');
+                return;
+            }
+            if ($('#date_deliver').val() == "") {
+                alert("Vui lòng chọn ngày giao hàng!");
+                return;
+            }
+            if ($('#address_deliver').val() == "") {
+                alert("Vui lòng chọn địa chỉ giao hàng!");
+                return;
+            }
+
+        }
+        $('#baogia_status').val(status);
+        $("#action").val(3);
+        document.forms[0].submit();
+
+    }
+
+    function AddNewBaoGia() {
+        $("#action").val(1);
+        document.forms[0].submit();
+    }
+
+    function SubmitAddNewBaoGia() {
+        $("#action").val(2);
+        document.forms[0].submit();
+    }
+
+    function UpdateStatusOrder(status) {
+
+        $('#status').val(status);
+        $("#action").val(4);
+        document.forms[0].submit();
+    }
+
+    $(document).ready(function () {
+        $("input[type=number]").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                // Allow: Ctrl+A, Command+A
+                (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: home, end, left, right, down, up
+                (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+
+    });
+
+    function updateProduct(el) {
+        var m = 0;
+        if ($('.NameProducts1').val() == '') {
+            $('.lblNameProducts').addClass('hidden');
+            $('.NameProducts1').after('<label class="errorLabel lblNameProducts">Nhập tên sản phẩm</label>');
+
+            m++;
+        } else {
+            $('.lblNameProducts').addClass('hidden');
+        }
+
+        if ($('.QuyCachProducts1').val() == '') {
+            $('.lblQuyCachProducts').addClass('hidden');
+            $('.QuyCachProducts1').after('<label class="errorLabel lblQuyCachProducts">Nhập quy cách</label>');
+            m++;
+        } else {
+            $('.lblQuyCachProducts').addClass('hidden');
+        }
+
+        if ($('.SolopProducts1').val() <= 0) {
+            $('.lblSolopProducts').addClass('hidden');
+            $('.SolopProducts1').after('<label class="errorLabel lblSolopProducts">Số lớp phải lớn hơn 0</label>');
+            m++;
+        } else {
+            $('.lblSolopProducts').addClass('hidden');
+        }
+        if ($('.GiaProducts1').val() <= 0) {
+            $('.lblGiaProducts').addClass('hidden');
+            $('.GiaProducts1').after('<label class="errorLabel lblGiaProducts">Giá phải lớn hơn 0</label>');
+            m++;
+        } else {
+            $('.lblGiaProducts').addClass('hidden');
+        }
+        if ($('select[name=LoaigiayProducts]').val() == 0) {
+            $('.lblLoaigiayProducts').addClass('hidden');
+            $('.LoaigiayProducts1').after('<label class="errorLabel lblLoaigiayProducts">Chọn loại giấy</label>');
+            m++;
+        } else {
+            $('.lblLoaigiayProducts').addClass('hidden');
+        }
+        if (m == 0) {
+
+            $('.lblNameProducts').addClass('hidden');
+            $('.lblQuyCachProducts').addClass('hidden');
+            $('.lblGiaProducts').addClass('hidden');
+            $('.lblSolopProducts').addClass('hidden');
+            $('.lblLoaigiayProducts').addClass('hidden');
+            var id = new Date().getTime();
+            var tr = $(el).parents('tr').eq(0);
+            var trdata = "<tr class='tr_edit' id='ext_" + id + "'><input name='BaoGiaTemView.BaoGiaTemDetailViews.Index' value='" + id + "' type='hidden'/>";
+            tr.find('.form-control').each(function () {
+                if ($(this).attr('name') == 'SoLuong') {
+                    trdata += "<td><input class='form-control text-box single-line updateSL " + this.name + "'  min='1' value='" + this.value + "' type='number' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "'/></td>";
+                } else {
+                    var text = this.value;
+                    if ($(this).attr('name') == 'GiaProducts') {
+                        text = numberParse(this.value) + " đ";
+                    }
+                    if ($(this).attr('name') == 'Design') {
+                        text = this.value == 1 ? "Y" : "N";
+                    }
+                    trdata += "<td>" + text + "<input class='" + this.name + "' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "' value='" + this.value + "' type='hidden'/></td>";
+                }
+                this.value = $(this).attr('default-value');
+            });
+            trdata += "<td><input type='submit' style='float: left; margin-left: 10px' value='Xóa' class='btn btn-primary' onclick='delProduct(this); return false;' /></td></tr>";
+            $(el).parents('tbody').eq(0).append(trdata);
+            updateMoney(el);
+            updateEvent();
+        }
+    }
+
+    function updateEvent() {
+        $('.updateSL').on("change", function () {
+            updateMoney(this);
+        });
+        $("input[type=number]").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                // Allow: Ctrl+A, Command+A
+                (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: home, end, left, right, down, up
+                (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+    }
+
+    function delProduct(el) {
+        var tr = $(el).parents('tr').eq(0);
+        tr.remove();
+        updateMoney(el);
+        updateEvent();
+    }
+
+    function updateMoney(el) {
+        var money = 0;
+        $(el).parents('.body_data').eq(0).find('tr').each(function () {
+            if ($(this).attr('id') != null) {
+
+                money += parseInt($(this).find('.SoLuong').eq(0).val()) * parseFloat($(this).find('.GiaProducts').eq(0).val());
+            }
+        });
+        $('.BaoGiaTemView_total_money').val(money);
+        $('#BaoGiaTemView_total_money').text(numberParse(money));
+    }
+
+</script>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Chỉnh sửa báo giá
+        </div>
+        <div class="panel-body">
+            <div class="row form-horizontal">
+                <input type="hidden" value="@Model.action" name="action" id="action">
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Mã báo giá</label>
+                        <div class="col-md-8" style="padding-top:7px">
+                            @Html.HiddenFor(model => model.code)
+                            @Model.code
+                            @Html.HiddenFor(model => model.customer_id)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Trạng thái</label>
+                        <div class="col-md-8" style="padding-top:7px">
+                            @Html.HiddenFor(model => model.status)
+                            @if (Model.status == 0)
+                            {
+                                <span>Đang báo giá</span>
+                            }
+                            @if (Model.status == 1)
+                            {
+                                <span>Đưa vào sản xuất</span>
+                            }
+                            @if (Model.status == 2)
+                            {
+                                <span>Kế hoạch sản xuất</span>
+                            }
+                            @if (Model.status == 3)
+                            {
+                                <span>Tiến hành sản xuất</span>
+                            }
+                            @if (Model.status == 4)
+                            {
+                                <span>Kết thúc sản xuất</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Ngày giao hàng</label>
+                        <div class="col-md-8" style="padding-top:7px">
+
+                            @(Model.date_deliver.HasValue ? Model.date_deliver.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Địa chỉ giao hàng</label>
+                        <div class="col-md-8" style="padding-top:7px">
+                            @(!String.IsNullOrEmpty(Model.address_deliver) ? Model.address_deliver : "Chưa cập nhập")
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Thông tin khách hàng</label>
+                        <div class="col-md-10" style="padding-top:7px">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        @Html.HiddenFor(model => model.customer_id)
+                                        <span style="padding-left:7px">@Model.Customer.NameCustomers</span>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12 form-horizontal">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-4">Mã số</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" disabled class="form-control text-box single-line valid" value="@(Model.Customer != null ? Model.Customer.CodeCustomers : ""  )" id="customer_id_MS">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-4">Công ty</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" disabled id="customer_id_Cty" value="@(Model.Customer != null ? Model.Customer.CongTyCustomers : ""  )" class="form-control text-box single-line valid">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-4">Email</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" disabled id="customer_id_Email" value="@(Model.Customer != null ? Model.Customer.EmailCustomers : ""  )" class="form-control text-box single-line valid">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-4">Địa chỉ</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" disabled id="customer_id_Address" value="@(Model.Customer != null ? Model.Customer.DiachiCustomers : ""  )" class="form-control text-box single-line">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+          
+                                        </div>
+                                        <!-- /.row (nested) -->
+                                    </div>
+                                </div>
+
+
+                                            if (Model.action == 1)
+                                            {
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <div class="row">
+                                                            <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count + 2)</span>
+                                                            <input type="submit" style="float: right; margin-right: 10px" value="Cập nhật" class="btn btn-primary" onclick="SubmitAddNewBaoGia();return false;" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 form-horizontal">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4" for="date_begin">Ngày bất đầu</label>
+                                                                        <div class="col-md-8" style="padding-top:7px">
+                                                                            <input class="form-control date" data-val="true" data-val-date="The field date_begin must be a date." name="BaoGiaTemView.date_begin" value="@DateTime.Now.ToString("dd/MM/yyyy")" type="hidden">
+                                                                            @DateTime.Now.ToString("dd/MM/yyyy")
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="form-group">
+
+                                                                        <label class="control-label col-md-4" for="total_money">Tổng tiền</label>
+                                                                        <div class="col-md-8" style="padding-top:7px">
+                                                                            <input class="form-control BaoGiaTemView_total_money" data-val="true" data-val-number="The field total_money must be a number." name="BaoGiaTemView.total_money" value="" type="hidden">
+                                                                            <span id="BaoGiaTemView_total_money">0</span> đ
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4" for="date_end">Ngày kết thúc</label>
+                                                                        <div class="col-md-8" style="padding-top:7px">
+                                                                            <input class="form-control date" data-val="true" data-val-date="The field date_end must be a date." name="BaoGiaTemView.date_end" value="" type="hidden">
+                                                                            Chờ cập nhật
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4" for="status">Trạng thái</label>
+                                                                        <div class="col-md-8" style="padding-top:7px">
+                                                                            Tạo mới báo giá
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4">Hoa hồng</label>
+                                                                        <div class="col-md-8" style="padding-top:7px">
+                                                                            Chưa cập nhập
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <table class="table table-striped table-bordered table-hover">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th width="150px" align="center" valign="middle">
+
+                                                                                Tên sản phẩm
+                                                                            </th>
+                                                                            <th width="100px" align="center" valign="middle">
+                                                                                Số lớp
+                                                                            </th>
+                                                                            <th width="*" align="center" valign="middle">
+                                                                                Loại giấy
+                                                                            </th>
+                                                                            <th width="100px" align="center" valign="middle">
+                                                                                Offset/Flexo
+                                                                            </th>
+                                                                            <th width="130px" align="center" valign="middle">
+                                                                                Dán/Kim
+                                                                            </th>
+                                                                            <th width="150px" align="center" valign="middle">
+                                                                                Quy Cách
+                                                                            </th>
+                                                                            <th width="150px" align="center" valign="middle">
+                                                                                Giá
+                                                                            </th>
+                                                                            <th width="100px" align="center" valign="middle">
+                                                                                Số lượng
+                                                                            </th>
+                                                                            <th width="80px" align="center" valign="middle">
+                                                                                Thiết kế
+                                                                            </th>
+                                                                            <th></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody class="body_data">
+                                                                        <tr>
+                                                                            <td align="center">
+                                                                                <input class="form-control text-box single-line NameProducts1" default-value="" name="NameProducts" type="text">
+                                                                            </td>
+                                                                            <td align="center">
+                                                                                <input class="form-control text-box single-line SolopProducts1" value="1" default-value="1" min="1" name="SolopProducts" type="number">
+                                                                            </td>
+                                                                            <td align="center">
+                                                                                <select name="LoaigiayProducts" default-value="0" class="form-control valid LoaigiayProducts1">
+                                                                                    <option value="0">Chọn loại giấy</option>
+                                                                                    <option value="3 lớp: 2 Vàng 1 Xeo">3 lớp: 2 Vàng 1 Xeo</option>
+                                                                                    <option value="3 lớp: 1 Trắng 1 Xeo 1 Vàng">3 lớp: 1 Trắng 1 Xeo 1 Vàng</option>
+                                                                                    <option value="3 lớp: 1 Đài Loan 1 Xeo 1 Vàng">3 lớp: 1 Đài Loan 1 Xeo 1 Vàng</option>
+                                                                                    <option value="5 lớp: 2 Vàng 3 Xeo">5 lớp: 2 Vàng 3 Xeo</option>
+                                                                                    <option value="5 lớp: 1 Trắng 1 Vàng 3 Xeo">5 lớp: 1 Trắng 1 Vàng 3 Xeo</option>
+                                                                                    <option value="5 lớp: 1 Đài Loan 1 Vàng 3 Xeo">5 lớp: 1 Đài Loan 1 Vàng 3 Xeo</option>
+                                                                                    <option value="2 lớp: 1 Vàng 1 Xeo - sóng E">2 lớp: 1 Vàng 1 Xeo - sóng E</option>
+                                                                                    <option value="2 lớp: 1 Vàng 1 Xeo - sóng C">2 lớp: 1 Vàng 1 Xeo - sóng C</option>
+                                                                                    <option value="2 lớp: 1 Trắng 1 Xeo - sóng E">2 lớp: 1 Trắng 1 Xeo - sóng E</option>
+                                                                                </select>
+
+                                                                            </td>
+                                                                            <td align="center">
+                                                                                <select name="OffsetFlexoProducts" default-value="Offset" class="form-control">
+                                                                                    <option value="Offset">Offset</option>
+                                                                                    <option value="Flexo">Flexo</option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td align="center">
+                                                                                <select name="DanKimProducts" default-value="Dán keo" class="form-control">
+                                                                                    <option value="Dán keo">Dán keo</option>
+                                                                                    <option value="Đóng kim">Đóng kim</option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td align="center">
+                                                                                <input class="form-control text-box single-line QuyCachProducts1" default-value="" name="QuyCachProducts" type="text">
+                                                                            </td>
+
+                                                                            <td align="center">
+                                                                                <input class="form-control text-box single-line GiaProducts1" name="GiaProducts" step="500" min="0" default-value="0" value="0" type="number">
+                                                                            </td>
+                                                                            <td align="center">
+                                                                                <input class="form-control text-box single-line SoLuong1" default-value="1" min="1" name="SoLuong" value="1" type="number">
+                                                                            </td>
+                                                                            <td align="center">
+                                                                                <select name="Design" default-value="0" class="form-control">
+                                                                                    <option value="0">N</option>
+                                                                                    <option value="1">Y</option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td align="center"><input type="submit" style="float: left; margin-left: 10px" value="Thêm" class="btn btn-primary" onclick=" updateProduct(this); return false; " /></td>
+
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <!-- /.col-lg-12 -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+
+
+
+
+
+
+
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <div class="row">
+                                                        <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count + 1)</span>
+
+                                                        @Html.ActionLink("In báo giá", "PrintOrder", new { id = Model.BaoGiaTemView.id }, htmlAttributes: new { @class = "btn btn-primary", @target = "_bank", @style = "float: right; margin-right: 10px" })
+
+                                                        @if (Model.BaoGiaTemView.status.Value == 0)
+                {
+                                                            <input type="button" data-target="#modal-container" data-toggle="modal" style="float: right; margin-right: 10px" value="Cập nhật kết quả" class="btn btn-primary" />
+                                                        }
+                                                        @if (Model.BaoGiaTemView.status.Value == 2 && Model.action == 0)
+                {
+                                                            <input type="submit" style="float: right; margin-right: 10px" value="Thêm mới báo giá" class="btn btn-primary" onclick="AddNewBaoGia(); return false; " />
+                                                        }
+                                                      
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 form-horizontal">
+                                                            <div class="col-lg-6 ">
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4" for="date_begin">Ngày bất đầu</label>
+                                                                    <div class="col-md-8" style="padding-top: 7px">
+                                                                        @Model.BaoGiaTemView.date_begin.Value.ToString("dd/MM/yyyy")
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group ">
+
+                                                                    <label class="control-label col-md-4" for="total_money">Tổng tiền</label>
+                                                                    <div class="col-md-8" style="padding-top: 7px">
+                                                                        @Model.BaoGiaTemView.total_money.Value.ToString("n2") đ
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-lg-6 ">
+                                                                <div class="form-group">
+
+                                                                    <label class="control-label col-md-4" for="date_end">Ngày kết thúc</label>
+                                                                    <div class="col-md-8" style="padding-top: 7px">
+                                                                        @if (Model.BaoGiaTemView.date_end.HasValue)
+                                                                        {
+                                                                            @Model.BaoGiaTemView.date_end.Value.ToString("dd/MM/yyyy")
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span>Chờ cập nhật</span>
+                                                                        }
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div class="form-group">
+
+                                                                    <label class="control-label col-md-4" for="status">Trạng thái</label>
+                                                                    <div class="col-md-8" style="padding-top: 7px">
+                                                                        @if (Model.BaoGiaTemView.status == 0)
+                                                                        {
+                                                                            <span>Chờ kết quả báo giá</span>
+                                                                        }
+                                                                        @if (Model.BaoGiaTemView.status == 1)
+                                                                        {
+                                                                            <span>Đồng ý</span>
+                                                                        }
+                                                                        @if (Model.BaoGiaTemView.status == 2)
+                                                                        {
+                                                                            <span>Từ chối</span>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4">Hoa hồng</label>
+                                                                    <div class="col-md-8" style="padding-top:7px">
+                                                                        @(Model.BaoGiaTemView.commission.HasValue ? (Model.BaoGiaTemView.commission.Value == 1 ? "Có" : "Không") : "Chưa cập nhật")
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+
+
+                                                            <table class="table table-striped table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>
+                                                                            Tên sản phẩm
+                                                                        </th>
+                                                                        <th>
+                                                                            Số lớp
+                                                                        </th>
+                                                                        <th>
+                                                                            Loại giấy
+                                                                        </th>
+                                                                        <th>
+                                                                            Offset/Flexo
+                                                                        </th>
+                                                                        <th>
+                                                                            Dán/Kim
+                                                                        </th>
+                                                                        <th>
+                                                                            Quy Cách
+                                                                        </th>
+                                                                        <th>
+                                                                            Giá
+                                                                        </th>
+                                                                        <th>
+                                                                            Số lượng
+                                                                        </th>
+                                                                        <th>
+                                                                            Thiết kế
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody class="body_data">
+                                                                    @foreach (BaoGiaTemDetailView item in Model.BaoGiaTemView.BaoGiaTemDetailViews)
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@item.NameProducts</td>
+                                                                            <td>@item.SolopProducts</td>
+                                                                            <td>@item.LoaigiayProducts</td>
+                                                                            <td>@item.OffsetFlexoProducts</td>
+                                                                            <td>@item.DanKimProducts</td>
+                                                                            <td>@item.QuyCachProducts</td>
+                                                                            <td>@double.Parse(item.GiaProducts).ToString("n2") đ</td>
+                                                                            <td>
+                                                                                @item.SoLuong
+                                                                                <input id="id_update_tk_@(item.id)_value" class="input_tk_value" type="hidden" value="@(item.Design.HasValue==true?(item.Design.Value+""):"0")" />
+                                                                            </td>
+                                                                            <td id="id_update_tk_@item.id">
+                                                                                @if (!item.Design.HasValue || item.Design.Value == 0)
+                                                                                {
+                                                                                    @("N")           }
+                                                                                else if (item.Design.Value == 2)
+                                                                                {
+                                                                                    if (!String.IsNullOrEmpty(item.Design_Img))
+                                                                                    {
+                                                                                        <a href="/Upload/ThietKe/@(item.id)_@(item.Design_Img)" target="_blank">@item.Design_Date.Value.ToString("dd/MM/yyyy")</a>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        @item.Design_Date.Value.ToString("dd/MM/yyyy")
+                                                                                    }
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <input type="button" onclick="UpdatePopupViewTK(this,@item.id);return false;" class="btn btn-primary" value="Update" data-target="#modal-container-tk" data-toggle="modal">
+                                                                                }
+
+
+
+
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                        <!-- /.col-lg-12 -->
+                                                    </div>
+
+                                                </div>
+                                            </div>
+    <!-- Trigger the modal with a button -->
+                                            for (int i = 0; i < Model.BaoGiaTemViews.Count; i++)
+                                            {
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <div class="row">
+                                                            <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count - i)</span>
+
+                                                            @Html.ActionLink("In báo giá", "PrintOrder", new { id = Model.BaoGiaTemViews[i].id }, htmlAttributes: new { @class = "btn btn-primary", @target = "_bank", @style = "float: right; margin-right: 10px" })
+
+
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 form-horizontal">
+                                                                <div class="col-lg-6 ">
+
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4" for="date_begin">Ngày bất đầu</label>
+                                                                        <div class="col-md-8" style="padding-top: 7px">
+                                                                            @Model.BaoGiaTemViews[i].date_begin.Value.ToString("dd/MM/yyyy")
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group ">
+
+                                                                        <label class="control-label col-md-4" for="total_money">Tổng tiền</label>
+                                                                        <div class="col-md-8" style="padding-top: 7px">
+                                                                            @Model.BaoGiaTemViews[i].total_money.Value.ToString("n2") đ
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-lg-6 ">
+                                                                    <div class="form-group">
+
+                                                                        <label class="control-label col-md-4" for="date_end">Ngày kết thúc</label>
+                                                                        <div class="col-md-8" style="padding-top: 7px">
+                                                                            @if (Model.BaoGiaTemViews[i].date_end.HasValue)
+                                                                            {
+                                                                                @Model.BaoGiaTemViews[i].date_end.Value.ToString("dd/MM/yyyy")
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <span>Chờ cập nhật</span>
+                                                                            }
+
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="form-group">
+
+                                                                        <label class="control-label col-md-4" for="status">Trạng thái</label>
+                                                                        <div class="col-md-8" style="padding-top: 7px">
+                                                                            @if (Model.BaoGiaTemViews[i].status == 0)
+                                                                            {
+                                                                                <span>Chờ kết quả báo giá</span>
+                                                                            }
+                                                                            @if (Model.BaoGiaTemViews[i].status == 1)
+                                                                            {
+                                                                                <span>Đồng ý</span>
+                                                                            }
+                                                                            @if (Model.BaoGiaTemViews[i].status == 2)
+                                                                            {
+                                                                                <span>Từ chối</span>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4">Hoa hồng</label>
+                                                                        <div class="col-md-8" style="padding-top:7px">
+                                                                            @(Model.BaoGiaTemViews[i].commission.HasValue ? (Model.BaoGiaTemViews[i].commission.Value == 1 ? "Có" : "Không") : "Chưa cập nhật")
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <table class="table table-striped table-bordered table-hover">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>
+                                                                                Tên sản phẩm
+                                                                            </th>
+                                                                            <th>
+                                                                                Số lớp
+                                                                            </th>
+                                                                            <th>
+                                                                                Loại giấy
+                                                                            </th>
+                                                                            <th>
+                                                                                Offset/Flexo
+                                                                            </th>
+                                                                            <th>
+                                                                                Dán/Kim
+                                                                            </th>
+                                                                            <th>
+                                                                                Quy Cách
+                                                                            </th>
+                                                                            <th>
+                                                                                Giá
+                                                                            </th>
+                                                                            <th>
+                                                                                Số lượng
+                                                                            </th>
+                                                                            <th>
+                                                                                Thiết kế
+                                                                            </th>
+
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody class="body_data">
+                                                                        @foreach (BaoGiaTemDetailView item in Model.BaoGiaTemViews[i].BaoGiaTemDetailViews)
+                                                                        {
+                                                                            <tr>
+                                                                                <td>@item.NameProducts</td>
+                                                                                <td>@item.SolopProducts</td>
+                                                                                <td>@item.LoaigiayProducts</td>
+                                                                                <td>@item.OffsetFlexoProducts</td>
+                                                                                <td>@item.DanKimProducts</td>
+                                                                                <td>@item.QuyCachProducts</td>
+                                                                                <td>@double.Parse(item.GiaProducts).ToString("n2") đ</td>
+                                                                                <td>@item.SoLuong</td>
+                                                                                <td>
+                                                                                    @if (!item.Design.HasValue || item.Design.Value == 0)
+                                                                                    {
+                                                                                        @("N")
+                                                                                    }
+                                                                                    else if (item.Design.Value == 2)
+                                                                                    {
+                                                                                        if (!String.IsNullOrEmpty(item.Design_Img))
+                                                                                        {
+                                                                                            <a href="/Upload/ThietKe/@(item.id)_@(item.Design_Img)" target="_blank">@item.Design_Date.Value.ToString("dd/MM/yyyy")</a>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            @item.Design_Date.Value.ToString("dd/MM/yyyy")
+                                                                                        }
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        @("Chưa cập nhập")
+                                                                                    }
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+
+                                                            </div>
+                                                            <!-- /.col-lg-12 -->
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            }
+
+    <!-- Modal -->
+                                            <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            Cập nhật kết quả báo giá
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="form-group">
+                                                                <label for="usr">Ngày giao hàng :</label>
+                                                                @Html.EditorFor(model => model.date_deliver, new { htmlAttributes = new { @class = "form-control date" } })
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="usr">Địa chỉ giao hàng :</label>
+                                                                @Html.EditorFor(model => model.address_deliver, new { htmlAttributes = new { @class = "form-control" } })
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="usr">Commission :</label>
+                                                                <label class="radio-inline"><input name="BaoGiaTemView.commission" type="radio" checked="checked" value="0"> Không</label>
+                                                                <label class="radio-inline"><input name="BaoGiaTemView.commission" type="radio" value="1"> Có</label>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="usr">Ghi chú :</label>
+                                                                <textarea class="form-control" name="BaoGiaTemView.note" placeholder="Try to input multiple lines here...">@Model.BaoGiaTemView.note</textarea>
+                                                            </div>
+
+                                                            <input type="hidden" id="baogia_status" name="BaoGiaTemView.status" value="@Model.BaoGiaTemView.status" />
+                                                            <input type="hidden" id="baogia_id" name="BaoGiaTemView.id" value="@Model.BaoGiaTemView.id" />
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div class="bootstrap-dialog-footer-buttons">
+                                                                <button class="btn btn-primary" onclick="UpdateResultBaoGia(1); return false; ">Đồng ý</button>
+                                                                <button class="btn btn-danger" onclick="UpdateResultBaoGia(2); return false; ">Từ chối</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div id="modal-container-tk" class="modal fade" tabindex="-1" role="dialog">
+                                                <div class="modal-dialog" style="width:400px" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            Cập nhật thiết kế
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="form-group">
+                                                                <input id="id_tk" type="hidden" value="" />
+                                                                <label for="usr">Ngày giao thiết kế :</label>
+                                                                <input type="datetime" value="" id="date_tk" name="date_tk" class="form-control date text-box single-line">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="pwd">Hình thiết kế :</label>
+                                                                <input type="file" id="image_tk" accept="image/*" name="image_tk">
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div class="bootstrap-dialog-footer-buttons">
+                                                                <button class="btn btn-primary" onclick="UpdateTK();return false;">Lưu</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            }
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<style>
+    .table td {
+        text-align: center;
+    }
+
+    .table th {
+        text-align: center;
+    }
+
+    .tr_edit > td {
+        line-height: 34px !important;
+    }
+</style>

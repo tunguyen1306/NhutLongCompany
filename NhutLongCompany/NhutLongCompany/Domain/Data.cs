@@ -21,7 +21,7 @@ namespace NhutLongCompany.Domain
 
 
             menu.Add(new Navbar { Id = 5, nameOption = "Báo Giá", controller = "tbl_OrderTem", action = "", imageClass = "fa fa-file-o fa-2x", status = true, isParent = true, parentId = 0 });
-            menu.Add(new Navbar { Id = 6, nameOption = "Báo Giá", controller = "tbl_OrderTem", action = "Create", imageClass = "fa fa-file-o fa-", status = true, isParent = false, parentId = 5 });
+            menu.Add(new Navbar { Id = 6, nameOption = "Báo Giá", controller = "tbl_OrderTem", action = "IndexBaoGia", imageClass = "fa fa-file-o fa-", status = true, isParent = false, parentId = 5 });
             menu.Add(new Navbar { Id = 7, nameOption = "Đơn hàng", controller = "tbl_OrderTem", action = "Index", imageClass = "fa fa-file-o fa-", status = true, isParent = false, parentId = 5 });
            
             return menu.ToList();
