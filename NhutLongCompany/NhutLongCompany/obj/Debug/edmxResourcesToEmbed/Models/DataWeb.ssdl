@@ -68,6 +68,7 @@
     <Property Name="step_index" Type="int" />
     <Property Name="date_working" Type="date" />
     <Property Name="status" Type="int" />
+    <Property Name="code_detail" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="tbl_Products">
     <Key>

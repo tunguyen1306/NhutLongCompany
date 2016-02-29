@@ -36,5 +36,7 @@ namespace NhutLongCompany.Models
         public Nullable<System.DateTime> Date_Working { get; set; }
 
         public Nullable<int> Status { get; set; }
+        public string Code_Detail { get; set; }
+        public Nullable<int> Step_Flow { get; set; }
     }
 }
