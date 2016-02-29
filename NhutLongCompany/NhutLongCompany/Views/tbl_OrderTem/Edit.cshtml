@@ -286,9 +286,10 @@
                         <label class="control-label col-md-4">Trạng thái</label>
                         <div class="col-md-8" style="padding-top:7px">
                             @Html.HiddenFor(model => model.status)
+
                             @if (Model.status == 0)
                             {
-                                <span>Đang báo giá</span>
+                                <span>Hoàn thành báo giá</span>
                             }
                             @if (Model.status == 1)
                             {
