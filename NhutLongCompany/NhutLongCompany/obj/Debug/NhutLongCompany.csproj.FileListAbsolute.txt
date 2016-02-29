@@ -84,3 +84,8 @@ D:\Dropbox\Cong Ty\NhutLongCompany\NhutLongCompany\NhutLongCompany\bin\Newtonsof
 D:\Dropbox\Cong Ty\NhutLongCompany\NhutLongCompany\NhutLongCompany\obj\Debug\NhutLongCompany.csprojResolveAssemblyReference.cache
 D:\Dropbox\Cong Ty\NhutLongCompany\NhutLongCompany\NhutLongCompany\obj\Debug\sb-admin-2.Web.dll
 D:\Dropbox\Cong Ty\NhutLongCompany\NhutLongCompany\NhutLongCompany\obj\Debug\sb-admin-2.Web.pdb
+D:\Dropbox\Cong Ty\NhutLong\NhutLongCompany\NhutLongCompany\NhutLongCompany\bin\MvcSiteMapProvider.dll
+D:\Dropbox\Cong Ty\NhutLong\NhutLongCompany\NhutLongCompany\NhutLongCompany\bin\MvcSiteMapProvider.WebActivator.dll
+D:\Dropbox\Cong Ty\NhutLong\NhutLongCompany\NhutLongCompany\NhutLongCompany\bin\WebActivatorEx.dll
+D:\Dropbox\Cong Ty\NhutLong\NhutLongCompany\NhutLongCompany\NhutLongCompany\bin\MvcSiteMapProvider.xml
+D:\Dropbox\Cong Ty\NhutLong\NhutLongCompany\NhutLongCompany\NhutLongCompany\bin\MvcSiteMapProvider.WebActivator.xml

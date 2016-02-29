@@ -154,4 +154,18 @@
 
         <!--/.nav-collapse -->
     </div><!--/.container-fluid -->
+    
+   
 </nav>
+
+    <style>
+        .breadcrumb > li + li:before {
+            color: #CCCCCC;
+            content: "/ ";
+            padding: 0 5px;
+        }
+    </style>
+<div class="breadcrumb cusbreadcrumb">
+   @Html.MvcSiteMap().SiteMapPath()
+</div>
+
