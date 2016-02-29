@@ -27,14 +27,16 @@ namespace NhutLongCompany.Controllers
             }
             var qr = (from data in db.tbl_OrderTem_BaoGia_Detail
                       join datapro in db.tbl_Products on data.sanpam_id equals datapro.ID_Products
-                      where data.status==1
-                select new BaoGiaTemDetailView
-                {
-                    NameProducts = datapro.NameProducts,
-                    CodeProducts = datapro.CodeProducts,
-                    Date_Working = data.date_working
-                    
-                });
+                      join dataquy in db.tbl_QuyTrinh on data.id equals dataquy.ID_BaoGiaDetail
+                      where data.status == 1
+                      select new BaoGiaTemDetailView
+                      {
+                          NameProducts = datapro.NameProducts,
+                          CodeProducts = datapro.CodeProducts,
+                          Date_Working = data.date_working,
+                          Date_end = dataquy.NgayKetThuc_TT
+
+                      });
             return View(qr.ToList());
         }
 

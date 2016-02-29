@@ -7,12 +7,14 @@
      NhutLongCompanyEntities db = new NhutLongCompanyEntities();
      var qr = (from data in db.tbl_OrderTem_BaoGia_Detail
                join datapro in db.tbl_Products on data.sanpam_id equals datapro.ID_Products
-               where data.status == 2
+               join dataquy in db.tbl_QuyTrinh on data.id equals dataquy.ID_BaoGiaDetail
+               where data.status == 2 && dataquy.ThuTu==8
                select new BaoGiaTemDetailView
                {
                    NameProducts = datapro.NameProducts,
                    CodeProducts = datapro.CodeProducts,
-                   Date_Working = data.date_working
+                   Date_Working = data.date_working,
+                   Date_end = dataquy.NgayKetThuc_TT
 
                });
 }
@@ -57,7 +59,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (var item in qr.ToList())
                             {
                                 <tr>
                                     <td>@Html.DisplayFor(modelItem => item.CodeProducts)</td>
@@ -66,7 +68,7 @@
 
                                     </td>
                                     <td>@Html.DisplayFor(modelItem => item.Date_Working)</td>
-                                    <td></td>
+                                    <td>@Html.DisplayFor(modelItem => item.Date_end)</td>
                                 </tr>
                             }
 
@@ -103,13 +105,11 @@
                                 <th>
                                     Ngày bất đầu thực hiện
                                 </th>
-                                <th>
-                                    Ngày hoàn tất
-                                </th>
+                               
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in qr.ToList())
+                            @foreach (var item in Model)
                             {
                                 <tr>
                                     <td>@Html.DisplayFor(modelItem => item.CodeProducts)</td>
@@ -118,7 +118,7 @@
 
                                     </td>
                                     <td>@Html.DisplayFor(modelItem => item.Date_Working)</td>
-                                    <td></td>
+                                   
                                 </tr>
                             }
 
