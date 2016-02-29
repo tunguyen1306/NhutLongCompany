@@ -87,7 +87,7 @@
                 }
             });
             if (!ck) {
-                alert("Vui lòng cập nhập tất cả thiết kế!");
+                alert("Vui lòng cập nhập tất cả Làm mẫu!");
                 $('#modal-container').modal('hide');
                 return;
             }
@@ -746,7 +746,7 @@
                                         Loại giấy
                                     </th>
                                     <th width="100px" align="center" valign="middle">
-                                        Offset/Flexo
+                                        Quy trình
                                     </th>
                                     <th width="130px" align="center" valign="middle">
                                         Dán/Kim
@@ -761,7 +761,7 @@
                                         Số lượng
                                     </th>
                                     <th width="80px" align="center" valign="middle">
-                                        Thiết kế
+                                        Làm mẫu
                                     </th>
                                     <th></th>
                                 </tr>
@@ -791,8 +791,8 @@
                                     </td>
                                     <td align="center">
                                         <select name="OffsetFlexoProducts" default-value="Offset" class="form-control">
-                                            <option value="Offset">Offset</option>
-                                            <option value="Flexo">Flexo</option>
+                                            <option value="Offset">2</option>
+                                            <option value="Flexo">1</option>
                                         </select>
                                     </td>
                                     <td align="center">
@@ -813,8 +813,8 @@
                                     </td>
                                     <td align="center">
                                         <select name="Design" default-value="0" class="form-control">
-                                            <option value="0">N</option>
-                                            <option value="1">Y</option>
+                                            <option value="0">Không</option>
+                                            <option value="1">Có</option>
                                         </select>
                                     </td>
                                     <td align="center"><input type="submit" style="float: left; margin-left: 10px" value="Thêm" class="btn btn-primary" onclick=" updateProduct(this); return false; " /></td>
@@ -940,7 +940,7 @@
                                     Loại giấy
                                 </th>
                                 <th>
-                                    Offset/Flexo
+                                    Quy trình
                                 </th>
                                 <th>
                                     Dán/Kim
@@ -955,7 +955,7 @@
                                     Số lượng
                                 </th>
                                 <th>
-                                    Thiết kế
+                                    Làm mẫu
                                 </th>
                             </tr>
                         </thead>
@@ -1107,7 +1107,7 @@
                                         Loại giấy
                                     </th>
                                     <th>
-                                        Offset/Flexo
+                                        Quy trình
                                     </th>
                                     <th>
                                         Dán/Kim
@@ -1122,7 +1122,7 @@
                                         Số lượng
                                     </th>
                                     <th>
-                                        Thiết kế
+                                        Làm mẫu
                                     </th>
 
                                 </tr>
@@ -1217,16 +1217,16 @@
         <div class="modal-dialog" style="width:400px" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    Cập nhật thiết kế
+                    Cập nhật Làm mẫu
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <input id="id_tk" type="hidden" value="" />
-                        <label for="usr">Ngày giao thiết kế :</label>
+                        <label for="usr">Ngày giao Làm mẫu :</label>
                         <input type="datetime" value="" id="date_tk" name="date_tk" class="form-control date text-box single-line">
                     </div>
                     <div class="form-group">
-                        <label for="pwd">Hình thiết kế :</label>
+                        <label for="pwd">Hình Làm mẫu :</label>
                         <input type="file" id="image_tk" accept="image/*" name="image_tk">
                     </div>
 

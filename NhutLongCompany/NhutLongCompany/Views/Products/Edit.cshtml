@@ -74,9 +74,9 @@
 
 
                             <div class="form-group">
-                                <label>Offset/Flexo</label>
+                                <label>Quy trình</label>
 
-                                @Html.DropDownListFor(model => model.OffsetFlexoProducts, new List<SelectListItem> { new SelectListItem { Text = "Offset", Value = "Offset" }, new SelectListItem { Text = "Flexo", Value = "Flexo" } }, htmlAttributes: new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.OffsetFlexoProducts, new List<SelectListItem> { new SelectListItem { Text = "2", Value = "Offset" }, new SelectListItem { Text = "1", Value = "Flexo" } }, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.OffsetFlexoProducts, "", new { @class = "text-danger" })
 
                             </div>
