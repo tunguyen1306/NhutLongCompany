@@ -74,7 +74,7 @@
                                     }
                                     else
                                     {
-                                        <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Update</span>
+                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Bất đầu</span>
                                     }
                                     @("-")
                                     @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
@@ -83,7 +83,7 @@
                                     }
                                     else
                                     {
-                                        <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"0"),@item.id,@item.QuyTrinhs[i].ID,2)">Update</span>
+                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"0"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>
                                     }
                                 </span>
                             </td>
@@ -165,7 +165,7 @@
                                     }
                                     else
                                     {
-                                        <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Update</span>
+                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Bất đầu</span>
                                     }
                                     @("-")
                                     @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
@@ -174,7 +174,7 @@
                                     }
                                     else
                                     {
-                                        <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)">Update</span>
+                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>
                                     }
                                 </span>
                             </td>
