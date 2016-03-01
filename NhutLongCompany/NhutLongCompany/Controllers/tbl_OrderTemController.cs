@@ -147,6 +147,7 @@ namespace NhutLongCompany.Controllers
             }
             DonHangView d = new DonHangView();
             d.customer_id = id;
+           
             var queryMax = (from u in db.tbl_OrderTem
                             orderby u.id descending
                             select u).Take(1);
