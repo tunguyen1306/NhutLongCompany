@@ -187,7 +187,7 @@ namespace NhutLongCompany.Controllers
             donHang.BaoGiaTemView.id = tbl_OrderTem_BaoGia.id;
 
             int countindex = 0;
-
+           
             foreach (var item in donHang.BaoGiaTemView.BaoGiaTemDetailViews)
             {
                 countindex++;
@@ -220,8 +220,11 @@ namespace NhutLongCompany.Controllers
                 itemP = db.tbl_Products.Add(itemP);
                 db.SaveChanges();
                 item.ID_Products = itemP.ID_Products;
-                tbl_OrderTem_BaoGia_Detail detail = new tbl_OrderTem_BaoGia_Detail {code_detail=donHang.code+"_"+countindex.ToString("00") ,design = item.Design, baogia_id = donHang.BaoGiaTemView.id, money = double.Parse(item.GiaProducts), soluong = item.SoLuong, sanpam_id = itemP.ID_Products };
+             
+                
+                tbl_OrderTem_BaoGia_Detail detail = new tbl_OrderTem_BaoGia_Detail { code_detail = donHang.code + "_" + countindex.ToString("00"), design = item.Design, baogia_id = donHang.BaoGiaTemView.id, money = double.Parse(item.GiaProducts), soluong = item.SoLuong, sanpam_id = itemP.ID_Products };
                 db.tbl_OrderTem_BaoGia_Detail.Add(detail);
+              
                 db.SaveChanges();
             }
             return RedirectToAction("EditBaoGia", new
@@ -360,8 +363,13 @@ namespace NhutLongCompany.Controllers
                     itemP = db.tbl_Products.Add(itemP);
                     db.SaveChanges();
                     item.ID_Products = itemP.ID_Products;
-                    tbl_OrderTem_BaoGia_Detail detail = new tbl_OrderTem_BaoGia_Detail {code_detail=donHang.code+"_"+countindex.ToString("00"), design = item.Design, baogia_id = donHang.BaoGiaTemView.id, money = double.Parse(item.GiaProducts), soluong = item.SoLuong, sanpam_id = itemP.ID_Products };
+                    var qr = (from cus in db.tbl_Customers where cus.IDCustomers == donHang.customer_id select cus).ToList();
+                    foreach (var code in qr)
+                    {
+                   
+                    tbl_OrderTem_BaoGia_Detail detail = new tbl_OrderTem_BaoGia_Detail {code_detail=code.CodeCustomers+"_"+ donHang.code+"_"+countindex.ToString("00"), design = item.Design, baogia_id = donHang.BaoGiaTemView.id, money = double.Parse(item.GiaProducts), soluong = item.SoLuong, sanpam_id = itemP.ID_Products };
                     db.tbl_OrderTem_BaoGia_Detail.Add(detail);
+                    }
                     db.SaveChanges();
                 }
 
@@ -400,7 +408,7 @@ namespace NhutLongCompany.Controllers
                 db.SaveChanges();
                 if (donHang.BaoGiaTemView.status.Value == 1)
                 {
-                    return RedirectToAction("Edit", "tbl_OrderTem", new { id = donHang.id });
+                    return RedirectToAction("Index", "tbl_OrderTem");
                 }
             }
             //if (donHang.action == 4)
@@ -767,7 +775,7 @@ namespace NhutLongCompany.Controllers
 
                     }
                 }
-                return RedirectToAction("Edit", "SanXuat", new { id = donHang.id });
+                return RedirectToAction("Index", "SanXuat");
             }
             DonHangView d = new DonHangView();
             d.action = donHang.action;
@@ -880,10 +888,11 @@ namespace NhutLongCompany.Controllers
             d.date_begin_plan = tbl_OrderTem.date_begin_plan;
             d.date_end_plan = tbl_OrderTem.date_end_plan;
             d.date_deliver = tbl_OrderTem.date_deliver;
+            d.address_deliver = tbl_OrderTem.address_deliver;
 
 
 
-            BaoGiaTemView temBG = new BaoGiaTemView { note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, order_id = item.order_id, status = item.status, total_money = item.total_money };
+            BaoGiaTemView temBG = new BaoGiaTemView { address_deliver = tbl_OrderTem.address_deliver, note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, order_id = item.order_id, status = item.status, total_money = item.total_money };
             var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
                                  join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
                                  where u.baogia_id.Value.Equals(temBG.id)

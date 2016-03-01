@@ -265,7 +265,7 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            Chỉnh sửa Đơn hàng
+            Chi tiết đơn hàng
         </div>
         <div class="panel-body">
             <div class="row form-horizontal">
@@ -335,58 +335,71 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Thông tin khách hàng</label>
                         <div class="col-md-10" style="padding-top:7px">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="row">
-                                        @Html.HiddenFor(model => model.customer_id)
-                                        <span style="padding-left:7px">@Model.Customer.NameCustomers</span>
-                                    </div>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-lg-12 form-horizontal">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="col-md-4">Mã số</label>
-                                                    <div class="col-md-8">
-                                                        <input type="text" disabled class="form-control text-box single-line valid" value="@(Model.Customer != null ? Model.Customer.CodeCustomers : ""  )" id="customer_id_MS">
+                            <!-- Trigger the modal with a button -->
+                            <span style="padding-left:7px">@Model.Customer.NameCustomers</span>
+                            <button type="button" class="btn btn-default btn-outline btn-sm" data-toggle="modal" data-target="#myModal">Chi tiết khách hàng</button>
 
-                                                    </div>
-                                                </div>
+                           
+
+                            <!-- Modal -->
+                            <div id="myModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                @Html.HiddenFor(model => model.customer_id)
+                                               
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="col-md-4">Công ty</label>
-                                                    <div class="col-md-8">
-                                                        <input type="text" disabled id="customer_id_Cty" value="@(Model.Customer != null ? Model.Customer.CongTyCustomers : ""  )" class="form-control text-box single-line valid">
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 form-horizontal">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="col-md-4">Mã số</label>
+                                                            <div class="col-md-8">
+                                                                <input type="text" disabled class="form-control text-box single-line valid" value="@(Model.Customer != null ? Model.Customer.CodeCustomers : ""  )" id="customer_id_MS">
 
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="col-md-4">Email</label>
-                                                    <div class="col-md-8">
-                                                        <input type="text" disabled id="customer_id_Email" value="@(Model.Customer != null ? Model.Customer.EmailCustomers : ""  )" class="form-control text-box single-line valid">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="col-md-4">Công ty</label>
+                                                            <div class="col-md-8">
+                                                                <input type="text" disabled id="customer_id_Cty" value="@(Model.Customer != null ? Model.Customer.CongTyCustomers : ""  )" class="form-control text-box single-line valid">
 
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="col-md-4">Email</label>
+                                                            <div class="col-md-8">
+                                                                <input type="text" disabled id="customer_id_Email" value="@(Model.Customer != null ? Model.Customer.EmailCustomers : ""  )" class="form-control text-box single-line valid">
 
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="col-md-4">Địa chỉ</label>
-                                                    <div class="col-md-8">
-                                                        <input type="text" disabled id="customer_id_Address" value="@(Model.Customer != null ? Model.Customer.DiachiCustomers : ""  )" class="form-control text-box single-line">
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="col-md-4">Địa chỉ</label>
+                                                            <div class="col-md-8">
+                                                                <input type="text" disabled id="customer_id_Address" value="@(Model.Customer != null ? Model.Customer.DiachiCustomers : ""  )" class="form-control text-box single-line">
+
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -475,7 +488,7 @@
                                                                     }
                                                                     else
                                                                     {
-                                                                        <span style="cursor:pointer" onclick="">Update</span>
+                                                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="">Bất đầu</span>
                                                                     }
                                                                     @("-")
                                                                     @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
@@ -484,7 +497,7 @@
                                                                     }
                                                                     else
                                                                     {
-                                                                        <span style="cursor:pointer" onclick="">Update</span>
+                                                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="">Kết thúc</span>
                                                                     }
                                                                 </span>
                                                             </td>
@@ -566,7 +579,7 @@
                                                                     }
                                                                     else
                                                                     {
-                                                                        <span style="cursor:pointer" onclick="">Update</span>
+                                                                        <span class="btn btn-outline btn-default btn-xs" style="cursor:pointer" onclick="">Bất đầu</span>
                                                                     }
                                                                     @("-")
                                                                     @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
@@ -575,7 +588,7 @@
                                                                     }
                                                                     else
                                                                     {
-                                                                        <span style="cursor:pointer" onclick="">Update</span>
+                                                                        <span class="btn btn-outline btn-default btn-xs" style="cursor:pointer" onclick="">Kết thúc</span>
                                                                     }
                                                                 </span>
                                                             </td>
