@@ -22,7 +22,7 @@ namespace NhutLongCompany.Controllers
             }
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
-                      where data.status >=0
+                      where data.status >=0 orderby data.status ascending
                       select new DonHangView
                       {
                           id = data.id,
@@ -378,7 +378,7 @@ namespace NhutLongCompany.Controllers
                 tbl_OrderTem order = db.tbl_OrderTem.Find(donHang.id);
                 if (donHang.BaoGiaTemView.status.Value==1)
                 {
-                    order.code ="DDH_"+ order.code;
+                    order.code = order.code;
                     order.status = 0;
 
 

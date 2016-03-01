@@ -18,14 +18,16 @@ namespace NhutLongCompany.Domain
             menu.Add(new Navbar { Id = 5, nameOption = "Đơn hàng", controller = "tbl_OrderTem", action = "Index", imageClass = "fa fa-file-o fa-", status = true, isParent = false, parentId = 3 });
             menu.Add(new Navbar { Id = 6, nameOption = "Sản Phẩm", controller = "Products", action = "Index", imageClass = "fa fa-shopping-cart fa-2x", status = true, isParent = true, parentId = 0 });
             menu.Add(new Navbar { Id = 7, nameOption = "Sản Phẩm Đã thực hiện", controller = "Products", action = "Index", imageClass = "fa fa-shopping-cart fa-2x", status = true, isParent = false, parentId =6 });
-            menu.Add(new Navbar { Id = 8, nameOption = "Sản Phẩm đang thực hiện", controller = "Products", action = "SPWorking", imageClass = "fa fa-shopping-cart fa-2x", status = true, isParent = false, parentId = 6 });
-            menu.Add(new Navbar { Id = 9, nameOption = "Sản xuất", controller = "Sanxuat", action = "", imageClass = "fa fa-gears fa-2x", status = true, isParent = true, parentId = 0 });
-            menu.Add(new Navbar { Id = 10, nameOption = "Sản phầm đang sản xuất", controller = "Sanxuat", action = "IndexSanXuat", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 9 });
-            menu.Add(new Navbar { Id = 11, nameOption = "Đơn hàng chờ duyệt sản xuất", controller = "Sanxuat", action = "Index", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 9 });
-            menu.Add(new Navbar { Id = 12, nameOption = "Đơn hàng đang sản xuất", controller = "Sanxuat", action = "IndexSX", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 9 });
+            //menu.Add(new Navbar { Id = 8, nameOption = "Sản Phẩm đang thực hiện", controller = "Products", action = "SPWorking", imageClass = "fa fa-shopping-cart fa-2x", status = true, isParent = false, parentId = 6 });
+            menu.Add(new Navbar { Id = 8, nameOption = "Sản Phẩm đang thực hiện", controller = "Products", action = "IndexProcessProduct", imageClass = "fa fa-shopping-cart fa-2x", status = true, isParent = false, parentId = 6 });
+            
+            menu.Add(new Navbar { Id = 9, nameOption = "Sản xuất", controller = "Sanxuat", action = "", imageClass = "fa fa-gears fa-2x", status = true, isParent = true, parentId = 0 });           
+            menu.Add(new Navbar { Id = 10, nameOption = "Đơn hàng chờ duyệt sản xuất", controller = "Sanxuat", action = "Index", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 9 });
+            menu.Add(new Navbar { Id = 11, nameOption = "Đơn hàng đang sản xuất", controller = "Sanxuat", action = "IndexSX", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 9 });
+            menu.Add(new Navbar { Id = 12, nameOption = "Lịch sản xuất", controller = "Sanxuat", action = "LichSanXuat", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 9 });
+            menu.Add(new Navbar { Id = 13, nameOption = "Sản phầm đang sản xuất", controller = "Sanxuat", action = "IndexSanXuat", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 9 });
 
 
-           
             return menu.ToList();
         }
     }

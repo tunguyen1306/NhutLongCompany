@@ -1,0 +1,232 @@
+﻿@model IEnumerable<NhutLongCompany.Models.BaoGiaTemDetailView>
+@{
+    ViewBag.Title = "Lịch sản xuất";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Lịch sản xuất</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    <table class="table table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr class="not_move">
+                                <th>
+                                    Mã sản phẩm
+                                </th>
+                                <th>
+                                    Tên sản phẩm
+                                </th>
+                                <th>
+                                    Ngày sản xuất
+                                </th>
+                                <th>
+                                    Ngày giao hàng
+                                </th>
+                                <th>
+                                    Step Flow
+                                </th>
+                                <th >
+                                    Trạng thái
+                                 </th>
+                                <th width="50">
+                                  Ưu tiên
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.ToList().Count; i++)
+                            {
+                                var itemCT = Model.ToList()[i];
+                                <tr id="ajax_update_@(itemCT.id)_product" class="move_product" data-index="@itemCT.Index_View">
+
+                                    <td>
+                                        @itemCT.Code_Detail
+                                    </td>
+                                    <td>
+                                        @itemCT.NameProducts
+
+                                    </td>
+                                    <td>
+                                        @(itemCT.Date_Working.HasValue ? itemCT.Date_Working.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")
+                                    </td>
+                                    <td>
+                                        @(itemCT.date_deliver.HasValue ? itemCT.date_deliver.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")
+                                    </td>
+                                    <td>
+                                        @if (itemCT.Step_Flow.HasValue)
+                                        {
+                                            @(itemCT.QuyTrinhs[0].TenBuoc + " - ( " + itemCT.QuyTrinhs[0].NgayBatDau_TT.Value.ToString("dd/MM/yyyy") + " - " + (itemCT.QuyTrinhs[0].NgayKetThuc_TT.HasValue ? itemCT.QuyTrinhs[0].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy") : "Updating") + " )")
+                                        }
+                                        else
+                                        {
+                                            @("Đang cập nhập")
+                                        }
+
+
+                                    </td>
+                                    <td >
+                                        @if (itemCT.Status == 0)
+                                        {
+                                            <span>Chưa sản xuất</span>
+                                        }
+                                        @if (itemCT.Status == 1)
+                                        {
+                                            <span>Đang sản xuất</span>
+                                        }
+                                        @if (itemCT.Status == 2)
+                                        {
+                                            <span>Hoàn thành sản xuất</span>
+                                        }
+                                    </td>
+                                    <td style="position:relative">
+                                        <span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:18px;top:5px;"></span>
+                                        <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 18px;top: 15px;"></span>
+                                    </td>
+
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script>
+    function UpdateStack(id, order) {
+        var jsonObject = {
+            "id": id,
+            "order": order
+        };
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UpdateStack", "SanXuat")',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(jsonObject),
+            success: function (data) {
+                //alert(data);
+            },
+            failure: function (errMsg) {
+                // alert(errMsg);
+            }
+        });
+    }
+    function updateMoveIcon() {
+        $('.move-down').each(function () {
+            var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
+            var item_product = $(this).parents(".move_product")[0];          
+            var item_next = $(item_product).next();
+
+            if (item_next.length == 0) {
+                $(this).css('display', 'none');
+            }
+            else {
+                $(this).css('display', '');
+            }
+        });
+
+        $('.move-up').each(function () {
+            var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
+            var item_product = $(this).parents(".move_product")[0];         
+            var item_prev = $(item_product).prev();
+            if (item_prev.length == 0 || item_prev.eq(0).hasClass('not_move')) {
+                $(this).css('display', 'none');
+            }
+            else {
+                $(this).css('display', '');
+            }
+        });
+    }
+    function swapElements(elm1, elm2) {
+        var parent1, next1,
+            parent2, next2;
+
+        parent1 = elm1.parentNode;
+        next1 = elm1.nextSibling;
+        parent2 = elm2.parentNode;
+        next2 = elm2.nextSibling;
+
+        parent1.insertBefore(elm2, next1);
+        parent2.insertBefore(elm1, next2);
+    }
+    function moveEvent() {
+        $('.move-down').on("click", function () {
+            var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
+            var item_product = $(this).parents(".move_product")[0];
+          
+            var item_next = $(item_product).next();
+            if (item_next.length > 0) {
+                var next_dataindex = item_next.eq(0).attr('data-index');
+                var item_product_next = item_next[0];
+             
+                $(item_product).attr('data-index', next_dataindex);
+                $(item_product_next).attr('data-index', dataindex);
+
+                UpdateStack(item_product.id.replace('ajax_update_', '').replace('_product', ''), next_dataindex);
+                UpdateStack(item_product_next.id.replace('ajax_update_', '').replace('_product', ''), dataindex);
+
+                swapElements(item_product, item_product_next);
+             
+
+            }
+            updateMoveIcon();
+        });
+        $('.move-up').on("click", function () {
+
+
+            var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
+            var item_product = $(this).parents(".move_product")[0];
+       
+            var item_prev = $(item_product).prev();
+            if (item_prev.length > 0) {
+
+                var item_product_prev = item_prev[0];                
+                var prev_dataindex = $(item_product_prev).eq(0).attr('data-index');
+                $(item_product).attr('data-index', prev_dataindex);
+                $(item_product_prev).attr('data-index', dataindex);
+
+                UpdateStack(item_product.id.replace('ajax_update_', '').replace('_product', ''), prev_dataindex);
+                UpdateStack(item_product_prev.id.replace('ajax_update_', '').replace('_product', ''), dataindex);
+
+                swapElements(item_product, item_product_prev);
+             
+
+            }
+            updateMoveIcon();
+
+        })
+
+        updateMoveIcon();
+    }
+    $(document).ready(function () {
+
+
+        moveEvent();
+
+
+    });
+
+</script>

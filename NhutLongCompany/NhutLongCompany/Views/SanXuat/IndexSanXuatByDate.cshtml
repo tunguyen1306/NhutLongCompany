@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<NhutLongCompany.Models.BaoGiaTemDetailView>
+    @{ var update = (int?)ViewData["Update"]; }
 <div class="dataTable_wrapper">
     <table class="table table-bordered ">
         <tbody>
@@ -35,10 +36,10 @@
 
                         <td class="cusfontsize2" colspan="18" style="position:relative">
 
-                            <span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:10px;top:5px;"></span>
-                            <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 10px;top: 15px;"></span>
-                            @item.NameProducts <i>
-                                (Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))
+                            @*<span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:10px;top:5px;"></span>
+                            <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 10px;top: 15px;"></span>*@
+                           @item.Code_Detail - @item.NameProducts <i>
+                                (Số lượng:@(item.SolopProducts.Value) - Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))
                                 <input type="hidden" value="@item.id" />
                             </i>
                         </td>
@@ -74,7 +75,19 @@
                                     }
                                     else
                                     {
+
                                         <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Bất đầu</span>
+
+                                        if (update.HasValue && update.Value == 1)
+                                        {
+                                            <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Update</span>
+                                        }
+                                        else
+                                        {
+                                            @(" ")
+                                        }
+
+
                                     }
                                     @("-")
                                     @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
@@ -83,7 +96,18 @@
                                     }
                                     else
                                     {
+
                                         <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"0"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>
+
+                                        if (update.HasValue && update.Value == 1)
+                                        {
+                                            <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"0"),@item.id,@item.QuyTrinhs[i].ID,2)">Update</span>
+                                        }
+                                        else
+                                        {
+                                            @(" ")
+                                        }
+                                       
                                     }
                                 </span>
                             </td>
@@ -132,9 +156,9 @@
                     <tr id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
 
                         <td class="cusfontsize2" colspan="18" style="position:relative">
-                            <span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:10px;top:5px;"></span>
-                            <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 10px;top: 15px;"></span>
-                            @item.NameProducts <i>(Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))</i>
+                            @*<span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:10px;top:5px;"></span>
+                            <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 10px;top: 15px;"></span>*@
+                         @item.Code_Detail - @item.NameProducts <i>(Số lượng:@(item.SolopProducts.Value) - Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))</i>
                             <input type="hidden" value="@item.id" />
                         </td>
                     </tr>
@@ -165,7 +189,18 @@
                                     }
                                     else
                                     {
+
                                         <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Bất đầu</span>
+
+                                        if (update.HasValue && update.Value == 1)
+                                        {
+                                            <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Update</span>
+                                        }
+                                        else
+                                        {
+                                            @(" ")
+                                        }
+
                                     }
                                     @("-")
                                     @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
@@ -174,7 +209,19 @@
                                     }
                                     else
                                     {
+
                                         <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>
+
+                                        if (update.HasValue && update.Value == 1)
+                                        {
+                                            <span style="cursor:pointer" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)">Update</span>
+                                        }
+                                        else
+                                        {
+                                            @(" ")
+                                        }
+                                      
+
                                     }
                                 </span>
                             </td>
