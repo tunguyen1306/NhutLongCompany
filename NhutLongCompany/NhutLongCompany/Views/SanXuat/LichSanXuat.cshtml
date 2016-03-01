@@ -11,108 +11,141 @@
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
+@using (Html.BeginForm())
+{
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <input type="hidden" value="" name="id" id="id"/>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="dataTable_wrapper">
+                        <table class="table table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr class="not_move">
+                                    <th>
+                                        Mã sản phẩm
+                                    </th>
+                                    <th>
+                                        Tên sản phẩm
+                                    </th>
+                                    <th>
+                                        Số lượng
+                                    </th>
+                                    <th>
+                                        Ngày giao hàng
+                                    </th>
+                                    <th>
+                                       Thời gian còn lại
+                                    </th>
+                                    @*<th>
+                                        Ngày sản xuất
+                                    </th>*@
 
-            <!-- /.panel-heading -->
-            <div class="panel-body">
-                <div class="dataTable_wrapper">
-                    <table class="table table-bordered table-hover" id="dataTables-example">
-                        <thead>
-                            <tr class="not_move">
-                                <th>
-                                    Mã sản phẩm
-                                </th>
-                                <th>
-                                    Tên sản phẩm
-                                </th>
-                              
-                                <th>
-                                    Ngày giao hàng
-                                </th>
-                                <th>
-                                    Ngày sản xuất
-                                </th>
-                             
-                                @*<th >
-                                    Trạng thái
-                                 </th>*@
-                                <th width="50">
-                                    Ưu tiên
-                                </th>
-                                <th >
-                                    Tiến hành sản xuất
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (int i = 0; i < Model.ToList().Count; i++)
-                            {
-                                var itemCT = Model.ToList()[i];
-                                <tr id="ajax_update_@(itemCT.id)_product" class="move_product" data-index="@itemCT.Index_View">
-
-                                    <td>
-                                        @itemCT.Code_Detail
-                                    </td>
-                                    <td>
-                                        @itemCT.NameProducts
-
-                                    </td>
-                                    
-                                    <td>
-                                        @(itemCT.date_deliver.HasValue ? itemCT.date_deliver.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")
-                                    </td>
-                                    <td>
-                                        @(itemCT.Date_Working.HasValue ? itemCT.Date_Working.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")
-                                    </td>
-                                    @*<td>
-                                        @if (itemCT.Step_Flow.HasValue)
-                                        {
-                                            @(itemCT.QuyTrinhs[0].TenBuoc + " - ( " + itemCT.QuyTrinhs[0].NgayBatDau_TT.Value.ToString("dd/MM/yyyy") + " - " + (itemCT.QuyTrinhs[0].NgayKetThuc_TT.HasValue ? itemCT.QuyTrinhs[0].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy") : "Updating") + " )")
-                                        }
-                                        else
-                                        {
-                                            @("Đang cập nhập")
-                                        }
-
-
-                                    </td>*@
-                                    @*<td >
-                                        @if (itemCT.Status == 0)
-                                        {
-                                            <span>Chưa sản xuất</span>
-                                        }
-                                        @if (itemCT.Status == 1)
-                                        {
-                                            <span>Đang sản xuất</span>
-                                        }
-                                        @if (itemCT.Status == 2)
-                                        {
-                                            <span>Hoàn thành sản xuất</span>
-                                        }
-                                    </td>*@
-                                    <td style="position:relative">
-                                        <span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:18px;top:5px;"></span>
-                                        <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 18px;top: 15px;"></span>
-                                    </td>
-                                    <td style="position:relative">
-                                        <button type="submit" class ="btn btn-outline btn-default btn-xs">Chuyển</button>
-                                    </td>
+                                    @*<th >
+                                           Trạng thái
+                                        </th>*@
+                                    @*<th width="50">
+                                            Ưu tiên
+                                        </th>*@
+                                    <th>
+                                        Tiến hành sản xuất
+                                    </th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.ToList().Count; i++)
+                                {
+                                    var itemCT = Model.ToList()[i];
 
-                            }
-                        </tbody>
-                    </table>
+                                    var songay = (int)itemCT.date_deliver.Value.Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays;
+                                    var color_for = "black";
+                                    var color = "";
+                                    if (songay < 0)
+                                    {
+                                        color = "red";
+                                        color_for = "yellow";
+                                    }
+                                    else if (songay < 2)
+                                    {
+                                        color = "yellow";
+                                        color_for = "red";
+                                    }
+
+                                    <tr id="ajax_update_@(itemCT.id)_product" class="move_product" data-index="@itemCT.Index_View">
+
+                                        <td>
+                                            @itemCT.Code_Detail
+                                        </td>
+                                        <td>
+                                            @itemCT.NameProducts
+
+                                        </td>
+                                        <td>
+                                            @itemCT.SoLuong
+                                        </td>
+                                        <td>
+                                            @(itemCT.date_deliver.HasValue ? itemCT.date_deliver.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")
+                                        </td>
+                                        <td style="background-color:@color;color:@color_for">
+                                            @songay
+                                        </td>
+                                        @*<td>
+                                            @(itemCT.Date_Working.HasValue ? itemCT.Date_Working.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")
+                                        </td>*@
+                                        @*<td>
+                                                @if (itemCT.Step_Flow.HasValue)
+                                                {
+                                                    @(itemCT.QuyTrinhs[0].TenBuoc + " - ( " + itemCT.QuyTrinhs[0].NgayBatDau_TT.Value.ToString("dd/MM/yyyy") + " - " + (itemCT.QuyTrinhs[0].NgayKetThuc_TT.HasValue ? itemCT.QuyTrinhs[0].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy") : "Updating") + " )")
+                                                }
+                                                else
+                                                {
+                                                    @("Đang cập nhập")
+                                                }
+
+
+                                            </td>*@
+                                        @*<td >
+                                                @if (itemCT.Status == 0)
+                                                {
+                                                    <span>Chưa sản xuất</span>
+                                                }
+                                                @if (itemCT.Status == 1)
+                                                {
+                                                    <span>Đang sản xuất</span>
+                                                }
+                                                @if (itemCT.Status == 2)
+                                                {
+                                                    <span>Hoàn thành sản xuất</span>
+                                                }
+                                            </td>*@
+                                        @*<td style="position:relative">
+                                                <span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:18px;top:5px;"></span>
+                                                <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 18px;top: 15px;"></span>
+                                            </td>*@
+                                        <td style="position:relative">
+                                            <button type="submit" class="btn btn-outline btn-default btn-xs"  onclick="return setValue(@itemCT.id);">Chuyển</button>
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                <!-- /.panel-body -->
             </div>
-            <!-- /.panel-body -->
+            <!-- /.panel -->
         </div>
-        <!-- /.panel -->
+        <!-- /.col-lg-12 -->
     </div>
-    <!-- /.col-lg-12 -->
-</div>
+
+}
+
+
+
+
 <!-- /.row -->
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -120,6 +153,10 @@
 
 
 <script>
+    function setValue(id) {
+        document.getElementById('id').value=id;
+        return true;
+    }
     function UpdateStack(id, order) {
         var jsonObject = {
             "id": id,

@@ -240,7 +240,10 @@
                             }*@
                         @if (Model.status.Value == 1)
                         {
-                            <input type="submit" value="Tiến hành sản xuất" class="btn btn-primary" data-toggle="modal" data-target="#modal-container-ngaythicong" onclick="return false; " />
+                            @*<input type="submit" value="Tiến hành sản xuất" class="btn btn-primary" data-toggle="modal" data-target="#modal-container-ngaythicong" onclick="return false; " />*@
+                            <input type="submit" value="Tiến hành sản xuất" class="btn btn-primary" onclick="UpdateStatusOrder(3); return false;" />
+                           
+
                         }
                         @if (Model.status.Value == 3)
                         {
