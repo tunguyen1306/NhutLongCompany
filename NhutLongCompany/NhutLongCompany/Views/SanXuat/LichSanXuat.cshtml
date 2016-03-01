@@ -28,20 +28,22 @@
                                 <th>
                                     Tên sản phẩm
                                 </th>
-                                <th>
-                                    Ngày sản xuất
-                                </th>
+                              
                                 <th>
                                     Ngày giao hàng
                                 </th>
                                 <th>
-                                    Step Flow
+                                    Ngày sản xuất
+                                </th>
+                             
+                                @*<th >
+                                    Trạng thái
+                                 </th>*@
+                                <th width="50">
+                                    Ưu tiên
                                 </th>
                                 <th >
-                                    Trạng thái
-                                 </th>
-                                <th width="50">
-                                  Ưu tiên
+                                    Tiến hành sản xuất
                                 </th>
                             </tr>
                         </thead>
@@ -58,13 +60,14 @@
                                         @itemCT.NameProducts
 
                                     </td>
-                                    <td>
-                                        @(itemCT.Date_Working.HasValue ? itemCT.Date_Working.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")
-                                    </td>
+                                    
                                     <td>
                                         @(itemCT.date_deliver.HasValue ? itemCT.date_deliver.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")
                                     </td>
                                     <td>
+                                        @(itemCT.Date_Working.HasValue ? itemCT.Date_Working.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")
+                                    </td>
+                                    @*<td>
                                         @if (itemCT.Step_Flow.HasValue)
                                         {
                                             @(itemCT.QuyTrinhs[0].TenBuoc + " - ( " + itemCT.QuyTrinhs[0].NgayBatDau_TT.Value.ToString("dd/MM/yyyy") + " - " + (itemCT.QuyTrinhs[0].NgayKetThuc_TT.HasValue ? itemCT.QuyTrinhs[0].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy") : "Updating") + " )")
@@ -75,8 +78,8 @@
                                         }
 
 
-                                    </td>
-                                    <td >
+                                    </td>*@
+                                    @*<td >
                                         @if (itemCT.Status == 0)
                                         {
                                             <span>Chưa sản xuất</span>
@@ -89,12 +92,14 @@
                                         {
                                             <span>Hoàn thành sản xuất</span>
                                         }
-                                    </td>
+                                    </td>*@
                                     <td style="position:relative">
                                         <span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:18px;top:5px;"></span>
                                         <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 18px;top: 15px;"></span>
                                     </td>
-
+                                    <td style="position:relative">
+                                        <button type="submit" class ="btn btn-outline btn-default btn-xs">Chuyển</button>
+                                    </td>
                                 </tr>
 
                             }
