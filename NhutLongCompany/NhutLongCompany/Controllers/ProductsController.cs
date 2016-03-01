@@ -17,6 +17,11 @@ namespace NhutLongCompany.Controllers
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();
 
+        public ActionResult IndexProcessProduct()
+        {
+
+            return View();
+        }
         // GET: Products
         public ActionResult Index()
         {

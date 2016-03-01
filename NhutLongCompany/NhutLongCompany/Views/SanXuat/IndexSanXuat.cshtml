@@ -54,7 +54,7 @@
             var layout = $('#' + id);
             $.ajax({
                 url: '@Url.Action("IndexSanXuatByDate", "SanXuat")',
-
+                data: { 'update': 1 },
                 cache: false,
                 type: "POST",
                 dataType: "html",
@@ -71,7 +71,7 @@
             $.ajax({
                 url: '@Url.Action("IndexSanXuatByDate", "SanXuat")',
                 cache: false,
-                data: { 'date': date },
+                data: { 'date': date, 'update': 1 },
                 type: "POST",
                 dataType: "html",
                 success: function (data, textStatus, XMLHttpRequest) {
@@ -91,12 +91,12 @@
             <div class="panel-heading">
                 <div class="row">
                     <span style="margin-left: 10px; line-height: 33px">Sản phẩm sản xuất (hiện tại)</span>
-                    <input type="button" onclick="Reload(this, 'today',null); return false;" style="float: right; margin-right: 10px" value="Reload" class="btn btn-primary reload" />
+                    <input type="button" onclick="Reload(this, 'today',null); return false;" style="float: right; margin-right: 10px" value="Reload" class="btn btn-primary reload reloadall" />
                 </div>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body" id="today">
-                @{Html.RenderAction("IndexSanXuatByDate", "SanXuat");}
+                @{Html.RenderAction("IndexSanXuatByDate", "SanXuat", new { update = 1 });}
 
             </div>
             <!-- /.panel-body -->
@@ -113,13 +113,13 @@
             <div class="panel-heading">
                 <div class="row">
                     <span style="margin-left: 10px; line-height: 33px">Sản phẩm sản xuất (ngày mai)</span>
-                    <input type="button" onclick="Reload(this,'tomorrow','@(DateTime.Parse( DateTime.Now.AddDays(1).ToShortDateString()))'); return false;" style="float: right; margin-right: 10px" value="Reload" class="btn btn-primary" />
+                    <input type="button" onclick="Reload(this,'tomorrow','@(DateTime.Parse( DateTime.Now.AddDays(1).ToShortDateString()))'); return false;" style="float: right; margin-right: 10px" value="Reload" class="btn btn-primary reloadall" />
                 </div>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body" id="tomorrow">
 
-                @{Html.RenderAction("IndexSanXuatByDate", "SanXuat", new { date = DateTime.Parse(DateTime.Now.AddDays(1).ToShortDateString()) });}
+                @{Html.RenderAction("IndexSanXuatByDate", "SanXuat", new { date = DateTime.Parse(DateTime.Now.AddDays(1).ToShortDateString()),update=1 });}
 
             </div>
             <!-- /.panel-body -->
@@ -163,6 +163,17 @@
 </style>
 
 <script>
+    var timeOut;
+    function ReloadAll() {
+        $('.reloadall').click();
+        clearTimeout(timeOut);
+        timeOut = setTimeout(function () {
+            ReloadAll();
+        }, 60000);
+    }
+    timeOut = setTimeout(function () {
+        ReloadAll();
+    },60000);
     function updateMoveIcon() {
         $('.move-down').each(function () {
             var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
