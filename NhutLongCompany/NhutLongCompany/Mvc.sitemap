@@ -8,17 +8,21 @@
     <mvcSiteMapNode title="Báo Giá" controller="Home" action="HomeBaoGia">
       <mvcSiteMapNode title="Báo Giá" controller="tbl_OrderTem" action="IndexBaoGia"/>
       <mvcSiteMapNode title="Đơn hàng" controller="tbl_OrderTem" action="Index"/>
+    <mvcSiteMapNode title="Thêm báo giá" controller="tbl_OrderTem" action="Create"/>
+        <mvcSiteMapNode title="Sửa báo giá" controller="tbl_OrderTem" action="EditBaoGia"/>
+
     </mvcSiteMapNode>
 
     <mvcSiteMapNode title="Sản Phẩm" controller="Home" action="HomeSanPham">
       <mvcSiteMapNode title="Sản Phẩm Đã thực hiện" controller="Products" action="Index"/>
-      <mvcSiteMapNode title="Sản Phẩm đang thực hiện" controller="Products" action="SPWorking"/>
+      <mvcSiteMapNode title="Sản Phẩm đang thực hiện" controller="Products" action="IndexProcessProduct"/>
     </mvcSiteMapNode>
 
     <mvcSiteMapNode title="Sản xuất" controller="Home" action="HomeSanXuat">
       <mvcSiteMapNode title="Sản phầm đang sản xuất" controller="Sanxuat" action="IndexSanXuat"/>
       <mvcSiteMapNode title="Đơn hàng chờ duyệt sản xuất" controller="Sanxuat" action="Index"/>
       <mvcSiteMapNode title="Đơn hàng đang sản xuất" controller="Sanxuat" action="IndexSX"/>
+    <mvcSiteMapNode title="Lịch sản xuất" controller="Sanxuat" action="LichSanXuat"/>
     </mvcSiteMapNode>
     
   </mvcSiteMapNode>
