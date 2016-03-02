@@ -87,6 +87,7 @@
           <Property Name="status" Type="int" />
           <Property Name="code_detail" Type="nvarchar" MaxLength="200" />
           <Property Name="status_pause" Type="int" />
+          <Property Name="loai_design" Type="int" />
         </EntityType>
         <EntityType Name="tbl_Products">
           <Key>
@@ -228,6 +229,7 @@
           <Property Name="status" Type="Int32" />
           <Property Name="code_detail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="status_pause" Type="Int32" />
+          <Property Name="loai_design" Type="Int32" />
         </EntityType>
         <EntityType Name="tbl_Products">
           <Key>
@@ -372,6 +374,7 @@
           <EntitySetMapping Name="tbl_OrderTem_BaoGia_Detail">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem_BaoGia_Detail">
               <MappingFragment StoreEntitySet="tbl_OrderTem_BaoGia_Detail">
+                <ScalarProperty Name="loai_design" ColumnName="loai_design" />
                 <ScalarProperty Name="status_pause" ColumnName="status_pause" />
                 <ScalarProperty Name="code_detail" ColumnName="code_detail" />
                 <ScalarProperty Name="status" ColumnName="status" />

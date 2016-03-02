@@ -16,6 +16,7 @@ namespace NhutLongCompany.Models
     {
         public int id { get; set; }
         public Nullable<int> baogia_id { get; set; }
+        public Nullable<int> loai_design { get; set; }
         public Nullable<int> sanpam_id { get; set; }
         public Nullable<int> soluong { get; set; }
         public Nullable<double> money { get; set; }
