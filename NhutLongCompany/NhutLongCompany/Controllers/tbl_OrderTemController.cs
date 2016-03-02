@@ -714,7 +714,9 @@ namespace NhutLongCompany.Controllers
 
                 order.update_date = DateTime.Now;
                 order.update_user = Session["username"].ToString();
-                order.status = donHang.status.Value;
+               // order.status = donHang.status.Value;
+                order.date_begin = DateTime.Now;
+                order.status = 3;
                 db.Entry(order).State = EntityState.Modified;
                 db.SaveChanges();
                 var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
@@ -725,6 +727,7 @@ namespace NhutLongCompany.Controllers
                 foreach (var item in listSP)
                 {
                     tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail = db.tbl_OrderTem_BaoGia_Detail.Find(item.id);
+                   // tbl_OrderTem_BaoGia_Detail.status = 0;
                     tbl_OrderTem_BaoGia_Detail.status = 0;
                     db.Entry(tbl_OrderTem_BaoGia_Detail).State = EntityState.Modified;
                     if (item.OffsetFlexoProducts.Equals("Offset"))
@@ -775,7 +778,28 @@ namespace NhutLongCompany.Controllers
 
                     }
                 }
-                return RedirectToAction("Index", "SanXuat");
+
+
+                var q = from a in db.tbl_OrderTem_BaoGia_Detail where a.baogia_id.Value == donHang.BaoGiaTemView.id select a;
+                List<tbl_OrderTem_BaoGia_Detail> listDetail = q.ToList();
+                var queryMax = (from u in db.tbl_Stack
+                                orderby u.index_view descending
+                                select u).Take(1);
+                int maxStackView = queryMax.ToList().Count == 0 ? 1 : queryMax.ToList()[0].index_view.Value;
+
+                for (int i = 0; i < listDetail.Count; i++)
+                {
+                    var item = listDetail[i];
+                    // item.status = 1;
+                    // item.date_working = donHang.date_begin;
+                    db.Entry(item).State = EntityState.Modified;
+                    tbl_Stack tbl_Stack = new tbl_Stack { baoGia_detail_id = item.id, date_create = DateTime.Now, index_view = maxStackView + i + 1 };
+                    db.tbl_Stack.Add(tbl_Stack);
+
+                }
+                db.SaveChanges();
+
+                return RedirectToAction("LichSanXuat", "SanXuat");
             }
             DonHangView d = new DonHangView();
             d.action = donHang.action;

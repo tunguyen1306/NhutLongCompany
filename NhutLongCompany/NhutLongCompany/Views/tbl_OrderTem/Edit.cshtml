@@ -548,7 +548,7 @@
 
                                                         <td class="cusfontsize2" colspan="18" style="position:relative">
                                                           
-                                                            @item.NameProducts <i>(Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))</i>
+                                                          @item.NameProducts <i>(Working:@(item.Date_Working.HasValue ? item.Date_Working.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật") - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))</i>
                                                             <input type="hidden" value="@item.id" />
                                                         </td>
                                                     </tr>
