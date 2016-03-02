@@ -26,5 +26,6 @@ namespace NhutLongCompany.Models
         public Nullable<System.DateTime> date_working { get; set; }
         public Nullable<int> status { get; set; }
         public string code_detail { get; set; }
+        public Nullable<int> status_pause { get; set; }
     }
 }

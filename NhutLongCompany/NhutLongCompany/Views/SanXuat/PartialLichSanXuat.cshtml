@@ -1,0 +1,97 @@
+﻿@model IEnumerable<NhutLongCompany.Models.BaoGiaTemDetailView>
+@for (int i = 0; i < Model.ToList().Count; i++)
+{
+    var itemCT = Model.ToList()[i];
+    var colorB = "transparent";
+    if (!itemCT.Status_Pause.HasValue || (itemCT.Status_Pause.HasValue && itemCT.Status_Pause.Value == 0))
+    {
+        colorB = "transparent";
+    }
+    else
+    {
+        colorB = "gray";
+    }
+
+    var songay = (int)itemCT.date_deliver.Value.Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays;
+    var color_for = "black";
+    var color = "";
+    if (songay < 0)
+    {
+        color = "red";
+        color_for = "yellow";
+    }
+    else if (songay < 2)
+    {
+        color = "yellow";
+        color_for = "red";
+    }
+
+    <tr style="background-color:@colorB" id="ajax_update_@(itemCT.id)_product" class="move_product" data-index="@itemCT.Index_View">
+
+        <td>
+            @itemCT.Code_Detail
+        </td>
+        <td>
+            @itemCT.NameProducts
+
+        </td>
+        <td>
+            @itemCT.SoLuong
+        </td>
+        <td>
+            @(itemCT.date_deliver.HasValue ? itemCT.date_deliver.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")
+        </td>
+        <td style="background-color:@color;color:@color_for">
+            @songay
+        </td>
+        @*<td>
+                @(itemCT.Date_Working.HasValue ? itemCT.Date_Working.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")
+            </td>*@
+        <td>
+            @if (itemCT.Step_Flow.HasValue)
+            {
+                @(itemCT.QuyTrinhs[0].TenBuoc + " - ( " + itemCT.QuyTrinhs[0].NgayBatDau_TT.Value.ToString("dd/MM/yyyy") + " - " + (itemCT.QuyTrinhs[0].NgayKetThuc_TT.HasValue ? itemCT.QuyTrinhs[0].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy") : "Updating") + " )")
+            }
+            else
+            {
+                @("Đang cập nhập")
+            }
+
+
+        </td>
+        @*<td >
+                @if (itemCT.Status == 0)
+                {
+                    <span>Chưa sản xuất</span>
+                }
+                @if (itemCT.Status == 1)
+                {
+                    <span>Đang sản xuất</span>
+                }
+                @if (itemCT.Status == 2)
+                {
+                    <span>Hoàn thành sản xuất</span>
+                }
+            </td>*@
+        <td style="position:relative">
+            <span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:18px;top:5px;"></span>
+            <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 18px;top: 15px;"></span>
+        </td>
+        @*<td style="position:relative">
+                <button type="submit" class="btn btn-outline btn-default btn-xs"  onclick="return setValue(@itemCT.id);">Chuyển</button>
+            </td>*@
+
+        <td style="position:relative">
+            @if (!itemCT.Status_Pause.HasValue || (itemCT.Status_Pause.HasValue && itemCT.Status_Pause.Value == 0))
+            {
+                <button type="submit" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@itemCT.id);">Tạm dừng</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@itemCT.id); onContinue(); return false;">Tiếp tục</button>
+            }
+
+        </td>
+    </tr>
+
+}

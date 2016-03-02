@@ -25,6 +25,18 @@
           <Property Name="CreateUserCustomers" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifyUserCustomers" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="tbl_FlowPauseTime">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="baoGia_detail_id" Type="int" />
+          <Property Name="date_begin" Type="datetime" />
+          <Property Name="date_end" Type="datetime" />
+          <Property Name="status" Type="int" />
+          <Property Name="index_step" Type="int" />
+          <Property Name="note" Type="nvarchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="tbl_OrderTem">
           <Key>
             <PropertyRef Name="id" />
@@ -74,6 +86,7 @@
           <Property Name="date_working" Type="date" />
           <Property Name="status" Type="int" />
           <Property Name="code_detail" Type="nvarchar" MaxLength="200" />
+          <Property Name="status_pause" Type="int" />
         </EntityType>
         <EntityType Name="tbl_Products">
           <Key>
@@ -132,6 +145,7 @@
         </EntityType>
         <EntityContainer Name="NhutLongCompanyModelStoreContainer">
           <EntitySet Name="tbl_Customers" EntityType="Self.tbl_Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_FlowPauseTime" EntityType="Self.tbl_FlowPauseTime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_OrderTem" EntityType="Self.tbl_OrderTem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_OrderTem_BaoGia" EntityType="Self.tbl_OrderTem_BaoGia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_OrderTem_BaoGia_Detail" EntityType="Self.tbl_OrderTem_BaoGia_Detail" Schema="dbo" store:Type="Tables" />
@@ -213,6 +227,7 @@
           <Property Name="date_working" Type="DateTime" Precision="0" />
           <Property Name="status" Type="Int32" />
           <Property Name="code_detail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="status_pause" Type="Int32" />
         </EntityType>
         <EntityType Name="tbl_Products">
           <Key>
@@ -270,6 +285,7 @@
           <EntitySet Name="tbl_QuyTrinh" EntityType="Self.tbl_QuyTrinh" />
           <EntitySet Name="tbl_User" EntityType="Self.tbl_User" />
           <EntitySet Name="tbl_Stack" EntityType="NhutLongCompanyModel.tbl_Stack" />
+          <EntitySet Name="tbl_FlowPauseTime" EntityType="NhutLongCompanyModel.tbl_FlowPauseTime" />
         </EntityContainer>
         <EntityType Name="tbl_Stack">
           <Key>
@@ -278,6 +294,18 @@
           <Property Name="baoGia_detail_id" Type="Int32" Nullable="false" />
           <Property Name="index_view" Type="Int32" />
           <Property Name="date_create" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="tbl_FlowPauseTime">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="baoGia_detail_id" Type="Int32" />
+          <Property Name="date_begin" Type="DateTime" Precision="3" />
+          <Property Name="date_end" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="index_step" Type="Int32" />
+          <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -344,6 +372,7 @@
           <EntitySetMapping Name="tbl_OrderTem_BaoGia_Detail">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem_BaoGia_Detail">
               <MappingFragment StoreEntitySet="tbl_OrderTem_BaoGia_Detail">
+                <ScalarProperty Name="status_pause" ColumnName="status_pause" />
                 <ScalarProperty Name="code_detail" ColumnName="code_detail" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="date_working" ColumnName="date_working" />
@@ -415,6 +444,19 @@
                 <ScalarProperty Name="date_create" ColumnName="date_create" />
                 <ScalarProperty Name="index_view" ColumnName="index_view" />
                 <ScalarProperty Name="baoGia_detail_id" ColumnName="baoGia_detail_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_FlowPauseTime">
+            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_FlowPauseTime">
+              <MappingFragment StoreEntitySet="tbl_FlowPauseTime">
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="index_step" ColumnName="index_step" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="date_end" ColumnName="date_end" />
+                <ScalarProperty Name="date_begin" ColumnName="date_begin" />
+                <ScalarProperty Name="baoGia_detail_id" ColumnName="baoGia_detail_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

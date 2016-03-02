@@ -555,17 +555,17 @@
 
                                                                         @foreach (var item in Model.BaoGiaTemView.BaoGiaTemDetailViews)
                                                                         {
-                                                                            <tr id="ext_@item.id" class="tr_edit">
-                                                                            <input type="hidden" value="@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews.Index">
-                                                                            <input type="hidden" value="@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].ID_Products">
-                                                                            <td>@item.NameProducts<input type="hidden" value="@item.NameProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].NameProducts" class="NameProducts"></td>
-                                                                            <td>@item.SolopProducts<input type="hidden" value="@item.SolopProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].SolopProducts" class="SolopProducts"></td>
-                                                                            <td>@item.LoaigiayProducts<input type="hidden" value="@item.LoaigiayProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].LoaigiayProducts" class="LoaigiayProducts"></td>
-                                                                            <td>@item.OffsetFlexoProducts<input type="hidden" value="@item.OffsetFlexoProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].OffsetFlexoProducts" class="OffsetFlexoProducts"></td>
-                                                                            <td>@item.DanKimProducts<input type="hidden" value="@item.DanKimProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].DanKimProducts" class="DanKimProducts"></td>
-                                                                            <td>@item.QuyCachProducts<input type="hidden" value="@item.QuyCachProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].QuyCachProducts" class="QuyCachProducts"></td>
-                                                                            <td><input  type="number" min="0" step="500" class="form-control text-box single-line GiaProducts updateSL" value="@item.GiaProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].GiaProducts" ></td>
-                                                                            <td><input type="number" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].SoLuong" value="@item.SoLuong" min="1" class="form-control text-box single-line updateSL SoLuong"></td>
+                                                                            <tr id="ext_@item.ID_Products" class="tr_edit">
+                                                                            <input type="hidden" value="@item.ID_Products" name="BaoGiaTemView.BaoGiaTemDetailViews.Index">
+                                                                            <input type="hidden" value="@item.ID_Products" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].ID_Products">
+                                                                            <td>@item.NameProducts<input type="hidden" value="@item.NameProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].NameProducts" class="NameProducts"></td>
+                                                                            <td>@item.SolopProducts<input type="hidden" value="@item.SolopProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].SolopProducts" class="SolopProducts"></td>
+                                                                            <td>@item.LoaigiayProducts<input type="hidden" value="@item.LoaigiayProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].LoaigiayProducts" class="LoaigiayProducts"></td>
+                                                                            <td>@item.OffsetFlexoProducts<input type="hidden" value="@item.OffsetFlexoProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].OffsetFlexoProducts" class="OffsetFlexoProducts"></td>
+                                                                            <td>@item.DanKimProducts<input type="hidden" value="@item.DanKimProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].DanKimProducts" class="DanKimProducts"></td>
+                                                                            <td>@item.QuyCachProducts<input type="hidden" value="@item.QuyCachProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].QuyCachProducts" class="QuyCachProducts"></td>
+                                                                            <td><input  type="number" min="0" step="500" class="form-control text-box single-line GiaProducts updateSL" value="@item.GiaProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].GiaProducts" ></td>
+                                                                            <td><input type="number" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].SoLuong" value="@item.SoLuong" min="1" class="form-control text-box single-line updateSL SoLuong"></td>
                                                                             <td>@if (!item.Design.HasValue || item.Design.Value == 0)
                                                                             {
                                                                                 @("N")
@@ -586,9 +586,9 @@
                                                                                 @("Chưa cập nhật")
                                                                             }
                                                                                 
-                                                                                <input type="hidden" value="@item.Design.Value" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].Design" class="Design">                                                                                
-                                                                                <input type="hidden" value="@item.Design_Img" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].Design_Img" class="Design">
-                                                                                <input type="hidden" value="@item.Design_Date" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].Design_Date" class="Design">
+                                                                                <input type="hidden" value="@item.Design.Value" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].Design" class="Design">                                                                                
+                                                                                <input type="hidden" value="@item.Design_Img" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].Design_Img" class="Design">
+                                                                                <input type="hidden" value="@item.Design_Date" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].Design_Date" class="Design">
                                                                                 </td>
 
 
