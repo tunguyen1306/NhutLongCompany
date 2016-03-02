@@ -24,6 +24,7 @@
                 data.append('file', document.getElementById('image_tk').files[0]);
             }
         }
+        data.append('loai', $('#ddlChonmau').val());
         $.ajax({
             url: '@Url.Action("UpdateDesign", "tbl_OrderTem")',
             type: 'POST',
@@ -734,6 +735,9 @@
                                                                         <th>
                                                                             Làm mẫu
                                                                         </th>
+                                                                        <th>
+                                                                            Kiểu mẫu
+                                                                        </th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody class="body_data">
@@ -775,6 +779,27 @@
 
 
 
+                                                                            </td>
+                                                                            <td>
+                                                                        
+                                                                                     @*@if (item.loai_design==0)
+                                                                                    {
+                                                                                        "Không";
+                                                                                    }
+                                                                                    @if (item.loai_design==1)
+                                                                                    {
+                                                                                        "Không";
+                                                                                    }
+                                                                                    @if (item.loai_design==2)
+                                                                                    {
+                                                                                        "Không";
+                                                                                    }
+                                                                                    @if (item.loai_design==3)
+                                                                                    {
+                                                                                        "Không";
+                                                                                    }
+                                                                                Không / Mẫu thiết kế / Mẫu thùng / Mẫu thùng và thiết kế / Khác*@
+                                                                                
                                                                             </td>
                                                                         </tr>
                                                                     }
@@ -902,6 +927,7 @@
                                                                             <th>
                                                                                 Làm mẫu
                                                                             </th>
+                                                                           
 
                                                                         </tr>
                                                                     </thead>
@@ -920,7 +946,7 @@
                                                                                 <td>
                                                                                     @if (!item.Design.HasValue || item.Design.Value == 0)
                                                                                     {
-                                                                                        @("N")
+                                                                                        @("Không")
                                                                                     }
                                                                                     else if (item.Design.Value == 2)
                                                                                     {
@@ -938,6 +964,7 @@
                                                                                         @("Chưa cập nhập")
                                                                                     }
                                                                                 </td>
+                                                                              
                                                                             </tr>
                                                                         }
                                                                     </tbody>

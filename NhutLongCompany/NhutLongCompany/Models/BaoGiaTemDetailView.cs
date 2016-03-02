@@ -23,6 +23,7 @@ namespace NhutLongCompany.Models
         public string CodeProducts { get; set; }
         public string QuyCachProducts { get; set; }
         public int SoLuong { get; set; }
+        public int loai_design { get; set; }
         public List<tbl_QuyTrinh> QuyTrinhs { get; set; }
 
         public Nullable<int> Design { get; set; }
