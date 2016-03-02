@@ -192,7 +192,7 @@
             $('.lblLoaigiayProducts').addClass('hidden');
             var id = new Date().getTime();
             var tr = $(el).parents('tr').eq(0);
-            var trdata = "<tr class='tr_edit' id='ext_" + id + "'><input name='BaoGiaTemView.BaoGiaTemDetailViews.Index' value='" + id + "' type='hidden'/>";
+            var trdata = "<tr class='tr_edit' id='ext_" + id + "'><input name='BaoGiaTemView.BaoGiaTemDetailViews.Index' value='" + id + "' type='hidden'/><input name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "].ID_Products' value='' type='hidden'/>";
             tr.find('.form-control').each(function () {
                 if ($(this).attr('name') == 'SoLuong') {
                     trdata += "<td><input class='form-control text-box single-line updateSL " + this.name + "'  min='1' value='" + this.value + "' type='number' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "'/></td>";
@@ -430,8 +430,8 @@
 
                                                                         <label class="control-label col-md-4" for="total_money">Tổng tiền</label>
                                                                         <div class="col-md-8" style="padding-top:7px">
-                                                                            <input class="form-control BaoGiaTemView_total_money" data-val="true" data-val-number="The field total_money must be a number." name="BaoGiaTemView.total_money" value="" type="hidden">
-                                                                            <span id="BaoGiaTemView_total_money">0</span> đ
+                                                                            <input class="form-control BaoGiaTemView_total_money" data-val="true" data-val-number="The field total_money must be a number." name="BaoGiaTemView.total_money" value="@Model.BaoGiaTemView.total_money.Value" type="hidden">
+                                                                            <span id="BaoGiaTemView_total_money">@(Model.BaoGiaTemView.total_money.Value.ToString("n2"))</span> đ
                                                                         </div>
                                                                     </div>
 
@@ -552,6 +552,51 @@
                                                                             <td align="center"><input type="submit" style="float: left; margin-left: 10px" value="Thêm" class="btn btn-primary" onclick=" updateProduct(this); return false; " /></td>
 
                                                                         </tr>
+
+                                                                        @foreach (var item in Model.BaoGiaTemView.BaoGiaTemDetailViews)
+                                                                        {
+                                                                            <tr id="ext_@item.id" class="tr_edit">
+                                                                            <input type="hidden" value="@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews.Index">
+                                                                            <input type="hidden" value="@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].ID_Products">
+                                                                            <td>@item.NameProducts<input type="hidden" value="@item.NameProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].NameProducts" class="NameProducts"></td>
+                                                                            <td>@item.SolopProducts<input type="hidden" value="@item.SolopProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].SolopProducts" class="SolopProducts"></td>
+                                                                            <td>@item.LoaigiayProducts<input type="hidden" value="@item.LoaigiayProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].LoaigiayProducts" class="LoaigiayProducts"></td>
+                                                                            <td>@item.OffsetFlexoProducts<input type="hidden" value="@item.OffsetFlexoProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].OffsetFlexoProducts" class="OffsetFlexoProducts"></td>
+                                                                            <td>@item.DanKimProducts<input type="hidden" value="@item.DanKimProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].DanKimProducts" class="DanKimProducts"></td>
+                                                                            <td>@item.QuyCachProducts<input type="hidden" value="@item.QuyCachProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].QuyCachProducts" class="QuyCachProducts"></td>
+                                                                            <td><input  type="number" min="0" step="500" class="form-control text-box single-line GiaProducts updateSL" value="@item.GiaProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].GiaProducts" ></td>
+                                                                            <td><input type="number" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].SoLuong" value="@item.SoLuong" min="1" class="form-control text-box single-line updateSL SoLuong"></td>
+                                                                            <td>@if (!item.Design.HasValue || item.Design.Value == 0)
+                                                                            {
+                                                                                @("N")
+                                                                            }
+                                                                            else if (item.Design.Value == 2)
+                                                                            {
+                                                                                if (!String.IsNullOrEmpty(item.Design_Img))
+                                                                                {
+                                                                                    <a href="/Upload/ThietKe/@(item.id)_@(item.Design_Img)" target="_blank">@item.Design_Date.Value.ToString("dd/MM/yyyy")</a>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @(item.Design_Date.HasValue ? item.Design_Date.Value.ToString("dd/MM/yyyy") : "Chưa update")
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @("Chưa cập nhật")
+                                                                            }
+                                                                                
+                                                                                <input type="hidden" value="@item.Design.Value" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].Design" class="Design">                                                                                
+                                                                                <input type="hidden" value="@item.Design_Img" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].Design_Img" class="Design">
+                                                                                <input type="hidden" value="@item.Design_Date" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].Design_Date" class="Design">
+                                                                                </td>
+
+
+
+                                                                            <td><input type="submit" onclick="delProduct(this); return false;" class="btn btn-primary" value="Xóa" style="float: left; margin-left: 10px"></td>
+                                                                            </tr>
+                                                                        }
+
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -559,6 +604,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <script type="text/javascript">$(document).ready(function () {
+                                                                                   updateEvent();
+                                                                            });</script>
                                             }
 
 
@@ -706,7 +754,8 @@
                                                                             <td id="id_update_tk_@item.id">
                                                                                 @if (!item.Design.HasValue || item.Design.Value == 0)
                                                                                 {
-                                                                                    @("N")           }
+                                                                                    @("N")           
+                                                                                }
                                                                                 else if (item.Design.Value == 2)
                                                                                 {
                                                                                     if (!String.IsNullOrEmpty(item.Design_Img))
@@ -715,7 +764,7 @@
                                                                                     }
                                                                                     else
                                                                                     {
-                                                                                        @item.Design_Date.Value.ToString("dd/MM/yyyy")
+                                                                                        @(item.Design_Date.HasValue?item.Design_Date.Value.ToString("dd/MM/yyyy"):"Chưa update")
                                                                                     }
                                                                                 }
                                                                                 else

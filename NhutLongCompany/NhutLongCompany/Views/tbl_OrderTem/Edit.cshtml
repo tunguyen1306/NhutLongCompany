@@ -192,7 +192,7 @@
             $('.lblLoaigiayProducts').addClass('hidden');
             var id = new Date().getTime();
             var tr = $(el).parents('tr').eq(0);
-            var trdata = "<tr class='tr_edit' id='ext_" + id + "'><input name='BaoGiaTemView.BaoGiaTemDetailViews.Index' value='" + id + "' type='hidden'/>";
+            var trdata = "<tr class='tr_edit' id='ext_" + id + "'><input name='BaoGiaTemView.BaoGiaTemDetailViews.Index' value='" + id + "' type='hidden'/><input name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "].ID_Products' value='' type='hidden'/>";
             tr.find('.form-control').each(function () {
                 if ($(this).attr('name') == 'SoLuong') {
                     trdata += "<td><input class='form-control text-box single-line updateSL " + this.name + "'  min='1' value='" + this.value + "' type='number' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "'/></td>";
