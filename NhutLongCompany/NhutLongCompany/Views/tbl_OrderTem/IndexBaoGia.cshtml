@@ -96,7 +96,7 @@
                                     <td>
 
                                         @Html.ActionLink("Chi tiết", "EditBaoGia", new {item.id}, new {@class = "btn btn-outline btn-primary btn-xs"})
-                                        @if (item.status == 0)
+                                        @if (item.BaoGiaTemView.status == 0 || item.BaoGiaTemView.status == 2)
                                         {
                                             <a href="@Url.Action("Delete", "tbl_OrderTem", new {item.id})" class="btn btn-outline btn-primary btn-xs" onclick=" return confirm('Bạn có muốn xóa báo giá không?'); ">Xóa</a>
                                         }

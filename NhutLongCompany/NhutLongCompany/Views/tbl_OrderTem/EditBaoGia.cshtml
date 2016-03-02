@@ -13,7 +13,7 @@
 
     function UpdateTK() {
         if ($('#date_tk').val() == "") {
-            alert("Vui lòng chọn ngày!")
+            alert("Vui lòng chọn ngày!");
             return;
         }
         var data = new FormData();
@@ -202,7 +202,7 @@
                         text = numberParse(this.value) + " đ";
                     }
                     if ($(this).attr('name') == 'Design') {
-                        text = this.value == 1 ? "Y" : "N";
+                        text = this.value == 1 ? "Có" : "Không";
                     }
                     trdata += "<td>" + text + "<input class='" + this.name + "' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "' value='" + this.value + "' type='hidden'/></td>";
                 }
@@ -954,6 +954,21 @@
                                                                 <label for="usr">Ngày giao Làm mẫu :</label>
                                                                 <input type="datetime" value="" id="date_tk" name="date_tk" class="form-control date text-box single-line">
                                                             </div>
+                                                           
+                                                            <div class="form-group">
+                                                                <label>Chọn Làm mẫu :</label>
+                                                                <select id="ddlChonmau" class="form-control">
+                                                                    <option value="0">Không</option>
+                                                                    <option value="1">Mẫu thiết kế</option>
+                                                                    <option value="2">Mẫu thùng</option>
+                                                                    <option value="3">Mẫu thùng và thiết kế</option>
+                                                                    <option value="4">Khác</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group hidden custex">
+                                                                <label>Ghi chú:</label>
+                                                                <input type="text" class="form-control" id="txtTex" name="txtNTex">
+                                                            </div>
                                                             <div class="form-group">
                                                                 <label for="pwd">Hình Làm mẫu :</label>
                                                                 <input type="file" id="image_tk" accept="image/*" name="image_tk">
@@ -965,6 +980,16 @@
                                                                 <button class="btn btn-primary" onclick="UpdateTK();return false;">Lưu</button>
                                                             </div>
                                                         </div>
+                                                        <script>
+                                                            $('#ddlChonmau').change(function() {
+                                                                var vl = $('#ddlChonmau').val();
+                                                                if (vl=="4") {
+                                                                    $('.custex').removeClass('hidden');
+                                                                } else {
+                                                                    $('.custex').addClass('hidden');
+                                                                }
+                                                            });
+                                                        </script>
                                                     </div>
                                                 </div>
                                             </div>
