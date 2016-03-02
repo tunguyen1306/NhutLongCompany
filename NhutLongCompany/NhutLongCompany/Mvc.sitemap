@@ -7,9 +7,7 @@
     <mvcSiteMapNode title="Khách hàng" controller="Customers" action="Index"/>
     <mvcSiteMapNode title="Báo Giá" controller="Home" action="HomeBaoGia">
       <mvcSiteMapNode title="Báo Giá" controller="tbl_OrderTem" action="IndexBaoGia"/>
-      <mvcSiteMapNode title="Đơn hàng" controller="tbl_OrderTem" action="Index">
-        <mvcSiteMapNode title="Chi tiết đơn hàng " controller="tbl_OrderTem" action="Edit"/>
-    </mvcSiteMapNode>
+      <mvcSiteMapNode title="Đơn hàng" controller="tbl_OrderTem" action="Index"/>
     <mvcSiteMapNode title="Thêm báo giá" controller="tbl_OrderTem" action="Create"/>
         <mvcSiteMapNode title="Sửa báo giá" controller="tbl_OrderTem" action="EditBaoGia"/>
 

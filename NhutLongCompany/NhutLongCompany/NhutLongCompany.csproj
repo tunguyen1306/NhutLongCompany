@@ -1072,6 +1072,7 @@
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <Content Include="Views\SanXuat\LichSanXuat.cshtml" />
     <Content Include="Views\Products\IndexProcessProduct.cshtml" />
+    <Content Include="Views\SanXuat\PartialLichSanXuat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

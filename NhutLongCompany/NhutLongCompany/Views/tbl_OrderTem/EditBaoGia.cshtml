@@ -13,7 +13,7 @@
 
     function UpdateTK() {
         if ($('#date_tk').val() == "") {
-            alert("Vui lòng chọn ngày!");
+            alert("Vui lòng chọn ngày!")
             return;
         }
         var data = new FormData();
@@ -24,7 +24,6 @@
                 data.append('file', document.getElementById('image_tk').files[0]);
             }
         }
-        data.append('loai', $('#ddlChonmau').val());
         $.ajax({
             url: '@Url.Action("UpdateDesign", "tbl_OrderTem")',
             type: 'POST',
@@ -203,7 +202,7 @@
                         text = numberParse(this.value) + " đ";
                     }
                     if ($(this).attr('name') == 'Design') {
-                        text = this.value == 1 ? "Có" : "Không";
+                        text = this.value == 1 ? "Y" : "N";
                     }
                     trdata += "<td>" + text + "<input class='" + this.name + "' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "' value='" + this.value + "' type='hidden'/></td>";
                 }
@@ -735,9 +734,6 @@
                                                                         <th>
                                                                             Làm mẫu
                                                                         </th>
-                                                                        <th>
-                                                                            Kiểu mẫu
-                                                                        </th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody class="body_data">
@@ -779,27 +775,6 @@
 
 
 
-                                                                            </td>
-                                                                            <td>
-                                                                        
-                                                                                     @*@if (item.loai_design==0)
-                                                                                    {
-                                                                                        "Không";
-                                                                                    }
-                                                                                    @if (item.loai_design==1)
-                                                                                    {
-                                                                                        "Không";
-                                                                                    }
-                                                                                    @if (item.loai_design==2)
-                                                                                    {
-                                                                                        "Không";
-                                                                                    }
-                                                                                    @if (item.loai_design==3)
-                                                                                    {
-                                                                                        "Không";
-                                                                                    }
-                                                                                Không / Mẫu thiết kế / Mẫu thùng / Mẫu thùng và thiết kế / Khác*@
-                                                                                
                                                                             </td>
                                                                         </tr>
                                                                     }
@@ -927,7 +902,6 @@
                                                                             <th>
                                                                                 Làm mẫu
                                                                             </th>
-                                                                           
 
                                                                         </tr>
                                                                     </thead>
@@ -946,7 +920,7 @@
                                                                                 <td>
                                                                                     @if (!item.Design.HasValue || item.Design.Value == 0)
                                                                                     {
-                                                                                        @("Không")
+                                                                                        @("N")
                                                                                     }
                                                                                     else if (item.Design.Value == 2)
                                                                                     {
@@ -964,7 +938,6 @@
                                                                                         @("Chưa cập nhập")
                                                                                     }
                                                                                 </td>
-                                                                              
                                                                             </tr>
                                                                         }
                                                                     </tbody>
@@ -1030,21 +1003,6 @@
                                                                 <label for="usr">Ngày giao Làm mẫu :</label>
                                                                 <input type="datetime" value="" id="date_tk" name="date_tk" class="form-control date text-box single-line">
                                                             </div>
-                                                           
-                                                            <div class="form-group">
-                                                                <label>Chọn Làm mẫu :</label>
-                                                                <select id="ddlChonmau" class="form-control">
-                                                                    <option value="0">Không</option>
-                                                                    <option value="1">Mẫu thiết kế</option>
-                                                                    <option value="2">Mẫu thùng</option>
-                                                                    <option value="3">Mẫu thùng và thiết kế</option>
-                                                                    <option value="4">Khác</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group hidden custex">
-                                                                <label>Ghi chú:</label>
-                                                                <input type="text" class="form-control" id="txtTex" name="txtNTex">
-                                                            </div>
                                                             <div class="form-group">
                                                                 <label for="pwd">Hình Làm mẫu :</label>
                                                                 <input type="file" id="image_tk" accept="image/*" name="image_tk">
@@ -1056,16 +1014,6 @@
                                                                 <button class="btn btn-primary" onclick="UpdateTK();return false;">Lưu</button>
                                                             </div>
                                                         </div>
-                                                        <script>
-                                                            $('#ddlChonmau').change(function() {
-                                                                var vl = $('#ddlChonmau').val();
-                                                                if (vl=="4") {
-                                                                    $('.custex').removeClass('hidden');
-                                                                } else {
-                                                                    $('.custex').addClass('hidden');
-                                                                }
-                                                            });
-                                                        </script>
                                                     </div>
                                                 </div>
                                             </div>
