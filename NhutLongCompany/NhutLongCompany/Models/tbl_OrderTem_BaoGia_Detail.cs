@@ -27,8 +27,6 @@ namespace NhutLongCompany.Models
         public Nullable<int> status { get; set; }
         public string code_detail { get; set; }
         public Nullable<int> status_pause { get; set; }
-
         public Nullable<int> loai_design { get; set; }
-
     }
 }

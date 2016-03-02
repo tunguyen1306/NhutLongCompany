@@ -308,8 +308,6 @@
 
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
 
-          <Property Name="id" Type="Int64" Nullable="false" />
-
           <Property Name="baoGia_detail_id" Type="Int32" />
           <Property Name="date_begin" Type="DateTime" Precision="3" />
           <Property Name="date_end" Type="DateTime" Precision="3" />
