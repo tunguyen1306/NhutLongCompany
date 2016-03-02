@@ -87,7 +87,10 @@
           <Property Name="status" Type="int" />
           <Property Name="code_detail" Type="nvarchar" MaxLength="200" />
           <Property Name="status_pause" Type="int" />
+<<<<<<< HEAD
           <Property Name="loai_design" Type="int" />
+=======
+>>>>>>> c8551ef73a150bc657cdbf8ed504420c33dec342
         </EntityType>
         <EntityType Name="tbl_Products">
           <Key>
@@ -229,7 +232,10 @@
           <Property Name="status" Type="Int32" />
           <Property Name="code_detail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="status_pause" Type="Int32" />
+<<<<<<< HEAD
           <Property Name="loai_design" Type="Int32" />
+=======
+>>>>>>> c8551ef73a150bc657cdbf8ed504420c33dec342
         </EntityType>
         <EntityType Name="tbl_Products">
           <Key>
@@ -301,7 +307,11 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
+<<<<<<< HEAD
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+=======
+          <Property Name="id" Type="Int64" Nullable="false" />
+>>>>>>> c8551ef73a150bc657cdbf8ed504420c33dec342
           <Property Name="baoGia_detail_id" Type="Int32" />
           <Property Name="date_begin" Type="DateTime" Precision="3" />
           <Property Name="date_end" Type="DateTime" Precision="3" />
@@ -374,7 +384,10 @@
           <EntitySetMapping Name="tbl_OrderTem_BaoGia_Detail">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem_BaoGia_Detail">
               <MappingFragment StoreEntitySet="tbl_OrderTem_BaoGia_Detail">
+<<<<<<< HEAD
                 <ScalarProperty Name="loai_design" ColumnName="loai_design" />
+=======
+>>>>>>> c8551ef73a150bc657cdbf8ed504420c33dec342
                 <ScalarProperty Name="status_pause" ColumnName="status_pause" />
                 <ScalarProperty Name="code_detail" ColumnName="code_detail" />
                 <ScalarProperty Name="status" ColumnName="status" />

@@ -22,7 +22,7 @@ namespace NhutLongCompany.Controllers
             }
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
-                      where data.status >=0 orderby data.status ascending
+                      where data.status >=0 orderby data.update_date descending
                       select new DonHangView
                       {
                           id = data.id,
@@ -611,7 +611,7 @@ namespace NhutLongCompany.Controllers
                 var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
                                      join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
                                      where u.baogia_id.Value.Equals(temBG.id)
-                                     select new BaoGiaTemDetailView { Date_Working=u.date_working,date_deliver = d.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+                                     select new BaoGiaTemDetailView {  Date_Working=u.date_working,date_deliver = d.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
                 temBG.BaoGiaTemDetailViews = queryGiaoGiaCT.ToList<BaoGiaTemDetailView>();
                 d.BaoGiaTemView = temBG;
                 foreach (var itemSP in d.BaoGiaTemView.BaoGiaTemDetailViews)
@@ -806,8 +806,8 @@ namespace NhutLongCompany.Controllers
                 for (int i = 0; i < listDetail.Count; i++)
                 {
                     var item = listDetail[i];
-                    // item.status = 1;
-                    // item.date_working = donHang.date_begin;
+                     item.status = 1;
+                     item.date_working = DateTime.Now;
                     db.Entry(item).State = EntityState.Modified;
                     tbl_Stack tbl_Stack = new tbl_Stack { baoGia_detail_id = item.id, date_create = DateTime.Now, index_view = maxStackView + i + 1 };
                     db.tbl_Stack.Add(tbl_Stack);

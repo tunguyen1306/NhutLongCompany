@@ -171,6 +171,9 @@
     <Compile Include="Models\tbl_Customers.cs">
       <DependentUpon>DataWeb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_FlowPauseTime.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_OrderTem.cs">
       <DependentUpon>DataWeb.tt</DependentUpon>
     </Compile>

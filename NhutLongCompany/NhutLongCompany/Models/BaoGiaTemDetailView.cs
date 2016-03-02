@@ -39,5 +39,9 @@ namespace NhutLongCompany.Models
         public Nullable<int> Status { get; set; }
         public string Code_Detail { get; set; }
         public Nullable<int> Step_Flow { get; set; }
+
+        public Nullable<int> Status_Pause { get; set; }
+
+        public tbl_FlowPauseTime Current_FlowPauseTime;
     }
 }
