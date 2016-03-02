@@ -344,38 +344,48 @@ namespace NhutLongCompany.Controllers
                     countindex++;
                     item.StatusProducts = -1;
                     item.CreatedDateProducts = DateTime.Now;
-
-                    var queryMax = (from u in db.tbl_Products
-                                    orderby u.ID_Products descending
-                                    select u).Take(1);
-                    int maxSP = queryMax.ToList().Count == 0 ? 1 : queryMax.ToList()[0].ID_Products + 1;
-                    String masp = String.Format("SP{0}", maxSP.ToString("000000"));
-                    item.CodeProducts = masp;
-                    tbl_Products itemP = new tbl_Products
+                    if (item.ID_Products==0)
                     {
-                        CodeProducts = masp,
-                        CreatedDateProducts = item.CreatedDateProducts,
-                        CreateUserProducts = item.CreateUserProducts,
-                        DanKimProducts = item.DanKimProducts,
-                        GiaProducts = item.GiaProducts,
-                        ID_Products = item.ID_Products,
-                        LoaigiayProducts = item.LoaigiayProducts,
-                        ModifyDateProducts = item.ModifyDateProducts,
-                        ModifyUserProducts = item.ModifyUserProducts,
-                        NameProducts = item.NameProducts,
-                        OffsetFlexoProducts = item.OffsetFlexoProducts,
-                        QuyCachProducts = item.QuyCachProducts,
-                        SolopProducts = item.SolopProducts,
-                        StatusProducts = item.StatusProducts
-                    };
-                    itemP = db.tbl_Products.Add(itemP);
-                    db.SaveChanges();
-                    item.ID_Products = itemP.ID_Products;
+                        var queryMax = (from u in db.tbl_Products
+                                        orderby u.ID_Products descending
+                                        select u).Take(1);
+                        int maxSP = queryMax.ToList().Count == 0 ? 1 : queryMax.ToList()[0].ID_Products + 1;
+                        String masp = String.Format("SP{0}", maxSP.ToString("000000"));
+                        item.CodeProducts = masp;
+                        tbl_Products itemP = new tbl_Products
+                        {
+                            CodeProducts = masp,
+                            CreatedDateProducts = item.CreatedDateProducts,
+                            CreateUserProducts = item.CreateUserProducts,
+                            DanKimProducts = item.DanKimProducts,
+                            GiaProducts = item.GiaProducts,
+                            ID_Products = item.ID_Products,
+                            LoaigiayProducts = item.LoaigiayProducts,
+                            ModifyDateProducts = item.ModifyDateProducts,
+                            ModifyUserProducts = item.ModifyUserProducts,
+                            NameProducts = item.NameProducts,
+                            OffsetFlexoProducts = item.OffsetFlexoProducts,
+                            QuyCachProducts = item.QuyCachProducts,
+                            SolopProducts = item.SolopProducts,
+                            StatusProducts = item.StatusProducts
+                        };
+                        itemP = db.tbl_Products.Add(itemP);
+                        db.SaveChanges();
+                        item.ID_Products = itemP.ID_Products;
+                    }                    
                     var qr = (from cus in db.tbl_Customers where cus.IDCustomers == donHang.customer_id select cus).ToList();
+
                     
                     tbl_OrderTem_BaoGia_Detail detail = new tbl_OrderTem_BaoGia_Detail {code_detail=donHang.code+"_"+countindex.ToString("00"), design = item.Design, baogia_id = donHang.BaoGiaTemView.id, money = double.Parse(item.GiaProducts), soluong = item.SoLuong, sanpam_id = itemP.ID_Products };
                     db.tbl_OrderTem_BaoGia_Detail.Add(detail);
                     
+
+                    //foreach (var code in qr)
+                    //{                   
+                    //    tbl_OrderTem_BaoGia_Detail detail = new tbl_OrderTem_BaoGia_Detail {design_date=item.Design_Date,design_img=item.Design_Img,code_detail=code.CodeCustomers+"_"+ donHang.code+"_"+countindex.ToString("00"), design = item.Design, baogia_id = donHang.BaoGiaTemView.id, money = double.Parse(item.GiaProducts), soluong = item.SoLuong, sanpam_id = item.ID_Products };
+                    //    db.tbl_OrderTem_BaoGia_Detail.Add(detail);
+                    //}
+
                     db.SaveChanges();
                 }
 
