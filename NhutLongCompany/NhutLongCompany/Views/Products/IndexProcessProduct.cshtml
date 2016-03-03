@@ -68,27 +68,7 @@
 </div>
 <!-- /.row -->
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="row">
-                    <span style="margin-left: 10px; line-height: 33px">Sản phẩm sản xuất (ngày mai)</span>
-                    <input type="button" onclick="Reload(this,'tomorrow','@(DateTime.Parse( DateTime.Now.AddDays(1).ToShortDateString()))'); return false;" style="float: right; margin-right: 10px" value="Reload" class="btn btn-primary reloadall" />
-                </div>
-            </div>
-            <!-- /.panel-heading -->
-            <div class="panel-body" id="tomorrow">
 
-                @{Html.RenderAction("IndexSanXuatByDate", "SanXuat", new { date = DateTime.Parse(DateTime.Now.AddDays(1).ToShortDateString()), update = 0});}
-
-            </div>
-            <!-- /.panel-body -->
-        </div>
-        <!-- /.panel -->
-    </div>
-    <!-- /.col-lg-12 -->
-</div>
 <!-- /.row -->
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

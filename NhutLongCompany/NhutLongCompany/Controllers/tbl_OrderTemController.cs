@@ -878,7 +878,18 @@ namespace NhutLongCompany.Controllers
             db.SaveChanges();
             return RedirectToAction("Index", new { id = tbl_OrderTem.customer_id });
         }
+        public ActionResult DeleteBaoGia(int? id)
+        {
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
 
+            tbl_OrderTem tbl_OrderTem = db.tbl_OrderTem.Find(id);
+            db.tbl_OrderTem.Remove(tbl_OrderTem);
+            db.SaveChanges();
+            return RedirectToAction("IndexBaoGia", new { id = tbl_OrderTem.customer_id });
+        }
         // POST: tbl_OrderTem/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

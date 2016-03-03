@@ -33,9 +33,10 @@ namespace NhutLongCompany.Controllers
             var qr = (from data in db.tbl_OrderTem_BaoGia_Detail
                       join datapro in db.tbl_Products on data.sanpam_id equals datapro.ID_Products
                       join dataquy in db.tbl_QuyTrinh on data.id equals dataquy.ID_BaoGiaDetail
-                      where data.status == 2
+                      where data.status == 2 && dataquy.ThuTu.Value==8
                       select new BaoGiaTemDetailView
                       {
+                          Code_Detail = data.code_detail,
                           NameProducts = datapro.NameProducts,
                           CodeProducts = datapro.CodeProducts,
                           Date_Working = data.date_working,
