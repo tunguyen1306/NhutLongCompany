@@ -24,6 +24,7 @@ namespace NhutLongCompany.Models
         public string QuyCachProducts { get; set; }
         public int SoLuong { get; set; }
         public List<tbl_QuyTrinh> QuyTrinhs { get; set; }
+        public string loai_design { get; set; }
 
         public Nullable<int> Design { get; set; }
         public String Design_Img { get; set; }

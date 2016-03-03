@@ -87,7 +87,7 @@
           <Property Name="status" Type="int" />
           <Property Name="code_detail" Type="nvarchar" MaxLength="200" />
           <Property Name="status_pause" Type="int" />
-          <Property Name="loai_design" Type="int" />
+          <Property Name="loai_design" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="tbl_Products">
           <Key>
@@ -229,7 +229,7 @@
           <Property Name="status" Type="Int32" />
           <Property Name="code_detail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="status_pause" Type="Int32" />
-          <Property Name="loai_design" Type="Int32" />
+          <Property Name="loai_design" Type="String" Unicode="true" />
         </EntityType>
         <EntityType Name="tbl_Products">
           <Key>
