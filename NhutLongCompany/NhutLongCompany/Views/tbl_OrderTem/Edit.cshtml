@@ -13,7 +13,7 @@
 
     function UpdateTK() {
         if ($('#date_tk').val() == "") {
-            alert("Vui lòng chọn ngày!")
+            alert("Vui lòng chọn ngày!");
             return;
         }
         var data = new FormData();
@@ -24,6 +24,11 @@
                 data.append('file', document.getElementById('image_tk').files[0]);
             }
         }
+        if ($('#ddlChonmau').val() == "4") {
+            data.append('loai', $('#txtTex').val());
+        } else {
+            data.append('loai', $('#ddlChonmau').val());
+        }
         $.ajax({
             url: '@Url.Action("UpdateDesign", "tbl_OrderTem")',
             type: 'POST',
@@ -32,7 +37,7 @@
             processData: false,
             // contentType: 'multipart/form-data; charset=utf-8',
             data: data,
-            success: function (result) {
+            success: function(result) {
                 alert('Cập nhật thàn công!');
                 var text = reformatDate($('#date_tk').val());
                 if ($('#image_tk').val() != "") {
@@ -48,11 +53,12 @@
                 $('#date_tk').val("");
                 $('#image_tk').val("");
             },
-            error: function () {
+            error: function() {
                 alert('Cập nhật thất bại!');
             }
         });
     }
+
     function UpdatePopupViewTK(el, id) {
         $('#id_tk').val(id);
     }
@@ -68,10 +74,11 @@
         }
         return x1 + x2;
     }
+
     function reformatDate(strMMDDYYYY) {
         var arr = strMMDDYYYY.split("/");
         if (arr.length == 3) {
-            return arr[1] + "/" + arr[0] + "/" + arr[2]
+            return arr[1] + "/" + arr[0] + "/" + arr[2];
         }
         return strMMDDYYYY;
     }
@@ -80,7 +87,7 @@
 
         if (status == 1) {
             var ck = true;
-            $('.input_tk_value').each(function () {
+            $('.input_tk_value').each(function() {
                 if ($(this).val() == "1") {
                     ck = false;
                     return;
@@ -124,8 +131,8 @@
         document.forms[0].submit();
     }
 
-    $(document).ready(function () {
-        $("input[type=number]").keydown(function (e) {
+    $(document).ready(function() {
+        $("input[type=number]").keydown(function(e) {
             // Allow: backspace, delete, tab, escape, enter and .
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
                 // Allow: Ctrl+A, Command+A
@@ -193,7 +200,7 @@
             var id = new Date().getTime();
             var tr = $(el).parents('tr').eq(0);
             var trdata = "<tr class='tr_edit' id='ext_" + id + "'><input name='BaoGiaTemView.BaoGiaTemDetailViews.Index' value='" + id + "' type='hidden'/><input name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "].ID_Products' value='' type='hidden'/>";
-            tr.find('.form-control').each(function () {
+            tr.find('.form-control').each(function() {
                 if ($(this).attr('name') == 'SoLuong') {
                     trdata += "<td><input class='form-control text-box single-line updateSL " + this.name + "'  min='1' value='" + this.value + "' type='number' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "'/></td>";
                 } else {
@@ -216,10 +223,10 @@
     }
 
     function updateEvent() {
-        $('.updateSL').on("change", function () {
+        $('.updateSL').on("change", function() {
             updateMoney(this);
         });
-        $("input[type=number]").keydown(function (e) {
+        $("input[type=number]").keydown(function(e) {
             // Allow: backspace, delete, tab, escape, enter and .
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
                 // Allow: Ctrl+A, Command+A
@@ -245,7 +252,7 @@
 
     function updateMoney(el) {
         var money = 0;
-        $(el).parents('.body_data').eq(0).find('tr').each(function () {
+        $(el).parents('.body_data').eq(0).find('tr').each(function() {
             if ($(this).attr('id') != null) {
 
                 money += parseInt($(this).find('.SoLuong').eq(0).val()) * parseFloat($(this).find('.GiaProducts').eq(0).val());
@@ -261,7 +268,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -274,7 +281,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">Mã đơn hàng</label>
-                        <div class="col-md-8" style="padding-top:7px">
+                        <div class="col-md-8" style="padding-top: 7px">
                             @Html.HiddenFor(model => model.code)
                             @Model.code
                             @Html.HiddenFor(model => model.customer_id)
@@ -284,7 +291,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">Trạng thái</label>
-                        <div class="col-md-8" style="padding-top:7px">
+                        <div class="col-md-8" style="padding-top: 7px">
                             @Html.HiddenFor(model => model.status)
 
                             @if (Model.status == 0)
@@ -313,7 +320,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">Ngày giao hàng</label>
-                        <div class="col-md-8" style="padding-top:7px">
+                        <div class="col-md-8" style="padding-top: 7px">
 
                             @(Model.date_deliver.HasValue ? Model.date_deliver.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
 
@@ -323,7 +330,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">Địa chỉ giao hàng</label>
-                        <div class="col-md-8" style="padding-top:7px">
+                        <div class="col-md-8" style="padding-top: 7px">
                             @(!String.IsNullOrEmpty(Model.address_deliver) ? Model.address_deliver : "Chưa cập nhập")
 
                         </div>
@@ -334,9 +341,9 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label class="control-label col-md-2">Thông tin khách hàng</label>
-                        <div class="col-md-10" style="padding-top:7px">
+                        <div class="col-md-10" style="padding-top: 7px">
                             <!-- Trigger the modal with a button -->
-                            <span style="padding-left:7px">@Model.Customer.NameCustomers</span>
+                            <span style="padding-left: 7px">@Model.Customer.NameCustomers</span>
                             <button type="button" class="btn btn-default btn-outline btn-sm" data-toggle="modal" data-target="#myModal">Chi tiết khách hàng</button>
 
                            
@@ -406,229 +413,213 @@
 
 
                 @if (Model.status > 2)
-                { <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-default">
+                {
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
                            
-                            <!-- /.panel-heading -->
-                            <div class="panel-body" id="today">
+                                <!-- /.panel-heading -->
+                                <div class="panel-body" id="today">
                            
-                                <div class="dataTable_wrapper">
-                                    <table class="table table-bordered ">
-                                        <tbody>
+                                    <div class="dataTable_wrapper">
+                                        <table class="table table-bordered ">
+                                            <tbody>
 
-                                            @{
-                                                var countQT = 0;
-                                            }
+                                                @{
+                                                    int countQT = 0;
+                                                }
 
-                                            @for (int j = 0; j < Model.BaoGiaTemView.BaoGiaTemDetailViews.ToList().Count(); j++)
-                                            {
-                                                var item = Model.BaoGiaTemView.BaoGiaTemDetailViews.ToList()[j];
-                                                if (!item.OffsetFlexoProducts.Equals("Offset"))
+                                                @for (int j = 0; j < Model.BaoGiaTemView.BaoGiaTemDetailViews.ToList().Count(); j++)
                                                 {
-
-                                                    if (countQT == 0)
+                                                    BaoGiaTemDetailView item = Model.BaoGiaTemView.BaoGiaTemDetailViews.ToList()[j];
+                                                    if (!item.OffsetFlexoProducts.Equals("Offset"))
                                                     {
-                                                        countQT++;
-                                                        <tr>
+                                                        if (countQT == 0)
+                                                        {
+                                                            countQT++;
+                                                            <tr>
 
-                                                            <th colspan="18">
-                                                                Quy trình 1
-                                                            </th>
-                                                        </tr>
-                                                        <tr class="not_move">
-                                                            @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                                            {
-                                                                var itemQT = item.QuyTrinhs[i];
-                                                                <th colspan="2" width="@((float)100 / (float)9)%" class="cusfontsize2">@itemQT.TenBuoc</th>
-                                                            }
-                                                        </tr>
-                                                    }
+                                                                <th colspan="18">
+                                                                    Quy trình 1
+                                                                </th>
+                                                            </tr>
+                                                            <tr class="not_move">
+                                                                @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                                                                {
+                                                                    tbl_QuyTrinh itemQT = item.QuyTrinhs[i];
+                                                                    <th colspan="2" width="@(100/(float) 9)%" class="cusfontsize2">@itemQT.TenBuoc</th>
+                                                                }
+                                                            </tr>
+                                                        }
 
 
-                                                    <tr id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
+                                                        <tr id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
 
-                                                        <td class="cusfontsize2" colspan="18" style="position:relative">
+                                                            <td class="cusfontsize2" colspan="18" style="position: relative">
 
                                                             
-                                                            @item.NameProducts <i>
-                                                                (Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))
-                                                                <input type="hidden" value="@item.id" />
-                                                            </i>
-                                                        </td>
-                                                    </tr>
-
-
-
-
-                                                    <tr id="ajax_update_@item.id" class="move" style="background-color:red;">
-                                                        @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                                        {
-                                                            var color = "red";
-                                                            var color_char = "yellow";
-                                                            if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                            {
-                                                                color = "blue";
-                                                                color_char = "white";
-                                                            }
-                                                            else
-                                                            {
-                                                                if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                                {
-                                                                    color = "yellow";
-                                                                    color_char = "red";
-                                                                }
-                                                            }
-                                                            <td colspan="2" width="@((float)100 / (float)9)" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
-
-                                                                <span>
-                                                                    @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
-                                                                    {
-                                                                        @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="">Bất đầu</span>
-                                                                    }
-                                                                    @("-")
-                                                                    @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                                    {
-                                                                        @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="">Kết thúc</span>
-                                                                    }
-                                                                </span>
+                                                                @item.NameProducts <i>
+                                                                                       (Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))
+                                                                                       <input type="hidden" value="@item.id" />
+                                                                                   </i>
                                                             </td>
-
-
-                                                        }
-                                                    </tr>
-                                                }
-
-                                            }
-                                        </tbody>
-                                    </table>
-
-                                    <table class="table table-bordered ">
-
-                                        <tbody>
-
-                                            @{
-                                                countQT = 0;
-                                            }
-
-                                            @for (int j = 0; j < Model.BaoGiaTemView.BaoGiaTemDetailViews.ToList().Count(); j++)
-                                            {
-                                                var item = Model.BaoGiaTemView.BaoGiaTemDetailViews.ToList()[j];
-                                                if (item.OffsetFlexoProducts.Equals("Offset"))
-                                                {
-
-                                                    if (countQT == 0)
-                                                    {
-                                                        countQT++;
-                                                        <tr>
-
-                                                            <th colspan="18">
-                                                                Quy trình 2
-                                                            </th>
                                                         </tr>
-                                                        <tr class="not_move">
+
+
+                                                        <tr id="ajax_update_@item.id" class="move" style="background-color: red;">
                                                             @for (int i = 0; i < item.QuyTrinhs.Count; i++)
                                                             {
-                                                                var itemQT = item.QuyTrinhs[i];
-                                                                <th colspan="2" width="@((float)100 / (float)9)%" class="cusfontsize2">@itemQT.TenBuoc</th>
+                                                                string color = "red";
+                                                                string color_char = "yellow";
+                                                                if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                                                {
+                                                                    color = "blue";
+                                                                    color_char = "white";
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                                                    {
+                                                                        color = "yellow";
+                                                                        color_char = "red";
+                                                                    }
+                                                                }
+                                                                <td colspan="2" width="@(100/(float) 9)" class="cusfontsize1 custt" style="color: @color_char; background-color: @color;">
+
+                                                                    <span>
+                                                                        @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
+                                                                        {
+                                                                            @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span style="cursor: pointer" class="btn btn-outline btn-default btn-xs" onclick="">Bất đầu</span>
+                                                                        }
+                                                                        @("-")
+                                                                        @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                                                        {
+                                                                            @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span style="cursor: pointer" class="btn btn-outline btn-default btn-xs" onclick="">Kết thúc</span>
+                                                                        }
+                                                                    </span>
+                                                                </td>
                                                             }
                                                         </tr>
                                                     }
+                                                }
+                                            </tbody>
+                                        </table>
 
+                                        <table class="table table-bordered ">
 
-                                                    <tr id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
+                                            <tbody>
 
-                                                        <td class="cusfontsize2" colspan="18" style="position:relative">
-                                                          
-                                                          @item.NameProducts <i>(Working:@(item.Date_Working.HasValue ? item.Date_Working.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật") - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))</i>
-                                                            <input type="hidden" value="@item.id" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr id="ajax_update_@item.id" class="move" style="background-color:red;">
-                                                        @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                                        {
-                                                            var color = "red";
-                                                            var color_char = "yellow";
-                                                            if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                            {
-                                                                color = "blue";
-                                                                color_char = "white";
-                                                            }
-                                                            else
-                                                            {
-                                                                if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                                {
-                                                                    color = "yellow";
-                                                                    color_char = "red";
-                                                                }
-                                                            }
-                                                            <td colspan="2" width="@((float)100 / (float)9)" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
-
-                                                                <span>
-                                                                    @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
-                                                                    {
-                                                                        @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="btn btn-outline btn-default btn-xs" style="cursor:pointer" onclick="">Bất đầu</span>
-                                                                    }
-                                                                    @("-")
-                                                                    @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                                    {
-                                                                        @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="btn btn-outline btn-default btn-xs" style="cursor:pointer" onclick="">Kết thúc</span>
-                                                                    }
-                                                                </span>
-                                                            </td>
-
-
-                                                        }
-                                                    </tr>
+                                                @{
+                                                    countQT = 0;
                                                 }
 
-                                            }
+                                                @for (int j = 0; j < Model.BaoGiaTemView.BaoGiaTemDetailViews.ToList().Count(); j++)
+                                                {
+                                                    BaoGiaTemDetailView item = Model.BaoGiaTemView.BaoGiaTemDetailViews.ToList()[j];
+                                                    if (item.OffsetFlexoProducts.Equals("Offset"))
+                                                    {
+                                                        if (countQT == 0)
+                                                        {
+                                                            countQT++;
+                                                            <tr>
+
+                                                                <th colspan="18">
+                                                                    Quy trình 2
+                                                                </th>
+                                                            </tr>
+                                                            <tr class="not_move">
+                                                                @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                                                                {
+                                                                    tbl_QuyTrinh itemQT = item.QuyTrinhs[i];
+                                                                    <th colspan="2" width="@(100/(float) 9)%" class="cusfontsize2">@itemQT.TenBuoc</th>
+                                                                }
+                                                            </tr>
+                                                        }
+
+
+                                                        <tr id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
+
+                                                            <td class="cusfontsize2" colspan="18" style="position: relative">
+                                                          
+                                                                @item.NameProducts <i>(Working:@(item.Date_Working.HasValue ? item.Date_Working.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật") - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))</i>
+                                                                <input type="hidden" value="@item.id" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr id="ajax_update_@item.id" class="move" style="background-color: red;">
+                                                            @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                                                            {
+                                                                string color = "red";
+                                                                string color_char = "yellow";
+                                                                if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                                                {
+                                                                    color = "blue";
+                                                                    color_char = "white";
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                                                    {
+                                                                        color = "yellow";
+                                                                        color_char = "red";
+                                                                    }
+                                                                }
+                                                                <td colspan="2" width="@(100/(float) 9)" class="cusfontsize1 custt" style="color: @color_char; background-color: @color;">
+
+                                                                    <span>
+                                                                        @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
+                                                                        {
+                                                                            @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="btn btn-outline btn-default btn-xs" style="cursor: pointer" onclick="">Bất đầu</span>
+                                                                        }
+                                                                        @("-")
+                                                                        @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                                                        {
+                                                                            @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="btn btn-outline btn-default btn-xs" style="cursor: pointer" onclick="">Kết thúc</span>
+                                                                        }
+                                                                    </span>
+                                                                </td>
+                                                            }
+                                                        </tr>
+                                                    }
+                                                }
 
 
 
 
 
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
 
 
+
+                                    </div>
 
                                 </div>
-
+                                <!-- /.panel-body -->
                             </div>
-                            <!-- /.panel-body -->
-                        </div>
                       
 
+                        </div>
                     </div>
-                </div>
-
-              }
+                }
 
 
-
-
-
-
-
-
-                @*<div class="col-lg-6">
+@*<div class="col-lg-6">
                         <div class="form-group">
                             <label class="col-md-4">Ngày bắt đầu dự kiến</label>
                             <div class="col-md-8">
@@ -667,9 +658,7 @@
                     </div>*@
 
 
-
-
-                @*<div class="col-lg-12">
+@*<div class="col-lg-12">
                         <div class="form-group" style="text-align:center">
 
                             <input type="submit" value="Cập nhật" class="btn btn-primary" />
@@ -678,8 +667,7 @@
                             </a>
                         </div>
 
-                    </div>*@
-            </div>
+                    </div>*@</div>
             <!-- /.row (nested) -->
         </div>
     </div>
@@ -691,7 +679,7 @@
             <div class="panel-heading">
                 <div class="row">
                     <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count + 2)</span>
-                    <input type="submit" style="float: right; margin-right: 10px" value="Cập nhật" class="btn btn-primary" onclick="SubmitAddNewBaoGia();return false;" />
+                    <input type="submit" style="float: right; margin-right: 10px" value="Cập nhật" class="btn btn-primary" onclick=" SubmitAddNewBaoGia();return false; " />
                 </div>
             </div>
 
@@ -701,7 +689,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="control-label col-md-4" for="date_begin">Ngày bất đầu</label>
-                                <div class="col-md-8" style="padding-top:7px">
+                                <div class="col-md-8" style="padding-top: 7px">
                                     <input class="form-control date" data-val="true" data-val-date="The field date_begin must be a date." name="BaoGiaTemView.date_begin" value="@DateTime.Now.ToString("dd/MM/yyyy")" type="hidden">
                                     @DateTime.Now.ToString("dd/MM/yyyy")
                                 </div>
@@ -711,7 +699,7 @@
                             <div class="form-group">
 
                                 <label class="control-label col-md-4" for="total_money">Tổng tiền</label>
-                                <div class="col-md-8" style="padding-top:7px">
+                                <div class="col-md-8" style="padding-top: 7px">
                                     <input class="form-control BaoGiaTemView_total_money" data-val="true" data-val-number="The field total_money must be a number." name="BaoGiaTemView.total_money" value="" type="hidden">
                                     <span id="BaoGiaTemView_total_money">0</span> đ
                                 </div>
@@ -721,14 +709,14 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="control-label col-md-4" for="date_end">Ngày kết thúc</label>
-                                <div class="col-md-8" style="padding-top:7px">
+                                <div class="col-md-8" style="padding-top: 7px">
                                     <input class="form-control date" data-val="true" data-val-date="The field date_end must be a date." name="BaoGiaTemView.date_end" value="" type="hidden">
                                     Chờ cập nhật
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-4" for="status">Trạng thái</label>
-                                <div class="col-md-8" style="padding-top:7px">
+                                <div class="col-md-8" style="padding-top: 7px">
                                     Tạo mới báo giá
                                 </div>
                             </div>
@@ -736,7 +724,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="control-label col-md-4">Hoa hồng</label>
-                                <div class="col-md-8" style="padding-top:7px">
+                                <div class="col-md-8" style="padding-top: 7px">
                                     Chưa cập nhập
                                 </div>
                             </div>
@@ -844,17 +832,12 @@
     }
 
 
-
-
-
-
-
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
                 <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count + 1)</span>
 
-                @Html.ActionLink("In báo giá", "PrintOrder", new { id = Model.BaoGiaTemView.id }, htmlAttributes: new { @class = "btn btn-primary", @target = "_bank", @style = "float: right; margin-right: 10px" })
+                @Html.ActionLink("In báo giá", "PrintOrder", new {Model.BaoGiaTemView.id}, new {@class = "btn btn-primary", @target = "_bank", @style = "float: right; margin-right: 10px"})
 
                 @if (Model.BaoGiaTemView.status.Value == 0)
                 {
@@ -862,11 +845,11 @@
                 }
                 @if (Model.BaoGiaTemView.status.Value == 2 && Model.action == 0)
                 {
-                    <input type="submit" style="float: right; margin-right: 10px" value="Thêm mới báo giá" class="btn btn-primary" onclick="AddNewBaoGia(); return false; " />
+                    <input type="submit" style="float: right; margin-right: 10px" value="Thêm mới báo giá" class="btn btn-primary" onclick=" AddNewBaoGia(); return false; " />
                 }
                 @if (Model.BaoGiaTemView.status.Value == 1 && Model.status == 0)
                 {
-                    <input type="button" onclick="UpdateStatusOrder(1); return false;" style="float: right; margin-right: 10px" value="Đưa vào sản xuất" class="btn btn-primary" />
+                    <input type="button" onclick=" UpdateStatusOrder(1); return false; " style="float: right; margin-right: 10px" value="Đưa vào sản xuất" class="btn btn-primary" />
                 }
             </div>
         </div>
@@ -929,7 +912,7 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label class="control-label col-md-4">Hoa hồng</label>
-                            <div class="col-md-8" style="padding-top:7px">
+                            <div class="col-md-8" style="padding-top: 7px">
                                 @(Model.BaoGiaTemView.commission.HasValue ? (Model.BaoGiaTemView.commission.Value == 1 ? "Có" : "Không") : "Chưa cập nhật")
                             </div>
                         </div>
@@ -986,33 +969,104 @@
                                     <td>@double.Parse(item.GiaProducts).ToString("n2") đ</td>
                                     <td>
                                         @item.SoLuong
-                                    <input id="id_update_tk_@(item.id)_value" class="input_tk_value" type="hidden" value="@(item.Design.HasValue==true?(item.Design.Value+""):"0")" />
-                                </td>
-                                <td id="id_update_tk_@item.id">
-                                    @if (!item.Design.HasValue || item.Design.Value == 0)
-                                    {
-                                        @("N")           }
-                                    else if (item.Design.Value == 2)
-                                    {
-                                        if (!String.IsNullOrEmpty(item.Design_Img))
+                                        <input id="id_update_tk_@(item.id)_value" class="input_tk_value" type="hidden" value="@(item.Design.HasValue ? (item.Design.Value + "") : "0")" />
+                                    </td>
+                                    <td id="id_update_tk_@item.id">
+                                        @if (!item.Design.HasValue || item.Design.Value == 0)
                                         {
-                                            <a href="/Upload/ThietKe/@(item.id)_@(item.Design_Img)" target="_blank">@item.Design_Date.Value.ToString("dd/MM/yyyy")</a>
+                                            @("Không")
+                                        }
+                                        else if (item.Design.Value == 2)
+                                        {
+                                            <button type="button" class="btn btn-info btn-outline btn-sm" data-toggle="modal" data-target="#chitietmau_@(item.id)">Chi tiết mẫu</button>
+                                        @*if (!String.IsNullOrEmpty(item.Design_Img))
+                                        {
+                                            <a href="/Upload/ThietKe/@(item.Design_Img)" target="_blank">@item.Design_Date.Value.ToString("dd/MM/yyyy")</a>
                                         }
                                         else
                                         {
                                             @item.Design_Date.Value.ToString("dd/MM/yyyy")
+                                        }*@
                                         }
-                                    }
-                                    else
-                                    {
-                                        <input type="button" onclick="UpdatePopupViewTK(this,@item.id);return false;" class="btn btn-primary" value="Update" data-target="#modal-container-tk" data-toggle="modal">
-                                    }
+                                        else
+                                        {
+                                            <input type="button" onclick=" UpdatePopupViewTK(this, @item.id);return false; " class="btn btn-primary" value="Update" data-target="#modal-container-tk" data-toggle="modal">
+                                        }
 
 
 
 
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                                
+                                <div id="chitietmau_@(item.id)" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+
+                                                <h4 class="modal-title">Chi tiết mẫu</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+
+                                                    <label class="control-label col-md-4">Hình</label>
+                                                    <div class="col-md-8" style="padding-top: 7px">
+                                                        <a href="/Upload/ThietKe/@(item.Design_Img)" target="_blank">
+
+                                                            <img src="/Upload/ThietKe/@(item.Design_Img)" height="100" width="100" />
+                                                        </a>
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group">
+
+                                                    <label class="control-label col-md-4">Ngày làm mẫu</label>
+                                                    <div class="col-md-8" style="padding-top: 7px">
+                                                        @(item.Design_Date.HasValue ? item.Design_Date.Value.ToString("dd/MM/yyyy") : "Chưa update")
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group">
+
+                                                    <label class="control-label col-md-4">Loại Mẫu</label>
+                                                    <div class="col-md-8" style="padding-top: 7px">
+
+                                                        @if (String.IsNullOrEmpty(item.loai_design) || item.loai_design == "0")
+                                                        {
+                                                            @("Không có mẫu")
+                                                        }
+                                                        @if (item.loai_design == "1")
+                                                        {
+                                                            @("Mẫu thiết kế")
+                                                        }
+                                                        @if (item.loai_design == "2")
+                                                        {
+                                                            @("Mẫu thùng")
+                                                        }
+                                                        @if (item.loai_design == "3")
+                                                        {
+                                                            @("Mẫu thùng và thiết kế")
+                                                        }
+                                                        else
+                                                        {
+                                                            @item.loai_design
+                                                        }
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            
                             }
                         </tbody>
                     </table>
@@ -1031,7 +1085,7 @@
                 <div class="row">
                     <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count - i)</span>
 
-                    @Html.ActionLink("In báo giá", "PrintOrder", new { id = Model.BaoGiaTemViews[i].id }, htmlAttributes: new { @class = "btn btn-primary", @target = "_bank", @style = "float: right; margin-right: 10px" })
+                    @Html.ActionLink("In báo giá", "PrintOrder", new {Model.BaoGiaTemViews[i].id}, new {@class = "btn btn-primary", @target = "_bank", @style = "float: right; margin-right: 10px"})
 
 
 
@@ -1098,7 +1152,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="control-label col-md-4">Hoa hồng</label>
-                                <div class="col-md-8" style="padding-top:7px">
+                                <div class="col-md-8" style="padding-top: 7px">
                                     @(Model.BaoGiaTemViews[i].commission.HasValue ? (Model.BaoGiaTemViews[i].commission.Value == 1 ? "Có" : "Không") : "Chưa cập nhật")
                                 </div>
                             </div>
@@ -1156,25 +1210,103 @@
                                         <td>
                                             @if (!item.Design.HasValue || item.Design.Value == 0)
                                             {
-                                                @("N")
+                                                @("Không")
                                             }
                                             else if (item.Design.Value == 2)
                                             {
-                                                if (!String.IsNullOrEmpty(item.Design_Img))
+                                                <button type="button" class="btn btn-info btn-outline btn-sm" data-toggle="modal" data-target="#chitietmau_@(item.id)">Chi tiết mẫu</button>
+                                                @*if (!String.IsNullOrEmpty(item.Design_Img))
                                                 {
-                                                    <a href="/Upload/ThietKe/@(item.id)_@(item.Design_Img)" target="_blank">@item.Design_Date.Value.ToString("dd/MM/yyyy")</a>
+                                                    <a href="/Upload/ThietKe/@(item.Design_Img)" target="_blank">@item.Design_Date.Value.ToString("dd/MM/yyyy")</a>
                                                 }
                                                 else
                                                 {
                                                     @item.Design_Date.Value.ToString("dd/MM/yyyy")
-                                                }
+                                                }*@
                                             }
                                             else
                                             {
                                                 @("Chưa cập nhập")
                                             }
-                                    </td>
-                                </tr>
+                                            <input type="hidden" value="@item.Design.Value" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].Design" class="Design">
+                                            <input type="hidden" value="@item.Design_Img" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].Design_Img" class="Design">
+                                            <input type="hidden" value="@item.Design_Date" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].Design_Date" class="Design">
+                                            <input type="hidden" value="@item.loai_design" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].loai_design" class="Design">
+                                        </td>
+                                    </tr>
+                                    <!-- Modal -->
+
+
+
+    <div id="chitietmau_@(item.id)" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title">Chi tiết mẫu</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+
+                        <label class="control-label col-md-4">Hình</label>
+                        <div class="col-md-8" style="padding-top: 7px">
+                            <a href="/Upload/ThietKe/@(item.Design_Img)" target="_blank">
+
+                                <img src="/Upload/ThietKe/@(item.Design_Img)" height="100" width="100" />
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+
+                        <label class="control-label col-md-4">Ngày làm mẫu</label>
+                        <div class="col-md-8" style="padding-top: 7px">
+                            @(item.Design_Date.HasValue ? item.Design_Date.Value.ToString("dd/MM/yyyy") : "Chưa update")
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+
+                        <label class="control-label col-md-4">Loại Mẫu</label>
+                        <div class="col-md-8" style="padding-top: 7px">
+
+                            @if (String.IsNullOrEmpty(item.loai_design) || item.loai_design == "0")
+                            {
+                                @("Không có mẫu")
+                            }
+                            @if (item.loai_design == "1")
+                            {
+                                @("Mẫu thiết kế")
+                            }
+                            @if (item.loai_design == "2")
+                            {
+                                @("Mẫu thùng")
+                            }
+                            @if (item.loai_design == "3")
+                            {
+                                @("Mẫu thùng và thiết kế")
+                            }
+                            else
+                            {
+                                @item.loai_design
+                            }
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
                                 }
                             </tbody>
                         </table>
@@ -1197,11 +1329,11 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="usr">Ngày giao hàng :</label>
-                        @Html.EditorFor(model => model.date_deliver, new { htmlAttributes = new { @class = "form-control date" } })
+                        @Html.EditorFor(model => model.date_deliver, new {htmlAttributes = new {@class = "form-control date"}})
                     </div>
                     <div class="form-group">
                         <label for="usr">Địa chỉ giao hàng :</label>
-                        @Html.EditorFor(model => model.address_deliver, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.address_deliver, new {htmlAttributes = new {@class = "form-control"}})
                     </div>
                     <div class="form-group">
                         <label for="usr">Commission :</label>
@@ -1218,8 +1350,8 @@
                 </div>
                 <div class="modal-footer">
                     <div class="bootstrap-dialog-footer-buttons">
-                        <button class="btn btn-primary" onclick="UpdateResultBaoGia(1); return false; ">Đồng ý</button>
-                        <button class="btn btn-danger" onclick="UpdateResultBaoGia(2); return false; ">Từ chối</button>
+                        <button class="btn btn-primary" onclick=" UpdateResultBaoGia(1); return false; ">Đồng ý</button>
+                        <button class="btn btn-danger" onclick=" UpdateResultBaoGia(2); return false; ">Từ chối</button>
                     </div>
                 </div>
             </div>
@@ -1227,8 +1359,9 @@
     </div>
 
 
+
     <div id="modal-container-tk" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" style="width:400px" role="document">
+        <div class="modal-dialog" style="width: 400px" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     Cập nhật Làm mẫu
@@ -1239,6 +1372,21 @@
                         <label for="usr">Ngày giao Làm mẫu :</label>
                         <input type="datetime" value="" id="date_tk" name="date_tk" class="form-control date text-box single-line">
                     </div>
+
+                    <div class="form-group">
+                        <label>Chọn Làm mẫu :</label>
+                        <select id="ddlChonmau" class="form-control">
+                            <option value="0">Không</option>
+                            <option value="1">Mẫu thiết kế</option>
+                            <option value="2">Mẫu thùng</option>
+                            <option value="3">Mẫu thùng và thiết kế</option>
+                            <option value="4">Khác</option>
+                        </select>
+                    </div>
+                    <div class="form-group hidden custex">
+                        <label>Ghi chú:</label>
+                        <input type="text" class="form-control" id="txtTex" name="txtNTex">
+                    </div>
                     <div class="form-group">
                         <label for="pwd">Hình Làm mẫu :</label>
                         <input type="file" id="image_tk" accept="image/*" name="image_tk">
@@ -1247,12 +1395,24 @@
                 </div>
                 <div class="modal-footer">
                     <div class="bootstrap-dialog-footer-buttons">
-                        <button class="btn btn-primary" onclick="UpdateTK();return false;">Lưu</button>
+                        <button class="btn btn-primary" onclick=" UpdateTK();return false; ">Lưu</button>
                     </div>
                 </div>
+                <script>
+                    $('#ddlChonmau').change(function () {
+                        var vl = $('#ddlChonmau').val();
+                        if (vl == "4") {
+                            $('.custex').removeClass('hidden');
+                        } else {
+                            $('.custex').addClass('hidden');
+                        }
+                    });
+                </script>
             </div>
         </div>
     </div>
+
+    <!-- Trigger the modal with a button -->
 }
 
 
@@ -1261,16 +1421,10 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 <style>
-    .table td {
-        text-align: center;
-    }
+    .table td { text-align: center; }
 
-    .table th {
-        text-align: center;
-    }
+    .table th { text-align: center; }
 
-    .tr_edit > td {
-        line-height: 34px !important;
-    }
+    .tr_edit > td { line-height: 34px !important; }
 </style>
 

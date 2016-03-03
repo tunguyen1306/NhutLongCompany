@@ -19,6 +19,8 @@
         var data = new FormData();
         data.append('id', $('#id_tk').val());
         data.append('date', $('#date_tk').val());
+  
+      
         if ($('#image_tk').val() != "") {
             if (document.getElementById('image_tk').files.length > 0) {
                 data.append('file', document.getElementById('image_tk').files[0]);
@@ -580,7 +582,7 @@
                                             }
                                             else if (item.Design.Value == 2)
                                             {
-                                                <button type="button" class="btn btn-info btn-outline btn-sm" data-toggle="modal" data-target="#chitietmau">Chi tiết mẫu</button>
+                                                <button type="button" class="btn btn-info btn-outline btn-sm" data-toggle="modal" data-target="#chitietmau_@(item.id)">Chi tiết mẫu</button>
 
                                                 @*if (!String.IsNullOrEmpty(item.Design_Img))
                                                 {
@@ -599,6 +601,7 @@
                                             <input type="hidden" value="@item.Design.Value" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].Design" class="Design">                                                                                
                                             <input type="hidden" value="@item.Design_Img" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].Design_Img" class="Design">
                                             <input type="hidden" value="@item.Design_Date" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].Design_Date" class="Design">
+                                            <input type="hidden" value="@item.loai_design" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].loai_design" class="Design">
                                         </td>
 
 
@@ -765,7 +768,7 @@
                                         }
                                         else if (item.Design.Value == 2)
                                         {
-                                            <button type="button" class="btn btn-info btn-outline btn-sm" data-toggle="modal" data-target="#chitietmau">Chi tiết mẫu</button>
+                                            <button type="button" class="btn btn-info btn-outline btn-sm" data-toggle="modal" data-target="#chitietmau_@(item.id)">Chi tiết mẫu</button>
                                             @*if (!String.IsNullOrEmpty(item.Design_Img))
                                                 {
                                                     <a href="/Upload/ThietKe/@(item.id)_@(item.Design_Img)" target="_blank">@item.Design_Date.Value.ToString("dd/MM/yyyy")</a>
@@ -787,7 +790,7 @@
                                     </td>
                                 </tr>
                                 <!-- Modal -->
-                                <div id="chitietmau" class="modal fade" role="dialog">
+                                <div id="chitietmau_@(item.id)" class="modal fade" role="dialog">
                                     <div class="modal-dialog">
 
                                         <!-- Modal content-->
@@ -801,9 +804,9 @@
 
                                                     <label class="control-label col-md-4" >Hình</label>
                                                     <div class="col-md-8" style="padding-top: 7px">
-                                                        <a href="/Upload/ThietKe/@(item.id)_@(item.Design_Img)" target="_blank">
+                                                        <a href="/Upload/ThietKe/@(item.Design_Img)" target="_blank">
                                                        
-                                                            <img src="/Upload/ThietKe/@(item.id)_@(item.Design_Img)" height="100" width="100"  />
+                                                            <img src="/Upload/ThietKe/@(item.Design_Img)" height="100" width="100"  />
                                                         </a>
                                                     </div>
 
@@ -820,8 +823,8 @@
 
                                                     <label class="control-label col-md-4">Loại Mẫu</label>
                                                     <div class="col-md-8" style="padding-top: 7px">
-                                                      
-                                                        @if (item.loai_design=="0")
+                                                     
+                                                        @if (String.IsNullOrEmpty( item.loai_design) || item.loai_design=="0")
                                                         {
                                                             @("Không có mẫu")
                             

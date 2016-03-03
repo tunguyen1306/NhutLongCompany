@@ -47,7 +47,7 @@ namespace NhutLongCompany.Controllers
                     var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
                                          join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
                                          where u.baogia_id.Value.Equals(temBG.id)
-                                         select new BaoGiaTemDetailView {Step_Flow=u.step_index, Status=u.status, Code_Detail=u.code_detail, Date_Working = u.date_working, date_deliver = itemBG.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+                                         select new BaoGiaTemDetailView { loai_design = u.loai_design, Step_Flow = u.step_index, Status = u.status, Code_Detail = u.code_detail, Date_Working = u.date_working, date_deliver = itemBG.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
                     temBG.BaoGiaTemDetailViews = queryGiaoGiaCT.ToList<BaoGiaTemDetailView>();
                     itemBG.BaoGiaTemView = temBG;
 
@@ -295,7 +295,7 @@ namespace NhutLongCompany.Controllers
                 var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
                                      join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
                                      where u.baogia_id.Value.Equals(temBG.id)
-                                     select new BaoGiaTemDetailView { loai_design = u.loai_design, Date_Working = u.date_working, date_deliver = d.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+                                     select new BaoGiaTemDetailView {loai_design = u.loai_design, Date_Working = u.date_working, date_deliver = d.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
                 temBG.BaoGiaTemDetailViews = queryGiaoGiaCT.ToList<BaoGiaTemDetailView>();
                 d.BaoGiaTemView = temBG;
                 foreach (var itemSP in d.BaoGiaTemView.BaoGiaTemDetailViews)
@@ -939,7 +939,7 @@ namespace NhutLongCompany.Controllers
             var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
                                  join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
                                  where u.baogia_id.Value.Equals(temBG.id)
-                                 select new BaoGiaTemDetailView { id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+                                 select new BaoGiaTemDetailView { loai_design =u.loai_design,id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
             temBG.BaoGiaTemDetailViews = queryGiaoGiaCT.ToList<BaoGiaTemDetailView>();
 
             d.BaoGiaTemView = temBG;
@@ -957,7 +957,7 @@ namespace NhutLongCompany.Controllers
             item.design_date = date;
             item.design = 2;
             item.loai_design = loai;
-            item.design_img = file.FileName;
+            item.design_img = item.id + "_" + file.FileName;
             file.SaveAs(Server.MapPath("~/Upload/ThietKe") + "/" + item.id + "_" + file.FileName);
             db.Entry(item).State = EntityState.Modified;
             db.SaveChanges();

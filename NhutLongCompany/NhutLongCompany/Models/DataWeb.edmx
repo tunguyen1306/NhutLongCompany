@@ -229,7 +229,7 @@
           <Property Name="status" Type="Int32" />
           <Property Name="code_detail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="status_pause" Type="Int32" />
-          <Property Name="loai_design" Type="String" Unicode="true" />
+          <Property Name="loai_design" Type="String" Unicode="true" MaxLength="250" FixedLength="false" />
         </EntityType>
         <EntityType Name="tbl_Products">
           <Key>
