@@ -120,10 +120,11 @@
 
                                     if (update.HasValue && update.Value == 1 && (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
                                     {
-                                            <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"0"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>
-                                        }
-                                        else
-                                        {
+                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"0"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>
+                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs">tạm dừng</span>
+                                    }
+                                    else
+                                    {
                                             @(" ")
                                         }
                                        
@@ -246,10 +247,11 @@
 
                                     if (update.HasValue && update.Value == 1 && (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
                                     {
-                                            <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)" >Kết thúc</span>
-                                        }
-                                        else
-                                        {
+                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)" >Kết thúc</span>
+                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs">tạm dừng</span>
+                                    }
+                                    else
+                                    {
                                             @(" ")
                                         }
                                       
