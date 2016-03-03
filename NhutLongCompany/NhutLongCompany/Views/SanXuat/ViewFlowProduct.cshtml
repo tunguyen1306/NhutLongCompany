@@ -39,8 +39,29 @@
                 }
                 else
                 {
-                    <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"0"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>
-                    <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs">tạm dừng</span> 
+
+                    if ((!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
+                    {
+                        <span style="cursor:pointer" id="item_@item.QuyTrinhs[i].ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"0"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>
+                        if (item.QuyTrinhs[i].TrangThai.Value == 1 && (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
+                        {
+                            <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@item.id);">tạm dừng</span>
+                        }
+                        else if (item.Status_Pause.HasValue && item.Status_Pause.Value == 1 && item.Current_FlowPauseTime.index_step.Value == item.QuyTrinhs[i].ThuTu.Value)
+                        {
+                            <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@item.id); onContinue(); return false;">tiếp tục</span>
+                            <script type="text/javascript">
+                                document.getElementById('item_@item.QuyTrinhs[i].ID').style.display = 'none';
+                            </script>
+                        }
+
+                    }
+                    else
+                    {
+                        @(" ")
+                    }
+
+                  
                 }
             </span>
         </td>

@@ -81,7 +81,7 @@
                 <button type="submit" class="btn btn-outline btn-default btn-xs"  onclick="return setValue(@itemCT.id);">Chuyển</button>
             </td>*@
 
-        <td style="position:relative">
+        @*<td style="position:relative">
             @if (!itemCT.Status_Pause.HasValue || (itemCT.Status_Pause.HasValue && itemCT.Status_Pause.Value == 0))
             {
                 <button type="submit" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@itemCT.id);">Tạm dừng</button>
@@ -91,7 +91,7 @@
                 <button type="submit" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@itemCT.id); onContinue(); return false;">Tiếp tục</button>
             }
 
-        </td>
+        </td>*@
     </tr>
 
 }
