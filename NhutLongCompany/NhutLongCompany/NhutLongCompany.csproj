@@ -637,6 +637,7 @@
     <Content Include="Content\timeline.css" />
     <Content Include="DonGia.html" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="images\mvl.png" />
@@ -965,9 +966,25 @@
       <LastGenOutput>DataWeb.cs</LastGenOutput>
     </Content>
     <Content Include="Mvc.sitemap" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\MBNDSwis-Bold.ttf" />
+    <Content Include="fonts\MBNDSwis-Italic.ttf" />
+    <Content Include="fonts\MBNDSwis.ttf" />
+    <Content Include="fonts\opensans-light-webfont.woff" />
+    <Content Include="fonts\opensans-regular-webfont.woff" />
+    <Content Include="fonts\roboto-bold-webfont.woff" />
+    <Content Include="fonts\roboto-light-webfont.woff" />
+    <Content Include="fonts\roboto-medium-webfont.woff" />
+    <Content Include="fonts\roboto-mediumitalic-webfont.woff" />
+    <Content Include="fonts\roboto-regular-webfont.woff" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\publish.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CusWeb.js" />
     <Content Include="Scripts\flot-data.js" />
