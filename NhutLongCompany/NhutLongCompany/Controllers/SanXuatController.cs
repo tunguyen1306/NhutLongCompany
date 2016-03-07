@@ -313,11 +313,13 @@ namespace NhutLongCompany.Controllers
             {
                 foreach (var item in donHang.BaoGiaTemView.BaoGiaTemDetailViews)
                 {
+                  
                     foreach (var itemSP in item.QuyTrinhs)
                     {
                         tbl_QuyTrinh tbQT = db.tbl_QuyTrinh.Find(itemSP.ID);
                         tbQT.NgayBatDau_DK = itemSP.NgayBatDau_DK;
                         tbQT.NgayKetThuc_DK = itemSP.NgayKetThuc_DK;
+                      
                         db.Entry(tbQT).State = EntityState.Modified;
                     }
                     db.SaveChanges();
@@ -327,13 +329,44 @@ namespace NhutLongCompany.Controllers
             {
                 foreach (var item in donHang.BaoGiaTemView.BaoGiaTemDetailViews)
                 {
+                    int step = 0;
+                    int idDetail = 0;
                     foreach (var itemSP in item.QuyTrinhs)
                     {
                         tbl_QuyTrinh tbQT = db.tbl_QuyTrinh.Find(itemSP.ID);
+                        idDetail = tbQT.ID_BaoGiaDetail;
                         tbQT.NgayBatDau_TT = itemSP.NgayBatDau_TT;
                         tbQT.NgayKetThuc_TT = itemSP.NgayKetThuc_TT;
+                        if (tbQT.NgayKetThuc_TT.HasValue && step<= tbQT.ThuTu.Value)
+                        {
+                            step = tbQT.ThuTu.Value;
+
+                        }
                         db.Entry(tbQT).State = EntityState.Modified;
                     }
+                    tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail=db.tbl_OrderTem_BaoGia_Detail.Find(idDetail);
+                    if (tbl_OrderTem_BaoGia_Detail!=null)
+                    {
+                        if (!tbl_OrderTem_BaoGia_Detail.step_index.HasValue)
+                        {
+                            tbl_OrderTem_BaoGia_Detail.step_index = step;
+                            if (tbl_OrderTem_BaoGia_Detail.step_index.Value == 8)
+                            {
+                                tbl_OrderTem_BaoGia_Detail.status = 2;
+                            }
+
+                        }
+                        else if (tbl_OrderTem_BaoGia_Detail.step_index.Value <= step)
+                        {
+                            tbl_OrderTem_BaoGia_Detail.step_index = step;
+                            if (tbl_OrderTem_BaoGia_Detail.step_index.Value == 8)
+                            {
+                                tbl_OrderTem_BaoGia_Detail.status = 2;
+                            }
+                        }
+                        db.Entry(tbl_OrderTem_BaoGia_Detail).State = EntityState.Modified;
+                    }                    
+                  
                     db.SaveChanges();
                 }
             }

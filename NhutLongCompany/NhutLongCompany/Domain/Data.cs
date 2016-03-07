@@ -23,7 +23,7 @@ namespace NhutLongCompany.Domain
             
             menu.Add(new Navbar { Id = 9, nameOption = "Sản xuất", controller = "Sanxuat", action = "", imageClass = "fa fa-gears fa-2x", status = true, isParent = true, parentId = 0 });           
             //menu.Add(new Navbar { Id = 10, nameOption = "Đơn hàng chờ duyệt sản xuất", controller = "Sanxuat", action = "Index", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 9 });
-            //menu.Add(new Navbar { Id = 11, nameOption = "Đơn hàng đang sản xuất", controller = "Sanxuat", action = "IndexSX", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 9 });
+            menu.Add(new Navbar { Id = 11, nameOption = "Đơn hàng đang sản xuất", controller = "Sanxuat", action = "IndexSX", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 9 });
             menu.Add(new Navbar { Id = 12, nameOption = "Lịch sản xuất", controller = "Sanxuat", action = "LichSanXuat", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 9 });
             menu.Add(new Navbar { Id = 13, nameOption = "Sản phầm đang sản xuất", controller = "Sanxuat", action = "IndexSanXuat", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 9 });
 
