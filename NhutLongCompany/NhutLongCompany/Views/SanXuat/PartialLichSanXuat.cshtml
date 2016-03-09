@@ -33,7 +33,10 @@
         </td>
         <td>
             @itemCT.NameProducts
-
+            @if (colorB == "gray")
+            {
+                <br /><b class="cusfontsize2" style="color:red">(Đang ngưng sản xuất - @itemCT.Current_FlowPauseTime.note - @itemCT.Current_FlowPauseTime.date_begin.Value.ToString("dd/MM/yyyy HH:mm:ss"))</b>
+            }
         </td>
         <td>
             @itemCT.SoLuong
@@ -81,17 +84,17 @@
                 <button type="submit" class="btn btn-outline btn-default btn-xs"  onclick="return setValue(@itemCT.id);">Chuyển</button>
             </td>*@
 
-        @*<td style="position:relative">
+        <td style="position:relative">
             @if (!itemCT.Status_Pause.HasValue || (itemCT.Status_Pause.HasValue && itemCT.Status_Pause.Value == 0))
             {
-                <button type="submit" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@itemCT.id);">Tạm dừng</button>
+                <button type="submit"  @(itemCT.QuyTrinhs[0].TrangThai.Value==1?"":"disabled") class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@itemCT.id);">Tạm dừng</button>
             }
             else
             {
                 <button type="submit" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@itemCT.id); onContinue(); return false;">Tiếp tục</button>
             }
 
-        </td>*@
+        </td>
     </tr>
 
 }

@@ -5,9 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2> </h2>
 
 
+<div class="row">
+    <div class="col-lg-12">
+        <h2 ></h2>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
 <script>
     function UpdateQuyTrinh(pre, id, flowid, status) {
         if (pre != 2) {
@@ -90,7 +96,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
-                    <span style="margin-left: 10px; line-height: 33px">Sản phẩm sản xuất</span>
+                   <span style="margin-left: 10px; line-height: 33px">Sản phẩm sản xuất</span>
                     <input type="button" onclick="Reload(this, 'today',null); return false;" style="float: right; margin-right: 10px" value="Reload" class="btn btn-primary reload reloadall" />
                 </div>
             </div>
@@ -239,7 +245,7 @@
     }
     timeOut = setTimeout(function () {
         ReloadAll();
-    },60000);
+    },30000);
     function updateMoveIcon() {
         $('.move-down').each(function () {
             var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');

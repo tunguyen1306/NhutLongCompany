@@ -65,6 +65,12 @@ namespace NhutLongCompany.Controllers
                     var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(item.id) && u.ThuTu.Value.Equals(item.Step_Flow.Value) orderby u.ThuTu ascending select u;
                     item.QuyTrinhs = queryQT.ToList<tbl_QuyTrinh>();
                 }
+                var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(item.id) orderby a.id descending select a).Take(1);
+                var listFlowPause = query.ToList();
+                if (listFlowPause.Count > 0)
+                {
+                    item.Current_FlowPauseTime = listFlowPause[0];
+                }
             }
             return PartialView(list);
         }
