@@ -16,6 +16,7 @@ namespace NhutLongCompany.Domain
             menu.Add(new Navbar { Id = 3, nameOption = "Báo Giá", controller = "tbl_OrderTem", action = "", imageClass = "fa fa-file-o fa-2x", status = true, isParent = true, parentId = 0 });
             menu.Add(new Navbar { Id = 4, nameOption = "Báo Giá", controller = "tbl_OrderTem", action = "IndexBaoGia", imageClass = "fa fa-file-o fa-", status = true, isParent = false, parentId = 3 });
             menu.Add(new Navbar { Id = 5, nameOption = "Đơn hàng", controller = "tbl_OrderTem", action = "Index", imageClass = "fa fa-file-o fa-", status = true, isParent = false, parentId = 3 });
+            menu.Add(new Navbar { Id = 14, nameOption = "Thông tin đơn hàng ", controller = "tbl_OrderTem", action = "IndexSX", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 3 });
             menu.Add(new Navbar { Id = 6, nameOption = "Sản Phẩm", controller = "Products", action = "Index", imageClass = "fa fa-shopping-cart fa-2x", status = true, isParent = true, parentId = 0 });
             menu.Add(new Navbar { Id = 7, nameOption = "Sản Phẩm Đã thực hiện", controller = "Products", action = "Index", imageClass = "fa fa-shopping-cart fa-2x", status = true, isParent = false, parentId =6 });
             //menu.Add(new Navbar { Id = 8, nameOption = "Sản Phẩm đang thực hiện", controller = "Products", action = "SPWorking", imageClass = "fa fa-shopping-cart fa-2x", status = true, isParent = false, parentId = 6 });

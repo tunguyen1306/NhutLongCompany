@@ -152,7 +152,7 @@ namespace NhutLongCompany.Controllers
                                       join u in db.tbl_OrderTem_BaoGia_Detail on b.id equals u.baogia_id.Value
                                       join y in db.tbl_Products on u.sanpam_id.Value equals y.ID_Products
                                       join z in db.tbl_Stack on u.id equals z.baoGia_detail_id
-                                      where a.status.Value == 3 && b.status.Value == 1 && u.status == 1 && u.date_working.Value <= DateTime.Now
+                                      where (a.status.Value == 3 || a.status.Value == 1|| a.status.Value == 4) && b.status.Value == 1 && u.status == 1 && u.date_working.Value <= DateTime.Now
                                       orderby z.index_view ascending
                                       select new BaoGiaTemDetailView { Step_Flow = u.step_index, Status_Pause = u.status_pause, Code_Detail = u.code_detail,  Status = u.status, Date_Working = u.date_working, Index_View = z.index_view, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
 
@@ -163,7 +163,7 @@ namespace NhutLongCompany.Controllers
                                       join u in db.tbl_OrderTem_BaoGia_Detail on b.id equals u.baogia_id.Value
                                       join y in db.tbl_Products on u.sanpam_id.Value equals y.ID_Products
                                       join z in db.tbl_Stack on u.id equals z.baoGia_detail_id
-                                      where a.status.Value == 3 && b.status.Value == 1 && u.status == 1 && u.date_working.Value == date.Value
+                                      where (a.status.Value == 3 || a.status.Value == 1|| a.status.Value == 4) && b.status.Value == 1 && u.status == 1 && u.date_working.Value == date.Value
                                       orderby z.index_view ascending
                                       select new BaoGiaTemDetailView { Step_Flow = u.step_index, Status_Pause = u.status_pause, Code_Detail = u.code_detail, Status = u.status, Date_Working = u.date_working, Index_View = z.index_view, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
 
@@ -462,7 +462,21 @@ namespace NhutLongCompany.Controllers
 
             }
             db.SaveChanges();
-
+            tbl_OrderTem_BaoGia bg = db.tbl_OrderTem_BaoGia.Find(tbl_OrderTem_BaoGia_Detail.baogia_id);
+            tbl_OrderTem order = db.tbl_OrderTem.Find(bg.order_id);
+            if (tbQT.ThuTu.Value==0)
+            {
+              
+                order.status = 3;
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            if (tbQT.ThuTu.Value == 5 && status == 2)
+            {
+                order.status = 4;
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             return PartialView(tbl_OrderTem_BaoGia_Detail);
         }
 

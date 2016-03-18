@@ -14,6 +14,32 @@ namespace NhutLongCompany.Controllers
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();
 
+
+        public ActionResult IndexSX()
+        {
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            var qr = (from data in db.tbl_OrderTem
+                      join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
+                      where data.status >= 0
+                      orderby data.update_date descending
+                      select new DonHangView
+                      {
+                          id = data.id,
+                          customer_id = cus.IDCustomers,
+                          Customer = cus,
+                          code = data.code,
+                          date_deliver = data.date_deliver,
+                          address_deliver = data.address_deliver,
+                          status = data.status
+                      });
+
+            return View(qr.ToList());
+        }
+
         public ActionResult Index()
         {
             if (Session["username"] == null)
@@ -67,8 +93,57 @@ namespace NhutLongCompany.Controllers
 
             return View(list);
         }
+        [HttpPost]
+        public ActionResult IndexBaoGia(DonHangView donHang)
+        {
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            int? id = donHang.id;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            tbl_OrderTem tbl_OrderTem = db.tbl_OrderTem.Find(id);
+            if (tbl_OrderTem == null)
+            {
+                return HttpNotFound();
+            }
+           
+                donHang.action = 0;
 
 
+                var queryCount = from a in db.tbl_OrderTem_BaoGia_Detail where a.baogia_id.Value.Equals(donHang.BaoGiaTemView.id) select a;
+                int countItem = queryCount.ToList().Count();
+
+
+                tbl_OrderTem order = db.tbl_OrderTem.Find(donHang.id);
+                if (donHang.BaoGiaTemView.status.Value == 1)
+                {
+                    order.code = order.code;
+                    order.status = 0;
+
+
+                }
+                order.date_deliver = donHang.date_deliver;
+                order.address_deliver = donHang.address_deliver;
+                order.update_date = DateTime.Now;
+                order.update_user = Session["username"].ToString();
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+
+
+                tbl_OrderTem_BaoGia baogia = db.tbl_OrderTem_BaoGia.Find(donHang.BaoGiaTemView.id);
+                baogia.status = donHang.BaoGiaTemView.status.Value;
+                baogia.commission = donHang.BaoGiaTemView.commission;
+                baogia.date_end = DateTime.Now;
+                baogia.note = donHang.BaoGiaTemView.note;
+                db.Entry(baogia).State = EntityState.Modified;
+                db.SaveChanges();
+               
+           return IndexBaoGia();
+        }
         public ActionResult IndexBaoGia()
         {
             if (Session["username"] == null)
@@ -77,7 +152,8 @@ namespace NhutLongCompany.Controllers
             }
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
-                      where data.status ==-1
+                     // where data.status ==-1
+                        orderby data.update_date descending
                       select new DonHangView
                       {
                           id = data.id,
@@ -722,9 +798,9 @@ namespace NhutLongCompany.Controllers
 
                 order.update_date = DateTime.Now;
                 order.update_user = Session["username"].ToString();
-               // order.status = donHang.status.Value;
+                order.status = donHang.status.Value;
                 order.date_begin = DateTime.Now;
-                order.status = 3;
+               // order.status = 3;
                 db.Entry(order).State = EntityState.Modified;
                 db.SaveChanges();
                 var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
