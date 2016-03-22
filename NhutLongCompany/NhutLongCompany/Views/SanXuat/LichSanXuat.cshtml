@@ -52,14 +52,17 @@
                                     <th >
                                            Trạng thái
                                         </th>
-                                    <th width="50">
+                                    <th width="100">
                                             Ưu tiên
                                         </th>
                                     @*<th>
                                         Tiến hành sản xuất
                                     </th>*@
-                                    <th>
+                                    <th width="100">
                                         
+                                    </th>
+                                    <th width="100">
+
                                     </th>
                                 </tr>
                             </thead>
@@ -109,7 +112,22 @@
 
 
 <script>
+    function UpdateLenhSanXuat(id) {
+        var json = JSON.stringify({ 'id': id});
+        $.ajax({
+            url: '@Url.Action("UpdateLenhSanXuat", "SanXuat")',
+            data: json,
+            cache: false,
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, XMLHttpRequest) {
+                ReloadAll();
+                alert("Cập nhật thành công!");
 
+            }
+        });
+    }
     function Reload(el)
     {
         $(el).attr('disabled', '')
@@ -142,7 +160,7 @@
 
     function onContinue()
     {
-     
+
         var id = document.getElementById('id').value;
         var note = document.getElementById('note').value;
         var idCrr = "ajax_update_" + id + "_product";
@@ -157,7 +175,7 @@
             success: function (data, textStatus, XMLHttpRequest) {
                 ReloadAll();
                 alert("Cập nhật thành công!");
-               
+
             }
         });
     }
@@ -179,12 +197,12 @@
                 ReloadAll();
                 alert("Cập nhật thành công!");
                 $('#modal-container-note').modal('hide');
-               
+
             }
         });
 
-       
-       
+
+
     }
     function setValuePause(id) {
         document.getElementById('note').value = "";
@@ -217,7 +235,7 @@
     function updateMoveIcon() {
         $('.move-down').each(function () {
             var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
-            var item_product = $(this).parents(".move_product")[0];          
+            var item_product = $(this).parents(".move_product")[0];
             var item_next = $(item_product).next();
 
             if (item_next.length == 0) {
@@ -230,7 +248,7 @@
 
         $('.move-up').each(function () {
             var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
-            var item_product = $(this).parents(".move_product")[0];         
+            var item_product = $(this).parents(".move_product")[0];
             var item_prev = $(item_product).prev();
             if (item_prev.length == 0 || item_prev.eq(0).hasClass('not_move')) {
                 $(this).css('display', 'none');
@@ -256,12 +274,12 @@
         $('.move-down').on("click", function () {
             var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
             var item_product = $(this).parents(".move_product")[0];
-          
+
             var item_next = $(item_product).next();
             if (item_next.length > 0) {
                 var next_dataindex = item_next.eq(0).attr('data-index');
                 var item_product_next = item_next[0];
-             
+
                 $(item_product).attr('data-index', next_dataindex);
                 $(item_product_next).attr('data-index', dataindex);
 
@@ -269,7 +287,7 @@
                 UpdateStack(item_product_next.id.replace('ajax_update_', '').replace('_product', ''), dataindex);
 
                 swapElements(item_product, item_product_next);
-             
+
 
             }
             updateMoveIcon();
@@ -279,11 +297,11 @@
 
             var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
             var item_product = $(this).parents(".move_product")[0];
-       
+
             var item_prev = $(item_product).prev();
             if (item_prev.length > 0) {
 
-                var item_product_prev = item_prev[0];                
+                var item_product_prev = item_prev[0];
                 var prev_dataindex = $(item_product_prev).eq(0).attr('data-index');
                 $(item_product).attr('data-index', prev_dataindex);
                 $(item_product_prev).attr('data-index', dataindex);
@@ -292,7 +310,7 @@
                 UpdateStack(item_product_prev.id.replace('ajax_update_', '').replace('_product', ''), dataindex);
 
                 swapElements(item_product, item_product_prev);
-             
+
 
             }
             updateMoveIcon();

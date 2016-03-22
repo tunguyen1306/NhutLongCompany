@@ -84,16 +84,37 @@
                 <button type="submit" class="btn btn-outline btn-default btn-xs"  onclick="return setValue(@itemCT.id);">Chuyển</button>
             </td>*@
 
-        <td style="position:relative">
-            @if (!itemCT.Status_Pause.HasValue || (itemCT.Status_Pause.HasValue && itemCT.Status_Pause.Value == 0))
+        <td >
+            @if (itemCT.QuyTrinhs != null && itemCT.QuyTrinhs.Count > 0)
             {
-                <button type="submit"  @(itemCT.QuyTrinhs[0].TrangThai.Value==1?"":"disabled") class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@itemCT.id);">Tạm dừng</button>
+                if (!itemCT.Status_Pause.HasValue || (itemCT.Status_Pause.HasValue && itemCT.Status_Pause.Value == 0))
+                {
+                    <button type="submit" @(itemCT.QuyTrinhs[0].TrangThai.Value == 1 ? "" : "disabled") class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@itemCT.id);">Tạm dừng</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@itemCT.id); onContinue(); return false;">Tiếp tục</button>
+                }
             }
-            else
+          
+
+        </td>
+
+        <td >
+          @if (itemCT.Status.Value == 0)
+          {
+            <a href="#lsx" class="btn btn-outline btn-primary btn-xs" onclick="UpdateLenhSanXuat(@itemCT.id);" >Lệnh sản xuất</a>
+          }
+
+            @if (itemCT.Status.Value == 1)
             {
-                <button type="submit" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@itemCT.id); onContinue(); return false;">Tiếp tục</button>
+                <span>Đang sản xuất</span>
             }
 
+            @if (itemCT.Status.Value == 2)
+            {
+                <span>Hoàn thành sản xuất</span>
+            }
         </td>
     </tr>
 

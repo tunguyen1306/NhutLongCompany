@@ -3,7 +3,9 @@
 
 @foreach (var item in Model)
 {
-
+    <td width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:yellow;background-color:green;">
+        @item.Code_Detail - @item.NameProducts
+    </td>
     for (int i = 0; i < item.QuyTrinhs.Count; i++)
     {
         var color = "red";
@@ -21,7 +23,7 @@
                 color_char = "red";
             }
         }
-        <td colspan="2" width="@((float)100 / (float)9)" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
+        <td  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
 
             <span>
                 @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)

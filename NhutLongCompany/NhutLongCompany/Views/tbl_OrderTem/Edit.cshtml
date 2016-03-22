@@ -149,8 +149,30 @@
         });
 
     });
+    function OffsetFlexoProductsUpdate(el) {
+        if (el.value == 'FLEXO - BẤM KIM') {
+            $('#DanKimProducts').val("Bấm kim")
+        }
+        if (el.value == 'FLEXO - DÁN') {
+            $('#DanKimProducts').val("Dán keo")
+        }
+        if (el.value == 'FLEXO - Bế') {
+            $('#DanKimProducts').val("")
+        }
+        if (el.value == 'FLEXO - Bế - DÁN') {
+            $('#DanKimProducts').val("Dán keo")
+        }
+        if (el.value == 'OFFSET -Bế - BK') {
+            $('#DanKimProducts').val("Bấm kim")
+        }
+        if (el.value == 'OFFSET - Bế - DÁN') {
+            $('#DanKimProducts').val("Dán keo")
+        }
 
+    }
     function updateProduct(el) {
+
+
         var m = 0;
         if ($('.NameProducts1').val() == '') {
             $('.lblNameProducts').addClass('hidden');
@@ -200,9 +222,11 @@
             var id = new Date().getTime();
             var tr = $(el).parents('tr').eq(0);
             var trdata = "<tr class='tr_edit' id='ext_" + id + "'><input name='BaoGiaTemView.BaoGiaTemDetailViews.Index' value='" + id + "' type='hidden'/><input name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "].ID_Products' value='' type='hidden'/>";
-            tr.find('.form-control').each(function() {
+            tr.find('.form-control').each(function () {
+
+
                 if ($(this).attr('name') == 'SoLuong') {
-                    trdata += "<td><input class='form-control text-box single-line updateSL " + this.name + "'  min='1' value='" + this.value + "' type='number' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "'/></td>";
+                    trdata += "<td class='" + this.name + "'><input class='form-control text-box single-line updateSL " + this.name + "'  min='1' value='" + this.value + "' type='number' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "'/></td>";
                 } else {
                     var text = this.value;
                     if ($(this).attr('name') == 'GiaProducts') {
@@ -211,22 +235,25 @@
                     if ($(this).attr('name') == 'Design') {
                         text = this.value == 1 ? "Y" : "N";
                     }
-                    trdata += "<td>" + text + "<input class='" + this.name + "' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "' value='" + this.value + "' type='hidden'/></td>";
+                    trdata += "<td class='" + this.name + "'>" + text + "<input class='" + this.name + "' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "' value='" + this.value + "' type='hidden'/></td>";
                 }
                 this.value = $(this).attr('default-value');
             });
-            trdata += "<td><input type='submit' style='float: left; margin-left: 10px' value='Xóa' class='btn btn-primary' onclick='delProduct(this); return false;' /></td></tr>";
+            trdata += "<td ><input type='submit' style='float: left; margin-left: 10px' value='Xóa' class='btn btn-primary' onclick='delProduct(this); return false;' /></td></tr>";
             $(el).parents('tbody').eq(0).append(trdata);
             updateMoney(el);
             updateEvent();
+
         }
+
+
     }
 
     function updateEvent() {
-        $('.updateSL').on("change", function() {
+        $('.updateSL').on("change", function () {
             updateMoney(this);
         });
-        $("input[type=number]").keydown(function(e) {
+        $("input[type=number]").keydown(function (e) {
             // Allow: backspace, delete, tab, escape, enter and .
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
                 // Allow: Ctrl+A, Command+A
@@ -252,15 +279,16 @@
 
     function updateMoney(el) {
         var money = 0;
-        $(el).parents('.body_data').eq(0).find('tr').each(function() {
+        $(el).parents('.body_data').eq(0).find('tr').each(function () {
             if ($(this).attr('id') != null) {
 
-                money += parseInt($(this).find('.SoLuong').eq(0).val()) * parseFloat($(this).find('.GiaProducts').eq(0).val());
+                money += parseInt($(this).find('input.SoLuong').eq(0).val()) * parseFloat($(this).find('input.GiaProducts').eq(0).val());
             }
         });
         $('.BaoGiaTemView_total_money').val(money);
         $('#BaoGiaTemView_total_money').text(numberParse(money));
     }
+
 
 </script>
 
@@ -313,6 +341,10 @@
                             @if (Model.status == 4)
                             {
                                 <span>Kết thúc sản xuất</span>
+                            }
+                            @if (Model.status == 5)
+                            {
+                                <span>Kết thúc đơn hàng</span>
                             }
                         </div>
                     </div>
@@ -750,7 +782,7 @@
                                     <th width="100px" align="center" valign="middle">
                                         Quy trình
                                     </th>
-                                    <th width="130px" align="center" valign="middle">
+                                    <th width="130px"  class="DanKimProducts" align="center" valign="middle">
                                         Dán/Kim
                                     </th>
                                     <th width="150px" align="center" valign="middle">
@@ -792,15 +824,20 @@
 
                                     </td>
                                     <td align="center">
-                                        <select name="OffsetFlexoProducts" default-value="Offset" class="form-control">
-                                            <option value="Offset">2</option>
-                                            <option value="Flexo">1</option>
+                                        <select name="OffsetFlexoProducts" onchange="OffsetFlexoProductsUpdate(this);" default-value="Offset" class="form-control">
+
+                                            <option value="FLEXO - BẤM KIM">1 - FLEXO - BẤM KIM</option>
+                                            <option value="FLEXO - DÁN">2 - FLEXO - DÁN</option>
+                                            <option value="FLEXO - Bế">3 - FLEXO - Bế</option>
+                                            <option value="FLEXO - Bế - DÁN">4 - FLEXO - Bế - DÁN</option>
+                                            <option value="OFFSET -Bế - BK">5 - OFFSET -Bế - BK</option>
+                                            <option value="OFFSET - Bế - DÁN">6 - OFFSET - Bế - DÁN</option>
                                         </select>
                                     </td>
-                                    <td align="center">
-                                        <select name="DanKimProducts" default-value="Dán keo" class="form-control">
+                                    <td align="center" class="DanKimProducts">
+                                        <select name="DanKimProducts" default-value="Dán keo" id="DanKimProducts" class="form-control">
                                             <option value="Dán keo">Dán keo</option>
-                                            <option value="Đóng kim">Đóng kim</option>
+                                            <option value="Bấm kim">Bấm kim</option>
                                         </select>
                                     </td>
                                     <td align="center">
@@ -1426,5 +1463,9 @@
     .table th { text-align: center; }
 
     .tr_edit > td { line-height: 34px !important; }
+       .DanKimProducts
+    {
+        display:none;
+    }
 </style>
 

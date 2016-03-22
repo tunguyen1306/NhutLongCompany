@@ -1,12 +1,15 @@
 ﻿@model IEnumerable<NhutLongCompany.Models.BaoGiaTemDetailView>
     @{ var update = (int?)ViewData["Update"]; }
 <div class="dataTable_wrapper">
-    <table class="table table-bordered ">
+    @{ 
+        var displayQT = false;
+    }
+    <table class="table table-bordered " id="QT1">
         <tbody>
             <tr>
 
                 <th colspan="18">
-                    Quy trình 1
+                    Quy trình 1 [FLEXO - BẤM KIM]
                 </th>
             </tr>
             @{
@@ -18,7 +21,7 @@
 
                 var item = Model.ToList()[j];
 
-                
+
                 var colorB = "transparent";
                 if (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0))
                 {
@@ -29,23 +32,25 @@
                     colorB = "gray";
                 }
 
-                if (!item.OffsetFlexoProducts.Equals("Offset"))
+                if (item.OffsetFlexoProducts.Equals("FLEXO - BẤM KIM"))
                 {
 
                     if (countQT == 0)
                     {
+                        displayQT = true;
                         countQT++;
                         <tr class="not_move">
+                            <th  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))%" class="cusfontsize2">Tên sản phẩm</th>
                             @for (int i = 0; i < item.QuyTrinhs.Count; i++)
                             {
                                 var itemQT = item.QuyTrinhs[i];
-                                <th colspan="2" width="@((float)100 / (float)9)%" class="cusfontsize2">@itemQT.TenBuoc</th>
+                                <th  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))%" class="cusfontsize2">@itemQT.TenBuoc</th>
                             }
                         </tr>
                     }
 
 
-                    <tr style="background-color:@colorB" id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
+                    <tr style="display:none;background-color:@colorB" id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
 
                         <td class="cusfontsize2" colspan="18" style="position:relative">
 
@@ -67,6 +72,9 @@
 
 
                     <tr id="ajax_update_@item.id" class="move" style="background-color:red;">
+                        <td  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:yellow;background-color:green;">
+                            @item.Code_Detail - @item.NameProducts
+                        </td>
                         @for (int i = 0; i < item.QuyTrinhs.Count; i++)
                         {
                             var color = "red";
@@ -85,7 +93,7 @@
                                 }
                             }
                            
-                            <td colspan="2" width="@((float)100 / (float)9)" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
+                            <td  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
 
                                 <span>
                                     @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
@@ -155,14 +163,20 @@
             }
         </tbody>
     </table>
-
-    <table class="table table-bordered ">
+    @if (!displayQT)
+    {
+        <script type="text/javascript">            
+            document.getElementById("QT1").style.display = "none";
+        </script>
+    }
+    @{ displayQT = false;}
+    <table class="table table-bordered " id="QT2">
 
         <tbody>
             <tr>
 
                 <th colspan="18">
-                    Quy trình 2
+                    Quy trình 2 [FLEXO - DÁN]
                 </th>
             </tr>
             @{
@@ -181,23 +195,25 @@
                 {
                     colorB = "gray";
                 }
-                if (item.OffsetFlexoProducts.Equals("Offset"))
+                if (item.OffsetFlexoProducts.Equals("FLEXO - DÁN"))
                 {
-
+                   
                     if (countQT == 0)
                     {
+                        displayQT = true;
                         countQT++;
                         <tr class="not_move">
+                            <th  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))%" class="cusfontsize2">Tên sản phẩm</th>
                             @for (int i = 0; i < item.QuyTrinhs.Count; i++)
                             {
                                 var itemQT = item.QuyTrinhs[i];
-                                <th colspan="2" width="@((float)100 / (float)9)%" class="cusfontsize2">@itemQT.TenBuoc</th>
+                                <th  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))%" class="cusfontsize2">@itemQT.TenBuoc</th>
                             }
                         </tr>
                     }
 
 
-                    <tr  style="background-color:@colorB"  id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
+                    <tr  style="display:none;background-color:@colorB"  id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
 
                         <td class="cusfontsize2" colspan="18" style="position:relative">
                             @*<span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:10px;top:5px;"></span>
@@ -211,6 +227,9 @@
                         </td>
                     </tr>
                     <tr id="ajax_update_@item.id" class="move" style="background-color:red;">
+                        <td  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:yellow;background-color:green;">
+                            @item.Code_Detail - @item.NameProducts
+                        </td>
                         @for (int i = 0; i < item.QuyTrinhs.Count; i++)
                         {
                             var color = "red";
@@ -228,7 +247,7 @@
                                     color_char = "red";
                                 }
                             }
-                            <td colspan="2" width="@((float)100 / (float)9)" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
+                            <td  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
 
                                 <span>
                                     @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
@@ -301,8 +320,651 @@
         </tbody>
     </table>
 
+    @if (!displayQT)
+    {
+        <script type="text/javascript">
+
+            document.getElementById("QT2").style.display = "none";
+        </script>
+    }
+    @{ displayQT = false;}
 
 
+
+
+    <table class="table table-bordered " id="QT3">
+
+        <tbody>
+            <tr>
+
+                <th colspan="18">
+                    Quy trình 3 [FLEXO - Bế]
+                </th>
+            </tr>
+            @{
+                countQT = 0;
+            }
+
+            @for (int j = 0; j < Model.ToList().Count(); j++)
+            {
+                var item = Model.ToList()[j];
+                var colorB = "transparent";
+                if (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0))
+                {
+                    colorB = "transparent";
+                }
+                else
+                {
+                    colorB = "gray";
+                }
+                if (item.OffsetFlexoProducts.Equals("FLEXO - Bế"))
+                {
+
+                    if (countQT == 0)
+                    {
+                        displayQT = true;
+                        countQT++;
+                        <tr class="not_move">
+                            <th  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))%" class="cusfontsize2">Tên sản phẩm</th>
+                            @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                            {
+                                var itemQT = item.QuyTrinhs[i];
+                                <th  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))%" class="cusfontsize2">@itemQT.TenBuoc</th>
+                            }
+                        </tr>
+                    }
+
+
+                    <tr style="display:none;background-color:@colorB" id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
+
+                        <td class="cusfontsize2" colspan="18" style="position:relative">
+                            @*<span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:10px;top:5px;"></span>
+                                <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 10px;top: 15px;"></span>*@
+                            @item.Code_Detail - @item.NameProducts <i>(Số lượng:@(item.SolopProducts.Value) - Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))</i>
+                            @if (colorB == "gray")
+                            {
+                                <b style="color:red">(Đang ngưng sản xuất - @item.Current_FlowPauseTime.note - @item.Current_FlowPauseTime.date_begin.Value.ToString("dd/MM/yyyy HH:mm:ss"))</b>
+                            }
+                            <input type="hidden" value="@item.id" />
+                        </td>
+                    </tr>
+                    <tr id="ajax_update_@item.id" class="move" style="background-color:red;">
+                        <td  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:yellow;background-color:green;">
+                            @item.Code_Detail - @item.NameProducts
+                        </td>
+                        @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                        {
+                            var color = "red";
+                            var color_char = "yellow";
+                            if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                            {
+                                color = "blue";
+                                color_char = "white";
+                            }
+                            else
+                            {
+                                if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                {
+                                    color = "yellow";
+                                    color_char = "red";
+                                }
+                            }
+                            <td  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
+
+                                <span>
+                                    @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
+                                    {
+                                        @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    else
+                                    {
+
+                                        @*<span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Bất đầu</span>*@
+
+                                    if (update.HasValue && update.Value == 1)
+                                    {
+                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Bất đầu</span>
+                                    }
+                                    else
+                                    {
+                                        @(" ")
+                                        }
+
+                                    }
+                                    @("-")
+                                    @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                    {
+                                        @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    else
+                                    {
+
+                                        @*<span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>*@
+
+                                    if (update.HasValue && update.Value == 1)
+                                    {
+                                        <span style="cursor:pointer" id="item_@item.QuyTrinhs[i].ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>
+                                        if (item.QuyTrinhs[i].TrangThai.Value == 1 && (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
+                                        {
+                                            <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@item.id);">tạm dừng</span>
+                                        }
+                                        else if (item.Status_Pause.HasValue && item.Status_Pause.Value == 1 && item.Current_FlowPauseTime.index_step.Value == item.QuyTrinhs[i].ThuTu.Value)
+                                        {
+                                            <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@item.id); onContinue(); return false;">tiếp tục</span>
+                                                <script type="text/javascript">
+                                                     document.getElementById('item_@item.QuyTrinhs[i].ID').style.display = 'none';
+                                                </script>
+                                        }
+
+
+                                    }
+                                    else
+                                    {
+                                        @(" ")
+                                        }
+
+
+                                    }
+                                </span>
+                            </td>
+
+
+                        }
+                    </tr>
+                }
+
+            }
+
+
+
+
+
+        </tbody>
+    </table>
+    @if (!displayQT)
+    {
+        <script type="text/javascript">
+
+            document.getElementById("QT3").style.display = "none";
+        </script>
+    }
+    @{ displayQT = false;}
+
+    <table class="table table-bordered " id="QT4">
+
+        <tbody>
+            <tr>
+
+                <th colspan="18">
+                    Quy trình 4 [FLEXO - Bế - DÁN]
+                </th>
+            </tr>
+            @{
+                countQT = 0;
+            }
+
+            @for (int j = 0; j < Model.ToList().Count(); j++)
+            {
+                var item = Model.ToList()[j];
+                var colorB = "transparent";
+                if (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0))
+                {
+                    colorB = "transparent";
+                }
+                else
+                {
+                    colorB = "gray";
+                }
+                if (item.OffsetFlexoProducts.Equals("FLEXO - Bế - DÁN"))
+                {
+
+                    if (countQT == 0)
+                    {
+                        displayQT = true;
+                        countQT++;
+                        <tr class="not_move">
+                            <th  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))%" class="cusfontsize2">Tên sản phẩm</th>
+                            @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                            {
+                                var itemQT = item.QuyTrinhs[i];
+                                <th  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))%" class="cusfontsize2">@itemQT.TenBuoc</th>
+                            }
+                        </tr>
+                    }
+
+
+                    <tr style="display:none;background-color:@colorB" id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
+
+                        <td class="cusfontsize2" colspan="18" style="position:relative">
+                            @*<span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:10px;top:5px;"></span>
+                                <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 10px;top: 15px;"></span>*@
+                            @item.Code_Detail - @item.NameProducts <i>(Số lượng:@(item.SolopProducts.Value) - Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))</i>
+                            @if (colorB == "gray")
+                            {
+                                <b style="color:red">(Đang ngưng sản xuất - @item.Current_FlowPauseTime.note - @item.Current_FlowPauseTime.date_begin.Value.ToString("dd/MM/yyyy HH:mm:ss"))</b>
+                            }
+                            <input type="hidden" value="@item.id" />
+                        </td>
+                    </tr>
+                    <tr id="ajax_update_@item.id" class="move" style="background-color:red;">
+                        <td  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:yellow;background-color:green;">
+                            @item.Code_Detail - @item.NameProducts
+                        </td>
+                        @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                        {
+                            var color = "red";
+                            var color_char = "yellow";
+                            if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                            {
+                                color = "blue";
+                                color_char = "white";
+                            }
+                            else
+                            {
+                                if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                {
+                                    color = "yellow";
+                                    color_char = "red";
+                                }
+                            }
+                            <td  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
+
+                                <span>
+                                    @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
+                                    {
+                                        @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    else
+                                    {
+
+                                        @*<span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Bất đầu</span>*@
+
+                                    if (update.HasValue && update.Value == 1)
+                                    {
+                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Bất đầu</span>
+                                    }
+                                    else
+                                    {
+                                        @(" ")
+                                        }
+
+                                    }
+                                    @("-")
+                                    @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                    {
+                                        @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    else
+                                    {
+
+                                        @*<span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>*@
+
+                                    if (update.HasValue && update.Value == 1)
+                                    {
+                                        <span style="cursor:pointer" id="item_@item.QuyTrinhs[i].ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>
+                                        if (item.QuyTrinhs[i].TrangThai.Value == 1 && (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
+                                        {
+                                            <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@item.id);">tạm dừng</span>
+                                        }
+                                        else if (item.Status_Pause.HasValue && item.Status_Pause.Value == 1 && item.Current_FlowPauseTime.index_step.Value == item.QuyTrinhs[i].ThuTu.Value)
+                                        {
+                                            <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@item.id); onContinue(); return false;">tiếp tục</span>
+                                            <script type="text/javascript">
+                                                     document.getElementById('item_@item.QuyTrinhs[i].ID').style.display = 'none';
+                                            </script>
+                                        }
+
+
+                                    }
+                                    else
+                                    {
+                                        @(" ")
+                                        }
+
+
+                                    }
+                                </span>
+                            </td>
+
+
+                        }
+                    </tr>
+                }
+
+            }
+
+
+
+
+
+        </tbody>
+    </table>
+    @if (!displayQT)
+    {
+        <script type="text/javascript">
+
+            document.getElementById("QT4").style.display = "none";
+        </script>
+    }
+    @{ displayQT = false;}
+
+
+    <table class="table table-bordered " id="QT5">
+
+        <tbody>
+            <tr>
+
+                <th colspan="18">
+                    Quy trình 5 [OFFSET -Bế - BK]
+                </th>
+            </tr>
+            @{
+                countQT = 0;
+            }
+
+            @for (int j = 0; j < Model.ToList().Count(); j++)
+            {
+                var item = Model.ToList()[j];
+                var colorB = "transparent";
+                if (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0))
+                {
+                    colorB = "transparent";
+                }
+                else
+                {
+                    colorB = "gray";
+                }
+                if (item.OffsetFlexoProducts.Equals("OFFSET -Bế - BK"))
+                {
+
+                    if (countQT == 0)
+                    {
+                        displayQT = true;
+                        countQT++;
+                        <tr class="not_move">
+                            <th  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))%" class="cusfontsize2">Tên sản phẩm</th>
+                            @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                            {
+                                var itemQT = item.QuyTrinhs[i];
+                                <th  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))%" class="cusfontsize2">@itemQT.TenBuoc</th>
+                            }
+                        </tr>
+                    }
+
+
+                    <tr style="display:none;background-color:@colorB" id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
+
+                        <td class="cusfontsize2" colspan="18" style="position:relative">
+                            @*<span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:10px;top:5px;"></span>
+                                <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 10px;top: 15px;"></span>*@
+                            @item.Code_Detail - @item.NameProducts <i>(Số lượng:@(item.SolopProducts.Value) - Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))</i>
+                            @if (colorB == "gray")
+                            {
+                                <b style="color:red">(Đang ngưng sản xuất - @item.Current_FlowPauseTime.note - @item.Current_FlowPauseTime.date_begin.Value.ToString("dd/MM/yyyy HH:mm:ss"))</b>
+                            }
+                            <input type="hidden" value="@item.id" />
+                        </td>
+                    </tr>
+                    <tr id="ajax_update_@item.id" class="move" style="background-color:red;">
+                        <td  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:yellow;background-color:green;">
+                            @item.Code_Detail - @item.NameProducts
+                        </td>
+                        @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                        {
+                            var color = "red";
+                            var color_char = "yellow";
+                            if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                            {
+                                color = "blue";
+                                color_char = "white";
+                            }
+                            else
+                            {
+                                if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                {
+                                    color = "yellow";
+                                    color_char = "red";
+                                }
+                            }
+                            <td  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
+
+                                <span>
+                                    @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
+                                    {
+                                        @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    else
+                                    {
+
+                                        @*<span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Bất đầu</span>*@
+
+                                    if (update.HasValue && update.Value == 1)
+                                    {
+                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Bất đầu</span>
+                                    }
+                                    else
+                                    {
+                                        @(" ")
+                                        }
+
+                                    }
+                                    @("-")
+                                    @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                    {
+                                        @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    else
+                                    {
+
+                                        @*<span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>*@
+
+                                    if (update.HasValue && update.Value == 1)
+                                    {
+                                        <span style="cursor:pointer" id="item_@item.QuyTrinhs[i].ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>
+                                        if (item.QuyTrinhs[i].TrangThai.Value == 1 && (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
+                                        {
+                                            <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@item.id);">tạm dừng</span>
+                                        }
+                                        else if (item.Status_Pause.HasValue && item.Status_Pause.Value == 1 && item.Current_FlowPauseTime.index_step.Value == item.QuyTrinhs[i].ThuTu.Value)
+                                        {
+                                            <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@item.id); onContinue(); return false;">tiếp tục</span>
+                                            <script type="text/javascript">
+                                                     document.getElementById('item_@item.QuyTrinhs[i].ID').style.display = 'none';
+                                            </script>
+                                        }
+
+
+                                    }
+                                    else
+                                    {
+                                        @(" ")
+                                        }
+
+
+                                    }
+                                </span>
+                            </td>
+
+
+                        }
+                    </tr>
+                }
+
+            }
+
+
+
+
+
+        </tbody>
+    </table>
+    @if (!displayQT)
+    {
+        <script type="text/javascript">
+
+            document.getElementById("QT5").style.display = "none";
+        </script>
+    }
+    @{ displayQT = false;}
+    <table class="table table-bordered " id="QT6">
+
+        <tbody>
+            <tr>
+
+                <th colspan="18">
+                    Quy trình 6 [OFFSET - Bế - DÁN]
+                </th>
+            </tr>
+            @{
+                countQT = 0;
+            }
+
+            @for (int j = 0; j < Model.ToList().Count(); j++)
+            {
+                var item = Model.ToList()[j];
+                var colorB = "transparent";
+                if (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0))
+                {
+                    colorB = "transparent";
+                }
+                else
+                {
+                    colorB = "gray";
+                }
+                if (item.OffsetFlexoProducts.Equals("OFFSET - Bế - DÁN"))
+                {
+
+
+                    if (countQT == 0)
+                    {
+                        displayQT = true;
+                        countQT++;
+                        <tr class="not_move">
+                            <th  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))%" class="cusfontsize2">Tên sản phẩm</th>
+                            @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                            {
+                                var itemQT = item.QuyTrinhs[i];
+                                <th  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))%" class="cusfontsize2">@itemQT.TenBuoc</th>
+                            }
+                        </tr>
+                    }
+
+
+                    <tr style="display:none;background-color:@colorB" id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
+
+                        <td class="cusfontsize2" colspan="18" style="position:relative">
+                            @*<span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:10px;top:5px;"></span>
+                                <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 10px;top: 15px;"></span>*@
+                            @item.Code_Detail - @item.NameProducts <i>(Số lượng:@(item.SolopProducts.Value) - Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))</i>
+                            @if (colorB == "gray")
+                            {
+                                <b style="color:red">(Đang ngưng sản xuất - @item.Current_FlowPauseTime.note - @item.Current_FlowPauseTime.date_begin.Value.ToString("dd/MM/yyyy HH:mm:ss"))</b>
+                            }
+                            <input type="hidden" value="@item.id" />
+                        </td>
+                    </tr>
+                    <tr id="ajax_update_@item.id" class="move" style="background-color:red;">
+                        <td  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:yellow;background-color:green;">
+                            @item.Code_Detail - @item.NameProducts                            
+                        </td>
+                         @for (int i = 0; i < item.QuyTrinhs.Count; i++)
+                        {
+                            var color = "red";
+                            var color_char = "yellow";
+                            if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                            {
+                                color = "blue";
+                                color_char = "white";
+                            }
+                            else
+                            {
+                                if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                {
+                                    color = "yellow";
+                                    color_char = "red";
+                                }
+                            }
+                            <td  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
+
+                                <span>
+                                    @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
+                                    {
+                                        @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    else
+                                    {
+
+                                        @*<span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Bất đầu</span>*@
+
+                                    if (update.HasValue && update.Value == 1)
+                                    {
+                                        <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Bất đầu</span>
+                                    }
+                                    else
+                                    {
+                                        @(" ")
+                                        }
+
+                                    }
+                                    @("-")
+                                    @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+                                    {
+                                        @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    else
+                                    {
+
+                                        @*<span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>*@
+
+                                    if (update.HasValue && update.Value == 1)
+                                    {
+                                        <span style="cursor:pointer" id="item_@item.QuyTrinhs[i].ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"1"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>
+                                        if (item.QuyTrinhs[i].TrangThai.Value == 1 && (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
+                                        {
+                                            <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@item.id);">tạm dừng</span>
+                                        }
+                                        else if (item.Status_Pause.HasValue && item.Status_Pause.Value == 1 && item.Current_FlowPauseTime.index_step.Value == item.QuyTrinhs[i].ThuTu.Value)
+                                        {
+                                            <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@item.id); onContinue(); return false;">tiếp tục</span>
+                                            <script type="text/javascript">
+                                                     document.getElementById('item_@item.QuyTrinhs[i].ID').style.display = 'none';
+                                            </script>
+                                        }
+
+
+                                    }
+                                    else
+                                    {
+                                        @(" ")
+                                        }
+
+
+                                    }
+                                </span>
+                            </td>
+
+
+                        }
+                    </tr>
+                }
+
+            }
+
+
+
+
+
+        </tbody>
+    </table>
+
+    @if (!displayQT)
+    {
+        <script type="text/javascript">
+
+            document.getElementById("QT6").style.display = "none";
+        </script>
+    }
+    @{ displayQT = false;}
 </div>
 
 

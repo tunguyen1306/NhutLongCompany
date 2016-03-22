@@ -87,6 +87,10 @@
                                         {
                                             <span>Kết thúc sản xuất</span>
                                         }
+                                        @if (item.status == 5)
+                                        {
+                                            <span>Kết thúc đơn hàng</span>
+                                        }
 
                                     </td>
 
@@ -132,7 +136,7 @@
 
 
                                         </td>
-                                        <td style="border-right: 1px solid;" >
+                                        <td style="border-right: 1px solid #ddd;" >
 
                                             Trạng thái
                                            
@@ -169,7 +173,7 @@
 
 
                                         </td>
-                                        <td style="border-right: 1px solid;">
+                                        <td style="border-right: 1px solid #ddd;">
 
                                           
                                             @if (itemCT.Status == 0)

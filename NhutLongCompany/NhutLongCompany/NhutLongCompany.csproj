@@ -1090,6 +1090,8 @@
     <Content Include="Views\SanXuat\LichSanXuat.cshtml" />
     <Content Include="Views\Products\IndexProcessProduct.cshtml" />
     <Content Include="Views\SanXuat\PartialLichSanXuat.cshtml" />
+    <Content Include="Views\tbl_OrderTem\IndexSX.cshtml" />
+    <Content Include="Views\SanXuat\EditFlow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
