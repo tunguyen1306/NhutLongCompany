@@ -29,5 +29,6 @@ namespace NhutLongCompany.Models
         public Nullable<System.DateTime> ModifyDateCustomers { get; set; }
         public string CreateUserCustomers { get; set; }
         public string ModifyUserCustomers { get; set; }
+        public string NoteCustomer { get; set; }
     }
 }

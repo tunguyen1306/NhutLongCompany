@@ -24,6 +24,7 @@
           <Property Name="ModifyDateCustomers" Type="datetime" />
           <Property Name="CreateUserCustomers" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifyUserCustomers" Type="nvarchar" MaxLength="50" />
+          <Property Name="NoteCustomer" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tbl_FlowPauseTime">
           <Key>
@@ -36,6 +37,14 @@
           <Property Name="status" Type="int" />
           <Property Name="index_step" Type="int" />
           <Property Name="note" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tbl_Note">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="NoteDisible" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tbl_OrderTem">
           <Key>
@@ -147,6 +156,7 @@
         <EntityContainer Name="NhutLongCompanyModelStoreContainer">
           <EntitySet Name="tbl_Customers" EntityType="Self.tbl_Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_FlowPauseTime" EntityType="Self.tbl_FlowPauseTime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Note" EntityType="Self.tbl_Note" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_OrderTem" EntityType="Self.tbl_OrderTem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_OrderTem_BaoGia" EntityType="Self.tbl_OrderTem_BaoGia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_OrderTem_BaoGia_Detail" EntityType="Self.tbl_OrderTem_BaoGia_Detail" Schema="dbo" store:Type="Tables" />
@@ -178,6 +188,7 @@
           <Property Name="ModifyDateCustomers" Type="DateTime" Precision="3" />
           <Property Name="CreateUserCustomers" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifyUserCustomers" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NoteCustomer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tbl_OrderTem">
           <Key>
@@ -288,6 +299,7 @@
           <EntitySet Name="tbl_User" EntityType="Self.tbl_User" />
           <EntitySet Name="tbl_Stack" EntityType="NhutLongCompanyModel.tbl_Stack" />
           <EntitySet Name="tbl_FlowPauseTime" EntityType="NhutLongCompanyModel.tbl_FlowPauseTime" />
+          <EntitySet Name="tbl_Note" EntityType="NhutLongCompanyModel.tbl_Note" />
         </EntityContainer>
         <EntityType Name="tbl_Stack">
           <Key>
@@ -309,6 +321,14 @@
           <Property Name="index_step" Type="Int32" />
           <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="tbl_Note">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="NoteDisible" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -318,6 +338,7 @@
           <EntitySetMapping Name="tbl_Customers">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Customers">
               <MappingFragment StoreEntitySet="tbl_Customers">
+                <ScalarProperty Name="NoteCustomer" ColumnName="NoteCustomer" />
                 <ScalarProperty Name="IDCustomers" ColumnName="IDCustomers" />
                 <ScalarProperty Name="NameCustomers" ColumnName="NameCustomers" />
                 <ScalarProperty Name="ChucvuCustomers" ColumnName="ChucvuCustomers" />
@@ -460,6 +481,15 @@
                 <ScalarProperty Name="date_begin" ColumnName="date_begin" />
                 <ScalarProperty Name="baoGia_detail_id" ColumnName="baoGia_detail_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Note">
+            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Note">
+              <MappingFragment StoreEntitySet="tbl_Note">
+                <ScalarProperty Name="NoteDisible" ColumnName="NoteDisible" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

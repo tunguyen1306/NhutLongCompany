@@ -174,6 +174,9 @@
     <Compile Include="Models\tbl_FlowPauseTime.cs">
       <DependentUpon>DataWeb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_Note.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_OrderTem.cs">
       <DependentUpon>DataWeb.tt</DependentUpon>
     </Compile>
@@ -1092,6 +1095,11 @@
     <Content Include="Views\SanXuat\PartialLichSanXuat.cshtml" />
     <Content Include="Views\tbl_OrderTem\IndexSX.cshtml" />
     <Content Include="Views\SanXuat\EditFlow.cshtml" />
+    <Content Include="Views\Customers\ViewNote.cshtml" />
+    <Content Include="Views\tbl_OrderTem\IndexDH.cshtml" />
+    <Content Include="Views\Customers\IndexBaoGia.cshtml" />
+    <Content Include="Views\Home\HomeCustomers.cshtml" />
+    <Content Include="Views\SanXuat\LichSanXuatOnDay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

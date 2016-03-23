@@ -112,5 +112,14 @@ namespace NhutLongCompany.Controllers
 
             return View();
         }
+        public ActionResult HomeCustomers()
+        {
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            return View();
+        }
     }
 }

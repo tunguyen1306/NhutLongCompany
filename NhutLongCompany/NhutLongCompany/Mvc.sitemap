@@ -3,7 +3,7 @@
             xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
             xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
 
-  <mvcSiteMapNode title="Trang chủ" controller="Home" action="Home">
+  <!--<mvcSiteMapNode title="Trang chủ" controller="Home" action="Home">
     <mvcSiteMapNode title="Khách hàng" controller="Customers" action="Index"/>
     <mvcSiteMapNode title="Báo Giá" controller="Home" action="HomeBaoGia">
       <mvcSiteMapNode title="Báo Giá" controller="tbl_OrderTem" action="IndexBaoGia"/>
@@ -25,10 +25,44 @@
     <mvcSiteMapNode title="Lịch sản xuất" controller="Sanxuat" action="LichSanXuat"/>
     </mvcSiteMapNode>
     
+  </mvcSiteMapNode>-->
+  <mvcSiteMapNode title="Trang chủ" controller="Home" action="Home">
+   
+    <mvcSiteMapNode title="Khách hàng" controller="Home" action="HomeCustomers">
+      <mvcSiteMapNode title="Thông tin khách hàng" controller="Customers" action="Index">
+        <mvcSiteMapNode title="Thêm khách hàng" controller="Customers" action="Create"/>
+        <mvcSiteMapNode title="Chi tiết khách hàng" controller="Customers" action="DetailCustomers"/>
+        <mvcSiteMapNode title="Sửa thông tin khách hàng" controller="Customers" action="Edit"/>
+       <mvcSiteMapNode title="Thông tin báo gái của khách hàng" controller="Customers" action="IndexBaoGia"/>
+       
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Thông tin Báo Giá" controller="tbl_OrderTem" action="IndexBaoGia">
+        <mvcSiteMapNode title="Thêm báo giá" controller="tbl_OrderTem" action="Create"/>
+        <mvcSiteMapNode title="Sửa báo giá" controller="tbl_OrderTem" action="EditBaoGia"/>
+      </mvcSiteMapNode>
+    </mvcSiteMapNode>
+
+
+    <mvcSiteMapNode title="Đơn hàng" controller="Home" action="HomeBaoGia">
+      <mvcSiteMapNode title="Thông tin Đơn hàng" controller="tbl_OrderTem" action="IndexSX"/>
+
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Sản xuất" controller="Home" action="HomeSanXuat">
+      <mvcSiteMapNode title="Sản phầm đang sản xuất" controller="Sanxuat" action="IndexSanXuat"/>
+      <mvcSiteMapNode title="Lịch sản xuất" controller="Sanxuat" action="LichSanXuat"/>
+      <mvcSiteMapNode title="Sản xuất trog ngày" controller="Sanxuat" action="LichSanXuatOnDay"/>
+    </mvcSiteMapNode>
+
+
   </mvcSiteMapNode>
 
 </mvcSiteMap>
-<!--menu.Add(new Navbar { Id = 1, nameOption = "Trang chủ", controller = "Home", action = "Home", imageClass = "fa fa-home fa-2x", status = true, isParent = false, parentId = 0 });
+
+
+  
+
+  <!--menu.Add(new Navbar { Id = 1, nameOption = "Trang chủ", controller = "Home", action = "Home", imageClass = "fa fa-home fa-2x", status = true, isParent = false, parentId = 0 });
 menu.Add(new Navbar { Id = 2, nameOption = "Khách Hàng", controller = "Customers", action = "Index", imageClass = "fa fa-users fa-2x", status = true, isParent = false, parentId = 0 });
 menu.Add(new Navbar { Id = 3, nameOption = "Báo Giá", controller = "tbl_OrderTem", action = "", imageClass = "fa fa-file-o fa-2x", status = true, isParent = true, parentId = 0 });
 menu.Add(new Navbar { Id = 4, nameOption = "Báo Giá", controller = "tbl_OrderTem", action = "IndexBaoGia", imageClass = "fa fa-file-o fa-", status = true, isParent = false, parentId = 3 });

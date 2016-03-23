@@ -74,7 +74,7 @@ namespace NhutLongCompany.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IDCustomers,NameCustomers,ChucvuCustomers,CongTyCustomers,CodeCustomers,EmailCustomers,PhoneCustomers,FaxCustomers,DiachiCustomers,MasothueCustomers,StatusCustomers,CreateDateCustomers,ModifyDateCustomers,CreateUserCustomers,ModifyUserCustomers")] tbl_Customers tbl_Customers)
+        public ActionResult Create([Bind(Include = "IDCustomers,NameCustomers,ChucvuCustomers,CongTyCustomers,CodeCustomers,EmailCustomers,PhoneCustomers,FaxCustomers,DiachiCustomers,MasothueCustomers,StatusCustomers,CreateDateCustomers,ModifyDateCustomers,CreateUserCustomers,ModifyUserCustomers,NoteCustomer")] tbl_Customers tbl_Customers)
         {
             if (Session["username"] == null)
             {
@@ -114,7 +114,7 @@ namespace NhutLongCompany.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDCustomers,NameCustomers,ChucvuCustomers,CongTyCustomers,CodeCustomers,EmailCustomers,PhoneCustomers,FaxCustomers,DiachiCustomers,MasothueCustomers,StatusCustomers,CreateDateCustomers,ModifyDateCustomers,CreateUserCustomers,ModifyUserCustomers")] tbl_Customers tbl_Customers)
+        public ActionResult Edit([Bind(Include = "IDCustomers,NameCustomers,ChucvuCustomers,CongTyCustomers,CodeCustomers,EmailCustomers,PhoneCustomers,FaxCustomers,DiachiCustomers,MasothueCustomers,StatusCustomers,CreateDateCustomers,ModifyDateCustomers,CreateUserCustomers,ModifyUserCustomers,NoteCustomer")] tbl_Customers tbl_Customers)
         {
             if (Session["username"] == null)
             {
@@ -182,5 +182,61 @@ namespace NhutLongCompany.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult ViewNote()
+        {
+            return View();
+        }
+        public ActionResult IndexBaoGia(int id)
+        {
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            var qr = (from data in db.tbl_OrderTem
+                      join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
+                      where cus.IDCustomers == id
+                      orderby data.update_date descending
+                      select new DonHangView
+                      {
+                          id = data.id,
+                          customer_id = cus.IDCustomers,
+                          Customer = cus,
+                          code = data.code,
+                          date_deliver = data.date_deliver,
+                          address_deliver = data.address_deliver,
+                          status = data.status
+                      });
+            List<DonHangView> list = qr.ToList();
+            foreach (var itemBG in list)
+            {
+                var queryBaoGia = from u in db.tbl_OrderTem_BaoGia where u.order_id.Value.Equals(itemBG.id) orderby u.id descending select u;
+                List<tbl_OrderTem_BaoGia> lisBG = queryBaoGia.ToList<tbl_OrderTem_BaoGia>();
+                List<BaoGiaTemView> lisBGTem = new List<BaoGiaTemView>();
+                if (lisBG.Count > 1)
+                {
+                    for (int i = 1; i < lisBG.Count; i++)
+                    {
+                        var item = lisBG[i];
+                        BaoGiaTemView temBG = new BaoGiaTemView { commission = item.commission, commission_money = item.commission_monney, note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, order_id = item.order_id, status = item.status, total_money = item.total_money };
+
+                        lisBGTem.Add(temBG);
+                    }
+                }
+                itemBG.BaoGiaTemViews = lisBGTem;
+                queryBaoGia = from u in db.tbl_OrderTem_BaoGia where u.order_id.Value.Equals(itemBG.id) orderby u.id descending select u;
+                lisBG = queryBaoGia.ToList<tbl_OrderTem_BaoGia>();
+                foreach (var item in lisBG)
+                {
+                    BaoGiaTemView temBG = new BaoGiaTemView { commission = item.commission, commission_money = item.commission_monney, note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, order_id = item.order_id, status = item.status, total_money = item.total_money };
+
+                    itemBG.BaoGiaTemView = temBG;
+
+                    break;
+                }
+            }
+            return View(list);
+        }
+
     }
 }
