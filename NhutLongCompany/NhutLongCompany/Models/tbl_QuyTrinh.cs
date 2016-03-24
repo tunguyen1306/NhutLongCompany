@@ -23,5 +23,6 @@ namespace NhutLongCompany.Models
         public Nullable<System.DateTime> NgayKetThuc_DK { get; set; }
         public Nullable<System.DateTime> NgayBatDau_TT { get; set; }
         public Nullable<System.DateTime> NgayKetThuc_TT { get; set; }
+        public Nullable<int> ThucHien { get; set; }
     }
 }

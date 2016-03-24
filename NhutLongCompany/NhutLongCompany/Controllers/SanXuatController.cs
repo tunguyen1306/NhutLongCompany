@@ -489,6 +489,11 @@ namespace NhutLongCompany.Controllers
                 tbQT.NgayKetThuc_TT = DateTime.Now;
             }
             tbQT.TrangThai = status;
+            if (tbQT.ThucHien==0)
+            {
+                tbQT.NgayBatDau_TT = DateTime.Now;
+                tbQT.NgayKetThuc_TT = DateTime.Now;
+            }
             db.Entry(tbQT).State = EntityState.Modified;
 
             tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail = db.tbl_OrderTem_BaoGia_Detail.Find(id);

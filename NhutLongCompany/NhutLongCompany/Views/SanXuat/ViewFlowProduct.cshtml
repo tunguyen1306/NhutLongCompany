@@ -33,51 +33,49 @@
     }
 
                         <td width="@((float)100 / (float)(11))%" class="cusfontsize1 custt" style="color:yellow;background-color:green;vertical-align: middle; padding-left: 5px !important;">
-                          @item.NameProducts
-                            <br />
-                            @QT
+                            @item.NameProducts (@QT)
                         </td>
-                        for (int i = 0; i < 10; i++)
-                        {
-                            var color = "red";
-                            var color_char = "yellow";
-                            NhutLongCompany.Models.tbl_QuyTrinh itemQT = null;
-                            NhutLongCompany.Models.tbl_QuyTrinh itemQTBF = null;
-                            for (int k = 0; k < item.QuyTrinhs.Count; k++)
-                            {
-                                var itemQTX = item.QuyTrinhs[k];
-                                if (itemQTX.ThuTu == i)
-                                {
-                                    itemQT = itemQTX;
-                                    if (k == 0)
-                                    {
-                                        itemQTBF = null;
+    for (int i = 0; i < 10; i++)
+    {
+        var color = "red";
+        var color_char = "yellow";
+        NhutLongCompany.Models.tbl_QuyTrinh itemQT = null;
+        NhutLongCompany.Models.tbl_QuyTrinh itemQTBF = null;
+        itemQT = item.QuyTrinhs[i];
+        if (i > 0)
+        {
+            itemQTBF = item.QuyTrinhs[i - 1];
+        }
+        if (itemQT.NgayBatDau_TT.HasValue && itemQT.NgayKetThuc_TT.HasValue)
+        {
+            color = "blue";
+            color_char = "white";
+        }
+        else
+        {
+            if (itemQT.NgayBatDau_TT.HasValue && !itemQT.NgayKetThuc_TT.HasValue)
+            {
+                color = "yellow";
+                color_char = "red";
+            }
+        }
 
 
-                                    }
-                                    else
-                                    {
-                                        itemQTBF = item.QuyTrinhs[k - 1];
-                                    }
-                                    break;
-                                }
-                            }
-
-                            if (itemQT != null)
-                            {
-                                if (itemQT.NgayBatDau_TT.HasValue && itemQT.NgayKetThuc_TT.HasValue)
-                                {
-                                    color = "blue";
-                                    color_char = "white";
-                                }
-                                else
-                                {
-                                    if (itemQT.NgayBatDau_TT.HasValue && !itemQT.NgayKetThuc_TT.HasValue)
-                                    {
-                                        color = "yellow";
-                                        color_char = "red";
-                                    }
-                                }
+        if (itemQT != null && itemQT.ThucHien.Value == 1)
+        {
+            if (itemQT.NgayBatDau_TT.HasValue && itemQT.NgayKetThuc_TT.HasValue)
+            {
+                color = "blue";
+                color_char = "white";
+            }
+            else
+            {
+                if (itemQT.NgayBatDau_TT.HasValue && !itemQT.NgayKetThuc_TT.HasValue)
+                {
+                    color = "yellow";
+                    color_char = "red";
+                }
+            }
 
                                 <td width="@((float)100 / (float)(11))%" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;vertical-align: middle; padding-left: 5px !important;">
 
@@ -135,7 +133,18 @@
                             }
                             else
                             {
-                                <td width="@((float)100 / (float)(11))%" class="cusfontsize1 custt"></td>
+                                <td width="@((float)100 / (float)(11))%" style="background-color:white !important;vertical-align: middle; padding-left: 5px !important;" class="cusfontsize1 custt">
+                                    @if (itemQT.TrangThai.Value==2)
+                                    {
+                                        @("Không thực hiện")
+
+                                    }
+                                    else
+                                    {
+                                        <span style="cursor:pointer;width:104px" id="item_@itemQT.ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQTBF==null?"2":"1"),@item.id,@itemQT.ID,2)">Không thực hiện</span>
+                                    }
+                                    
+                                </td>
                             }
 
 
