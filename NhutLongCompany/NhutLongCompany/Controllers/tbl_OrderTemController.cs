@@ -675,7 +675,7 @@ namespace NhutLongCompany.Controllers
                 db.SaveChanges();
                 if (donHang.BaoGiaTemView.status.Value == 1)
                 {
-                    return RedirectToAction("Index", "tbl_OrderTem");
+                    return RedirectToAction("IndexSX", "tbl_OrderTem");
                 }
             }
             //if (donHang.action == 4)
@@ -1301,14 +1301,14 @@ namespace NhutLongCompany.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateDesign(int id, DateTime date, HttpPostedFileBase file, string loai)
+        public ActionResult UpdateDesign(int id, DateTime date, string loai)
         {
             tbl_OrderTem_BaoGia_Detail item = db.tbl_OrderTem_BaoGia_Detail.Find(id);
             item.design_date = date;
             item.design = 2;
             item.loai_design = loai;
-            item.design_img = item.id + "_" + file.FileName;
-            file.SaveAs(Server.MapPath("~/Upload/ThietKe") + "/" + item.id + "_" + file.FileName);
+            //item.design_img = item.id + "_";
+            //file.SaveAs(Server.MapPath("~/Upload/ThietKe") + "/" + item.id + "_" + file.FileName);
             db.Entry(item).State = EntityState.Modified;
             db.SaveChanges();
             return Json(item);

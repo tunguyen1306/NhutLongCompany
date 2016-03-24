@@ -95,6 +95,7 @@
                 <div class="modal-footer">
                     <div class="bootstrap-dialog-footer-buttons">
                         <button class="btn btn-primary" onclick="onPause(); return false;">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
                     </div>
                 </div>
             </div>
@@ -114,19 +115,22 @@
 <script>
     function UpdateLenhSanXuat(id) {
         var json = JSON.stringify({ 'id': id});
-        $.ajax({
-            url: '@Url.Action("UpdateLenhSanXuat", "SanXuat")',
-            data: json,
-            cache: false,
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data, textStatus, XMLHttpRequest) {
-                ReloadAll();
-                alert("Cập nhật thành công!");
+        var cf = confirm("Bạn có đồng ý lệnh không?");
+        if (cf == true) {
+            $.ajax({
+                url: '@Url.Action("UpdateLenhSanXuat", "SanXuat")',
+                data: json,
+                cache: false,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data, textStatus, XMLHttpRequest) {
+                    ReloadAll();
+                    alert("Cập nhật thành công!");
 
-            }
-        });
+                }
+            });
+        }
     }
     function Reload(el)
     {
