@@ -490,9 +490,9 @@
                                     <th width="100px" align="center" valign="middle">
                                         Quy trình
                                     </th>
-                                    <th width="130px" align="center" valign="middle">
+                                    @*<th width="130px" align="center" valign="middle">
                                         Dán/Kim
-                                    </th>
+                                    </th>*@
                                     <th width="150px" align="center" valign="middle">
                                         Quy Cách (cm)
                                     </th>
@@ -537,12 +537,12 @@
                                             <option value="Flexo">1</option>
                                         </select>
                                     </td>
-                                    <td align="center">
+                                    @*<td align="center">
                                         <select name="DanKimProducts" default-value="Dán keo" class="form-control">
                                             <option value="Dán keo">Dán keo</option>
                                             <option value="Đóng kim">Đóng kim</option>
                                         </select>
-                                    </td>
+                                    </td>*@
                                     <td align="center">
                                         <input class="form-control text-box single-line QuyCachProducts1" default-value="" name="QuyCachProducts" type="text">
                                     </td>
@@ -572,7 +572,7 @@
                                         <td>@item.SolopProducts<input type="hidden" value="@item.SolopProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].SolopProducts" class="SolopProducts"></td>
                                         <td>@item.LoaigiayProducts<input type="hidden" value="@item.LoaigiayProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].LoaigiayProducts" class="LoaigiayProducts"></td>
                                         <td>@item.OffsetFlexoProducts<input type="hidden" value="@item.OffsetFlexoProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].OffsetFlexoProducts" class="OffsetFlexoProducts"></td>
-                                        <td>@item.DanKimProducts<input type="hidden" value="@item.DanKimProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].DanKimProducts" class="DanKimProducts"></td>
+                                        @*<td>@item.DanKimProducts<input type="hidden" value="@item.DanKimProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].DanKimProducts" class="DanKimProducts"></td>*@
                                         <td>@item.QuyCachProducts<input type="hidden" value="@item.QuyCachProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].QuyCachProducts" class="QuyCachProducts"></td>
                                         <td><input  type="number" min="0" step="500" class="form-control text-box single-line GiaProducts updateSL" value="@item.GiaProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].GiaProducts" ></td>
                                         <td><input type="number" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].SoLuong" value="@item.SoLuong" min="1" class="form-control text-box single-line updateSL SoLuong"></td>
@@ -729,9 +729,9 @@
                                 <th>
                                     Quy trình
                                 </th>
-                                <th>
+                                @*<th>
                                     Dán/Kim
-                                </th>
+                                </th>*@
                                 <th>
                                     Quy Cách (cm)
                                 </th>
@@ -754,7 +754,7 @@
                                     <td>@item.SolopProducts</td>
                                     <td>@item.LoaigiayProducts</td>
                                     <td>@item.OffsetFlexoProducts</td>
-                                    <td>@item.DanKimProducts</td>
+                                    @*<td>@item.DanKimProducts</td>*@
                                     <td>@item.QuyCachProducts</td>
                                     <td>@double.Parse(item.GiaProducts).ToString("n2") đ</td>
                                     <td>
@@ -971,9 +971,9 @@
                                     <th>
                                         Quy trình
                                     </th>
-                                    <th>
+                                    @*<th>
                                         Dán/Kim
-                                    </th>
+                                    </th>*@
                                     <th>
                                         Quy Cách (cm)
                                     </th>
@@ -997,7 +997,7 @@
                                         <td>@item.SolopProducts</td>
                                         <td>@item.LoaigiayProducts</td>
                                         <td>@item.OffsetFlexoProducts</td>
-                                        <td>@item.DanKimProducts</td>
+                                        @*<td>@item.DanKimProducts</td>*@
                                         <td>@item.QuyCachProducts</td>
                                         <td>@double.Parse(item.GiaProducts).ToString("n2") đ</td>
                                         <td>@item.SoLuong</td>
