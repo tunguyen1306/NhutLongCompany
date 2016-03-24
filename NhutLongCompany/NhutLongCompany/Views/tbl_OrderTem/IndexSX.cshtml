@@ -134,6 +134,12 @@
 
 
                                         }
+                                        @if (item.status.Value == 4)
+                                        {
+                                            <span onclick="UpdateQuyTrinhAll(@item.id,10)" class="btn btn-outline btn-default btn-xs" style="cursor:pointer">Giao hàng</span>
+                                            <span onclick="UpdateQuyTrinhAll(@item.id,11)" class="btn btn-outline btn-default btn-xs" style="cursor:pointer">Thanh toán</span>
+                                            <span onclick="UpdateQuyTrinhAll(@item.id,12)" class="btn btn-outline btn-default btn-xs" style="cursor:pointer">KT đơn hàng</span>
+                                        }
                                     </td>
                                     <td style="text-align: center">
 
@@ -172,17 +178,26 @@
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-<form method="post" action="/tbl_OrderTem/IndexSXSubmit">
+<form method="post" id="fromUpdate1" action="/tbl_OrderTem/IndexSXSubmit">
     <input type="hidden" value="0" name="status" id="status" >
     <input type="hidden" value="0" name="id" id="idDH">
     <input type="hidden" value="0" name="idBG" id="idBG">
+</form>
+<form method="post" id="fromUpdate2" action="/tbl_OrderTem/UpdateFlow_GD_TT_KTDH">   
+    <input type="hidden" value="0" name="id" id="idBGUpdateFlow">
+    <input type="hidden" value="0" name="index" id="indexFlow">
 </form>
 <script>
     function UpdateStatusOrder(id,idBG,status)
     {
         $('#status').val(status);
         $("#idDH").val(id);    
-        $("#idBG").val(idBG);    
-        document.forms[0].submit();
+        $("#idBG").val(idBG);       
+        document.getElementById("fromUpdate1").submit();
+    }
+    function UpdateQuyTrinhAll(id, index) {       
+        $("#idDHUpdateFlow").val(id);
+        $("#indexFlow").val(index);
+        document.getElementById("fromUpdate2").submit();
     }
 </script>

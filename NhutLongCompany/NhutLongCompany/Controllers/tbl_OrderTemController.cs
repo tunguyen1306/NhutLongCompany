@@ -14,12 +14,125 @@ namespace NhutLongCompany.Controllers
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();
 
+        public PartialViewResult IndexSanXuatByDate(DateTime? date, int? update)
+        {
+            //if (Session["username"] == null)
+            //{
+            //    return RedirectToAction("Login", "Login");
+            //}
+            var querySanPhamSanXuat = from a in db.tbl_OrderTem
+                                      join b in db.tbl_OrderTem_BaoGia on a.id equals b.order_id.Value
+                                      join u in db.tbl_OrderTem_BaoGia_Detail on b.id equals u.baogia_id.Value
+                                      join y in db.tbl_Products on u.sanpam_id.Value equals y.ID_Products
+                                      join z in db.tbl_Stack on u.id equals z.baoGia_detail_id
+                                      where (a.status.Value == 3 || a.status.Value == 1 || a.status.Value == 4) && b.status.Value == 1 && u.status == 1 && u.date_working.Value <= DateTime.Now
+                                      orderby z.index_view ascending
+                                      select new BaoGiaTemDetailView { Step_Flow = u.step_index, Status_Pause = u.status_pause, Code_Detail = u.code_detail, Status = u.status, Date_Working = u.date_working, Index_View = z.index_view, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+
+            if (date.HasValue)
+            {
+                querySanPhamSanXuat = from a in db.tbl_OrderTem
+                                      join b in db.tbl_OrderTem_BaoGia on a.id equals b.order_id.Value
+                                      join u in db.tbl_OrderTem_BaoGia_Detail on b.id equals u.baogia_id.Value
+                                      join y in db.tbl_Products on u.sanpam_id.Value equals y.ID_Products
+                                      join z in db.tbl_Stack on u.id equals z.baoGia_detail_id
+                                      where (a.status.Value == 3 || a.status.Value == 1 || a.status.Value == 4) && b.status.Value == 1 && u.status == 1 && u.date_working.Value == date.Value
+                                      orderby z.index_view ascending
+                                      select new BaoGiaTemDetailView { Step_Flow = u.step_index, Status_Pause = u.status_pause, Code_Detail = u.code_detail, Status = u.status, Date_Working = u.date_working, Index_View = z.index_view, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+
+
+            }
+            List<BaoGiaTemDetailView> list = querySanPhamSanXuat.ToList();
+            foreach (var item in list)
+            {
+                item.Timer = (int)DateTime.Parse(item.date_deliver.Value.ToShortDateString()).Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays;
+                var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(item.id)  orderby u.ThuTu ascending select u;
+                item.QuyTrinhs = queryQT.ToList<tbl_QuyTrinh>();
+                var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(item.id) orderby a.id descending select a).Take(1);
+                var listFlowPause = query.ToList();
+                if (listFlowPause.Count > 0)
+                {
+                    item.Current_FlowPauseTime = listFlowPause[0];
+                }
+
+            }
+            // list.Sort(new CoordinatesBasedComparer());
+
+            ViewData["Update"] = update;
+            return PartialView(list);
+        }
+
         public ActionResult TheoDoiDonHang()
         {
 
             return View();
         }
 
+        [HttpPost]
+        public ActionResult UpdateFlow_GD_TT_KTDH(int? id, int index)
+        {
+            var queryBaoGia = from u in db.tbl_OrderTem_BaoGia where u.order_id.Value.Equals(id) orderby u.id descending select u;
+            var lisBG = queryBaoGia.ToList<tbl_OrderTem_BaoGia>();
+            foreach (var item in lisBG)
+            {
+                BaoGiaTemView temBG = new BaoGiaTemView { commission = item.commission, commission_money = item.commission_monney, note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, order_id = item.order_id, status = item.status, total_money = item.total_money };
+                var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
+                                     join z in db.tbl_QuyTrinh on u.id equals z.ID_BaoGiaDetail
+                                     where u.baogia_id.Value.Equals(temBG.id) && z.ThuTu.Equals(index)
+                                     select z;
+                List<tbl_QuyTrinh> listQ = queryGiaoGiaCT.ToList();
+                foreach (var itemQT in listQ)
+                {
+                    itemQT.TrangThai = 2;
+                    itemQT.NgayBatDau_TT = DateTime.Now;
+                    itemQT.NgayKetThuc_TT = DateTime.Now;
+                    db.Entry(itemQT).State = EntityState.Modified;
+                }
+                if (index==12)
+                {
+
+                    var listGH = from u in db.tbl_OrderTem_BaoGia_Detail
+                                 join z in db.tbl_QuyTrinh on u.id equals z.ID_BaoGiaDetail
+                                 where u.baogia_id.Value.Equals(temBG.id) && z.ThuTu.Equals(10) select z;
+                    listQ = listGH.ToList();
+                    foreach (var itemQT in listQ)
+                    {
+                        if (itemQT.TrangThai!=2)
+                        {
+                            itemQT.TrangThai = 2;
+                            itemQT.NgayBatDau_TT = DateTime.Now;
+                            itemQT.NgayKetThuc_TT = DateTime.Now;
+                            db.Entry(itemQT).State = EntityState.Modified;
+                        }
+                      
+                    }
+                    listGH = from u in db.tbl_OrderTem_BaoGia_Detail
+                             join z in db.tbl_QuyTrinh on u.id equals z.ID_BaoGiaDetail
+                             where u.baogia_id.Value.Equals(temBG.id) && z.ThuTu.Equals(11)
+                             select z;
+                    listQ = listGH.ToList();
+                    foreach (var itemQT in listQ)
+                    {
+                        if (itemQT.TrangThai != 2)
+                        {
+                            itemQT.TrangThai = 2;
+                            itemQT.NgayBatDau_TT = DateTime.Now;
+                            itemQT.NgayKetThuc_TT = DateTime.Now;
+                            db.Entry(itemQT).State = EntityState.Modified;
+                        }
+
+                    }
+                    tbl_OrderTem tbl_OrderTem = db.tbl_OrderTem.Find(id);
+                    tbl_OrderTem.status = 5;
+                    db.Entry(tbl_OrderTem).State = EntityState.Modified;
+                }
+                db.SaveChanges();
+                break;
+            }
+            return RedirectToAction("IndexSX", "tbl_OrderTem");
+        }
+
+            
 
         [HttpPost]
         public ActionResult IndexSXSubmit(int? id,int status,int idBG)
@@ -192,9 +305,22 @@ namespace NhutLongCompany.Controllers
                         db.tbl_QuyTrinh.Add(qt1);
                         tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 2, TrangThai = 0, TenBuoc = "Bồi" };
                         db.tbl_QuyTrinh.Add(qt2);
-                        tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Bế" };
+
+                    tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 3, TrangThai = 0, TenBuoc = "Xả biến, cán lằn" };
+                    db.tbl_QuyTrinh.Add(qt3);
+                    tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 4, TrangThai = 0, TenBuoc = "In FLEXO" };
+                    db.tbl_QuyTrinh.Add(qt4);
+
+                    tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Bế" };
                         db.tbl_QuyTrinh.Add(qt5);
-                        tbl_QuyTrinh qt8 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Dán" };
+
+                    tbl_QuyTrinh qt6 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 6, TrangThai = 0, TenBuoc = "Chập khe" };
+                    db.tbl_QuyTrinh.Add(qt6);
+
+                    tbl_QuyTrinh qt7 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 7, TrangThai = 0, TenBuoc = "Bấm kim" };
+                    db.tbl_QuyTrinh.Add(qt7);
+
+                    tbl_QuyTrinh qt8 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Dán" };
                         db.tbl_QuyTrinh.Add(qt8);
                     }
                     tbl_QuyTrinh qt9 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 9, TrangThai = 0, TenBuoc = "Đóng gói" };
@@ -273,7 +399,7 @@ namespace NhutLongCompany.Controllers
                     {
                         if (itemSP.Step_Flow.HasValue)
                         {
-                            var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(itemSP.id) && u.ThuTu.Value.Equals(itemSP.Step_Flow.Value) orderby u.ThuTu ascending select u;
+                            var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(itemSP.id) orderby u.ThuTu ascending select u;
                             itemSP.QuyTrinhs = queryQT.ToList<tbl_QuyTrinh>();
                         }
 
@@ -1062,93 +1188,160 @@ namespace NhutLongCompany.Controllers
                     //FLEXO - BẤM KIM	FLEXO - DÁN	FLEXO - Bế - BK	FLEXO - Bế - DÁN	OFFSET -Bế  - BK	OFFSET - Bế - DÁN
                     if (item.OffsetFlexoProducts.Equals("FLEXO - BẤM KIM"))
                     {
-                        tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
+                        tbl_QuyTrinh qt0 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 0, TrangThai = 0, TenBuoc = "Nhận tờ in offset" };
+                        db.tbl_QuyTrinh.Add(qt0);
+                        tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
                         db.tbl_QuyTrinh.Add(qt1);
-                        tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 3, TrangThai = 0, TenBuoc = "Xả biến, cán lằn" };
+                        tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 2, TrangThai = 0, TenBuoc = "Bồi" };
                         db.tbl_QuyTrinh.Add(qt2);
-                        tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 4, TrangThai = 0, TenBuoc = "In FLEXO" };
+                        tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 3, TrangThai = 0, TenBuoc = "Xả biến, cán lằn" };
                         db.tbl_QuyTrinh.Add(qt3);
-                        tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 6, TrangThai = 0, TenBuoc = "Chập khe" };
+                        tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 4, TrangThai = 0, TenBuoc = "In FLEXO" };
                         db.tbl_QuyTrinh.Add(qt4);
-                        tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 7, TrangThai = 0, TenBuoc = "Bấm kim" };
+                        tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Bế" };
                         db.tbl_QuyTrinh.Add(qt5);
-                    
+                        tbl_QuyTrinh qt6 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 6, TrangThai = 0, TenBuoc = "Chập khe" };
+                        db.tbl_QuyTrinh.Add(qt6);
+                        tbl_QuyTrinh qt7 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 7, TrangThai = 0, TenBuoc = "Bấm kim" };
+                        db.tbl_QuyTrinh.Add(qt7);
+                        tbl_QuyTrinh qt8 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Dán" };
+                        db.tbl_QuyTrinh.Add(qt8);
+
                     }
                     if (item.OffsetFlexoProducts.Equals("FLEXO - DÁN"))
                     {
-                        tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
+                        tbl_QuyTrinh qt0 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 0, TrangThai = 0, TenBuoc = "Nhận tờ in offset" };
+                        db.tbl_QuyTrinh.Add(qt0);
+                        tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
                         db.tbl_QuyTrinh.Add(qt1);
-                        tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 3, TrangThai = 0, TenBuoc = "Xả biến, cán lằn" };
+                        tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 2, TrangThai = 0, TenBuoc = "Bồi" };
                         db.tbl_QuyTrinh.Add(qt2);
-                        tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 4, TrangThai = 0, TenBuoc = "In FLEXO" };
+                        tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 3, TrangThai = 0, TenBuoc = "Xả biến, cán lằn" };
+
                         db.tbl_QuyTrinh.Add(qt3);
-                        tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 6, TrangThai = 0, TenBuoc = "Chập khe" };
+                        tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 4, TrangThai = 0, TenBuoc = "In FLEXO" };
                         db.tbl_QuyTrinh.Add(qt4);
-                        tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Dán" };
+                        tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Bế" };
                         db.tbl_QuyTrinh.Add(qt5);
+                        tbl_QuyTrinh qt6 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 6, TrangThai = 0, TenBuoc = "Chập khe" };
+                        db.tbl_QuyTrinh.Add(qt6);
+                        tbl_QuyTrinh qt7 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 7, TrangThai = 0, TenBuoc = "Bấm kim" };
+                        db.tbl_QuyTrinh.Add(qt7);
+                        tbl_QuyTrinh qt8 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Dán" };
+                        db.tbl_QuyTrinh.Add(qt8);
                     }
                     if (item.OffsetFlexoProducts.Equals("FLEXO - Bế"))
                     {
-                        tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
+                        tbl_QuyTrinh qt0 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 0, TrangThai = 0, TenBuoc = "Nhận tờ in offset" };
+                        db.tbl_QuyTrinh.Add(qt0);
+
+                        tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
                         db.tbl_QuyTrinh.Add(qt1);
-                      
-                        tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 4, TrangThai = 0, TenBuoc = "In FLEXO" };
+
+                        tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 2, TrangThai = 0, TenBuoc = "Bồi" };
                         db.tbl_QuyTrinh.Add(qt2);
-                        tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Bế" };
+
+                        tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 3, TrangThai = 0, TenBuoc = "Xả biến, cán lằn" };
                         db.tbl_QuyTrinh.Add(qt3);
-                        tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 6, TrangThai = 0, TenBuoc = "Chập khe" };
+
+                        tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 4, TrangThai = 0, TenBuoc = "In FLEXO" };
                         db.tbl_QuyTrinh.Add(qt4);
-                        tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 7, TrangThai = 0, TenBuoc = "Bấm kim" };
+                        tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Bế" };
                         db.tbl_QuyTrinh.Add(qt5);
+                        tbl_QuyTrinh qt6 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 6, TrangThai = 0, TenBuoc = "Chập khe" };
+                        db.tbl_QuyTrinh.Add(qt6);
+                        tbl_QuyTrinh qt7 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 7, TrangThai = 0, TenBuoc = "Bấm kim" };
+                        db.tbl_QuyTrinh.Add(qt7);
+                        tbl_QuyTrinh qt8 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Dán" };
+                        db.tbl_QuyTrinh.Add(qt8);
                     }
                     if (item.OffsetFlexoProducts.Equals("FLEXO - Bế - DÁN"))
                     {
-                        tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
+
+                        tbl_QuyTrinh qt0 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 0, TrangThai = 0, TenBuoc = "Nhận tờ in offset" };
+                        db.tbl_QuyTrinh.Add(qt0);
+
+                        tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
                         db.tbl_QuyTrinh.Add(qt1);
-                        tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 4, TrangThai = 0, TenBuoc = "In FLEXO" };
+
+                        tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 2, TrangThai = 0, TenBuoc = "Bồi" };
                         db.tbl_QuyTrinh.Add(qt2);
-                        tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Bế" };
+
+                        tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 3, TrangThai = 0, TenBuoc = "Xả biến, cán lằn" };
                         db.tbl_QuyTrinh.Add(qt3);
-                        tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 6, TrangThai = 0, TenBuoc = "Chập khe" };
+
+                        tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 4, TrangThai = 0, TenBuoc = "In FLEXO" };
                         db.tbl_QuyTrinh.Add(qt4);
-                        tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Dán" };
+                        tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Bế" };
                         db.tbl_QuyTrinh.Add(qt5);
+                        tbl_QuyTrinh qt6 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 6, TrangThai = 0, TenBuoc = "Chập khe" };
+                        db.tbl_QuyTrinh.Add(qt6);
+
+
+                        tbl_QuyTrinh qt7 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 7, TrangThai = 0, TenBuoc = "Bấm kim" };
+                        db.tbl_QuyTrinh.Add(qt7);
+
+                        tbl_QuyTrinh qt8 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Dán" };
+                        db.tbl_QuyTrinh.Add(qt8);
                     }
                     if (item.OffsetFlexoProducts.Equals("OFFSET -Bế - BK"))
                     {
-                        tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 0, TrangThai = 0, TenBuoc = "Nhận tờ in offset" };
+                        tbl_QuyTrinh qt0 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 0, TrangThai = 0, TenBuoc = "Nhận tờ in offset" };
+                        db.tbl_QuyTrinh.Add(qt0);
+                        tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
                         db.tbl_QuyTrinh.Add(qt1);
-                        tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
+                        tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 2, TrangThai = 0, TenBuoc = "Bồi" };
                         db.tbl_QuyTrinh.Add(qt2);
-                        tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 2, TrangThai = 0, TenBuoc = "Bồi" };
+
+                        tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 3, TrangThai = 0, TenBuoc = "Xả biến, cán lằn" };
                         db.tbl_QuyTrinh.Add(qt3);
-                        tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Bế" };
+                        tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 4, TrangThai = 0, TenBuoc = "In FLEXO" };
                         db.tbl_QuyTrinh.Add(qt4);
-                        tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 7, TrangThai = 0, TenBuoc = "Bấm kim" };
+
+                        tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Bế" };
                         db.tbl_QuyTrinh.Add(qt5);
-                        tbl_QuyTrinh qt6 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Dán" };
+
+                        tbl_QuyTrinh qt6 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 6, TrangThai = 0, TenBuoc = "Chập khe" };
                         db.tbl_QuyTrinh.Add(qt6);
+
+                        tbl_QuyTrinh qt7 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 7, TrangThai = 0, TenBuoc = "Bấm kim" };
+                        db.tbl_QuyTrinh.Add(qt7);
+                        tbl_QuyTrinh qt8 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Dán" };
+                        db.tbl_QuyTrinh.Add(qt8);
                     }
                     if (item.OffsetFlexoProducts.Equals("OFFSET - Bế - DÁN"))
                     {
-                        tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 0, TrangThai = 0, TenBuoc = "Nhận tờ in offset" };
+                        tbl_QuyTrinh qt0 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 0, TrangThai = 0, TenBuoc = "Nhận tờ in offset" };
+                        db.tbl_QuyTrinh.Add(qt0);
+                        tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
                         db.tbl_QuyTrinh.Add(qt1);
-                        tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
+                        tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 2, TrangThai = 0, TenBuoc = "Bồi" };
                         db.tbl_QuyTrinh.Add(qt2);
-                        tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 2, TrangThai = 0, TenBuoc = "Bồi" };
+
+                        tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 3, TrangThai = 0, TenBuoc = "Xả biến, cán lằn" };
                         db.tbl_QuyTrinh.Add(qt3);
-                        tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Bế" };
-                        db.tbl_QuyTrinh.Add(qt4);    
-                        tbl_QuyTrinh qt6 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Dán" };
+                        tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ThucHien = 0, ID_BaoGiaDetail = item.id, ThuTu = 4, TrangThai = 0, TenBuoc = "In FLEXO" };
+                        db.tbl_QuyTrinh.Add(qt4);
+
+                        tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Bế" };
+                        db.tbl_QuyTrinh.Add(qt5);
+
+                        tbl_QuyTrinh qt6 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 6, TrangThai = 0, TenBuoc = "Chập khe" };
                         db.tbl_QuyTrinh.Add(qt6);
+
+                        tbl_QuyTrinh qt7 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 7, TrangThai = 0, TenBuoc = "Bấm kim" };
+                        db.tbl_QuyTrinh.Add(qt7);
+
+                        tbl_QuyTrinh qt8 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Dán" };
+                        db.tbl_QuyTrinh.Add(qt8);
                     }
-                    tbl_QuyTrinh qt9 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 9, TrangThai = 0, TenBuoc = "Đóng gói" };
+                    tbl_QuyTrinh qt9 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 9, TrangThai = 0, TenBuoc = "Đóng gói" };
                     db.tbl_QuyTrinh.Add(qt9);
-                    tbl_QuyTrinh qt10 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 10, TrangThai = 0, TenBuoc = "Giao hàng" };
+                    tbl_QuyTrinh qt10 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 10, TrangThai = 0, TenBuoc = "Giao hàng" };
                     db.tbl_QuyTrinh.Add(qt10);
-                    tbl_QuyTrinh qt11 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 11, TrangThai = 0, TenBuoc = "Thanh toán" };
+                    tbl_QuyTrinh qt11 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 11, TrangThai = 0, TenBuoc = "Thanh toán" };
                     db.tbl_QuyTrinh.Add(qt11);
-                    tbl_QuyTrinh qt12= new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 12, TrangThai = 0, TenBuoc = "Kết thúc đơn hàng" };
+                    tbl_QuyTrinh qt12 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 12, TrangThai = 0, TenBuoc = "Kết thúc đơn hàng" };
                     db.tbl_QuyTrinh.Add(qt12);
                     //if (item.OffsetFlexoProducts.Equals("Offset"))
                     //{

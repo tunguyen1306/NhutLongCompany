@@ -133,7 +133,7 @@
                             }
                             else
                             {
-                                <td width="@((float)100 / (float)(11))%" style="background-color:white !important;vertical-align: middle; padding-left: 5px !important;" class="cusfontsize1 custt">
+                                <td width="@((float)100 / (float)(11))%" style="color:@color_char;background-color:@color;vertical-align: middle; padding-left: 5px !important;" class="cusfontsize1 custt">
                                     @if (itemQT.TrangThai.Value==2)
                                     {
                                         @("Không thực hiện")
@@ -141,7 +141,7 @@
                                     }
                                     else
                                     {
-                                        <span style="cursor:pointer;width:104px" id="item_@itemQT.ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQTBF==null?"2":"1"),@item.id,@itemQT.ID,2)">Không thực hiện</span>
+                                        <span style="cursor:pointer;width:104px" id="item_@itemQT.ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQTBF==null?"2": itemQTBF.TrangThai.Value+""),@item.id,@itemQT.ID,2)">Không thực hiện</span>
                                     }
                                     
                                 </td>
