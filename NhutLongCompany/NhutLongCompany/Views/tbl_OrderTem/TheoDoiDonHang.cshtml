@@ -60,7 +60,7 @@
         if (date == null) {
             var layout = $('#' + id);
             $.ajax({
-                url: '@Url.Action("IndexSanXuatByDate", "SanXuat")',
+                url: '@Url.Action("IndexSanXuatByDate", "tbl_OrderTem")',
                 data: { 'update': 0 },
                 cache: false,
                 type: "POST",
@@ -76,7 +76,7 @@
         else {
             var layout = $('#' + id);
             $.ajax({
-                url: '@Url.Action("IndexSanXuatByDate", "SanXuat")',
+                url: '@Url.Action("IndexSanXuatByDate", "tbl_OrderTem")',
                 cache: false,
                 data: { 'date': date, 'update': 1 },
                 type: "POST",
@@ -103,7 +103,7 @@
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body" id="today">
-                @{Html.RenderAction("IndexSanXuatByDate", "SanXuat", new { update = 0 });}
+                @{Html.RenderAction("IndexSanXuatByDate", "tbl_OrderTem", new { update = 0 });}
 
             </div>
             <!-- /.panel-body -->
@@ -148,7 +148,7 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body" id="tomorrow">
 
-                    @{Html.RenderAction("IndexSanXuatByDate", "SanXuat", new { date = DateTime.Parse(DateTime.Now.AddDays(1).ToShortDateString()),update=1 });}
+                    @{Html.RenderAction("IndexSanXuatByDate", "tbl_OrderTem", new { date = DateTime.Parse(DateTime.Now.AddDays(1).ToShortDateString()),update=1 });}
 
                 </div>
                 <!-- /.panel-body -->

@@ -71,10 +71,10 @@ namespace NhutLongCompany.Controllers
             {
                 if (item.Step_Flow.HasValue)
                 {
-                    var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(item.id) && u.ThuTu.Value.Equals(item.Step_Flow.Value) orderby u.ThuTu ascending select u;
+                    var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(item.id) && u.ThuTu.Value.Equals(item.Step_Flow.Value)  orderby u.ThuTu ascending select u;
                     item.QuyTrinhs = queryQT.ToList<tbl_QuyTrinh>();
                 }
-                var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(item.id) orderby a.id descending select a).Take(1);
+                var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(item.id)  orderby a.id descending select a).Take(1);
                 var listFlowPause = query.ToList();
                 if (listFlowPause.Count > 0)
                 {
@@ -499,7 +499,10 @@ namespace NhutLongCompany.Controllers
             tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail = db.tbl_OrderTem_BaoGia_Detail.Find(id);
             if (!tbl_OrderTem_BaoGia_Detail.step_index.HasValue || tbl_OrderTem_BaoGia_Detail.step_index.Value <= tbQT.ThuTu)
             {
-                tbl_OrderTem_BaoGia_Detail.step_index = tbQT.ThuTu;
+                if (tbQT.ThucHien == 1)
+                {
+                    tbl_OrderTem_BaoGia_Detail.step_index = tbQT.ThuTu;
+                }                
                 if (status == 2 && tbQT.ThuTu == 9)
                 {
                     tbl_Stack tbl_Stack = db.tbl_Stack.Find(tbl_OrderTem_BaoGia_Detail.id);
@@ -531,6 +534,12 @@ namespace NhutLongCompany.Controllers
             if (tbQT.ThuTu.Value == 9 && status == 2)
             {
                 order.status = 4;
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            if (tbQT.ThuTu.Value == 12 && status == 2)
+            {
+                order.status = 5;
                 db.Entry(order).State = EntityState.Modified;
                 db.SaveChanges();
             }
