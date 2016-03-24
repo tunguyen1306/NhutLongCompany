@@ -1,0 +1,348 @@
+﻿
+@model IEnumerable<NhutLongCompany.Models.BaoGiaTemDetailView>
+
+@{
+    ViewBag.Title = "TheoDoiDonHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <h2></h2>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<script>
+    function UpdateQuyTrinh(pre, id, flowid, status) {
+        if (pre != 2) {
+            alert("Vui lòng cập nhật TUẦN TỰ từ trái sang phải!");
+            return;
+
+        }
+        var layout = $('#ajax_update_' + id);
+        $.ajax({
+            url: '@Url.Action("UpdateFlowProduct", "SanXuat")',
+            data: { 'id': id, 'idflow': flowid, 'status': status },
+            cache: false,
+            type: "POST",
+            dataType: "html",
+            success: function (data, textStatus, XMLHttpRequest) {
+
+                layout.html(data);
+            }
+        });
+    }
+    function UpdateStack(id, order) {
+        var jsonObject = {
+            "id": id,
+            "order": order
+        };
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UpdateStack", "SanXuat")',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(jsonObject),
+            success: function (data) {
+                //alert(data);
+            },
+            failure: function (errMsg) {
+                // alert(errMsg);
+            }
+        });
+    }
+    function Reload(el, id, date) {
+        $(el).attr('disabled', '')
+        $(el).val("Loading .....")
+        if (date == null) {
+            var layout = $('#' + id);
+            $.ajax({
+                url: '@Url.Action("IndexSanXuatByDate", "SanXuat")',
+                data: { 'update': 0 },
+                cache: false,
+                type: "POST",
+                dataType: "html",
+                success: function (data, textStatus, XMLHttpRequest) {
+                    layout.html(data);
+                    moveEvent();
+                    $(el).removeAttr("disabled");
+                    $(el).val("Reload");
+                }
+            });
+        }
+        else {
+            var layout = $('#' + id);
+            $.ajax({
+                url: '@Url.Action("IndexSanXuatByDate", "SanXuat")',
+                cache: false,
+                data: { 'date': date, 'update': 1 },
+                type: "POST",
+                dataType: "html",
+                success: function (data, textStatus, XMLHttpRequest) {
+                    layout.html(data);
+                    moveEvent();
+                    $(el).removeAttr("disabled");
+                    $(el).val("Reload");
+                }
+            });
+        }
+
+    }
+</script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <span style="margin-left: 10px; line-height: 33px">Sản phẩm sản xuất</span>
+                    <input type="button" onclick="Reload(this, 'today',null); return false;" style="float: right; margin-right: 10px" value="Reload" class="btn btn-primary reload reloadall" />
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body" id="today">
+                @{Html.RenderAction("IndexSanXuatByDate", "SanXuat", new { update = 0 });}
+
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div id="modal-container-note" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width:400px" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Lý do
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="hidden" id="id" />
+                    <textarea class="form-control" id="note" placeholder="Try to input multiple lines here..."></textarea>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <div class="bootstrap-dialog-footer-buttons">
+                    <button class="btn btn-primary" onclick="onPause(); return false;">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <span style="margin-left: 10px; line-height: 33px">Sản phẩm sản xuất (ngày mai)</span>
+                        <input type="button" onclick="Reload(this,'tomorrow','@(DateTime.Parse( DateTime.Now.AddDays(1).ToShortDateString()))'); return false;" style="float: right; margin-right: 10px" value="Reload" class="btn btn-primary reloadall" />
+                    </div>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body" id="tomorrow">
+
+                    @{Html.RenderAction("IndexSanXuatByDate", "SanXuat", new { date = DateTime.Parse(DateTime.Now.AddDays(1).ToShortDateString()),update=1 });}
+
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<style>
+    .table td {
+        text-align: center;
+    }
+
+    .table th {
+        text-align: center;
+    }
+
+    body.dragging, body.dragging * {
+        cursor: move !important;
+    }
+
+    .dragged {
+        position: absolute;
+        opacity: 0.5;
+        z-index: 2000;
+    }
+
+    li.placeholder {
+        position: relative;
+        /** More li styles **/
+    }
+
+        li.placeholder:before {
+            position: absolute;
+            /** Define arrowhead **/
+        }
+</style>
+
+<script>
+
+    function onContinue() {
+        var layout = $('#layout_reload');
+        var id = document.getElementById('id').value;
+        var note = document.getElementById('note').value;
+        var json = JSON.stringify({ 'id': id, 'note': note, 'state': 2 });
+        $.ajax({
+            url: '@Url.Action("UpdateStateFlow", "SanXuat")',
+            data: json,
+            cache: false,
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, XMLHttpRequest) {
+                alert("Cập nhật thành công!");
+                ReloadAll();
+            }
+        });
+    }
+    function onPause() {
+        var layout = $('#layout_reload');
+        var id = document.getElementById('id').value;
+        var note = document.getElementById('note').value;
+        var json = JSON.stringify({ 'id': id, 'note': note, 'state': 1 });
+        $.ajax({
+            url: '@Url.Action("UpdateStateFlow", "SanXuat")',
+            data: json,
+            cache: false,
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, XMLHttpRequest) {
+                alert("Cập nhật thành công!");
+                $('#modal-container-note').modal('hide');
+                ReloadAll();
+            }
+        });
+    }
+    function setValuePause(id) {
+        document.getElementById('note').value = "";
+        document.getElementById('id').value = id;
+        return false;
+    }
+
+    var timeOut;
+    function ReloadAll() {
+        $('.reloadall').click();
+        clearTimeout(timeOut);
+        timeOut = setTimeout(function () {
+            ReloadAll();
+        }, 30000);
+    }
+    timeOut = setTimeout(function () {
+        ReloadAll();
+    },30000);
+    function updateMoveIcon() {
+        $('.move-down').each(function () {
+            var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
+            var item_product = $(this).parents(".move_product")[0];
+            var item_flow = $('#' + item_product.id.replace('_product', ''))[0];
+            var item_next = $(item_flow).next();
+
+            if (item_next.length == 0) {
+                $(this).css('display', 'none');
+            }
+            else {
+                $(this).css('display', '');
+            }
+        });
+
+        $('.move-up').each(function () {
+            var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
+            var item_product = $(this).parents(".move_product")[0];
+            var item_flow = $('#' + item_product.id.replace('_product', ''))[0];
+            var item_prev = $(item_product).prev();
+            if (item_prev.length == 0 || item_prev.eq(0).hasClass('not_move')) {
+                $(this).css('display', 'none');
+            }
+            else {
+                $(this).css('display', '');
+            }
+        });
+    }
+    function swapElements(elm1, elm2) {
+        var parent1, next1,
+            parent2, next2;
+
+        parent1 = elm1.parentNode;
+        next1 = elm1.nextSibling;
+        parent2 = elm2.parentNode;
+        next2 = elm2.nextSibling;
+
+        parent1.insertBefore(elm2, next1);
+        parent2.insertBefore(elm1, next2);
+    }
+    function moveEvent() {
+        $('.move-down').on("click", function () {
+            var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
+            var item_product = $(this).parents(".move_product")[0];
+            var item_flow = $('#' + item_product.id.replace('_product', ''))[0];
+            var item_next = $(item_flow).next();
+            if (item_next.length > 0) {
+                var next_dataindex = item_next.eq(0).attr('data-index');
+                var item_product_next = item_next[0];
+                var item_flow_next = $('#' + item_product_next.id.replace('_product', ''))[0];
+                $(item_product).attr('data-index', next_dataindex);
+                $(item_product_next).attr('data-index', dataindex);
+
+                UpdateStack(item_flow.id.replace('ajax_update_', ''), next_dataindex);
+                UpdateStack(item_flow_next.id.replace('ajax_update_', ''), dataindex);
+
+                swapElements(item_product, item_product_next);
+                swapElements(item_flow, item_flow_next);
+
+            }
+            updateMoveIcon();
+        });
+        $('.move-up').on("click", function () {
+
+
+            var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
+            var item_product = $(this).parents(".move_product")[0];
+            var item_flow = $('#' + item_product.id.replace('_product', ''))[0];
+            var item_prev = $(item_product).prev();
+            if (item_prev.length > 0) {
+
+                var item_flow_prev = item_prev[0];
+                var item_product_prev = $('#' + item_flow_prev.id + '_product')[0];
+                var prev_dataindex = $(item_product_prev).eq(0).attr('data-index');
+                $(item_product).attr('data-index', prev_dataindex);
+                $(item_product_prev).attr('data-index', dataindex);
+
+                UpdateStack(item_flow.id.replace('ajax_update_', ''), prev_dataindex);
+                UpdateStack(item_flow_prev.id.replace('ajax_update_', ''), dataindex);
+
+                swapElements(item_product, item_product_prev);
+                swapElements(item_flow, item_flow_prev);
+
+            }
+            updateMoveIcon();
+
+        })
+
+        updateMoveIcon();
+    }
+    $(document).ready(function () {
+
+
+        moveEvent();
+
+
+    });
+
+</script>
