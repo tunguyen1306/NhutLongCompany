@@ -134,6 +134,13 @@
 
 
                                         }
+
+                                        @if (item.status.Value == 3)
+                                        {
+                                            <span onclick="UpdateTamDung(@item.id)" class="btn btn-outline btn-default btn-xs" style="cursor:pointer">Tạm dừng</span>
+                                          
+                                        }
+
                                         @if (item.status.Value == 4)
                                         {
                                             <span onclick="UpdateQuyTrinhAll(@item.id,10)" class="btn btn-outline btn-default btn-xs" style="cursor:pointer">Giao hàng</span>
@@ -184,7 +191,7 @@
     <input type="hidden" value="0" name="idBG" id="idBG">
 </form>
 <form method="post" id="fromUpdate2" action="/tbl_OrderTem/UpdateFlow_GD_TT_KTDH">   
-    <input type="hidden" value="0" name="id" id="idBGUpdateFlow">
+    <input type="hidden" value="0" name="id" id="idDHUpdateFlow">
     <input type="hidden" value="0" name="index" id="indexFlow">
 </form>
 <script>
@@ -199,5 +206,9 @@
         $("#idDHUpdateFlow").val(id);
         $("#indexFlow").val(index);
         document.getElementById("fromUpdate2").submit();
+    }
+    function UpdateTamDung(id)
+    {
+        alert("Chức năng đang update");
     }
 </script>

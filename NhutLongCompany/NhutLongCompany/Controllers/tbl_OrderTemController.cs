@@ -69,64 +69,61 @@ namespace NhutLongCompany.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateFlow_GD_TT_KTDH(int? id, int index)
+        public ActionResult UpdateFlow_GD_TT_KTDH(int id, int index)
         {
             var queryBaoGia = from u in db.tbl_OrderTem_BaoGia where u.order_id.Value.Equals(id) orderby u.id descending select u;
             var lisBG = queryBaoGia.ToList<tbl_OrderTem_BaoGia>();
             foreach (var item in lisBG)
             {
-                BaoGiaTemView temBG = new BaoGiaTemView { commission = item.commission, commission_money = item.commission_monney, note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, order_id = item.order_id, status = item.status, total_money = item.total_money };
-                var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
-                                     join z in db.tbl_QuyTrinh on u.id equals z.ID_BaoGiaDetail
-                                     where u.baogia_id.Value.Equals(temBG.id) && z.ThuTu.Equals(index)
-                                     select z;
-                List<tbl_QuyTrinh> listQ = queryGiaoGiaCT.ToList();
-                foreach (var itemQT in listQ)
+                var queryBaoGiaDetail = from u in db.tbl_OrderTem_BaoGia_Detail where u.baogia_id.Value.Equals(item.id) orderby u.id descending select u;
+                var lisBGDetail = queryBaoGiaDetail.ToList<tbl_OrderTem_BaoGia_Detail>();
+                foreach (var itemDetail in lisBGDetail)
                 {
-                    itemQT.TrangThai = 2;
-                    itemQT.NgayBatDau_TT = DateTime.Now;
-                    itemQT.NgayKetThuc_TT = DateTime.Now;
-                    db.Entry(itemQT).State = EntityState.Modified;
-                }
-                if (index==12)
-                {
-
-                    var listGH = from u in db.tbl_OrderTem_BaoGia_Detail
-                                 join z in db.tbl_QuyTrinh on u.id equals z.ID_BaoGiaDetail
-                                 where u.baogia_id.Value.Equals(temBG.id) && z.ThuTu.Equals(10) select z;
-                    listQ = listGH.ToList();
+                    var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(itemDetail.id) && u.ThuTu==index orderby u.ThuTu ascending select u;
+                    List<tbl_QuyTrinh> listQ = queryQT.ToList<tbl_QuyTrinh>();
                     foreach (var itemQT in listQ)
                     {
-                        if (itemQT.TrangThai!=2)
-                        {
-                            itemQT.TrangThai = 2;
-                            itemQT.NgayBatDau_TT = DateTime.Now;
-                            itemQT.NgayKetThuc_TT = DateTime.Now;
-                            db.Entry(itemQT).State = EntityState.Modified;
-                        }
-                      
+                        itemQT.TrangThai = 2;
+                        itemQT.NgayBatDau_TT = DateTime.Now;
+                        itemQT.NgayKetThuc_TT = DateTime.Now;
+                        db.Entry(itemQT).State = EntityState.Modified;
                     }
-                    listGH = from u in db.tbl_OrderTem_BaoGia_Detail
-                             join z in db.tbl_QuyTrinh on u.id equals z.ID_BaoGiaDetail
-                             where u.baogia_id.Value.Equals(temBG.id) && z.ThuTu.Equals(11)
-                             select z;
-                    listQ = listGH.ToList();
-                    foreach (var itemQT in listQ)
+                    if (index == 12)
                     {
-                        if (itemQT.TrangThai != 2)
-                        {
-                            itemQT.TrangThai = 2;
-                            itemQT.NgayBatDau_TT = DateTime.Now;
-                            itemQT.NgayKetThuc_TT = DateTime.Now;
-                            db.Entry(itemQT).State = EntityState.Modified;
-                        }
 
+                        var listGH = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(itemDetail.id) && u.ThuTu == 10 orderby u.ThuTu ascending select u;
+                        listQ = listGH.ToList<tbl_QuyTrinh>();
+                        foreach (var itemQT in listQ)
+                        {
+                            if (itemQT.TrangThai != 2)
+                            {
+                                itemQT.TrangThai = 2;
+                                itemQT.NgayBatDau_TT = DateTime.Now;
+                                itemQT.NgayKetThuc_TT = DateTime.Now;
+                                db.Entry(itemQT).State = EntityState.Modified;
+                            }
+
+                        }
+                        listGH = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(itemDetail.id) && u.ThuTu == 11 orderby u.ThuTu ascending select u;
+                        listQ = listGH.ToList<tbl_QuyTrinh>();
+                        foreach (var itemQT in listQ)
+                        {
+                            if (itemQT.TrangThai != 2)
+                            {
+                                itemQT.TrangThai = 2;
+                                itemQT.NgayBatDau_TT = DateTime.Now;
+                                itemQT.NgayKetThuc_TT = DateTime.Now;
+                                db.Entry(itemQT).State = EntityState.Modified;
+                            }
+
+                        }
+                        tbl_OrderTem tbl_OrderTem = db.tbl_OrderTem.Find(id);
+                        tbl_OrderTem.status = 5;
+                        db.Entry(tbl_OrderTem).State = EntityState.Modified;
                     }
-                    tbl_OrderTem tbl_OrderTem = db.tbl_OrderTem.Find(id);
-                    tbl_OrderTem.status = 5;
-                    db.Entry(tbl_OrderTem).State = EntityState.Modified;
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
+                
                 break;
             }
             return RedirectToAction("IndexSX", "tbl_OrderTem");
