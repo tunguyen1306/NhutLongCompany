@@ -988,6 +988,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PublishProfiles\publish.pubxml" />
+    <None Include="Properties\PublishProfiles\pulish.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CusWeb.js" />
     <Content Include="Scripts\flot-data.js" />
