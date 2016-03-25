@@ -44,5 +44,8 @@ namespace NhutLongCompany.Models
         public Nullable<int> Status_Pause { get; set; }
 
         public tbl_FlowPauseTime Current_FlowPauseTime;
+
+        public int? pause { get; set; }
+        public tbl_OrderTemPause tbl_OrderTemPause;
     }
 }

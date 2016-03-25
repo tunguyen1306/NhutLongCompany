@@ -21,6 +21,9 @@ namespace NhutLongCompany.Models
         public BaoGiaTemView BaoGiaTemView { get; set; }
         public List<BaoGiaTemView> BaoGiaTemViews { get; set; }
         public int action { get; set; }
+        public int? pause { get; set; }
+        public tbl_OrderTemPause tbl_OrderTemPause { get; set; }
+        public List<tbl_OrderTemPause> tbl_OrderTemPauses { get; set; }
         public DonHangView()
         {
             action = 0;

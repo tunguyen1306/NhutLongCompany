@@ -20,7 +20,7 @@ namespace NhutLongCompany.Domain
 
             menu.Add(new Navbar { Id = 5, nameOption = "Đơn hàng", controller = "tbl_OrderTem", action = "Index", imageClass = "fa fa-file-o fa-2x", status = true, isParent = true, parentId = 0 });
 
-            menu.Add(new Navbar { Id = 6, nameOption = "Thông tin đơn hàng ", controller = "tbl_OrderTem", action = "IndexSX", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 5 });
+            menu.Add(new Navbar { Id = 6, nameOption = "Thông tin đơn hàng ", controller = "tbl_OrderTem", action = "ThongTinDonHang", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 5 });
             menu.Add(new Navbar { Id = 15, nameOption = "Theo dõi đơn hàng ", controller = "tbl_OrderTem", action = "TheoDoiDonHang", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 5 });
             //menu.Add(new Navbar { Id = 10, nameOption = "Theo dõi đơn hàng", controller = "tbl_OrderTem", action = "Index", imageClass = "fa fa-file-o fa-", status = true, isParent = false, parentId = 5 });
             //menu.Add(new Navbar { Id = 11, nameOption = "Đơn hàng đang sản xuất", controller = "Sanxuat", action = "IndexSX", imageClass = "fa fa-gears fa-1x", status = true, isParent = false, parentId = 5 });

@@ -180,6 +180,9 @@
     <Compile Include="Models\tbl_OrderTem.cs">
       <DependentUpon>DataWeb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_OrderTemPause.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_OrderTem_BaoGia.cs">
       <DependentUpon>DataWeb.tt</DependentUpon>
     </Compile>
@@ -1094,7 +1097,7 @@
     <Content Include="Views\SanXuat\LichSanXuat.cshtml" />
     <Content Include="Views\Products\IndexProcessProduct.cshtml" />
     <Content Include="Views\SanXuat\PartialLichSanXuat.cshtml" />
-    <Content Include="Views\tbl_OrderTem\IndexSX.cshtml" />
+    <Content Include="Views\tbl_OrderTem\ThongTinDonHang.cshtml" />
     <Content Include="Views\SanXuat\EditFlow.cshtml" />
     <Content Include="Views\Customers\ViewNote.cshtml" />
     <Content Include="Views\tbl_OrderTem\IndexDH.cshtml" />
@@ -1103,6 +1106,8 @@
     <Content Include="Views\SanXuat\LichSanXuatOnDay.cshtml" />
     <Content Include="Views\tbl_OrderTem\TheoDoiDonHang.cshtml" />
     <Content Include="Views\tbl_OrderTem\IndexSanXuatByDate.cshtml" />
+    <Content Include="Views\tbl_OrderTem\PartialThongTinDonHang.cshtml" />
+    <Content Include="Views\SanXuat\PartialLichSanXuatOnDay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
