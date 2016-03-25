@@ -93,7 +93,10 @@
                     <tr id="ajax_update_@item.id" class="move" style="background-color:red;">
                         <td width="@((float)100 / (float)(14))%" class="cusfontsize1 custt" style="color:yellow;background-color:green;vertical-align: middle; padding-left: 5px !important;">
                             @item.NameProducts (@QT)
-
+                            @if (item.pause.HasValue && item.pause.Value==1)
+	                        {
+		                        <br /> <b style="color:red">Tạm dừng</b>
+	                        }
 
                         </td>
                         @for (int i = 0; i < item.QuyTrinhs.Count; i++)

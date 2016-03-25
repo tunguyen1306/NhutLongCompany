@@ -28,5 +28,6 @@ namespace NhutLongCompany.Models
         public string create_user { get; set; }
         public Nullable<System.DateTime> update_date { get; set; }
         public string update_user { get; set; }
+        public Nullable<int> status_pause { get; set; }
     }
 }
