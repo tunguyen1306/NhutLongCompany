@@ -1101,6 +1101,8 @@
     <Content Include="Views\Customers\IndexBaoGia.cshtml" />
     <Content Include="Views\Home\HomeCustomers.cshtml" />
     <Content Include="Views\SanXuat\LichSanXuatOnDay.cshtml" />
+    <Content Include="Views\tbl_OrderTem\TheoDoiDonHang.cshtml" />
+    <Content Include="Views\tbl_OrderTem\IndexSanXuatByDate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

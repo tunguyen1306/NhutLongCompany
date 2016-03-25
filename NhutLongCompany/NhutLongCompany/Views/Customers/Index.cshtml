@@ -65,7 +65,7 @@
                                     <td>
                                         @if (item.StatusCustomers == 1)
                                         {
-                                            <a href="@Url.Action("IndexDH", "tbl_OrderTem", new {id = item.IDCustomers})" target="_blank" class="btn btn-outline btn-primary btn-xs">
+                                            <a href="@Url.Action("IndexDH", "tbl_OrderTem", new {id = item.IDCustomers})"  class="btn btn-outline btn-primary btn-xs">
                                                 Hoạt động
                                             </a>
                                         }
@@ -88,11 +88,16 @@
                                                             <p>@item.NoteCustomer</p>
                                                         </div>
                                                     </div>
-
+                                                    <div class="modal-footer">
+                                                        <div class="bootstrap-dialog-footer-buttons">
+                                                           
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         }
-                                        | <a href="@Url.Action("IndexBaoGia","Customers",new {id=item.IDCustomers})" class="btn btn-outline btn-primary btn-xs" target="_blank">
+                                        | <a href="@Url.Action("IndexBaoGia","Customers",new {id=item.IDCustomers})" class="btn btn-outline btn-primary btn-xs">
                                               Xem báo giá
                                           </a>
                                     </td>

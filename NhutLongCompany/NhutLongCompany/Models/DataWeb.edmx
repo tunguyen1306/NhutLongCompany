@@ -130,6 +130,7 @@
           <Property Name="NgayKetThuc_DK" Type="datetime" />
           <Property Name="NgayBatDau_TT" Type="datetime" />
           <Property Name="NgayKetThuc_TT" Type="datetime" />
+          <Property Name="ThucHien" Type="int" />
         </EntityType>
         <EntityType Name="tbl_Stack">
           <Key>
@@ -274,6 +275,7 @@
           <Property Name="NgayKetThuc_DK" Type="DateTime" Precision="3" />
           <Property Name="NgayBatDau_TT" Type="DateTime" Precision="3" />
           <Property Name="NgayKetThuc_TT" Type="DateTime" Precision="3" />
+          <Property Name="ThucHien" Type="Int32" />
         </EntityType>
         <EntityType Name="tbl_User">
           <Key>
@@ -435,6 +437,7 @@
           <EntitySetMapping Name="tbl_QuyTrinh">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_QuyTrinh">
               <MappingFragment StoreEntitySet="tbl_QuyTrinh">
+                <ScalarProperty Name="ThucHien" ColumnName="ThucHien" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ID_BaoGiaDetail" ColumnName="ID_BaoGiaDetail" />
                 <ScalarProperty Name="TenBuoc" ColumnName="TenBuoc" />

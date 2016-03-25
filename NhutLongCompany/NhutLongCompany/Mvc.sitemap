@@ -33,19 +33,26 @@
         <mvcSiteMapNode title="Thêm khách hàng" controller="Customers" action="Create"/>
         <mvcSiteMapNode title="Chi tiết khách hàng" controller="Customers" action="DetailCustomers"/>
         <mvcSiteMapNode title="Sửa thông tin khách hàng" controller="Customers" action="Edit"/>
-       <mvcSiteMapNode title="Thông tin báo gái của khách hàng" controller="Customers" action="IndexBaoGia"/>
+         <mvcSiteMapNode title="Đơn hàng của khách hàng" controller="tbl_OrderTem" action="IndexDH" preservedRouteParameters="id"/>   
+        
+       <mvcSiteMapNode title="Thông tin báo giá của khách hàng" controller="Customers" action="IndexBaoGia"  preservedRouteParameters="id"/>
        
+      
       </mvcSiteMapNode>
       <mvcSiteMapNode title="Thông tin Báo Giá" controller="tbl_OrderTem" action="IndexBaoGia">
         <mvcSiteMapNode title="Thêm báo giá" controller="tbl_OrderTem" action="Create"/>
-        <mvcSiteMapNode title="Sửa báo giá" controller="tbl_OrderTem" action="EditBaoGia"/>
+        <mvcSiteMapNode title="Sửa báo giá" controller="tbl_OrderTem" action="EditBaoGia" preservedRouteParameters="id"/> 
+  
+   
       </mvcSiteMapNode>
     </mvcSiteMapNode>
 
 
     <mvcSiteMapNode title="Đơn hàng" controller="Home" action="HomeBaoGia">
-      <mvcSiteMapNode title="Thông tin Đơn hàng" controller="tbl_OrderTem" action="IndexSX"/>
-
+      <mvcSiteMapNode title="Thông tin Đơn hàng" controller="tbl_OrderTem" action="IndexSX">
+         <mvcSiteMapNode title="Chi tiết Đơn hàng" controller="tbl_OrderTem" action="Edit" preservedRouteParameters="id"/> 
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Theo dõi Đơn hàng" controller="tbl_OrderTem" action="TheoDoiDonHang" />
     </mvcSiteMapNode>
 
     <mvcSiteMapNode title="Sản xuất" controller="Home" action="HomeSanXuat">

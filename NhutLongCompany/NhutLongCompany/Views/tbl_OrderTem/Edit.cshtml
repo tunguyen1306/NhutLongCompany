@@ -19,11 +19,11 @@
         var data = new FormData();
         data.append('id', $('#id_tk').val());
         data.append('date', $('#date_tk').val());
-        if ($('#image_tk').val() != "") {
-            if (document.getElementById('image_tk').files.length > 0) {
-                data.append('file', document.getElementById('image_tk').files[0]);
-            }
-        }
+        //if ($('#image_tk').val() != "") {
+            //if (document.getElementById('image_tk').files.length > 0) {
+               // data.append('file', document.getElementById('image_tk').files[0]);
+            //}
+       // }
         if ($('#ddlChonmau').val() == "4") {
             data.append('loai', $('#txtTex').val());
         } else {
@@ -38,20 +38,20 @@
             // contentType: 'multipart/form-data; charset=utf-8',
             data: data,
             success: function(result) {
-                alert('Cập nhật thàn công!');
+                alert('Cập nhật thành công!');
                 var text = reformatDate($('#date_tk').val());
-                if ($('#image_tk').val() != "") {
-                    if (document.getElementById('image_tk').files.length > 0) {
-                        var text = '<a href="/Upload/ThietKe/' + $('#id_tk').val() + '_' + $('#image_tk').val() + '" target="_blank">' + reformatDate($('#date_tk').val()) + '</a>';
+                //if ($('#image_tk').val() != "") {+ $('#image_tk').val()
+                    //if (document.getElementById('image_tk').files.length > 0) {
+                      //  var text = '<a href="/Upload/ThietKe/' + $('#id_tk').val() + '_'  + '" target="_blank">' + reformatDate($('#date_tk').val()) + '</a>';
 
-                    }
-                }
+                   // }
+               // }
                 $('#id_update_tk_' + $('#id_tk').val()).html(text);
                 $('#id_update_tk_' + $('#id_tk').val() + "_value").val(2);
                 $('#modal-container-tk').modal('hide');
                 $('#id_tk').val("");
                 $('#date_tk').val("");
-                $('#image_tk').val("");
+               // $('#image_tk').val("");
             },
             error: function() {
                 alert('Cập nhật thất bại!');
@@ -435,6 +435,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        
+                                        <div class="modal-footer">
+                                            <div class="bootstrap-dialog-footer-buttons">
+                                              
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -448,199 +455,11 @@
                 {
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="panel panel-default">
+                            <div class="panel panel-default" style="border:none">
                            
                                 <!-- /.panel-heading -->
-                                <div class="panel-body" id="today">
-                           
-                                    <div class="dataTable_wrapper">
-                                        <table class="table table-bordered ">
-                                            <tbody>
-
-                                                @{
-                                                    int countQT = 0;
-                                                }
-
-                                                @for (int j = 0; j < Model.BaoGiaTemView.BaoGiaTemDetailViews.ToList().Count(); j++)
-                                                {
-                                                    BaoGiaTemDetailView item = Model.BaoGiaTemView.BaoGiaTemDetailViews.ToList()[j];
-                                                    if (!item.OffsetFlexoProducts.Equals("Offset"))
-                                                    {
-                                                        if (countQT == 0)
-                                                        {
-                                                            countQT++;
-                                                            <tr>
-
-                                                                <th colspan="18">
-                                                                    Quy trình 1
-                                                                </th>
-                                                            </tr>
-                                                            <tr class="not_move">
-                                                                @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                                                {
-                                                                    tbl_QuyTrinh itemQT = item.QuyTrinhs[i];
-                                                                    <th colspan="2" width="@(100/(float) 9)%" class="cusfontsize2">@itemQT.TenBuoc</th>
-                                                                }
-                                                            </tr>
-                                                        }
-
-
-                                                        <tr id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
-
-                                                            <td class="cusfontsize2" colspan="18" style="position: relative">
-
-                                                            
-                                                                @item.NameProducts <i>
-                                                                                       (Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))
-                                                                                       <input type="hidden" value="@item.id" />
-                                                                                   </i>
-                                                            </td>
-                                                        </tr>
-
-
-                                                        <tr id="ajax_update_@item.id" class="move" style="background-color: red;">
-                                                            @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                                            {
-                                                                string color = "red";
-                                                                string color_char = "yellow";
-                                                                if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                                {
-                                                                    color = "blue";
-                                                                    color_char = "white";
-                                                                }
-                                                                else
-                                                                {
-                                                                    if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                                    {
-                                                                        color = "yellow";
-                                                                        color_char = "red";
-                                                                    }
-                                                                }
-                                                                <td colspan="2" width="@(100/(float) 9)" class="cusfontsize1 custt" style="color: @color_char; background-color: @color;">
-
-                                                                    <span>
-                                                                        @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
-                                                                        {
-                                                                            @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <span style="cursor: pointer" class="btn btn-outline btn-default btn-xs" onclick="">Bất đầu</span>
-                                                                        }
-                                                                        @("-")
-                                                                        @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                                        {
-                                                                            @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <span style="cursor: pointer" class="btn btn-outline btn-default btn-xs" onclick="">Kết thúc</span>
-                                                                        }
-                                                                    </span>
-                                                                </td>
-                                                            }
-                                                        </tr>
-                                                    }
-                                                }
-                                            </tbody>
-                                        </table>
-
-                                        <table class="table table-bordered ">
-
-                                            <tbody>
-
-                                                @{
-                                                    countQT = 0;
-                                                }
-
-                                                @for (int j = 0; j < Model.BaoGiaTemView.BaoGiaTemDetailViews.ToList().Count(); j++)
-                                                {
-                                                    BaoGiaTemDetailView item = Model.BaoGiaTemView.BaoGiaTemDetailViews.ToList()[j];
-                                                    if (item.OffsetFlexoProducts.Equals("Offset"))
-                                                    {
-                                                        if (countQT == 0)
-                                                        {
-                                                            countQT++;
-                                                            <tr>
-
-                                                                <th colspan="18">
-                                                                    Quy trình 2
-                                                                </th>
-                                                            </tr>
-                                                            <tr class="not_move">
-                                                                @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                                                {
-                                                                    tbl_QuyTrinh itemQT = item.QuyTrinhs[i];
-                                                                    <th colspan="2" width="@(100/(float) 9)%" class="cusfontsize2">@itemQT.TenBuoc</th>
-                                                                }
-                                                            </tr>
-                                                        }
-
-
-                                                        <tr id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
-
-                                                            <td class="cusfontsize2" colspan="18" style="position: relative">
-                                                          
-                                                                @item.NameProducts <i>(Working:@(item.Date_Working.HasValue ? item.Date_Working.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật") - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))</i>
-                                                                <input type="hidden" value="@item.id" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr id="ajax_update_@item.id" class="move" style="background-color: red;">
-                                                            @for (int i = 0; i < item.QuyTrinhs.Count; i++)
-                                                            {
-                                                                string color = "red";
-                                                                string color_char = "yellow";
-                                                                if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                                {
-                                                                    color = "blue";
-                                                                    color_char = "white";
-                                                                }
-                                                                else
-                                                                {
-                                                                    if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                                    {
-                                                                        color = "yellow";
-                                                                        color_char = "red";
-                                                                    }
-                                                                }
-                                                                <td colspan="2" width="@(100/(float) 9)" class="cusfontsize1 custt" style="color: @color_char; background-color: @color;">
-
-                                                                    <span>
-                                                                        @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
-                                                                        {
-                                                                            @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <span class="btn btn-outline btn-default btn-xs" style="cursor: pointer" onclick="">Bất đầu</span>
-                                                                        }
-                                                                        @("-")
-                                                                        @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                                                                        {
-                                                                            @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <span class="btn btn-outline btn-default btn-xs" style="cursor: pointer" onclick="">Kết thúc</span>
-                                                                        }
-                                                                    </span>
-                                                                </td>
-                                                            }
-                                                        </tr>
-                                                    }
-                                                }
-
-
-
-
-
-                                            </tbody>
-                                        </table>
-
-
-
-                                    </div>
-
+                                <div class="panel-body" id="today" >
+                                    @{Html.RenderAction("IndexSanXuatByDate", "tbl_OrderTem", new { update = 0 });}
                                 </div>
                                 <!-- /.panel-body -->
                             </div>
@@ -1097,7 +916,7 @@
 
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
                                             </div>
                                         </div>
 
@@ -1336,7 +1155,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
                 </div>
             </div>
 
@@ -1387,6 +1206,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="bootstrap-dialog-footer-buttons">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
                         <button class="btn btn-primary" onclick=" UpdateResultBaoGia(1); return false; ">Đồng ý</button>
                         <button class="btn btn-danger" onclick=" UpdateResultBaoGia(2); return false; ">Từ chối</button>
                     </div>
@@ -1424,15 +1244,16 @@
                         <label>Ghi chú:</label>
                         <input type="text" class="form-control" id="txtTex" name="txtNTex">
                     </div>
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <label for="pwd">Hình Làm mẫu :</label>
                         <input type="file" id="image_tk" accept="image/*" name="image_tk">
-                    </div>
+                    </div>*@
 
                 </div>
                 <div class="modal-footer">
                     <div class="bootstrap-dialog-footer-buttons">
                         <button class="btn btn-primary" onclick=" UpdateTK();return false; ">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
                     </div>
                 </div>
                 <script>

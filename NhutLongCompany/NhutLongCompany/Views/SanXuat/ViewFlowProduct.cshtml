@@ -3,73 +3,154 @@
 
 @foreach (var item in Model)
 {
-    <td width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:yellow;background-color:green;">
-        @item.Code_Detail - @item.NameProducts
-    </td>
-    for (int i = 0; i < item.QuyTrinhs.Count; i++)
+    var QT = "QT1";
+    if (item.OffsetFlexoProducts.Equals("FLEXO - BẤM KIM"))
+    {
+
+        QT = "QT1";
+
+    }
+    if (item.OffsetFlexoProducts.Equals("FLEXO - DÁN"))
+    {
+        QT = "QT2";
+    }
+    if (item.OffsetFlexoProducts.Equals("FLEXO - Bế"))
+    {
+        QT = "QT3";
+    }
+    if (item.OffsetFlexoProducts.Equals("FLEXO - Bế - DÁN"))
+    {
+        QT = "QT4";
+
+    }
+    if (item.OffsetFlexoProducts.Equals("OFFSET -Bế - BK"))
+    {
+        QT = "QT5";
+    }
+    if (item.OffsetFlexoProducts.Equals("OFFSET - Bế - DÁN"))
+    {
+        QT = "QT6";
+    }
+
+                        <td width="@((float)100 / (float)(11))%" class="cusfontsize1 custt" style="color:yellow;background-color:green;vertical-align: middle; padding-left: 5px !important;">
+                            @item.NameProducts (@QT)
+                        </td>
+    for (int i = 0; i < 10; i++)
     {
         var color = "red";
         var color_char = "yellow";
-        if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+        NhutLongCompany.Models.tbl_QuyTrinh itemQT = null;
+        NhutLongCompany.Models.tbl_QuyTrinh itemQTBF = null;
+        itemQT = item.QuyTrinhs[i];
+        if (i > 0)
+        {
+            itemQTBF = item.QuyTrinhs[i - 1];
+        }
+        if (itemQT.NgayBatDau_TT.HasValue && itemQT.NgayKetThuc_TT.HasValue)
         {
             color = "blue";
             color_char = "white";
         }
         else
         {
-            if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue && !item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
+            if (itemQT.NgayBatDau_TT.HasValue && !itemQT.NgayKetThuc_TT.HasValue)
             {
                 color = "yellow";
                 color_char = "red";
             }
         }
-        <td  width="@((float)100 / (float)(item.QuyTrinhs.Count+1))" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;">
 
-            <span>
-                @if (item.QuyTrinhs[i].NgayBatDau_TT.HasValue)
-                {
-                    @item.QuyTrinhs[i].NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
-                }
-                else
-                {
-                    <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@item.QuyTrinhs[i].ID,1)">Bất đầu</span>
-                }
-                @("-")
-                @if (item.QuyTrinhs[i].NgayKetThuc_TT.HasValue)
-                {
-                    @item.QuyTrinhs[i].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
-                }
-                else
-                {
 
-                    if ((!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
-                    {
-                        <span style="cursor:pointer" id="item_@item.QuyTrinhs[i].ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(item.QuyTrinhs[i].TrangThai.Value==1?"2":"0"),@item.id,@item.QuyTrinhs[i].ID,2)">Kết thúc</span>
-                        if (item.QuyTrinhs[i].TrangThai.Value == 1 && (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
-                        {
-                            <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@item.id);">tạm dừng</span>
+        if (itemQT != null && itemQT.ThucHien.Value == 1)
+        {
+            if (itemQT.NgayBatDau_TT.HasValue && itemQT.NgayKetThuc_TT.HasValue)
+            {
+                color = "blue";
+                color_char = "white";
+            }
+            else
+            {
+                if (itemQT.NgayBatDau_TT.HasValue && !itemQT.NgayKetThuc_TT.HasValue)
+                {
+                    color = "yellow";
+                    color_char = "red";
+                }
+            }
+
+                                <td width="@((float)100 / (float)(11))%" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;vertical-align: middle; padding-left: 5px !important;">
+
+                                    <span>
+                                        @if (itemQT.NgayBatDau_TT.HasValue)
+                                        {
+                                            @itemQT.NgayBatDau_TT.Value.ToString("dd/MM/yyyy")
+                                        }
+                                        else
+                                        {
+
+                                            @*<span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@itemQT.ID,1)">Bất đầu</span>*@
+
+                                      
+                                            <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQTBF==null?"2":(itemQTBF.TrangThai.Value+"")),@item.id,@itemQT.ID,1)">Bất đầu</span>
+                                   
+
+                                        }
+                                       <br />
+                                        @if (itemQT.NgayKetThuc_TT.HasValue)
+                                        {
+                                            @itemQT.NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
+                                        }
+                                        else
+                                        {
+
+
+                                            @*<span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQT.TrangThai.Value==1?"2":"1"),@item.id,@itemQT.ID,2)">Kết thúc</span>*@
+
+                                    
+                                            <span style="cursor:pointer;width:65px" id="item_@itemQT.ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQT.TrangThai.Value==1?"2":"1"),@item.id,@itemQT.ID,2)">Kết thúc</span>
+                                            if (itemQT.TrangThai.Value == 1 && (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
+                                            {
+                                                <br />
+                                                <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@item.id);">tạm dừng</span>
+                                            }
+                                            else if (item.Status_Pause.HasValue && item.Status_Pause.Value == 1 && item.Current_FlowPauseTime.index_step.Value == itemQT.ThuTu.Value)
+                                            {
+                                                
+                                                <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@item.id); onContinue(); return false;">tiếp tục</span>
+                                                <script type="text/javascript">
+                                                    document.getElementById('item_@itemQT.ID').style.display = 'none';
+                                                </script>
+                                            }
+
+
+                                     
+
+
+
+                                        }
+                                    </span>
+                                </td>
+
+                            }
+                            else
+                            {
+                                <td width="@((float)100 / (float)(11))%" style="color:@color_char;background-color:@color;vertical-align: middle; padding-left: 5px !important;" class="cusfontsize1 custt">
+                                    @if (itemQT.TrangThai.Value==2)
+                                    {
+                                        @("Không thực hiện")
+
+                                    }
+                                    else
+                                    {
+                                        <span style="cursor:pointer;width:104px" id="item_@itemQT.ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQTBF==null?"2": itemQTBF.TrangThai.Value+""),@item.id,@itemQT.ID,2)">Không thực hiện</span>
+                                    }
+                                    
+                                </td>
+                            }
+
+
                         }
-                        else if (item.Status_Pause.HasValue && item.Status_Pause.Value == 1 && item.Current_FlowPauseTime.index_step.Value == item.QuyTrinhs[i].ThuTu.Value)
-                        {
-                            <span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@item.id); onContinue(); return false;">tiếp tục</span>
-                            <script type="text/javascript">
-                                document.getElementById('item_@item.QuyTrinhs[i].ID').style.display = 'none';
-                            </script>
-                        }
+                   
 
-                    }
-                    else
-                    {
-                        @(" ")
-                    }
-
-                  
-                }
-            </span>
-        </td>
-
-
-    }
     <script type="text/javascript">
         var st='@item.Status.Value';
             if (st=='2') {

@@ -1,29 +1,32 @@
-﻿@model IEnumerable<NhutLongCompany.Models.BaoGiaTemDetailView>
-    
-    @{ var update = (int?)ViewData["Update"]; }
+﻿
+@model IEnumerable<NhutLongCompany.Models.BaoGiaTemDetailView>
+
+@{ var update = (int?)ViewData["Update"]; }
 <div class="dataTable_wrapper">
-   
+
     <table class="table table-bordered " id="QT1">
         <tbody>
-           
+
 
             <tr class="not_move">
-                <th width="@((float)100 / (float)(11))%" class="cusfontsize2">Tên sản phẩm</th>
-                <th width="@((float)100 / (float)(11))%" class="cusfontsize2">Nhận tờ in offset</th>
-                <th width="@((float)100 / (float)(11))%" class="cusfontsize2">Sản xuất giấy tấm </th>
-                <th width="@((float)100 / (float)(11))%" class="cusfontsize2">Bồi</th>
-                <th width="@((float)100 / (float)(11))%" class="cusfontsize2">Xả biến,cán lằn</th>
-                <th width="@((float)100 / (float)(11))%" class="cusfontsize2">IN FLEXO </th>
-                <th width="@((float)100 / (float)(11))%" class="cusfontsize2">Bế</th>
-                <th width="@((float)100 / (float)(11))%" class="cusfontsize2">Chạp Khe</th>
-                <th width="@((float)100 / (float)(11))%" class="cusfontsize2">Bấm kim </th>
-                <th width="@((float)100 / (float)(11))%" class="cusfontsize2">Dán </th>
-                <th width="@((float)100 / (float)(11))%" class="cusfontsize2">Đóng gói</th>
-       
+                <th width="@((float)100 / (float)(14))%" class="cusfontsize2">Tên sản phẩm</th>
+                <th width="@((float)100 / (float)(14))%" class="cusfontsize2">Nhận tờ in offset</th>
+                <th width="@((float)100 / (float)(14))%" class="cusfontsize2">Sản xuất giấy tấm </th>
+                <th width="@((float)100 / (float)(14))%" class="cusfontsize2">Bồi</th>
+                <th width="@((float)100 / (float)(14))%" class="cusfontsize2">Xả biến,cán lằn</th>
+                <th width="@((float)100 / (float)(14))%" class="cusfontsize2">IN FLEXO </th>
+                <th width="@((float)100 / (float)(14))%" class="cusfontsize2">Bế</th>
+                <th width="@((float)100 / (float)(14))%" class="cusfontsize2">Chạp Khe</th>
+                <th width="@((float)100 / (float)(14))%" class="cusfontsize2">Bấm kim </th>
+                <th width="@((float)100 / (float)(14))%" class="cusfontsize2">Dán </th>            
+                <th width="@((float)100 / (float)(14))%" class="cusfontsize2">Đóng gói</th>
+                <th width="@((float)100 / (float)(14))%" class="cusfontsize2">Giao hàng</th>
+                <th width="@((float)100 / (float)(14))%" class="cusfontsize2">Thanh toán</th>
+                <th width="@((float)100 / (float)(14))%" class="cusfontsize2">KT đơn hàng</th>
             </tr>
 
-       
-          
+
+
             @for (int j = 0; j < Model.ToList().Count(); j++)
             {
 
@@ -66,34 +69,34 @@
                 {
                     colorB = "gray";
                 }
-                    <tr style="display:none;background-color:@colorB" id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
+                <tr style="display:none;background-color:@colorB" id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
 
-                        <td class="cusfontsize2" colspan="20" style="position:relative">
+                    <td class="cusfontsize2" colspan="20" style="position:relative">
 
-                            @*<span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:10px;top:5px;"></span>
+                        @*<span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:10px;top:5px;"></span>
                             <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 10px;top: 15px;"></span>*@
-                           @item.Code_Detail - @item.NameProducts <i>
-                                (Số lượng:@(item.SolopProducts.Value) - Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))
-                                <input type="hidden" value="@item.id" />
-                            </i>
-                            @if (colorB == "gray")
-                            {
-                                <b style="color:red">(Đang ngưng sản xuất - @item.Current_FlowPauseTime.note - @item.Current_FlowPauseTime.date_begin.Value.ToString("dd/MM/yyyy HH:mm:ss"))</b>
-                            }
-                           
-                        </td>
-                    </tr>
+                        @item.Code_Detail - @item.NameProducts <i>
+                            (Số lượng:@(item.SolopProducts.Value) - Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))
+                            <input type="hidden" value="@item.id" />
+                        </i>
+                        @if (colorB == "gray")
+                        {
+                            <b style="color:red">(Đang ngưng sản xuất - @item.Current_FlowPauseTime.note - @item.Current_FlowPauseTime.date_begin.Value.ToString("dd/MM/yyyy HH:mm:ss"))</b>
+                        }
+
+                    </td>
+                </tr>
 
 
 
 
                     <tr id="ajax_update_@item.id" class="move" style="background-color:red;">
-                        <td  width="@((float)100 / (float)(11))%" class="cusfontsize1 custt" style="color:yellow;background-color:green;vertical-align: middle; padding-left: 5px !important;">
-                           @item.NameProducts (@QT)
-                           
-                           
+                        <td width="@((float)100 / (float)(14))%" class="cusfontsize1 custt" style="color:yellow;background-color:green;vertical-align: middle; padding-left: 5px !important;">
+                            @item.NameProducts (@QT)
+
+
                         </td>
-                        @for (int i = 0; i < 10; i++)
+                        @for (int i = 0; i < item.QuyTrinhs.Count; i++)
                         {
                             var color = "red";
                             var color_char = "yellow";
@@ -101,9 +104,9 @@
                             NhutLongCompany.Models.tbl_QuyTrinh itemQTBF = null;
 
                             itemQT = item.QuyTrinhs[i];
-                            if (i>0)
+                            if (i > 0)
                             {
-                                itemQTBF = item.QuyTrinhs[i-1];
+                                itemQTBF = item.QuyTrinhs[i - 1];
                             }
                             if (itemQT.NgayBatDau_TT.HasValue && itemQT.NgayKetThuc_TT.HasValue)
                             {
@@ -119,11 +122,11 @@
                                 }
                             }
 
-                            if (itemQT != null && itemQT.ThucHien.Value==1)
+                            if (itemQT != null && itemQT.ThucHien.Value == 1)
                             {
 
 
-                                <td width="@((float)100 / (float)(11))%" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;vertical-align: middle; padding-left: 5px !important;">
+                                <td width="@((float)100 / (float)(14))%" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;vertical-align: middle; padding-left: 5px !important;">
 
                                     <span>
                                         @if (itemQT.NgayBatDau_TT.HasValue)
@@ -146,7 +149,7 @@
 
 
                                         }
-                                      <br />
+                                        <br />
                                         @if (itemQT.NgayKetThuc_TT.HasValue)
                                         {
                                             @itemQT.NgayKetThuc_TT.Value.ToString("dd/MM/yyyy")
@@ -189,7 +192,7 @@
                             }
                             else
                             {
-                                <td width="@((float)100 / (float)(11))%" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;vertical-align: middle; padding-left: 5px !important;" >
+                                <td width="@((float)100 / (float)(14))%" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;vertical-align: middle; padding-left: 5px !important;">
                                     @if (update.HasValue && update.Value == 1)
                                     {
                                         if (itemQT.TrangThai.Value == 2)
@@ -214,13 +217,13 @@
 
                         }
                     </tr>
-                
+
 
             }
         </tbody>
     </table>
-   
-   
+
+
 </div>
 
 

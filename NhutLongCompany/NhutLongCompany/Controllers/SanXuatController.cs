@@ -71,10 +71,10 @@ namespace NhutLongCompany.Controllers
             {
                 if (item.Step_Flow.HasValue)
                 {
-                    var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(item.id) && u.ThuTu.Value.Equals(item.Step_Flow.Value) orderby u.ThuTu ascending select u;
+                    var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(item.id) && u.ThuTu.Value.Equals(item.Step_Flow.Value)  orderby u.ThuTu ascending select u;
                     item.QuyTrinhs = queryQT.ToList<tbl_QuyTrinh>();
                 }
-                var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(item.id) orderby a.id descending select a).Take(1);
+                var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(item.id)  orderby a.id descending select a).Take(1);
                 var listFlowPause = query.ToList();
                 if (listFlowPause.Count > 0)
                 {
@@ -489,12 +489,20 @@ namespace NhutLongCompany.Controllers
                 tbQT.NgayKetThuc_TT = DateTime.Now;
             }
             tbQT.TrangThai = status;
+            if (tbQT.ThucHien==0)
+            {
+                tbQT.NgayBatDau_TT = DateTime.Now;
+                tbQT.NgayKetThuc_TT = DateTime.Now;
+            }
             db.Entry(tbQT).State = EntityState.Modified;
 
             tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail = db.tbl_OrderTem_BaoGia_Detail.Find(id);
             if (!tbl_OrderTem_BaoGia_Detail.step_index.HasValue || tbl_OrderTem_BaoGia_Detail.step_index.Value <= tbQT.ThuTu)
             {
-                tbl_OrderTem_BaoGia_Detail.step_index = tbQT.ThuTu;
+                if (tbQT.ThucHien == 1)
+                {
+                    tbl_OrderTem_BaoGia_Detail.step_index = tbQT.ThuTu;
+                }                
                 if (status == 2 && tbQT.ThuTu == 9)
                 {
                     tbl_Stack tbl_Stack = db.tbl_Stack.Find(tbl_OrderTem_BaoGia_Detail.id);
@@ -529,6 +537,12 @@ namespace NhutLongCompany.Controllers
                 db.Entry(order).State = EntityState.Modified;
                 db.SaveChanges();
             }
+            if (tbQT.ThuTu.Value == 12 && status == 2)
+            {
+                order.status = 5;
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             return PartialView(tbl_OrderTem_BaoGia_Detail);
         }
 
@@ -538,7 +552,7 @@ namespace NhutLongCompany.Controllers
             var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
                                  join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
                                  where u.id.Equals(id)
-                                 select new BaoGiaTemDetailView {Code_Detail=u.code_detail, Step_Flow=u.step_index, Status = u.status, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+                                 select new BaoGiaTemDetailView {Date_Working=u.date_working, Code_Detail=u.code_detail, Step_Flow=u.step_index, Status = u.status, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
             List<BaoGiaTemDetailView> listData = queryGiaoGiaCT.ToList<BaoGiaTemDetailView>();
             foreach (var itemSP in listData)
             {
