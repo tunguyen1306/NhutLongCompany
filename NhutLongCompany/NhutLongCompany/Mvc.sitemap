@@ -49,7 +49,7 @@
 
 
     <mvcSiteMapNode title="Đơn hàng" controller="Home" action="HomeBaoGia">
-      <mvcSiteMapNode title="Thông tin Đơn hàng" controller="tbl_OrderTem" action="IndexSX">
+      <mvcSiteMapNode title="Thông tin Đơn hàng" controller="tbl_OrderTem" action="ThongTinDonHang">
          <mvcSiteMapNode title="Chi tiết Đơn hàng" controller="tbl_OrderTem" action="Edit" preservedRouteParameters="id"/> 
       </mvcSiteMapNode>
       <mvcSiteMapNode title="Theo dõi Đơn hàng" controller="tbl_OrderTem" action="TheoDoiDonHang" />

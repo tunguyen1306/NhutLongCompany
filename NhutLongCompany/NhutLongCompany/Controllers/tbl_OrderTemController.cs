@@ -126,7 +126,7 @@ namespace NhutLongCompany.Controllers
                 
                 break;
             }
-            return RedirectToAction("IndexSX", "tbl_OrderTem");
+            return RedirectToAction("ThongTinDonHang", "tbl_OrderTem");
         }
 
         public PartialViewResult PartialThongTinDonHang()
@@ -399,7 +399,7 @@ namespace NhutLongCompany.Controllers
 
                 }
                 db.SaveChanges();
-            return RedirectToAction("IndexSX", "tbl_OrderTem");
+                return RedirectToAction("ThongTinDonHang", "tbl_OrderTem");
            
         }
         public ActionResult ThongTinDonHang()
@@ -923,7 +923,7 @@ namespace NhutLongCompany.Controllers
                 db.SaveChanges();
                 if (donHang.BaoGiaTemView.status.Value == 1)
                 {
-                    return RedirectToAction("IndexSX", "tbl_OrderTem");
+                    return RedirectToAction("ThongTinDonHang", "tbl_OrderTem");
                 }
             }
             //if (donHang.action == 4)

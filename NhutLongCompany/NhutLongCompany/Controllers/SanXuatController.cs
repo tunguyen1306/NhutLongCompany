@@ -800,8 +800,8 @@ namespace NhutLongCompany.Controllers
                 order.status = donHang.status.Value;
                 db.Entry(order).State = EntityState.Modified;
                 db.SaveChanges();
-            
-                return RedirectToAction("IndexSX", "tbl_OrderTem");
+
+                return RedirectToAction("ThongTinDonHang", "tbl_OrderTem");
 
             }
             if (donHang.action == 6)
