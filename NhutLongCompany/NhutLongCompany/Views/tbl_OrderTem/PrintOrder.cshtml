@@ -54,7 +54,7 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-8"><span class="print-label">Địa chỉ:</span> @Model.Customer.DiachiCustomers</div>
+            <div class="col-xs-8"><span class="print-label">Địa chỉ:</span> @Model.Customer.DiaChiCustomers</div>
             <div class="col-xs-4"><span class="print-label">Email:</span> @Model.Customer.EmailCustomers</div>
         </div>
         <div class="row">
@@ -95,8 +95,8 @@
                     }
                 </tr>
                 <tr>
-                    <td>Dán/Kim</td>
-                    @foreach (var item in Model.BaoGiaTemView.PrintDan_Kim)
+                    <td>Quy cách</td>
+                    @foreach (var item in Model.BaoGiaTemView.PrintQuyCach)
                     {
                         <td> @item</td>
                     }

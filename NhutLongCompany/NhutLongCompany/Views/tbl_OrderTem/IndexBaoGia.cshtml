@@ -104,6 +104,50 @@
 
                                     </td>
                                 </tr>
+    <form method="post" action="/tbl_OrderTem/IndexBaoGia">
+        <!-- Modal -->
+        <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        Cập nhật kết quả báo giá
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="usr">Ngày giao hàng :</label>
+                                <input type="datetime" value="" name="date_deliver" id="date_deliver" data-val-date="The field date_deliver must be a date." data-val="true" class="form-control date text-box single-line">
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">Địa chỉ giao hàng :</label>
+                                <input type="text" value="" name="address_deliver" id="address_deliver" class="form-control text-box single-line">
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">Commission :</label>
+                                <label class="radio-inline"><input type="radio" value="0" checked="checked" name="BaoGiaTemView.commission"> Không</label>
+                                <label class="radio-inline"><input type="radio" value="1" name="BaoGiaTemView.commission"> Có</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">Ghi chú :</label>
+                                <textarea placeholder="Try to input multiple lines here..." name="BaoGiaTemView.note" id="txt_note" class="form-control"></textarea>
+                            </div>
+
+                            <input type="hidden" value="" name="BaoGiaTemView.status" id="baogia_status">
+                            <input type="hidden" value="" name="BaoGiaTemView.id" id="baogia_id">
+                            <input type="hidden" value="" name="id" id="id">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="bootstrap-dialog-footer-buttons">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                            <button class="btn btn-primary" onclick="UpdateResultBaoGia(1); return false; ">Đồng ý</button>
+                            <button class="btn btn-danger" onclick="UpdateResultBaoGia(2); return false; ">Từ chối</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
                             }
                         </tbody>
                     </table>
@@ -116,50 +160,7 @@
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-<form method="post" action="/tbl_OrderTem/IndexBaoGia" >
-    <!-- Modal -->
-    <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    Cập nhật kết quả báo giá
-                </div>
-                <div class="modal-body">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="usr">Ngày giao hàng :</label>
-                            <input type="datetime" value="" name="date_deliver" id="date_deliver" data-val-date="The field date_deliver must be a date." data-val="true" class="form-control date text-box single-line">
-                        </div>
-                        <div class="form-group">
-                            <label for="usr">Địa chỉ giao hàng :</label>
-                            <input type="text" value="" name="address_deliver" id="address_deliver" class="form-control text-box single-line">
-                        </div>
-                        <div class="form-group">
-                            <label for="usr">Commission :</label>
-                            <label class="radio-inline"><input type="radio" value="0" checked="checked" name="BaoGiaTemView.commission"> Không</label>
-                            <label class="radio-inline"><input type="radio" value="1" name="BaoGiaTemView.commission"> Có</label>
-                        </div>
-                        <div class="form-group">
-                            <label for="usr">Ghi chú :</label>
-                            <textarea placeholder="Try to input multiple lines here..." name="BaoGiaTemView.note" id="txt_note" class="form-control"></textarea>
-                        </div>
 
-                        <input type="hidden" value="" name="BaoGiaTemView.status" id="baogia_status">
-                        <input type="hidden" value="" name="BaoGiaTemView.id" id="baogia_id">
-                        <input type="hidden" value="" name="id" id="id">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="bootstrap-dialog-footer-buttons">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                        <button class="btn btn-primary" onclick="UpdateResultBaoGia(1); return false; ">Đồng ý</button>
-                        <button class="btn btn-danger" onclick="UpdateResultBaoGia(2); return false; ">Từ chối</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
     <script>
         function loadData(id,baogiaid)
         {

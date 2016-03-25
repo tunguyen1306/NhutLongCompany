@@ -32,7 +32,7 @@ namespace NhutLongCompany.Models
         public string EmailCustomers { get; set; }
         public string PhoneCustomers { get; set; }
         public string FaxCustomers { get; set; }
-        public string DiachiCustomers { get; set; }
+        public string DiaChiCustomers { get; set; }
         public string MasothueCustomers { get; set; }
 
 

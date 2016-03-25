@@ -18,12 +18,13 @@ namespace NhutLongCompany.Models
         public Nullable<int> commission { get; set; }
         public Nullable<double> commission_money { get; set; }
         public string address_deliver { get; set; }
-
+        public Nullable<System.DateTime> date_deliver { get; set; }
         public List<String> PrintTen { get; set; }
         public List<int> PrintSoLop { get; set; }
         public List<String> PrintLoaiGiay { get; set; }
         public List<String> PrintOffset_Flexo { get; set; }
         public List<String> PrintDan_Kim { get; set; }
+        public List<String> PrintQuyCach { get; set; }
         public List<int> PrintSoLuong { get; set; }
         public List<double> PrintDonGia { get; set; }
         public List<double> PrintThanhTien { get; set; }
@@ -35,6 +36,7 @@ namespace NhutLongCompany.Models
             PrintLoaiGiay = new List<string>();
             PrintOffset_Flexo = new List<string>();
             PrintDan_Kim = new List<string>();
+            PrintQuyCach = new List<string>();
             PrintSoLuong = new List<int>();
             PrintDonGia = new List<double>();
             PrintThanhTien = new List<double>();
@@ -46,6 +48,7 @@ namespace NhutLongCompany.Models
                 PrintLoaiGiay.Add(item.LoaigiayProducts);
                 PrintOffset_Flexo.Add(item.OffsetFlexoProducts);
                 PrintDan_Kim.Add(item.DanKimProducts);
+                PrintQuyCach.Add(item.QuyCachProducts);
                 PrintSoLuong.Add(item.SoLuong);
                 PrintDonGia.Add(double.Parse(item.GiaProducts));
                 PrintThanhTien.Add(double.Parse(item.GiaProducts) * item.SoLuong);

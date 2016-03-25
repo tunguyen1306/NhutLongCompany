@@ -17,7 +17,7 @@
           <Property Name="EmailCustomers" Type="nvarchar" MaxLength="500" />
           <Property Name="PhoneCustomers" Type="nvarchar" MaxLength="15" />
           <Property Name="FaxCustomers" Type="nvarchar" MaxLength="15" />
-          <Property Name="DiachiCustomers" Type="nvarchar" MaxLength="500" />
+          <Property Name="DiaChiCustomers" Type="nvarchar" MaxLength="500" />
           <Property Name="MasothueCustomers" Type="nvarchar" MaxLength="50" />
           <Property Name="StatusCustomers" Type="int" />
           <Property Name="CreateDateCustomers" Type="datetime" />
@@ -182,7 +182,7 @@
           <Property Name="EmailCustomers" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="PhoneCustomers" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="FaxCustomers" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="DiachiCustomers" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChiCustomers" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="MasothueCustomers" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StatusCustomers" Type="Int32" />
           <Property Name="CreateDateCustomers" Type="DateTime" Precision="3" />
@@ -349,7 +349,7 @@
                 <ScalarProperty Name="EmailCustomers" ColumnName="EmailCustomers" />
                 <ScalarProperty Name="PhoneCustomers" ColumnName="PhoneCustomers" />
                 <ScalarProperty Name="FaxCustomers" ColumnName="FaxCustomers" />
-                <ScalarProperty Name="DiachiCustomers" ColumnName="DiachiCustomers" />
+                <ScalarProperty Name="DiaChiCustomers" ColumnName="DiaChiCustomers" />
                 <ScalarProperty Name="MasothueCustomers" ColumnName="MasothueCustomers" />
                 <ScalarProperty Name="StatusCustomers" ColumnName="StatusCustomers" />
                 <ScalarProperty Name="CreateDateCustomers" ColumnName="CreateDateCustomers" />
