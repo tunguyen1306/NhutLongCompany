@@ -459,7 +459,7 @@
                            
                                 <!-- /.panel-heading -->
                                 <div class="panel-body" id="today" >
-                                    @{Html.RenderAction("IndexSanXuatByDate", "tbl_OrderTem", new { update = 0 });}
+                                    @{Html.RenderAction("IndexSanXuatByDate_DonHang", "tbl_OrderTem", new { update = 0 ,id=Model.id});}
                                 </div>
                                 <!-- /.panel-body -->
                             </div>
@@ -468,57 +468,7 @@
                         </div>
                     </div>
                 }
-
-
-@*<div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="col-md-4">Ngày bắt đầu dự kiến</label>
-                            <div class="col-md-8">
-
-                                @(Model.date_begin_plan.HasValue ? Model.date_begin_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="col-md-4">Ngày kết thúc dự kiến</label>
-                            <div class="col-md-8">
-                                @(Model.date_end_plan.HasValue ? Model.date_end_plan.Value.ToString("MM/dd/yyyy") : "Chưa cập nhập")
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="col-md-4">Ngày bắt đầu thực tế</label>
-                            <div class="col-md-8">
-
-                                @(Model.date_begin.HasValue ? Model.date_begin.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="col-md-4">Ngày kết thúc thực tế</label>
-                            <div class="col-md-8">
-
-                                @(Model.date_end.HasValue ? Model.date_end.Value.ToString("dd/MM/yyyy") : "Chưa cập nhập")
-                            </div>
-                        </div>
-                    </div>*@
-
-
-@*<div class="col-lg-12">
-                        <div class="form-group" style="text-align:center">
-
-                            <input type="submit" value="Cập nhật" class="btn btn-primary" />
-                            <a class="btn btn-primary" href="@Url.Action("Index", "BaoGia", new { id = 1 })">
-                                Hủy
-                            </a>
-                        </div>
-
-                    </div>*@</div>
+            </div>
             <!-- /.row (nested) -->
         </div>
     </div>

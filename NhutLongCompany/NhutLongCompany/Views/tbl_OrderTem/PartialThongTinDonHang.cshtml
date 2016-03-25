@@ -63,7 +63,11 @@
         @if (item.status == 3)
         {
             <td style="background-color:yellow;text-align: center;">
-                <span style="color:red">Tiến hành sản xuất</span>
+                <span style="color:red">
+                    Tiến hành sản xuất (@if (item.pause.HasValue && item.pause.Value == 1)
+                    {
+                        <b style="color:red">Tạm dừng</b>
+                    })</span>
             </td>
         }
         @if (item.status == 4)
@@ -112,18 +116,9 @@
         </td>
         <td style="text-align: center">
 
-            @if (item.status.Value == 4)
-            {
+           @Html.ActionLink("Chi tiết", "Edit", new { id = item.id }, htmlAttributes: new { @class = "btn btn-outline btn-primary btn-xs" })
 
-                @Html.ActionLink("Chi tiết", "EditFlow", "SanXuat", new { id = item.id }, htmlAttributes: new { @class = "btn btn-outline btn-primary btn-xs" })
-
-            }
-            else
-            {
-                @Html.ActionLink("Chi tiết", "Edit", new { id = item.id }, htmlAttributes: new { @class = "btn btn-outline btn-primary btn-xs" })
-
-            }
-
+           
 
             @if (item.status == 0)
             {
