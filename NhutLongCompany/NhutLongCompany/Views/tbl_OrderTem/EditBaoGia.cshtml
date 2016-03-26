@@ -597,7 +597,7 @@
                                         <td>@item.SolopProducts<input type="hidden" value="@item.SolopProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].SolopProducts" class="SolopProducts"></td>
                                         <td>@item.LoaigiayProducts<input type="hidden" value="@item.LoaigiayProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].LoaigiayProducts" class="LoaigiayProducts"></td>
                                         <td>@item.OffsetFlexoProducts<input type="hidden" value="@item.OffsetFlexoProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].OffsetFlexoProducts" class="OffsetFlexoProducts"></td>
-                                        @*<td>@item.DanKimProducts<input type="hidden" value="@item.DanKimProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].DanKimProducts" class="DanKimProducts"></td>*@
+                                      
                                         <td>@item.QuyCachProducts<input type="hidden" value="@item.QuyCachProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].QuyCachProducts" class="QuyCachProducts"></td>
                                         <td><input type="text" class="form-control  date_deliver updateSL date" value="@item.date_deliver" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].date_deliver"></td>
                                         <td><input type="text" class="form-control  address_deliver updateSL " value="@item.address_deliver" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].address_deliver"></td>
@@ -656,9 +656,9 @@
         <div class="panel-heading">
             <div class="row">
                 <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count + 1)</span>
-
+               
                 @Html.ActionLink("In báo giá", "PrintOrder", new {Model.BaoGiaTemView.id}, new {@class = "btn btn-primary", @target = "_bank", @style = "float: right; margin-right: 10px"})
-
+                @Html.ActionLink("Sửa báo giá", "PrintOrder", new { Model.BaoGiaTemView.id }, new { @class = "btn btn-primary", @style = "float: right; margin-right: 10px" })
                 @if (Model.BaoGiaTemView.status.Value == 0)
                 {
                     <input type="button" data-target="#modal-container" data-toggle="modal" style="float: right; margin-right: 10px" value="Cập nhật kết quả" class="btn btn-primary" />
@@ -783,19 +783,47 @@
                             @foreach (BaoGiaTemDetailView item in Model.BaoGiaTemView.BaoGiaTemDetailViews)
                             {
                                 <tr>
-                                    <td>@item.NameProducts</td>
-                                    <td>@item.SolopProducts</td>
-                                    <td>@item.LoaigiayProducts</td>
+                                    @*<td>@item.NameProducts</td>*@
+                                    <td><input type="text" class="form-control text-box single-line NameProducts1" value="@item.NameProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].NameProducts"></td>
+                                    <td>@item.SolopProducts
+                                        <select name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].SolopProducts" class="SolopProducts" value="@item.SolopProducts" class="form-control valid SolopProducts1">
+                                            <option value="0">Chọn số lớp</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="5">5</option>
+                                            <option value="7">7</option>
+                                        </select>
+                                    </td>
+                                    <td>@item.LoaigiayProducts
+                                        <select name="@item.LoaigiayProducts" value="@item.LoaigiayProducts" class="form-control valid LoaigiayProducts1">
+                                            <option value="0">Chọn loại giấy</option>
+                                            <option value="3 lớp: 2 Vàng 1 Xeo">3 lớp: 2 Vàng 1 Xeo</option>
+                                            <option value="3 lớp: 1 Trắng 1 Xeo 1 Vàng">3 lớp: 1 Trắng 1 Xeo 1 Vàng</option>
+                                            <option value="3 lớp: 1 Đài Loan 1 Xeo 1 Vàng">3 lớp: 1 Đài Loan 1 Xeo 1 Vàng</option>
+                                            <option value="5 lớp: 2 Vàng 3 Xeo">5 lớp: 2 Vàng 3 Xeo</option>
+                                            <option value="5 lớp: 1 Trắng 1 Vàng 3 Xeo">5 lớp: 1 Trắng 1 Vàng 3 Xeo</option>
+                                            <option value="5 lớp: 1 Đài Loan 1 Vàng 3 Xeo">5 lớp: 1 Đài Loan 1 Vàng 3 Xeo</option>
+                                            <option value="2 lớp: 1 Vàng 1 Xeo - sóng E">2 lớp: 1 Vàng 1 Xeo - sóng E</option>
+                                            <option value="2 lớp: 1 Vàng 1 Xeo - sóng C">2 lớp: 1 Vàng 1 Xeo - sóng C</option>
+                                            <option value="2 lớp: 1 Trắng 1 Xeo - sóng E">2 lớp: 1 Trắng 1 Xeo - sóng E</option>
+                                        </select>
+                                    </td>
                                     <td>@item.OffsetFlexoProducts</td>
-                                    @*<td>@item.DanKimProducts</td>*@
-                                    <td>@item.QuyCachProducts</td>
-                                    <td>@item.date_deliver</td>
-                                    <td>@item.address_deliver</td>
-                                    <td>@double.Parse(item.GiaProducts).ToString("n2") đ</td>
+                                 
+                                    @*<td>@item.QuyCachProducts</td>*@
+                                    <td align="center">
+                                        <input class="form-control text-box single-line QuyCachProducts cusinputsmall" value="@item.QuyCachProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].QuyCachProducts" type="text">
+                                    </td>
+                                    <td><input type="text" class="form-control  date_deliver updateSL date" value="@item.date_deliver" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].date_deliver"></td>
+                                    <td><input type="text" class="form-control  address_deliver updateSL " value="@item.address_deliver" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].address_deliver"></td>
+                                    <td><input type="number" min="0" step="500" class="form-control text-box single-line GiaProducts updateSL" value="@item.GiaProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].GiaProducts"></td>
+                                    <td><input type="number" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].SoLuong" value="@item.SoLuong" min="1" class="form-control text-box single-line updateSL SoLuong"></td>
+
+                                    @*<td>@double.Parse(item.GiaProducts).ToString("n2") đ</td>
                                     <td>
                                         @item.SoLuong
                                         <input id="id_update_tk_@(item.id)_value" class="input_tk_value" type="hidden" value="@(item.Design.HasValue ? (item.Design.Value + "") : "0")" />
-                                    </td>
+                                    </td>*@
                                     <td id="id_update_tk_@item.id">
                                         @if (!item.Design.HasValue || item.Design.Value == 0)
                                         {
