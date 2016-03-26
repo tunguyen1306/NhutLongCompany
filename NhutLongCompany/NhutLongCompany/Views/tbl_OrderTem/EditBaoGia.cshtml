@@ -19,19 +19,19 @@
         var data = new FormData();
         data.append('id', $('#id_tk').val());
         data.append('date', $('#date_tk').val());
-  
-      
+
+
         //if ($('#image_tk').val() != "") {
         //    if (document.getElementById('image_tk').files.length > 0) {
         //        data.append('file', document.getElementById('image_tk').files[0]);
         //    }
         //}
-        if ($('#ddlChonmau').val()=="4") {
+        if ($('#ddlChonmau').val() == "4") {
             data.append('loai', $('#txtTex').val());
         } else {
             data.append('loai', $('#ddlChonmau').val());
         }
-       
+
         $.ajax({
             url: '@Url.Action("UpdateDesign", "tbl_OrderTem")',
             type: 'POST',
@@ -44,17 +44,17 @@
                 alert('Cập nhật thàn công!');
                 var text = reformatDate($('#date_tk').val());
                 //if ($('#image_tk').val() != "") {+ $('#image_tk').val()
-                    //if (document.getElementById('image_tk').files.length > 0) {
-                        //var text = '<a href="/Upload/ThietKe/' + $('#id_tk').val() + '_'  + '" target="_blank">' + reformatDate($('#date_tk').val()) + '</a>';
+                //if (document.getElementById('image_tk').files.length > 0) {
+                //var text = '<a href="/Upload/ThietKe/' + $('#id_tk').val() + '_'  + '" target="_blank">' + reformatDate($('#date_tk').val()) + '</a>';
 
-                   // }
+                // }
                 //}
                 $('#id_update_tk_' + $('#id_tk').val()).html(text);
                 $('#id_update_tk_' + $('#id_tk').val() + "_value").val(2);
                 $('#modal-container-tk').modal('hide');
                 $('#id_tk').val("");
                 $('#date_tk').val("");
-               // $('#image_tk').val("");
+                // $('#image_tk').val("");
             },
             error: function() {
                 alert('Cập nhật thất bại!');
@@ -658,7 +658,7 @@
                 <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count + 1)</span>
                
                 @Html.ActionLink("In báo giá", "PrintOrder", new {Model.BaoGiaTemView.id}, new {@class = "btn btn-primary", @target = "_bank", @style = "float: right; margin-right: 10px"})
-                @Html.ActionLink("Sửa báo giá", "PrintOrder", new { Model.BaoGiaTemView.id }, new { @class = "btn btn-primary", @style = "float: right; margin-right: 10px" })
+                @Html.ActionLink("Sửa báo giá", "PrintOrder", new {Model.BaoGiaTemView.id}, new {@class = "btn btn-primary", @style = "float: right; margin-right: 10px"})
                 @if (Model.BaoGiaTemView.status.Value == 0)
                 {
                     <input type="button" data-target="#modal-container" data-toggle="modal" style="float: right; margin-right: 10px" value="Cập nhật kết quả" class="btn btn-primary" />
@@ -785,7 +785,8 @@
                                 <tr>
                                     @*<td>@item.NameProducts</td>*@
                                     <td><input type="text" class="form-control text-box single-line NameProducts1" value="@item.NameProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].NameProducts"></td>
-                                    <td>@item.SolopProducts
+                                    <td>
+                                    
                                         <select name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].SolopProducts" class="SolopProducts" value="@item.SolopProducts" class="form-control valid SolopProducts1">
                                             <option value="0">Chọn số lớp</option>
                                             <option value="2">2</option>
@@ -793,8 +794,9 @@
                                             <option value="5">5</option>
                                             <option value="7">7</option>
                                         </select>
+                                      
                                     </td>
-                                    <td>@item.LoaigiayProducts
+                                    <td>
                                         <select name="@item.LoaigiayProducts" value="@item.LoaigiayProducts" class="form-control valid LoaigiayProducts1">
                                             <option value="0">Chọn loại giấy</option>
                                             <option value="3 lớp: 2 Vàng 1 Xeo">3 lớp: 2 Vàng 1 Xeo</option>
@@ -808,9 +810,17 @@
                                             <option value="2 lớp: 1 Trắng 1 Xeo - sóng E">2 lớp: 1 Trắng 1 Xeo - sóng E</option>
                                         </select>
                                     </td>
-                                    <td>@item.OffsetFlexoProducts</td>
+                                    <td><select name="OffsetFlexoProducts" onchange=" OffsetFlexoProductsUpdate(this); " default-value="Offset" class="form-control">
+
+                                            <option value="FLEXO - BẤM KIM">1 - FLEXO - BẤM KIM</option>
+                                            <option value="FLEXO - DÁN">2 - FLEXO - DÁN</option>
+                                            <option value="FLEXO - Bế">3 - FLEXO - Bế</option>
+                                            <option value="FLEXO - Bế - DÁN">4 - FLEXO - Bế - DÁN</option>
+                                            <option value="OFFSET -Bế - BK">5 - OFFSET -Bế - BK</option>
+                                            <option value="OFFSET - Bế - DÁN">6 - OFFSET - Bế - DÁN</option>
+                                        </select></td>
                                  
-                                    @*<td>@item.QuyCachProducts</td>*@
+                                  
                                     <td align="center">
                                         <input class="form-control text-box single-line QuyCachProducts cusinputsmall" value="@item.QuyCachProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].QuyCachProducts" type="text">
                                     </td>
@@ -844,7 +854,7 @@
                                         }
                                         else
                                         {
-                                            <input type="button" onclick="UpdatePopupViewTK(this, @item.id);return false;" class="btn btn-primary" value="Update" data-target="#modal-container-tk" data-toggle="modal">
+                                            <input type="button" onclick=" UpdatePopupViewTK(this, @item.id);return false; " class="btn btn-primary" value="Update" data-target="#modal-container-tk" data-toggle="modal">
                                         }
 
 
@@ -887,29 +897,25 @@
                                                     <label class="control-label col-md-4">Loại Mẫu</label>
                                                     <div class="col-md-8" style="padding-top: 7px">
                                                      
-                                                        @if (String.IsNullOrEmpty( item.loai_design) || item.loai_design=="0")
+                                                        @if (String.IsNullOrEmpty(item.loai_design) || item.loai_design == "0")
                                                         {
                                                             @("Không có mẫu")
-                            
                                                         }
                                                         @if (item.loai_design == "1")
                                                         {
                                                             @("Mẫu thiết kế")
-
                                                         }
                                                         @if (item.loai_design == "2")
                                                         {
                                                             @("Mẫu thùng")
-
                                                         }
                                                         @if (item.loai_design == "3")
                                                         {
                                                             @("Mẫu thùng và thiết kế")
-
                                                         }
                                                         else
                                                         {
-                                                           @item.loai_design
+                                                            @item.loai_design
                                                         }
                                                     </div>
 
