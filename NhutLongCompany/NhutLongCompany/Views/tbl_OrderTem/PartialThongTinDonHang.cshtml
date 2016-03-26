@@ -64,10 +64,10 @@
         {
             <td style="background-color:yellow;text-align: center;">
                 <span style="color:red">
-                    Tiến hành sản xuất (@if (item.pause.HasValue && item.pause.Value == 1)
+                    Tiến hành sản xuất @if (item.pause.HasValue && item.pause.Value == 1)
                     {
-                        <b style="color:red">Tạm dừng</b>
-                    })</span>
+                        <b style="color:red">(Tạm dừng)</b>
+                    }</span>
             </td>
         }
         @if (item.status == 4)
