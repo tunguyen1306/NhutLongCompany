@@ -784,20 +784,25 @@
                             {
                                 <tr>
                                     @*<td>@item.NameProducts</td>*@
-                                    <td><input type="text" class="form-control text-box single-line NameProducts1" value="@item.NameProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].NameProducts"></td>
+                                    
+                                    <td>
+                                    <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews.Index" value="@item.id"/>
+                                    <input type="text" class="form-control text-box single-line NameProducts1" value="@item.NameProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].NameProducts"></td>
                                     <td>
                                     
-                                        <select name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].SolopProducts" class="SolopProducts" value="@item.SolopProducts" class="form-control valid SolopProducts1">
+                                        <select id="SolopProducts_@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].SolopProducts"  class="form-control valid SolopProducts SolopProducts1">
                                             <option value="0">Chọn số lớp</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="5">5</option>
                                             <option value="7">7</option>
                                         </select>
-                                      
+                                        <script>
+                                            document.getElementById("SolopProducts_@item.id").value=@item.SolopProducts.Value;
+                                        </script>
                                     </td>
                                     <td>
-                                        <select name="@item.LoaigiayProducts" value="@item.LoaigiayProducts" class="form-control valid LoaigiayProducts1">
+                                        <select name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].LoaigiayProducts"  class="form-control valid LoaigiayProducts1">
                                             <option value="0">Chọn loại giấy</option>
                                             <option value="3 lớp: 2 Vàng 1 Xeo">3 lớp: 2 Vàng 1 Xeo</option>
                                             <option value="3 lớp: 1 Trắng 1 Xeo 1 Vàng">3 lớp: 1 Trắng 1 Xeo 1 Vàng</option>
@@ -809,8 +814,12 @@
                                             <option value="2 lớp: 1 Vàng 1 Xeo - sóng C">2 lớp: 1 Vàng 1 Xeo - sóng C</option>
                                             <option value="2 lớp: 1 Trắng 1 Xeo - sóng E">2 lớp: 1 Trắng 1 Xeo - sóng E</option>
                                         </select>
+                                        <script>
+                                            document.getElementById("LoaigiayProducts_@item.id").value=@item.LoaigiayProducts;
+
+                                        </script>
                                     </td>
-                                    <td><select name="OffsetFlexoProducts" onchange=" OffsetFlexoProductsUpdate(this); " default-value="Offset" class="form-control">
+                                    <td><select id="OffsetFlexoProducts_@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].OffsetFlexoProducts" onchange="OffsetFlexoProductsUpdate(this); " default-value="Offset" class="form-control">
 
                                             <option value="FLEXO - BẤM KIM">1 - FLEXO - BẤM KIM</option>
                                             <option value="FLEXO - DÁN">2 - FLEXO - DÁN</option>
@@ -818,8 +827,14 @@
                                             <option value="FLEXO - Bế - DÁN">4 - FLEXO - Bế - DÁN</option>
                                             <option value="OFFSET -Bế - BK">5 - OFFSET -Bế - BK</option>
                                             <option value="OFFSET - Bế - DÁN">6 - OFFSET - Bế - DÁN</option>
-                                        </select></td>
-                                 
+                                        </select>
+                                    
+                                        <script>
+                                        document.getElementById("OffsetFlexoProducts_@item.id").value=@item.OffsetFlexoProducts;
+
+                                        </script>
+                                    </td>
+                                   
                                   
                                     <td align="center">
                                         <input class="form-control text-box single-line QuyCachProducts cusinputsmall" value="@item.QuyCachProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].QuyCachProducts" type="text">
