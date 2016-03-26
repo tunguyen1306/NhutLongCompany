@@ -24,10 +24,10 @@ namespace NhutLongCompany.Controllers
                                       join b in db.tbl_OrderTem_BaoGia on a.id equals b.order_id.Value
                                       join u in db.tbl_OrderTem_BaoGia_Detail on b.id equals u.baogia_id.Value
                                       join y in db.tbl_Products on u.sanpam_id.Value equals y.ID_Products
-                                      join z in db.tbl_Stack on u.id equals z.baoGia_detail_id
-                                      where (a.status.Value == 3 || a.status.Value == 1 || a.status.Value == 4) && b.status.Value == 1 && u.status == 1 && u.date_working.Value <= DateTime.Now
-                                      orderby z.index_view ascending
-                                      select new BaoGiaTemDetailView {pause=a.status_pause,  Step_Flow = u.step_index, Status_Pause = u.status_pause, Code_Detail = u.code_detail, Status = u.status, Date_Working = u.date_working, Index_View = z.index_view, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+                                    //  join z in db.tbl_Stack on u.id equals z.baoGia_detail_id
+                                      where (a.status.Value == 3 || a.status.Value == 1 || a.status.Value == 4) && b.status.Value == 1 && u.date_working.Value <= DateTime.Now
+                                     // orderby z.index_view ascending
+                                      select new BaoGiaTemDetailView {pause=a.status_pause,  Step_Flow = u.step_index, Status_Pause = u.status_pause, Code_Detail = u.code_detail, Status = u.status, Date_Working = u.date_working, Index_View = 0, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
 
             if (date.HasValue)
             {
@@ -35,10 +35,10 @@ namespace NhutLongCompany.Controllers
                                       join b in db.tbl_OrderTem_BaoGia on a.id equals b.order_id.Value
                                       join u in db.tbl_OrderTem_BaoGia_Detail on b.id equals u.baogia_id.Value
                                       join y in db.tbl_Products on u.sanpam_id.Value equals y.ID_Products
-                                      join z in db.tbl_Stack on u.id equals z.baoGia_detail_id
-                                      where (a.status.Value == 3 || a.status.Value == 1 || a.status.Value == 4) && b.status.Value == 1 && u.status == 1 && u.date_working.Value == date.Value
-                                      orderby z.index_view ascending
-                                      select new BaoGiaTemDetailView { pause = a.status_pause, Step_Flow = u.step_index, Status_Pause = u.status_pause, Code_Detail = u.code_detail, Status = u.status, Date_Working = u.date_working, Index_View = z.index_view, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+                                  //    join z in db.tbl_Stack on u.id equals z.baoGia_detail_id
+                                      where (a.status.Value == 3 || a.status.Value == 1 || a.status.Value == 4) && b.status.Value == 1 && u.date_working.Value == date.Value
+                                 //     orderby z.index_view ascending
+                                      select new BaoGiaTemDetailView { pause = a.status_pause, Step_Flow = u.step_index, Status_Pause = u.status_pause, Code_Detail = u.code_detail, Status = u.status, Date_Working = u.date_working, Index_View =0, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
 
 
             }
@@ -61,7 +61,53 @@ namespace NhutLongCompany.Controllers
             ViewData["Update"] = update;
             return PartialView(list);
         }
+        public PartialViewResult IndexSanXuatByDate_DonHang(DateTime? date, int? update,int id)
+        {
+            //if (Session["username"] == null)
+            //{
+            //    return RedirectToAction("Login", "Login");
+            //}
+            var querySanPhamSanXuat = from a in db.tbl_OrderTem
+                                      join b in db.tbl_OrderTem_BaoGia on a.id equals b.order_id.Value
+                                      join u in db.tbl_OrderTem_BaoGia_Detail on b.id equals u.baogia_id.Value
+                                      join y in db.tbl_Products on u.sanpam_id.Value equals y.ID_Products
+                                      //  join z in db.tbl_Stack on u.id equals z.baoGia_detail_id
+                                      where a.id == id && (a.status.Value == 3 || a.status.Value == 1 || a.status.Value == 4 || a.status.Value == 5) && b.status.Value == 1 && u.date_working.Value <= DateTime.Now
+                                      // orderby z.index_view ascending
+                                      select new BaoGiaTemDetailView { pause = a.status_pause, Step_Flow = u.step_index, Status_Pause = u.status_pause, Code_Detail = u.code_detail, Status = u.status, Date_Working = u.date_working, Index_View = 0, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
 
+            if (date.HasValue)
+            {
+                querySanPhamSanXuat = from a in db.tbl_OrderTem
+                                      join b in db.tbl_OrderTem_BaoGia on a.id equals b.order_id.Value
+                                      join u in db.tbl_OrderTem_BaoGia_Detail on b.id equals u.baogia_id.Value
+                                      join y in db.tbl_Products on u.sanpam_id.Value equals y.ID_Products
+                                      //    join z in db.tbl_Stack on u.id equals z.baoGia_detail_id
+                                      where a.id==id && (a.status.Value == 3 || a.status.Value == 1 || a.status.Value == 4 || a.status.Value == 5) && b.status.Value == 1 && u.date_working.Value == date.Value
+                                      //     orderby z.index_view ascending
+                                      select new BaoGiaTemDetailView { pause = a.status_pause, Step_Flow = u.step_index, Status_Pause = u.status_pause, Code_Detail = u.code_detail, Status = u.status, Date_Working = u.date_working, Index_View = 0, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+
+
+            }
+            List<BaoGiaTemDetailView> list = querySanPhamSanXuat.ToList();
+            foreach (var item in list)
+            {
+                item.Timer = (int)DateTime.Parse(item.date_deliver.Value.ToShortDateString()).Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays;
+                var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(item.id) orderby u.ThuTu ascending select u;
+                item.QuyTrinhs = queryQT.ToList<tbl_QuyTrinh>();
+                var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(item.id) orderby a.id descending select a).Take(1);
+                var listFlowPause = query.ToList();
+                if (listFlowPause.Count > 0)
+                {
+                    item.Current_FlowPauseTime = listFlowPause[0];
+                }
+
+            }
+            // list.Sort(new CoordinatesBasedComparer());
+
+            ViewData["Update"] = update;
+            return PartialView(list);
+        }
         public ActionResult TheoDoiDonHang()
         {
 

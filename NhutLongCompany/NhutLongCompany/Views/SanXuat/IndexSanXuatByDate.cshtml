@@ -57,15 +57,23 @@
                 {
                     QT = "QT6";
                 }
-                var colorB = "transparent";
+                var colorBChar = "yellow";
+                var colorB = "green";
                 if (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0))
                 {
-                    colorB = "transparent";
+                    colorB = "green";
                 }
                 else
                 {
                     colorB = "gray";
                 }
+
+                if (item.pause.HasValue && item.pause.Value==1)
+                {
+                    colorB = "wheat";
+                    colorBChar = "black";
+                }
+
                     <tr style="display:none;background-color:@colorB" id="ajax_update_@(item.id)_product" class="move_product" data-index="@item.Index_View">
 
                         <td class="cusfontsize2" colspan="20" style="position:relative">
@@ -88,9 +96,12 @@
 
 
                     <tr id="ajax_update_@item.id" class="move" style="background-color:red;">
-                        <td  width="@((float)100 / (float)(11))%" class="cusfontsize1 custt" style="color:yellow;background-color:green;vertical-align: middle; padding-left: 5px !important;">
+                        <td  width="@((float)100 / (float)(11))%" class="cusfontsize1 custt" style="color:@colorBChar;background-color:@colorB;vertical-align: middle; padding-left: 5px !important;">
                            @item.NameProducts (@QT)
-                           
+                           @if (item.pause.HasValue && item.pause.Value == 1)
+                           {
+                            <br /> <b style="color:red">Tạm dừng</b>
+                           }
                            
                         </td>
                         @for (int i = 0; i < 10; i++)
@@ -135,7 +146,7 @@
 
                                             @*<span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(i==0?"2":(item.QuyTrinhs[i-1].TrangThai.Value+"")),@item.id,@itemQT.ID,1)">Bất đầu</span>*@
 
-                                        if (update.HasValue && update.Value == 1)
+                                        if (update.HasValue && update.Value == 1 && (!item.pause.HasValue || item.pause.Value == 0))
                                         {
                                             <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQTBF==null?"2":(itemQTBF.TrangThai.Value+"")),@item.id,@itemQT.ID,1)">Bất đầu</span>
                                         }
@@ -157,7 +168,7 @@
 
                                             @*<span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQT.TrangThai.Value==1?"2":"1"),@item.id,@itemQT.ID,2)">Kết thúc</span>*@
 
-                                        if (update.HasValue && update.Value == 1)
+                                        if (update.HasValue && update.Value == 1 && (!item.pause.HasValue || item.pause.Value == 0))
                                         {
                                             <span style="cursor:pointer;width:65px" id="item_@itemQT.ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQT.TrangThai.Value==1?"2":"1"),@item.id,@itemQT.ID,2)">Kết thúc</span>
                                             if (itemQT.TrangThai.Value == 1 && (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
@@ -178,7 +189,7 @@
                                         else
                                         {
                                             @("Kết thúc")
-                                            }
+                                        }
 
 
 
@@ -190,7 +201,7 @@
                             else
                             {
                                 <td width="@((float)100 / (float)(11))%" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;vertical-align: middle; padding-left: 5px !important;" >
-                                    @if (update.HasValue && update.Value == 1)
+                                    @if (update.HasValue && update.Value == 1 && (!item.pause.HasValue|| item.pause.Value==0))
                                     {
                                         if (itemQT.TrangThai.Value == 2)
                                         {

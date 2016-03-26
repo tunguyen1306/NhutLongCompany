@@ -206,8 +206,9 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data, textStatus, XMLHttpRequest) {
-                alert("Cập nhật thành công!");              
+                      
                 ReloadAll();
+                alert("Cập nhật thành công!");
             }
         });
     }
@@ -224,9 +225,11 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data, textStatus, XMLHttpRequest) {
-                alert("Cập nhật thành công!");
-                $('#modal-container-note').modal('hide');
                 ReloadAll();
+                $('#modal-container-note').modal('hide');
+                alert("Cập nhật thành công!");
+              
+             
             }
         });
     }

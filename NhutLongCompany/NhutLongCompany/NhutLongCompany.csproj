@@ -1091,6 +1091,7 @@
     <Content Include="Views\tbl_OrderTem\IndexSanXuatByDate.cshtml" />
     <Content Include="Views\tbl_OrderTem\PartialThongTinDonHang.cshtml" />
     <Content Include="Views\SanXuat\PartialLichSanXuatOnDay.cshtml" />
+    <Content Include="Views\tbl_OrderTem\IndexSanXuatByDate_DonHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
