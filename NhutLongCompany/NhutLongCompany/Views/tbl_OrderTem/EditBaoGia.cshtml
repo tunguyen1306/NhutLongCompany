@@ -85,7 +85,11 @@
         }
         return strMMDDYYYY;
     }
-
+    function updateproductBaoGia()
+    {
+        $("#action").val(4);
+        document.forms[0].submit();
+    }
     function UpdateResultBaoGia(status) {
 
         if (status == 1) {
@@ -152,8 +156,9 @@
         });
 
     });
-
     function updateProduct(el) {
+
+
         var m = 0;
         if ($('.NameProducts1').val() == '') {
             $('.lblNameProducts').addClass('hidden');
@@ -164,17 +169,31 @@
             $('.lblNameProducts').addClass('hidden');
         }
 
-        if ($('.QuyCachProducts1').val() == '') {
-            $('.lblQuyCachProducts').addClass('hidden');
-            $('.QuyCachProducts1').after('<label class="errorLabel lblQuyCachProducts">Nhập quy cách</label>');
+        if ($('.QuyCachProducts1dai').val() == '') {
+            $('.lblQuyCachProductsdai').addClass('hidden');
+            $('.QuyCachProducts1dai').after('<label class="errorLabel lblQuyCachProductsdai">Nhập dài</label>');
             m++;
         } else {
             $('.lblQuyCachProducts').addClass('hidden');
         }
+        if ($('.QuyCachProducts1rong').val() == '') {
+            $('.lblQuyCachProductsrong').addClass('hidden');
+            $('.QuyCachProducts1rong').after('<label class="errorLabel lblQuyCachProductsrong">Nhập rộng</label>');
+            m++;
+        } else {
+            $('.lblQuyCachProducts').addClass('hidden');
+        }
+        if ($('.QuyCachProducts1cao').val() == '') {
+            $('.lblQuyCachProductscao').addClass('hidden');
+            $('.QuyCachProducts1cao').after('<label class="errorLabel lblQuyCachProductscao">Nhập cao</label>');
+            m++;
+        } else {
+            $('.lblQuyCachProductscao').addClass('hidden');
+        }
 
         if ($('.SolopProducts1').val() <= 0) {
             $('.lblSolopProducts').addClass('hidden');
-            $('.SolopProducts1').after('<label class="errorLabel lblSolopProducts">Số lớp phải lớn hơn 0</label>');
+            $('.SolopProducts1').after('<label class="errorLabel lblSolopProducts">Chọn số lớp</label>');
             m++;
         } else {
             $('.lblSolopProducts').addClass('hidden');
@@ -196,35 +215,48 @@
         if (m == 0) {
 
             $('.lblNameProducts').addClass('hidden');
-            $('.lblQuyCachProducts').addClass('hidden');
+            $('.lblQuyCachProductsdai').addClass('hidden');
+            $('.lblQuyCachProductsrong').addClass('hidden');
+            $('.lblQuyCachProductscao').addClass('hidden');
             $('.lblGiaProducts').addClass('hidden');
             $('.lblSolopProducts').addClass('hidden');
             $('.lblLoaigiayProducts').addClass('hidden');
             var id = new Date().getTime();
+            //var dai = $('.QuyCachProducts1dai').val();
+            //var rong = $('.QuyCachProducts1rong').val();
+            //var cao = $('.QuyCachProducts1cao').val();
+            //var qc = dai + ' x ' + rong + ' x ' + cao;
+            //$('.QuyCachProducts').val(qc);
             var tr = $(el).parents('tr').eq(0);
             var trdata = "<tr class='tr_edit' id='ext_" + id + "'><input name='BaoGiaTemView.BaoGiaTemDetailViews.Index' value='" + id + "' type='hidden'/><input name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "].ID_Products' value='' type='hidden'/>";
             tr.find('.form-control').each(function() {
+
+
                 if ($(this).attr('name') == 'SoLuong') {
-                    trdata += "<td><input class='form-control text-box single-line updateSL " + this.name + "'  min='1' value='" + this.value + "' type='number' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "'/></td>";
+                    trdata += "<td class='" + this.name + "'><input class='form-control text-box single-line updateSL " + this.name + "'  min='1' value='" + this.value + "' type='number' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "'/></td>";
                 } else {
                     var text = this.value;
                     if ($(this).attr('name') == 'GiaProducts') {
                         text = numberParse(this.value) + " đ";
                     }
                     if ($(this).attr('name') == 'Design') {
-                        text = this.value == 1 ? "Có" : "Không";
+                        text = this.value == 1 ? "có" : "không";
                     }
-                    trdata += "<td>" + text + "<input class='" + this.name + "' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "' value='" + this.value + "' type='hidden'/></td>";
+
+
+                    trdata += "<td class='" + this.name + "'>" + text + "<input class='" + this.name + "' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "' value='" + this.value + "' type='hidden'/></td>";
                 }
                 this.value = $(this).attr('default-value');
             });
-            trdata += "<td><input type='submit' style='float: left; margin-left: 10px' value='Xóa' class='btn btn-primary' onclick='delProduct(this); return false;' /></td></tr>";
+            trdata += "<td ><input type='submit' style='float: left; margin-left: 10px' value='Xóa' class='btn btn-primary' onclick='delProduct(this); return false;' /></td></tr>";
             $(el).parents('tbody').eq(0).append(trdata);
             updateMoney(el);
             updateEvent();
-        }
-    }
 
+        }
+
+
+    }
     function updateEvent() {
         $('.updateSL').on("change", function() {
             updateMoney(this);
@@ -658,7 +690,7 @@
                 <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count + 1)</span>
                
                 @Html.ActionLink("In báo giá", "PrintOrder", new {Model.BaoGiaTemView.id}, new {@class = "btn btn-primary", @target = "_bank", @style = "float: right; margin-right: 10px"})
-                @Html.ActionLink("Sửa báo giá", "PrintOrder", new {Model.BaoGiaTemView.id}, new {@class = "btn btn-primary", @style = "float: right; margin-right: 10px"})
+               
                 @if (Model.BaoGiaTemView.status.Value == 0)
                 {
                     <input type="button" data-target="#modal-container" data-toggle="modal" style="float: right; margin-right: 10px" value="Cập nhật kết quả" class="btn btn-primary" />
@@ -777,6 +809,9 @@
                                 <th>
                                     Làm mẫu
                                 </th>
+                                <th>
+                                   
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="body_data">
@@ -802,7 +837,7 @@
                                         </script>
                                     </td>
                                     <td>
-                                        <select name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].LoaigiayProducts"  class="form-control valid LoaigiayProducts1">
+                                        <select name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].LoaigiayProducts" id="LoaigiayProducts_@item.id" class="form-control valid LoaigiayProducts1">
                                             <option value="0">Chọn loại giấy</option>
                                             <option value="3 lớp: 2 Vàng 1 Xeo">3 lớp: 2 Vàng 1 Xeo</option>
                                             <option value="3 lớp: 1 Trắng 1 Xeo 1 Vàng">3 lớp: 1 Trắng 1 Xeo 1 Vàng</option>
@@ -815,7 +850,8 @@
                                             <option value="2 lớp: 1 Trắng 1 Xeo - sóng E">2 lớp: 1 Trắng 1 Xeo - sóng E</option>
                                         </select>
                                         <script>
-                                            document.getElementById("LoaigiayProducts_@item.id").value=@item.LoaigiayProducts;
+                                           
+                                            document.getElementById("LoaigiayProducts_@item.id").value= $('<select />').html("@item.LoaigiayProducts").text();
 
                                         </script>
                                     </td>
@@ -830,14 +866,14 @@
                                         </select>
                                     
                                         <script>
-                                        document.getElementById("OffsetFlexoProducts_@item.id").value=@item.OffsetFlexoProducts;
+    document.getElementById("OffsetFlexoProducts_@item.id").value=$('<select />').html("@item.OffsetFlexoProducts").text()
 
                                         </script>
                                     </td>
                                    
                                   
                                     <td align="center">
-                                        <input class="form-control text-box single-line QuyCachProducts cusinputsmall" value="@item.QuyCachProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].QuyCachProducts" type="text">
+                                        <input class="form-control text-box single-line QuyCachProducts" value="@item.QuyCachProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].QuyCachProducts" type="text">
                                     </td>
                                     <td><input type="text" class="form-control  date_deliver updateSL date" value="@item.date_deliver" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].date_deliver"></td>
                                     <td><input type="text" class="form-control  address_deliver updateSL " value="@item.address_deliver" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].address_deliver"></td>
@@ -869,13 +905,14 @@
                                         }
                                         else
                                         {
-                                            <input type="button" onclick=" UpdatePopupViewTK(this, @item.id);return false; " class="btn btn-primary" value="Update" data-target="#modal-container-tk" data-toggle="modal">
+                                            <input type="button" onclick="UpdatePopupViewTK(this, @item.id);return false; " class="btn btn-primary" value="Update" data-target="#modal-container-tk" data-toggle="modal">
                                         }
 
 
 
 
                                     </td>
+                                    <td><input type="submit" value="Save" class="btn btn-default" onclick="updateproductBaoGia();" /></td>
                                 </tr>
                                 <!-- Modal -->
                                 <div id="chitietmau_@(item.id)" class="modal fade" role="dialog">

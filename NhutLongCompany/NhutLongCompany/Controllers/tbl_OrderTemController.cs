@@ -972,6 +972,92 @@ namespace NhutLongCompany.Controllers
                     return RedirectToAction("ThongTinDonHang", "tbl_OrderTem");
                 }
             }
+            if (donHang.action == 4)
+            {
+
+                DonHangView d1 = new DonHangView();
+                d1.date_deliver = tbl_OrderTem.date_deliver;
+                d1.address_deliver = tbl_OrderTem.address_deliver;
+                d1.customer_id = tbl_OrderTem.customer_id;
+                d1.code = tbl_OrderTem.code;
+                d1.date_begin = tbl_OrderTem.date_begin;
+                d1.date_end = tbl_OrderTem.date_end;
+                d1.id = tbl_OrderTem.id;
+                d1.status = tbl_OrderTem.status;
+                d1.date_begin_plan = tbl_OrderTem.date_begin_plan;
+                d1.date_end_plan = tbl_OrderTem.date_end_plan;
+
+                var queryBaoGia1 = from u in db.tbl_OrderTem_BaoGia where u.order_id.Value.Equals(tbl_OrderTem.id) orderby u.id descending select u;
+                List<tbl_OrderTem_BaoGia> lisBG1 = queryBaoGia1.ToList<tbl_OrderTem_BaoGia>();
+                List<BaoGiaTemView> lisBGTem1 = new List<BaoGiaTemView>();
+
+                if (lisBG1.Count > 1)
+                {
+                    for (int i = 1; i < lisBG1.Count; i++)
+                    {
+                        var item = lisBG1[i];
+                        BaoGiaTemView temBG = new BaoGiaTemView { commission = item.commission, commission_money = item.commission_monney, note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, order_id = item.order_id, status = item.status, total_money = item.total_money };
+                        var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
+                                             join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
+                                             where u.baogia_id.Value.Equals(temBG.id)
+                                             select new BaoGiaTemDetailView { loai_design = u.loai_design, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+                        temBG.BaoGiaTemDetailViews = queryGiaoGiaCT.ToList<BaoGiaTemDetailView>();
+                        lisBGTem1.Add(temBG);
+                    }
+                }
+
+                d1.BaoGiaTemViews = lisBGTem1;
+                queryBaoGia1 = from u in db.tbl_OrderTem_BaoGia where u.order_id.Value.Equals(tbl_OrderTem.id) orderby u.id descending select u;
+                lisBG1 = queryBaoGia1.ToList<tbl_OrderTem_BaoGia>();
+                foreach (var item in lisBG1)
+                {
+                    BaoGiaTemView temBG = new BaoGiaTemView { commission = item.commission, commission_money = item.commission_monney, note = item.note, date_begin = item.date_begin, date_end = item.date_end, id = item.id, order_id = item.order_id, status = item.status, total_money = item.total_money };
+                    var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
+                                         join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
+                                         where u.baogia_id.Value.Equals(temBG.id)
+                                         select new BaoGiaTemDetailView { loai_design = u.loai_design, Date_Working = u.date_working, address_deliver = d1.address_deliver, date_deliver = d1.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+                    temBG.BaoGiaTemDetailViews = queryGiaoGiaCT.ToList<BaoGiaTemDetailView>();
+                    d1.BaoGiaTemView = temBG;
+                    foreach (var itemSP in d1.BaoGiaTemView.BaoGiaTemDetailViews)
+                    {
+                        var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(itemSP.id) orderby u.ThuTu ascending select u;
+                        itemSP.QuyTrinhs = queryQT.ToList<tbl_QuyTrinh>();
+                    }
+                    break;
+                }
+                foreach (var item in donHang.BaoGiaTemView.BaoGiaTemDetailViews)
+                {
+
+                    tbl_Products itemP = new tbl_Products();
+                     
+                    foreach (var item1 in d1.BaoGiaTemView.BaoGiaTemDetailViews)
+                    {
+                        itemP = db.tbl_Products.Find(item1.ID_Products);
+                        itemP.CreatedDateProducts = item.CreatedDateProducts;
+                        itemP.CreateUserProducts = item.CreateUserProducts;
+                        itemP.DanKimProducts = item.DanKimProducts;
+                            itemP.GiaProducts = item.GiaProducts;
+                      
+                        itemP.LoaigiayProducts = item.LoaigiayProducts;
+                        itemP.ModifyDateProducts = item.ModifyDateProducts;
+                        itemP.ModifyUserProducts = item.ModifyUserProducts;
+                        itemP.NameProducts = item.NameProducts;
+                        itemP.OffsetFlexoProducts = item.OffsetFlexoProducts;
+                        itemP.QuyCachProducts = item.QuyCachProducts;
+                        itemP.SolopProducts = item.SolopProducts;
+                        itemP.StatusProducts = item.StatusProducts;
+                        db.Entry(itemP).State = EntityState.Modified;
+                    db.SaveChanges();
+                    tbl_OrderTem = db.tbl_OrderTem.Find(id);
+                    tbl_OrderTem.date_deliver = item.date_deliver;
+                    tbl_OrderTem.address_deliver = item.address_deliver;
+                    db.Entry(tbl_OrderTem).State = EntityState.Modified;
+                    db.SaveChanges();
+                    }
+                }
+                    
+                
+            }
             //if (donHang.action == 4)
             //{
             //    donHang.action = 0;
@@ -1044,6 +1130,7 @@ namespace NhutLongCompany.Controllers
             //    }
             //    return RedirectToAction("Edit", "SanXuat", new { id = donHang.id });
             //}
+            
             DonHangView d = new DonHangView();
             d.action = donHang.action;
             d.address_deliver = tbl_OrderTem.address_deliver;
