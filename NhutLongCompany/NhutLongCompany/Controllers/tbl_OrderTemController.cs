@@ -1030,10 +1030,12 @@ namespace NhutLongCompany.Controllers
 
                     tbl_Products itemP = new tbl_Products();
                     var detail = new tbl_OrderTem_BaoGia_Detail();
+                    var tblbaogia = new tbl_OrderTem_BaoGia();
                     foreach (var item1 in d1.BaoGiaTemView.BaoGiaTemDetailViews)
                     {
                         itemP = db.tbl_Products.Find(item1.ID_Products);
                         detail = db.tbl_OrderTem_BaoGia_Detail.Find(item1.ID_Products);
+                        tblbaogia = db.tbl_OrderTem_BaoGia.Find(id);
                         itemP.CreatedDateProducts = item.CreatedDateProducts;
                         itemP.CreateUserProducts = item.CreateUserProducts;
                         itemP.DanKimProducts = item.DanKimProducts;
@@ -1046,12 +1048,13 @@ namespace NhutLongCompany.Controllers
                         itemP.QuyCachProducts = item.QuyCachProducts;
                         itemP.SolopProducts = item.SolopProducts;
                         itemP.StatusProducts = item.StatusProducts;
-                      
+                       
                         db.Entry(itemP).State = EntityState.Modified;
-                    db.SaveChanges();
+                      
 
-                    detail.money = double.Parse(item.GiaProducts);
+                        detail.money = double.Parse(item.GiaProducts);
                         detail.soluong = item.SoLuong;
+                        tblbaogia.total_money = double.Parse(item.GiaProducts)*item.SoLuong;
                     tbl_OrderTem = db.tbl_OrderTem.Find(id);
                     tbl_OrderTem.date_deliver = item.date_deliver;
                     tbl_OrderTem.address_deliver = item.address_deliver;
