@@ -22,7 +22,6 @@ namespace NhutLongCompany.Models
         public string EmailCustomers { get; set; }
         public string PhoneCustomers { get; set; }
         public string FaxCustomers { get; set; }
-        public string DiaChiCustomers { get; set; }
         public string MasothueCustomers { get; set; }
         public Nullable<int> StatusCustomers { get; set; }
         public Nullable<System.DateTime> CreateDateCustomers { get; set; }
@@ -30,5 +29,6 @@ namespace NhutLongCompany.Models
         public string CreateUserCustomers { get; set; }
         public string ModifyUserCustomers { get; set; }
         public string NoteCustomer { get; set; }
+        public string DiachiCustomers { get; set; }
     }
 }

@@ -29,5 +29,6 @@ namespace NhutLongCompany.Models
             action = 0;
         }
         public List<tbl_Customers> tbl_Customers { get; set; }
+        public tbl_Products TblProductses { get; set; }
     }
 }

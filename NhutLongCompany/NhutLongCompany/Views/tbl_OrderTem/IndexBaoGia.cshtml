@@ -29,6 +29,9 @@
                                     Mã báo giá
                                 </th>
                                 <th>
+                                    Tên sản phẩm
+                                </th>
+                                <th>
                                     Lần báo giá
                                 </th>
                                 <th>
@@ -57,6 +60,9 @@
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.code)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TblProductses.NameProducts)
                                     </td>
                                     <td>
                                         Lần @(item.BaoGiaTemViews.Count + 1)
@@ -97,7 +103,7 @@
                                         @Html.ActionLink("Edit", "EditBaoGia", new {item.id}, new {@class = "btn btn-outline btn-primary btn-xs"})
                                         @if (item.BaoGiaTemView.status == 0 || item.BaoGiaTemView.status == 2)
                                         {
-                                            <a href="@Url.Action("IndexBaoGia", "tbl_OrderTem", new { item.id })" class="btn btn-outline btn-primary btn-xs" onclick=" return confirm('Bạn có muốn xóa báo giá không?'); ">Xóa</a>
+                                            <a href="@Url.Action("DeleteBaoGia", "tbl_OrderTem", new { item.id })" class="btn btn-outline btn-primary btn-xs" onclick=" return confirm('Bạn có muốn xóa báo giá không?'); ">Xóa</a>
                                         }
 
 

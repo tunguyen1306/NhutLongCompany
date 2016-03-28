@@ -28,7 +28,5 @@ namespace NhutLongCompany.Models
         public Nullable<int> StatusProducts { get; set; }
         public string CodeProducts { get; set; }
         public string QuyCachProducts { get; set; }
-        public Nullable<System.DateTime> date_deliver { get; set; }
-        public string address_deliver { get; set; }
     }
 }

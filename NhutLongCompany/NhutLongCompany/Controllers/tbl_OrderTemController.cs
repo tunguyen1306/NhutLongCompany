@@ -179,6 +179,8 @@ namespace NhutLongCompany.Controllers
         {
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
+                      join bgdetail in db.tbl_OrderTem_BaoGia_Detail on data.id equals bgdetail.baogia_id
+                      join sp in db.tbl_Products on bgdetail.sanpam_id  equals sp.ID_Products
                       where data.status >= 0
                       orderby data.update_date descending
                       select new DonHangView
@@ -190,7 +192,8 @@ namespace NhutLongCompany.Controllers
                           date_deliver = data.date_deliver,
                           address_deliver = data.address_deliver,
                           status = data.status,
-                          pause=data.status_pause
+                          pause=data.status_pause,
+                          TblProductses=sp
                       });
             List<DonHangView> list = qr.ToList();
             foreach (var itemBG in list)
@@ -458,6 +461,9 @@ namespace NhutLongCompany.Controllers
 
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
+                                          join bgdetail in db.tbl_OrderTem_BaoGia_Detail on data.id equals bgdetail.baogia_id
+                   join sp in db.tbl_Products on bgdetail.sanpam_id  equals sp.ID_Products
+
                       where data.status >= 0
                       orderby data.update_date descending
                       select new DonHangView
@@ -620,6 +626,8 @@ namespace NhutLongCompany.Controllers
             }
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
+                      join bgdetail in db.tbl_OrderTem_BaoGia_Detail on data.id equals bgdetail.baogia_id
+                      join sp in db.tbl_Products on bgdetail.sanpam_id equals sp.ID_Products
                      // where data.status ==-1
                         orderby data.update_date descending
                       select new DonHangView
@@ -630,7 +638,8 @@ namespace NhutLongCompany.Controllers
                           code = data.code,
                           date_deliver = data.date_deliver,
                           address_deliver = data.address_deliver,
-                          status = data.status
+                          status = data.status,
+                          TblProductses = sp
                       });
             List<DonHangView> list = qr.ToList();
             foreach (var itemBG in list)
@@ -1704,7 +1713,7 @@ namespace NhutLongCompany.Controllers
             tbl_OrderTem tbl_OrderTem = db.tbl_OrderTem.Find(id);
             db.tbl_OrderTem.Remove(tbl_OrderTem);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexBaoGia");
         }
 
         protected override void Dispose(bool disposing)
