@@ -515,6 +515,19 @@ namespace NhutLongCompany.Controllers
             if (status == 2)
             {
                 tbQT.NgayKetThuc_TT = DateTime.Now;
+                var queryNext = from a in db.tbl_QuyTrinh where a.ID_BaoGiaDetail == tbQT.ID_BaoGiaDetail && a.ThuTu.Value > tbQT.ThuTu.Value select a;
+                var listNext = queryNext.ToList<tbl_QuyTrinh>();
+                for (int i = 0; i < listNext.Count; i++)
+                {
+                    if (listNext[i].ThucHien.Value == 1)
+                    {
+                        break;
+                    }
+                    listNext[i].NgayBatDau_TT = DateTime.Now;
+                    listNext[i].NgayKetThuc_TT = DateTime.Now;
+                    listNext[i].TrangThai = 2;
+                    db.Entry(listNext[i]).State = EntityState.Modified;
+                }
             }
             tbQT.TrangThai = status;
             if (tbQT.ThucHien==0)
@@ -573,7 +586,94 @@ namespace NhutLongCompany.Controllers
             }
             return PartialView(tbl_OrderTem_BaoGia_Detail);
         }
+        [HttpPost]
+        public PartialViewResult UpdateFlow(int idflow, DateTime? begin,DateTime? end)
+        {
+            tbl_QuyTrinh tbQT = db.tbl_QuyTrinh.Find(idflow);
+           
+            tbQT.NgayBatDau_TT = begin;          
+            tbQT.NgayKetThuc_TT = end;
 
+            if (begin.HasValue)
+            {
+                tbQT.TrangThai = 1;
+
+            }
+            if (end.HasValue)
+            {
+                tbQT.TrangThai = 2;
+
+                var queryNext = from a in db.tbl_QuyTrinh where a.ID_BaoGiaDetail == tbQT.ID_BaoGiaDetail && a.ThuTu.Value > tbQT.ThuTu.Value select a;
+                var listNext = queryNext.ToList<tbl_QuyTrinh>();
+                for (int i = 0; i < listNext.Count; i++)
+                {
+                    if (listNext[i].ThucHien.Value==1)
+                    {
+                        break;
+                    }
+                    listNext[i].NgayBatDau_TT = DateTime.Now;
+                    listNext[i].NgayKetThuc_TT = DateTime.Now;
+                    listNext[i].TrangThai = 2;
+                    db.Entry(listNext[i]).State = EntityState.Modified;
+                }
+
+            }
+            if (tbQT.ThucHien == 0)
+            {
+                tbQT.NgayBatDau_TT = DateTime.Now;
+                tbQT.NgayKetThuc_TT = DateTime.Now;
+            }
+            db.Entry(tbQT).State = EntityState.Modified;
+
+            tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail = db.tbl_OrderTem_BaoGia_Detail.Find(tbQT.ID_BaoGiaDetail);
+            if (!tbl_OrderTem_BaoGia_Detail.step_index.HasValue || tbl_OrderTem_BaoGia_Detail.step_index.Value <= tbQT.ThuTu)
+            {
+                if (tbQT.ThucHien == 1)
+                {
+                    tbl_OrderTem_BaoGia_Detail.step_index = tbQT.ThuTu;
+                }
+                if (tbQT.TrangThai == 2 && tbQT.ThuTu == 9)
+                {
+                    tbl_Stack tbl_Stack = db.tbl_Stack.Find(tbl_OrderTem_BaoGia_Detail.id);
+                    db.Entry(tbl_Stack).State = EntityState.Deleted;
+                    tbl_OrderTem_BaoGia_Detail.status = 2;
+
+                }
+
+                db.Entry(tbl_OrderTem_BaoGia_Detail).State = EntityState.Modified;
+
+            }
+            db.SaveChanges();
+            tbl_OrderTem_BaoGia bg = db.tbl_OrderTem_BaoGia.Find(tbl_OrderTem_BaoGia_Detail.baogia_id);
+            tbl_OrderTem order = db.tbl_OrderTem.Find(bg.order_id);
+            var queryQT = (from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(tbQT.ID_BaoGiaDetail) orderby u.ThuTu ascending select u).Take(1);
+            List<tbl_QuyTrinh> listAT = queryQT.ToList();
+            int indexBG = 0;
+            if (listAT.Count > 0)
+            {
+                indexBG = listAT[0].ThuTu.Value;
+            }
+            if (tbQT.ThuTu.Value == indexBG)
+            {
+
+                order.status = 3;
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            if (tbQT.ThuTu.Value == 9 && tbQT.TrangThai == 2)
+            {
+                order.status = 4;
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            if (tbQT.ThuTu.Value == 12 && tbQT.TrangThai == 2)
+            {
+                order.status = 5;
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return PartialView(tbl_OrderTem_BaoGia_Detail);
+        }
         public PartialViewResult ViewFlowProduct(int id)
         {
             BaoGiaTemDetailView bgdt = new BaoGiaTemDetailView();
