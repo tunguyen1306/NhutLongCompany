@@ -36,5 +36,6 @@ namespace NhutLongCompany.Models
         public virtual DbSet<tbl_FlowPauseTime> tbl_FlowPauseTime { get; set; }
         public virtual DbSet<tbl_Note> tbl_Note { get; set; }
         public virtual DbSet<tbl_OrderTemPause> tbl_OrderTemPause { get; set; }
+        public virtual DbSet<Web_Admin_Menu> Web_Admin_Menu { get; set; }
     }
 }
