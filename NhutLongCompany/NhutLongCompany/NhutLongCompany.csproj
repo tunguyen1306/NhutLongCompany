@@ -201,9 +201,6 @@
     <Compile Include="Models\tbl_User.cs">
       <DependentUpon>DataWeb.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Web_Admin_Menu.cs">
-      <DependentUpon>DataWeb.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

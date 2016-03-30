@@ -166,20 +166,6 @@
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="Password" Type="nvarchar" MaxLength="250" />
         </EntityType>
-        <EntityType Name="Web_Admin_Menu">
-          <Key>
-            <PropertyRef Name="Admin_Menu_Id" />
-          </Key>
-          <Property Name="Admin_Menu_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Admin_Menu_Name" Type="nvarchar" MaxLength="200" />
-          <Property Name="Admin_Menu_Controller" Type="varchar" MaxLength="50" />
-          <Property Name="Admin_Menu_Action" Type="varchar" MaxLength="50" />
-          <Property Name="Admin_Menu_ImgClass" Type="varchar" MaxLength="50" />
-          <Property Name="Admin_Menu_Status" Type="int" />
-          <Property Name="Admin_Menu_Order" Type="int" />
-          <Property Name="Admin_Menu_ParentId" Type="int" />
-          <Property Name="Admin_Menu_ParentActive" Type="int" />
-        </EntityType>
         <EntityContainer Name="NhutLongCompanyModelStoreContainer">
           <EntitySet Name="tbl_Customers" EntityType="Self.tbl_Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_FlowPauseTime" EntityType="Self.tbl_FlowPauseTime" Schema="dbo" store:Type="Tables" />
@@ -192,7 +178,6 @@
           <EntitySet Name="tbl_QuyTrinh" EntityType="Self.tbl_QuyTrinh" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Stack" EntityType="Self.tbl_Stack" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_User" EntityType="Self.tbl_User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Web_Admin_Menu" EntityType="Self.Web_Admin_Menu" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -332,7 +317,6 @@
           <EntitySet Name="tbl_FlowPauseTime" EntityType="NhutLongCompanyModel.tbl_FlowPauseTime" />
           <EntitySet Name="tbl_Note" EntityType="NhutLongCompanyModel.tbl_Note" />
           <EntitySet Name="tbl_OrderTemPause" EntityType="NhutLongCompanyModel.tbl_OrderTemPause" />
-          <EntitySet Name="Web_Admin_Menu" EntityType="NhutLongCompanyModel.Web_Admin_Menu" />
         </EntityContainer>
         <EntityType Name="tbl_Stack">
           <Key>
@@ -372,20 +356,6 @@
           <Property Name="date_end" Type="DateTime" Precision="3" />
           <Property Name="status" Type="Int32" />
           <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Web_Admin_Menu">
-          <Key>
-            <PropertyRef Name="Admin_Menu_Id" />
-          </Key>
-          <Property Name="Admin_Menu_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Admin_Menu_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Admin_Menu_Controller" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Admin_Menu_Action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Admin_Menu_ImgClass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Admin_Menu_Status" Type="Int32" />
-          <Property Name="Admin_Menu_Order" Type="Int32" />
-          <Property Name="Admin_Menu_ParentId" Type="Int32" />
-          <Property Name="Admin_Menu_ParentActive" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -562,21 +532,6 @@
                 <ScalarProperty Name="date_begin" ColumnName="date_begin" />
                 <ScalarProperty Name="order_id" ColumnName="order_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Web_Admin_Menu">
-            <EntityTypeMapping TypeName="NhutLongCompanyModel.Web_Admin_Menu">
-              <MappingFragment StoreEntitySet="Web_Admin_Menu">
-                <ScalarProperty Name="Admin_Menu_ParentActive" ColumnName="Admin_Menu_ParentActive" />
-                <ScalarProperty Name="Admin_Menu_ParentId" ColumnName="Admin_Menu_ParentId" />
-                <ScalarProperty Name="Admin_Menu_Order" ColumnName="Admin_Menu_Order" />
-                <ScalarProperty Name="Admin_Menu_Status" ColumnName="Admin_Menu_Status" />
-                <ScalarProperty Name="Admin_Menu_ImgClass" ColumnName="Admin_Menu_ImgClass" />
-                <ScalarProperty Name="Admin_Menu_Action" ColumnName="Admin_Menu_Action" />
-                <ScalarProperty Name="Admin_Menu_Controller" ColumnName="Admin_Menu_Controller" />
-                <ScalarProperty Name="Admin_Menu_Name" ColumnName="Admin_Menu_Name" />
-                <ScalarProperty Name="Admin_Menu_Id" ColumnName="Admin_Menu_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

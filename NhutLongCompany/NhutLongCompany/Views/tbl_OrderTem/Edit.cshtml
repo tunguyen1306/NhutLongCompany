@@ -131,7 +131,8 @@
         document.forms[0].submit();
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
+        reLoadEvent();
         $("input[type=number]").keydown(function(e) {
             // Allow: backspace, delete, tab, escape, enter and .
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
@@ -1268,7 +1269,26 @@
     <!-- Trigger the modal with a button -->
 }
 
+<script>
 
+    function reLoadEvent() {
+        $('body').on('click', function (e) {
+            $('[data-toggle=popover]').each(function () {
+                //the 'is' for buttons that trigger popups
+                //the 'has' for icons within a button that triggers a popup
+                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                    $(this).popover('hide');
+                }
+            });
+        });
+        $("[data-toggle=popover]").popover({
+            html: true,
+            content: function () {
+                return $("#" + $(this).attr("data-ref")).html();
+            }
+        });
+    }
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -1285,3 +1305,26 @@
     }
 </style>
 
+
+<style>
+    #today table.table-bordered tbody th, #today table.table-bordered tbody td {
+        border-width: 0px;
+    }
+
+    #today table.table-bordered {
+        border-collapse: separate;
+        border-spacing: 1px;
+    }
+
+    #today table.table-bordered {
+        background-color: lightgray;
+    }
+
+        #today table.table-bordered tbody th {
+            background-color: white;
+        }
+
+    .popover {
+        max-width: inherit !important;
+    }
+</style>
