@@ -126,3 +126,7 @@ ul li {
  .cusinputsmall {
      width: 50px;
  }
+ .navbar-nav > li > a {
+    padding-bottom: 0!important;
+   
+}

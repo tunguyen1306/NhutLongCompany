@@ -145,9 +145,11 @@ namespace NhutLongCompany.Controllers
         [HttpPost]
         public ActionResult Login(string username, string password)
         {
-
+            Session.Remove("username");
+            Session.Remove("userId");
+            Session.Clear();
             var data = db.tbl_User.Where(x => x.Username == username && x.Password == password).Select(x => new { x.Username,x.FullName,x.IDUser}).FirstOrDefault();
-
+           
             Session["userId"] = data.IDUser;
             Session["username"] = data.Username;
             var qrmenu =(from datamenu in db.AdminMenus where datamenu.IdUser == data.IDUser select datamenu).Select(x => new { x.controller,x.action}).FirstOrDefault();

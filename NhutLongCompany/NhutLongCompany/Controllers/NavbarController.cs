@@ -57,7 +57,7 @@ namespace NhutLongCompany.Controllers
             var qruser = (from datauser in db.tbl_User
                           where datauser.Status == 1
                           select datauser).ToArray();
-            for (int i = 0; i < data.Length; i++)
+            for (int i = 0; i < qruser.Length; i++)
             {
                 listuser.Add(new SelectListItem { Text = qruser[i].FullName, Value = qruser[i].IDUser.ToString() });
             }
@@ -102,7 +102,7 @@ namespace NhutLongCompany.Controllers
                 var qruser = (from datauser in db.tbl_User
                               where datauser.Status == 1
                               select datauser).ToArray();
-                for (int i = 0; i < data.Length; i++)
+                for (int i = 0; i < qruser.Length; i++)
                 {
                     listuser.Add(new SelectListItem { Text = qruser[i].FullName, Value = qruser[i].IDUser.ToString() });
                 }

@@ -333,10 +333,10 @@
           <EntitySet Name="tbl_FlowPauseTime" EntityType="NhutLongCompanyModel.tbl_FlowPauseTime" />
           <EntitySet Name="tbl_Note" EntityType="NhutLongCompanyModel.tbl_Note" />
           <EntitySet Name="tbl_OrderTemPause" EntityType="NhutLongCompanyModel.tbl_OrderTemPause" />
-<<<<<<< HEAD
+
           <EntitySet Name="AdminMenus" EntityType="NhutLongCompanyModel.AdminMenu" />
-=======
->>>>>>> 7272614bcd257a4965af4fc277471034873d84ec
+
+
         </EntityContainer>
         <EntityType Name="tbl_Stack">
           <Key>
@@ -377,7 +377,7 @@
           <Property Name="status" Type="Int32" />
           <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
-<<<<<<< HEAD
+
         <EntityType Name="AdminMenu">
           <Key>
             <PropertyRef Name="Id" />
@@ -393,8 +393,7 @@
           <Property Name="isParent" Type="Boolean" />
           <Property Name="IdUser" Type="Int32" />
         </EntityType>
-=======
->>>>>>> 7272614bcd257a4965af4fc277471034873d84ec
+
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -573,7 +572,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-<<<<<<< HEAD
+
           <EntitySetMapping Name="AdminMenus">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.AdminMenu">
               <MappingFragment StoreEntitySet="AdminMenu">
@@ -590,8 +589,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-=======
->>>>>>> 7272614bcd257a4965af4fc277471034873d84ec
+
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
