@@ -1,0 +1,96 @@
+﻿@using System.Web.UI.WebControls
+@model NhutLongCompany.Models.Navbar
+@{
+    ViewBag.Title = "AddMenu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AddMenu</h2>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Form Elements
+            </div>
+            @using(Html.BeginForm())
+            { 
+            <div class="panel-body">
+                <form role="form" method="post">
+                    <div class="row">
+                        <div class="col-lg-6">
+
+
+                            <div class="form-group">
+                                <label>Menu Name</label>
+                                <input class="form-control" name="nameOption" placeholder="Enter Menu Name">
+
+
+                            </div>
+                            <div class="form-group">
+                                <label>Action Name</label>
+                                <input class="form-control" name="action" placeholder="Enter Action Name">
+                            </div>
+                            <div class="form-group">
+                                <label>Class Image Name</label>
+                                <input class="form-control" name="imageClass" placeholder="Enter Class Image Name">
+                            </div>
+                            <div class="form-group">
+                                <label>Menu Status</label>
+                             @Html.DropDownList("status", new List<SelectListItem> { new SelectListItem { Text = "DeActive", Value = "False" }, new SelectListItem { Text = "Active", Value = "True" } }, htmlAttributes: new { @class = "form-control" })
+                            </div>
+
+                            <div class="form-group">
+                                <label>User</label>
+                                @Html.DropDownList("UserId", (List<SelectListItem>)ViewData["listuser"], htmlAttributes: new { @class = "form-control" })
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label>Constroller Name</label>
+                                <input class="form-control" name="controller" placeholder="Enter Constroller Name">
+                            </div>
+                            <div class="form-group">
+                                <label>Order Menu</label>
+                                <select id="drOrder" name="isOrder" class="form-control">
+                                    <option value="99999999999999">Chose Order</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Parent  Menu</label>
+                              @Html.DropDownList("parentId", (List<SelectListItem>)ViewData["list"], htmlAttributes: new { @class = "form-control" })
+                               
+                            </div>
+                            <div class="form-group">
+                                <label>Parent  Active</label>
+                                @Html.DropDownList("isParent", new List<SelectListItem> { new SelectListItem { Text = "DeActive", Value = "False" }, new SelectListItem { Text = "Active", Value = "True" } }, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <input value="send" name="command" type="submit" class="btn btn-primary" title="send" />
+                                <input value="cancel" name="command" type="submit" class="btn btn-primary" title="Cancel" />
+                            </div>
+
+                        </div>
+                        <!-- /.col-lg-6 (nested) -->
+                       
+                    </div>
+                </form>
+
+
+                <!-- /.row (nested) -->
+
+
+            </div>
+            }
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>

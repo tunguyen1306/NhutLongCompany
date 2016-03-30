@@ -16,10 +16,10 @@ namespace NhutLongCompany.Controllers
 
         public ActionResult Index()
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+            //if (Session["username"] == null)
+            //{
+            //    return RedirectToAction("Login", "Login");
+            //}
             return View(db.tbl_User.ToList());
         }
 
@@ -49,7 +49,7 @@ namespace NhutLongCompany.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IDUser,Username,FullName,Status,ModifyDate,ModifyUser,CreateUser,CreateDate")] tbl_User tbl_User)
+        public ActionResult Create([Bind(Include = "IDUser,Username,FullName,Status,ModifyDate,ModifyUser,CreateUser,CreateDate,Password")] tbl_User tbl_User)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace NhutLongCompany.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDUser,Username,FullName,Status,ModifyDate,ModifyUser,CreateUser,CreateDate")] tbl_User tbl_User)
+        public ActionResult Edit([Bind(Include = "IDUser,Username,FullName,Status,ModifyDate,ModifyUser,CreateUser,CreateDate,Password")] tbl_User tbl_User)
         {
             if (ModelState.IsValid)
             {
@@ -130,14 +130,14 @@ namespace NhutLongCompany.Controllers
         public ActionResult Login()
         {
 
-            var data = db.tbl_User.Where(x => x.Username == "admin@gmail.com" && x.Password == "1234").Select(x => new { x.Username, x.FullName }).FirstOrDefault();
+            //var data = db.tbl_User.Where(x => x.Username == "admin@gmail.com" && x.Password == "1234").Select(x => new { x.Username, x.FullName }).FirstOrDefault();
 
 
-            Session["username"] = data.Username;
-            if (data != null)
-            {
-                return RedirectToAction("Home", "Home");
-            }
+            //Session["username"] = data.Username;
+            //if (data != null)
+            //{
+            //    return RedirectToAction("Home", "Home");
+            //}
 
             return View();
         }
@@ -146,13 +146,14 @@ namespace NhutLongCompany.Controllers
         public ActionResult Login(string username, string password)
         {
 
-            var data = db.tbl_User.Where(x => x.Username == username && x.Password == password).Select(x => new { x.Username,x.FullName}).FirstOrDefault();
-           
+            var data = db.tbl_User.Where(x => x.Username == username && x.Password == password).Select(x => new { x.Username,x.FullName,x.IDUser}).FirstOrDefault();
 
+            Session["userId"] = data.IDUser;
             Session["username"] = data.Username;
+            var qrmenu =(from datamenu in db.AdminMenus where datamenu.IdUser == data.IDUser select datamenu).Select(x => new { x.controller,x.action}).FirstOrDefault();
             if (data != null)
             {
-                return RedirectToAction("Home", "Home");
+                return RedirectToAction(qrmenu.action, qrmenu.controller);
             }
             return View();
         }

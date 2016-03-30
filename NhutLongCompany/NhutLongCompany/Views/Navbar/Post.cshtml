@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Post";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Post</h2>
+@using (Ajax.BeginForm("Post", "Home", new AjaxOptions { }, new { @enctype = "multipart/form-data" }))
+{
+    <input type="file" id="files"
+           name="files" multiple="multiple" />
+    <input type="submit" value="Chào" />
+}
+<script src="~/Scripts/jquery.form.min.js"></script>
+

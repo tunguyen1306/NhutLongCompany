@@ -1,76 +1,84 @@
-﻿@model IEnumerable<NhutLongCompany.Models.tbl_User>
+﻿@using NhutLongCompany.Models
+@model IEnumerable<tbl_User>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header">Thông Tin User</h3>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifyDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifyUser)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreateUser)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreateDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th></th>
-    </tr>
+<div class="row">
+    <div class="col-lg-12">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifyDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifyUser)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreateUser)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreateDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IDUser }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IDUser }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IDUser })
-        </td>
-    </tr>
-}
+        <div class="panel panel-default">
 
-</table>
+            <div class="panel-heading">
+                @Html.ActionLink("Thêm User", "Create", "", new {@class = "btn btn-primary"})
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+
+                <div class="dataTable_wrapper">
+
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Tên đăng nhập
+                                </th>
+                                <th>
+                                    Họ và tên
+                                </th>
+                                <th>
+                                    Trạng thái
+                                </th>
+                                
+                                <th>
+                                    PassWord
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (tbl_User item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Username)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FullName)
+                                    </td>
+                                    <td>
+                                        @(
+    item.Status == 1 ? "Hoạt động" : "tạm dừng"
+                                              )
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Password)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Sửa", "Edit", new {id = item.IDUser}) |
+                                        @Html.ActionLink("Xóa", "Delete", new {id = item.IDUser})
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>

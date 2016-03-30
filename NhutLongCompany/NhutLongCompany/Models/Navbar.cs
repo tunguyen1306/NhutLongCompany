@@ -11,11 +11,12 @@ namespace NhutLongCompany.Models
         public string nameOption { get; set; }
         public string controller { get; set; }
         public string action { get; set; }
-        public string area { get; set; }
         public string imageClass { get; set; }
-        public string activeli { get; set; }
         public bool status { get; set; }
-        public int parentId { get; set; }
+        public int? parentId { get; set; }
         public bool isParent { get; set; }
+        public int? isOrder { get; set; }
+        public string nameOptionCh { get; set; }
+        public int? UserId { get; set; } public string nameUser { get; set; }
     }
 }
