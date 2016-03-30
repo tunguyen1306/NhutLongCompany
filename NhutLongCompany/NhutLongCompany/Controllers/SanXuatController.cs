@@ -227,7 +227,7 @@ namespace NhutLongCompany.Controllers
                                       join z in db.tbl_Stack on u.id equals z.baoGia_detail_id
                                       where (a.status.Value == 3 || a.status.Value == 1|| a.status.Value == 4) && b.status.Value == 1 && u.status == 1 && u.date_working.Value <= DateTime.Now
                                       orderby z.index_view ascending
-                                      select new BaoGiaTemDetailView { pause = a.status_pause, Step_Flow = u.step_index, Status_Pause = u.status_pause, Code_Detail = u.code_detail,  Status = u.status, Date_Working = u.date_working, Index_View = z.index_view, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+                                      select new BaoGiaTemDetailView {address_deliver=a.address_deliver, pause = a.status_pause, Step_Flow = u.step_index, Status_Pause = u.status_pause, Code_Detail = u.code_detail,  Status = u.status, Date_Working = u.date_working, Index_View = z.index_view, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
 
             if (date.HasValue)
             {
@@ -238,7 +238,7 @@ namespace NhutLongCompany.Controllers
                                       join z in db.tbl_Stack on u.id equals z.baoGia_detail_id
                                       where (a.status.Value == 3 || a.status.Value == 1|| a.status.Value == 4) && b.status.Value == 1 && u.status == 1 && u.date_working.Value == date.Value
                                       orderby z.index_view ascending
-                                      select new BaoGiaTemDetailView { pause = a.status_pause, Step_Flow = u.step_index, Status_Pause = u.status_pause, Code_Detail = u.code_detail, Status = u.status, Date_Working = u.date_working, Index_View = z.index_view, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+                                      select new BaoGiaTemDetailView { address_deliver = a.address_deliver, pause = a.status_pause, Step_Flow = u.step_index, Status_Pause = u.status_pause, Code_Detail = u.code_detail, Status = u.status, Date_Working = u.date_working, Index_View = z.index_view, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
 
 
             }
@@ -764,6 +764,27 @@ namespace NhutLongCompany.Controllers
                 tbl_OrderTem_BaoGia_Detail.status = 1;
                 tbl_OrderTem_BaoGia_Detail.date_working = DateTime.Now;
                 db.Entry(tbl_OrderTem_BaoGia_Detail).State = EntityState.Modified;
+
+                var queryNext = from a in db.tbl_QuyTrinh where a.ID_BaoGiaDetail == tbl_OrderTem_BaoGia_Detail.id && a.ThuTu.Value >= 0 select a;
+                var listNext = queryNext.ToList<tbl_QuyTrinh>();
+                for (int i = 0; i < listNext.Count; i++)
+                {
+                    if (listNext[i].ThucHien.Value == 1)
+                    {
+                        listNext[i].NgayBatDau_TT = DateTime.Now;
+                        listNext[i].TrangThai = 1;
+                        db.Entry(listNext[i]).State = EntityState.Modified;
+                        tbl_OrderTem_BaoGia_Detail.step_index = listNext[i].ThuTu;
+                        db.Entry(tbl_OrderTem_BaoGia_Detail).State = EntityState.Modified;
+
+                        break;
+                    }
+                    listNext[i].NgayBatDau_TT = DateTime.Now;
+                    listNext[i].NgayKetThuc_TT = DateTime.Now;
+                    listNext[i].TrangThai = 2;
+                    db.Entry(listNext[i]).State = EntityState.Modified;
+                }
+
                 db.SaveChanges();
             }
             catch (Exception e)

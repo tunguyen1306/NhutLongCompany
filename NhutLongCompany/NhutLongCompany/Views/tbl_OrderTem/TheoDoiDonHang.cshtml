@@ -32,6 +32,7 @@
             success: function (data, textStatus, XMLHttpRequest) {
 
                 layout.html(data);
+                reLoadEvent();
             }
         });
     }
@@ -70,6 +71,7 @@
                     moveEvent();
                     $(el).removeAttr("disabled");
                     $(el).val("Reload");
+                    reLoadEvent();
                 }
             });
         }
@@ -86,6 +88,7 @@
                     moveEvent();
                     $(el).removeAttr("disabled");
                     $(el).val("Reload");
+                    reLoadEvent();
                 }
             });
         }
@@ -341,8 +344,49 @@
 
 
         moveEvent();
-
+        reLoadEvent();
 
     });
-
+    function reLoadEvent() {
+        $('.popover').remove();
+        $('body').on('click', function (e) {
+            $('[data-toggle=popover]').each(function () {
+                //the 'is' for buttons that trigger popups
+                //the 'has' for icons within a button that triggers a popup
+                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                    $(this).popover('hide');
+                }
+            });
+        });
+        $("[data-toggle=popover]").popover({
+            html: true,
+            content: function () {
+                return $("#" + $(this).attr("data-ref")).html();
+            }
+        });
+    }
 </script>
+
+
+<style>
+    #today table.table-bordered tbody th, #today table.table-bordered tbody td {
+        border-width: 0px;
+    }
+
+    #today table.table-bordered {
+        border-collapse: separate;
+        border-spacing: 1px;
+    }
+
+    #today table.table-bordered {
+        background-color: lightgray;
+    }
+
+        #today table.table-bordered tbody th {
+            background-color: white;
+        }
+
+    .popover {
+        max-width: inherit !important;
+    }
+</style>

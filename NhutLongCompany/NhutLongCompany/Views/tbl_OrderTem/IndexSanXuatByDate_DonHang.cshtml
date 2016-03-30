@@ -137,8 +137,58 @@
                         {
 
 
-                            <td width="@((float)100 / (float)(14))%" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;vertical-align: middle; padding-left: 5px !important;">
+                            <td width="@((float)100 / (float)(14))%" class="cusfontsize1 custt" style="position:relative;color:@color_char;background-color:@color;vertical-align: middle; padding-left: 5px !important;">
+                                <span data-placement="bottom" data-toggle="popover" data-container="body" data-ref='tooltip_@(item.id)_@itemQT.ID' data-html="true" style="position:absolute;top:1px;right:1px" class="glyphicon glyphicon-info-sign viewToolTip"></span>
 
+                                <div id="tooltip_@(item.id)_@itemQT.ID" style="display:none">
+                                    <table style="background-color:khaki;color:black;text-align:left;vertical-align:middle;width:330px">
+
+                                        <tr>
+                                            <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Tên sản phẩm</td>
+                                            <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.NameProducts</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Số lớp</td>
+                                            <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.SolopProducts</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Loại giấy</td>
+                                            <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.LoaigiayProducts</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Quy trình</td>
+                                            <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.OffsetFlexoProducts</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Quy Cách (cm)</td>
+                                            <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.QuyCachProducts</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Ngày giao hàng</td>
+                                            <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.date_deliver</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Địa chỉ giao hàng</td>
+                                            <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.address_deliver</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Giá</td>
+                                            <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.GiaProducts</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Số lượng</td>
+                                            <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.SoLuong</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Làm mẫu</td>
+                                            <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@((!item.Design.HasValue || item.Design.Value == 0) ? "Không" : "Có")</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Công đoạn</td>
+                                            <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@(itemQT.TenBuoc + " (" + (itemQT.NgayBatDau_TT.HasValue ? itemQT.NgayBatDau_TT.Value.ToString("dd/MM/yyyy") : "bắt đầu") + " - " + (itemQT.NgayKetThuc_TT.HasValue ? itemQT.NgayKetThuc_TT.Value.ToString("dd/MM/yyyy") : "kết thúc") + ")")</td>
+                                        </tr>
+                                    </table>
+                                </div>
                                 <span>
                                     @if (itemQT.NgayBatDau_TT.HasValue)
                                     {
