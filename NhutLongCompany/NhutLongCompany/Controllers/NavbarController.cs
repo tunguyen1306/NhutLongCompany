@@ -5,9 +5,11 @@ using System.Linq;
 using System.Web.Mvc;
 using NhutLongCompany.Domain;
 using NhutLongCompany.Models;
+using NhutLongCompany.Attribute;
 
 namespace NhutLongCompany.Controllers
 {
+    [RedirectOnError]
     public class NavbarController : Controller
     {
         private readonly NhutLongCompanyEntities db = new NhutLongCompanyEntities();
@@ -30,7 +32,7 @@ namespace NhutLongCompany.Controllers
                         isParent = (bool) x.isParent,
                         isOrder = x.orderId
                     });
-            return PartialView("_Navbar", qr);
+            return PartialView("_Navbar", new Data().navbarItems());
         }
 
         public ActionResult MenuList()

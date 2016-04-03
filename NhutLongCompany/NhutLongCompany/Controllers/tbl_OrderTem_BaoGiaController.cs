@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NhutLongCompany.Models;
+using NhutLongCompany.Attribute;
 
 namespace NhutLongCompany.Controllers
 {
+    [RedirectOnError]
     public class tbl_OrderTem_BaoGiaController : Controller
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();

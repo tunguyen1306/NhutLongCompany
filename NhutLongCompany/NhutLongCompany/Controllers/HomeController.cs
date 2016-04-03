@@ -4,9 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NhutLongCompany.Models;
+using NhutLongCompany.Attribute;
 
 namespace NhutLongCompany.Controllers
 {
+    [RedirectOnError]
     public class HomeController : Controller
     {
         private NhutLongCompanyEntities db=new NhutLongCompanyEntities();

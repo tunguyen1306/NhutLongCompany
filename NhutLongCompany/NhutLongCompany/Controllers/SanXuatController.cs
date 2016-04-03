@@ -6,19 +6,20 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NhutLongCompany.Models;
+using NhutLongCompany.Attribute;
 
 namespace NhutLongCompany.Controllers
 {
+    [RedirectOnError]
     public class SanXuatController : Controller
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();
         // GET: SanXuat
+
+        [ActionAuthorizeAttribute("SanXuat")]
         public ActionResult Index()
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+          
 
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
@@ -37,25 +38,23 @@ namespace NhutLongCompany.Controllers
             return View(qr.ToList());
         }
 
-
+        [ActionAuthorizeAttribute("SanXuat")]
         public ActionResult LichSanXuat()
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+          
         
             return View();
         }
+
+        [ActionAuthorizeAttribute("SanXuat")]
         public ActionResult LichSanXuatOnDay()
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+         
 
             return View();
         }
+
+        [ActionAuthorizeAttribute("SanXuat")]
         public PartialViewResult PartialLichSanXuat()
         {
             var querySanPhamSanXuat = from a in db.tbl_OrderTem
@@ -83,6 +82,8 @@ namespace NhutLongCompany.Controllers
             }
             return PartialView(list);
         }
+
+        [ActionAuthorizeAttribute("SanXuat")]
         public PartialViewResult PartialLichSanXuatOnDay()
         {
             DateTime dt = DateTime.Parse( DateTime.Now.ToShortDateString());
@@ -111,13 +112,12 @@ namespace NhutLongCompany.Controllers
             }
             return PartialView(list);
         }
+
+        [ActionAuthorizeAttribute("SanXuat")]
         [HttpPost]
         public ActionResult LichSanXuat(int? id)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+          
             if (id.HasValue)
             {
                 tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail= db.tbl_OrderTem_BaoGia_Detail.Find(id.Value);
@@ -147,13 +147,11 @@ namespace NhutLongCompany.Controllers
             return View(list);
         }
 
-           [HttpPost]
+        [ActionAuthorizeAttribute("SanXuat")]
+        [HttpPost]
         public ActionResult LichSanXuatOnDay(int? id)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+           
             if (id.HasValue)
             {
                 tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail = db.tbl_OrderTem_BaoGia_Detail.Find(id.Value);
@@ -185,10 +183,7 @@ namespace NhutLongCompany.Controllers
 
         public ActionResult IndexSX()
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+        
 
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
@@ -207,19 +202,17 @@ namespace NhutLongCompany.Controllers
             return View(qr.ToList());
         }
 
+        [ActionAuthorizeAttribute("SanXuat")]
         public ActionResult IndexSanXuat()
         {
 
             return View();
         }
 
-
+        [ActionAuthorizeAttribute("SanXuat")]
         public PartialViewResult IndexSanXuatByDate(DateTime? date,int? update)
         {
-            //if (Session["username"] == null)
-            //{
-            //    return RedirectToAction("Login", "Login");
-            //}
+         
             var querySanPhamSanXuat = from a in db.tbl_OrderTem
                                       join b in db.tbl_OrderTem_BaoGia on a.id equals b.order_id.Value
                                       join u in db.tbl_OrderTem_BaoGia_Detail on b.id equals u.baogia_id.Value
@@ -262,12 +255,9 @@ namespace NhutLongCompany.Controllers
             return PartialView(list);
         }
 
+        [ActionAuthorizeAttribute("SanXuat")]
         public ActionResult Edit(int? id)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -334,14 +324,13 @@ namespace NhutLongCompany.Controllers
             d.Customer = list.ToList()[0];
             return View(d);
         }
+
+        [ActionAuthorizeAttribute("SanXuat")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(DonHangView donHang)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+          
             int? id = donHang.id;
             if (id == null)
             {
@@ -503,7 +492,7 @@ namespace NhutLongCompany.Controllers
             return View(d);
         }
 
-
+        [ActionAuthorizeAttribute("SanXuat")]
         [HttpPost]
         public PartialViewResult UpdateFlowProduct(int id, int idflow, int status)
         {
@@ -586,6 +575,8 @@ namespace NhutLongCompany.Controllers
             }
             return PartialView(tbl_OrderTem_BaoGia_Detail);
         }
+
+        [ActionAuthorizeAttribute("SanXuat")]
         [HttpPost]
         public PartialViewResult UpdateFlow(int idflow, DateTime? begin,DateTime? end)
         {
@@ -674,6 +665,8 @@ namespace NhutLongCompany.Controllers
             }
             return PartialView(tbl_OrderTem_BaoGia_Detail);
         }
+
+        [ActionAuthorizeAttribute("SanXuat")]
         public PartialViewResult ViewFlowProduct(int id)
         {
             BaoGiaTemDetailView bgdt = new BaoGiaTemDetailView();
@@ -697,6 +690,8 @@ namespace NhutLongCompany.Controllers
 
             return PartialView(listData);
         }
+
+        [ActionAuthorizeAttribute("SanXuat")]
         [HttpPost]
         public JsonResult UpdateStack(int id, int order)
         {
@@ -715,6 +710,8 @@ namespace NhutLongCompany.Controllers
 
             return Json("Success");
         }
+
+        [ActionAuthorizeAttribute("SanXuat")]
         [HttpPost]
         public JsonResult UpdateStateFlow(int id, String note,int state)
         {
@@ -755,6 +752,7 @@ namespace NhutLongCompany.Controllers
             return Json("Success");
         }
 
+        [ActionAuthorizeAttribute("SanXuat")]
         [HttpPost]
         public JsonResult UpdateLenhSanXuat(int id)
         {
@@ -800,10 +798,7 @@ namespace NhutLongCompany.Controllers
 
         public ActionResult EditFlow(int? id)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+       
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -874,10 +869,7 @@ namespace NhutLongCompany.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditFlow(DonHangView donHang)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+         
             int? id = donHang.id;
             if (id == null)
             {

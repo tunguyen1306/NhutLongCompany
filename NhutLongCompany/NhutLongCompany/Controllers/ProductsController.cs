@@ -10,9 +10,11 @@ using System.Web;
 using System.Web.Mvc;
 using NhutLongCompany.Domain;
 using NhutLongCompany.Models;
+using NhutLongCompany.Attribute;
 
 namespace NhutLongCompany.Controllers
 {
+    [RedirectOnError]
     public class ProductsController : Controller
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();

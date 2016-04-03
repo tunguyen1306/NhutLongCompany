@@ -5,9 +5,11 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using NhutLongCompany.Models;
+using NhutLongCompany.Attribute;
 
 namespace NhutLongCompany.Controllers
 {
+    [RedirectOnError]
     public class EmailController : Controller
     {
         // GET: Email

@@ -23,5 +23,6 @@ namespace NhutLongCompany.Models
         public string CreateUser { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string Password { get; set; }
+        public string RoleName { get; set; }
     }
 }

@@ -7,29 +7,27 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NhutLongCompany.Models;
+using NhutLongCompany.Attribute;
 
 namespace NhutLongCompany.Controllers
 {
+    [RedirectOnError]
     public class CustomersController : Controller
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();
         private int ck { get; set; }
 
+        [ActionAuthorizeAttribute("BaoGia")]
         // GET: Customers
         public ActionResult Index()
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+       
             return View(db.tbl_Customers.ToList());
         }
+        [ActionAuthorizeAttribute("BaoGia")]
         public ActionResult DetailCustomers(int id)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+           
             tbl_Customers tblCustomers = db.tbl_Customers.Find(id);
             if ((string) Session["ck"] =="1")
             {
@@ -43,14 +41,11 @@ namespace NhutLongCompany.Controllers
             return View("DetailCustomers",tblCustomers);
         }
 
-
+        [ActionAuthorizeAttribute("BaoGia")]
         // GET: Customers/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+           
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -62,7 +57,7 @@ namespace NhutLongCompany.Controllers
             }
             return View(tbl_Customers);
         }
-
+        [ActionAuthorizeAttribute("BaoGia")]
         // GET: Customers/Create
         public ActionResult Create()
         {
@@ -72,14 +67,12 @@ namespace NhutLongCompany.Controllers
         // POST: Customers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [ActionAuthorizeAttribute("BaoGia")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IDCustomers,NameCustomers,ChucvuCustomers,CongTyCustomers,CodeCustomers,EmailCustomers,PhoneCustomers,FaxCustomers,DiaChiCustomers,MasothueCustomers,StatusCustomers,CreateDateCustomers,ModifyDateCustomers,CreateUserCustomers,ModifyUserCustomers,NoteCustomer")] tbl_Customers tbl_Customers)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+          
             if (ModelState.IsValid)
             {
                 db.tbl_Customers.Add(tbl_Customers);
@@ -91,12 +84,10 @@ namespace NhutLongCompany.Controllers
         }
 
         // GET: Customers/Edit/5
+        [ActionAuthorizeAttribute("BaoGia")]
         public ActionResult Edit(int? id)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+          
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -112,14 +103,12 @@ namespace NhutLongCompany.Controllers
         // POST: Customers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [ActionAuthorizeAttribute("BaoGia")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "IDCustomers,NameCustomers,ChucvuCustomers,CongTyCustomers,CodeCustomers,EmailCustomers,PhoneCustomers,FaxCustomers,DiaChiCustomers,MasothueCustomers,StatusCustomers,CreateDateCustomers,ModifyDateCustomers,CreateUserCustomers,ModifyUserCustomers,NoteCustomer")] tbl_Customers tbl_Customers)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+           
             if (ModelState.IsValid)
             {
                 db.Entry(tbl_Customers).State = EntityState.Modified;
@@ -130,13 +119,11 @@ namespace NhutLongCompany.Controllers
         }
 
         // GET: Customers/Delete/5
+        [ActionAuthorizeAttribute("BaoGia")]
         public ActionResult Delete(int? id)
         {
            
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+            
             var qr = from datadh in db.tbl_OrderTem
                      where datadh.customer_id == id
                      select datadh;
@@ -160,14 +147,12 @@ namespace NhutLongCompany.Controllers
         }
 
         // POST: Customers/Delete/5
+        [ActionAuthorizeAttribute("BaoGia")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+         
             tbl_Customers tbl_Customers = db.tbl_Customers.Find(id);
             db.tbl_Customers.Remove(tbl_Customers);
             db.SaveChanges();
@@ -182,17 +167,15 @@ namespace NhutLongCompany.Controllers
             }
             base.Dispose(disposing);
         }
-
+        [ActionAuthorizeAttribute("BaoGia")]
         public ActionResult ViewNote()
         {
             return View();
         }
+        [ActionAuthorizeAttribute("BaoGia")]
         public ActionResult IndexBaoGia(int id)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+           
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
                       where cus.IDCustomers == id

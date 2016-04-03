@@ -131,6 +131,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Attribute\ActionAuthorizeAttribute.cs" />
+    <Compile Include="Attribute\RedirectOnErrorAttribute.cs" />
     <Compile Include="Controllers\BaoCaoController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
@@ -1101,6 +1103,8 @@
     <Content Include="Views\Navbar\EditMenu.cshtml" />
     <Content Include="Views\Navbar\MenuList.cshtml" />
     <Content Include="Views\Navbar\Post.cshtml" />
+    <Content Include="Views\Login\NoAuthorize.cshtml" />
+    <Content Include="Views\Login\AjaxLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

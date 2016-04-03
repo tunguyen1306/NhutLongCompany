@@ -7,19 +7,18 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NhutLongCompany.Models;
+using NhutLongCompany.Attribute;
 
 namespace NhutLongCompany.Controllers
 {
+    [RedirectOnError]
     public class tbl_OrderTemController : Controller
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();
-
+        [ActionAuthorizeAttribute("DonHang")]
         public PartialViewResult IndexSanXuatByDate(DateTime? date, int? update)
         {
-            //if (Session["username"] == null)
-            //{
-            //    return RedirectToAction("Login", "Login");
-            //}
+          
             var querySanPhamSanXuat = from a in db.tbl_OrderTem
                                       join b in db.tbl_OrderTem_BaoGia on a.id equals b.order_id.Value
                                       join u in db.tbl_OrderTem_BaoGia_Detail on b.id equals u.baogia_id.Value
@@ -61,12 +60,11 @@ namespace NhutLongCompany.Controllers
             ViewData["Update"] = update;
             return PartialView(list);
         }
+
+        [ActionAuthorizeAttribute("DonHang")]
         public PartialViewResult IndexSanXuatByDate_DonHang(DateTime? date, int? update,int id)
         {
-            //if (Session["username"] == null)
-            //{
-            //    return RedirectToAction("Login", "Login");
-            //}
+         
             var querySanPhamSanXuat = from a in db.tbl_OrderTem
                                       join b in db.tbl_OrderTem_BaoGia on a.id equals b.order_id.Value
                                       join u in db.tbl_OrderTem_BaoGia_Detail on b.id equals u.baogia_id.Value
@@ -108,12 +106,15 @@ namespace NhutLongCompany.Controllers
             ViewData["Update"] = update;
             return PartialView(list);
         }
+
+        [ActionAuthorizeAttribute("DonHang")]
         public ActionResult TheoDoiDonHang()
         {
 
             return View();
         }
 
+        [ActionAuthorizeAttribute("DonHang")]
         [HttpPost]
         public ActionResult UpdateFlow_GD_TT_KTDH(int id, int index)
         {
@@ -175,6 +176,7 @@ namespace NhutLongCompany.Controllers
             return RedirectToAction("ThongTinDonHang", "tbl_OrderTem");
         }
 
+        [ActionAuthorizeAttribute("DonHang")]
         public PartialViewResult PartialThongTinDonHang()
         {
             var qr = (from data in db.tbl_OrderTem
@@ -229,13 +231,10 @@ namespace NhutLongCompany.Controllers
             return PartialView(list);
         }
 
-      [HttpPost]
+        [ActionAuthorizeAttribute("DonHang")]
+        [HttpPost]
         public ActionResult IndexSXSubmit(int? id,int status,int idBG)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -451,13 +450,10 @@ namespace NhutLongCompany.Controllers
                 return RedirectToAction("ThongTinDonHang", "tbl_OrderTem");
            
         }
+
+        [ActionAuthorizeAttribute("DonHang")]
         public ActionResult ThongTinDonHang()
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-
 
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
@@ -514,12 +510,9 @@ namespace NhutLongCompany.Controllers
 
         }
 
+        [ActionAuthorizeAttribute("DonHang")]
         public ActionResult Index()
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
                       where data.status >=0 orderby data.update_date descending
@@ -567,13 +560,12 @@ namespace NhutLongCompany.Controllers
 
             return View(list);
         }
+
+        [ActionAuthorizeAttribute("BaoGia")]
         [HttpPost]
         public ActionResult IndexBaoGia(DonHangView donHang)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+          
             int? id = donHang.id;
             if (id == null)
             {
@@ -618,12 +610,11 @@ namespace NhutLongCompany.Controllers
                
            return IndexBaoGia();
         }
+
+        [ActionAuthorizeAttribute("BaoGia")]
         public ActionResult IndexBaoGia()
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+           
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
                       join bgdetail in db.tbl_OrderTem_BaoGia_Detail on data.id equals bgdetail.baogia_id
@@ -672,32 +663,11 @@ namespace NhutLongCompany.Controllers
             return View(list);
         }
 
-        // GET: tbl_OrderTem/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tbl_OrderTem tbl_OrderTem = db.tbl_OrderTem.Find(id);
-            if (tbl_OrderTem == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tbl_OrderTem);
-        }
-
-        // GET: tbl_OrderTem/Create
+        
+        [ActionAuthorizeAttribute("BaoGia")]      
         public ActionResult Create(int? id)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+          
             DonHangView d = new DonHangView();
             d.customer_id = id;
            
@@ -715,17 +685,12 @@ namespace NhutLongCompany.Controllers
             return View(d);
         }
 
-        // POST: tbl_OrderTem/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [ActionAuthorizeAttribute("BaoGia")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(DonHangView donHang)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+           
             var qr = from custom in db.tbl_Customers
                      where custom.IDCustomers == donHang.customer_id
                      select custom;
@@ -801,12 +766,11 @@ namespace NhutLongCompany.Controllers
             });
 
         }
+
+        [ActionAuthorizeAttribute("BaoGia")]
         public ActionResult EditBaoGia(int? id)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+           
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -872,14 +836,11 @@ namespace NhutLongCompany.Controllers
             return View(d);
         }
 
+        [ActionAuthorizeAttribute("BaoGia")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditBaoGia(DonHangView donHang)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
             int? id = donHang.id;
             if (id == null)
             {
@@ -1075,79 +1036,7 @@ namespace NhutLongCompany.Controllers
                     
                 
             }
-            //if (donHang.action == 4)
-            //{
-            //    donHang.action = 0;
-            //    tbl_OrderTem order = db.tbl_OrderTem.Find(donHang.id);
-            //    order.date_begin_plan = donHang.date_begin_plan;
-            //    order.date_end_plan = donHang.date_end_plan;
-
-            //    order.update_date = DateTime.Now;
-            //    order.update_user = Session["username"].ToString();
-            //    order.status = donHang.status.Value;
-            //    db.Entry(order).State = EntityState.Modified;
-            //    db.SaveChanges();
-            //    var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
-            //                         join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
-            //                         where u.baogia_id.Value.Equals(donHang.BaoGiaTemView.id)
-            //                         select new BaoGiaTemDetailView { Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
-            //    List<BaoGiaTemDetailView> listSP = queryGiaoGiaCT.ToList<BaoGiaTemDetailView>();
-            //    foreach (var item in listSP)
-            //    {
-            //        tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail = db.tbl_OrderTem_BaoGia_Detail.Find(item.id);
-            //        tbl_OrderTem_BaoGia_Detail.status = 0;
-            //        db.Entry(tbl_OrderTem_BaoGia_Detail).State = EntityState.Modified;
-            //        if (item.OffsetFlexoProducts.Equals("Offset"))
-            //        {
-            //            tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 0, TrangThai = 0, TenBuoc = "Nhận tờ in offset" };
-            //            db.tbl_QuyTrinh.Add(qt1);
-            //            tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
-            //            db.tbl_QuyTrinh.Add(qt2);
-            //            tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 2, TrangThai = 0, TenBuoc = "Bồi" };
-            //            db.tbl_QuyTrinh.Add(qt3);
-            //            tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 3, TrangThai = 0, TenBuoc = "Bế" };
-            //            db.tbl_QuyTrinh.Add(qt4);
-            //            tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 4, TrangThai = 0, TenBuoc = "Bấm kim/dán" };
-            //            db.tbl_QuyTrinh.Add(qt5);
-            //            tbl_QuyTrinh qt6 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Đóng gói" };
-            //            db.tbl_QuyTrinh.Add(qt6);
-            //            tbl_QuyTrinh qt7 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 6, TrangThai = 0, TenBuoc = "Giao hàng" };
-            //            db.tbl_QuyTrinh.Add(qt7);
-            //            tbl_QuyTrinh qt8 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 7, TrangThai = 0, TenBuoc = "Thanh toán" };
-            //            db.tbl_QuyTrinh.Add(qt8);
-            //            tbl_QuyTrinh qt9 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Kết thúc đơn hàng" };
-            //            db.tbl_QuyTrinh.Add(qt9);
-
-            //            db.SaveChanges();
-
-            //        }
-            //        else
-            //        {
-            //            tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 0, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
-            //            db.tbl_QuyTrinh.Add(qt1);
-            //            tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Xã biên,cán lằn" };
-            //            db.tbl_QuyTrinh.Add(qt2);
-            //            tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 2, TrangThai = 0, TenBuoc = "In Flexo " };
-            //            db.tbl_QuyTrinh.Add(qt3);
-            //            tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 3, TrangThai = 0, TenBuoc = "Chạp khoe" };
-            //            db.tbl_QuyTrinh.Add(qt4);
-            //            tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 4, TrangThai = 0, TenBuoc = "Đóng kim/Dán" };
-            //            db.tbl_QuyTrinh.Add(qt5);
-            //            tbl_QuyTrinh qt6 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Đóng gói" };
-            //            db.tbl_QuyTrinh.Add(qt6);
-            //            tbl_QuyTrinh qt7 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 6, TrangThai = 0, TenBuoc = "Giao hàng" };
-            //            db.tbl_QuyTrinh.Add(qt7);
-            //            tbl_QuyTrinh qt8 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 7, TrangThai = 0, TenBuoc = "Thanh toán" };
-            //            db.tbl_QuyTrinh.Add(qt8);
-            //            tbl_QuyTrinh qt9 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Kết thúc đơn hàng" };
-            //            db.tbl_QuyTrinh.Add(qt9);
-            //            db.SaveChanges();
-
-            //        }
-            //    }
-            //    return RedirectToAction("Edit", "SanXuat", new { id = donHang.id });
-            //}
-            
+          
             DonHangView d = new DonHangView();
             d.action = donHang.action;
             d.address_deliver = tbl_OrderTem.address_deliver;
@@ -1204,13 +1093,9 @@ namespace NhutLongCompany.Controllers
             return View(d);
         }
 
-        // GET: tbl_OrderTem/Edit/5
+        [ActionAuthorizeAttribute("DonHang")]  
         public ActionResult Edit(int? id)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -1275,17 +1160,12 @@ namespace NhutLongCompany.Controllers
             return View(d);
         }
 
-        // POST: tbl_OrderTem/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [ActionAuthorizeAttribute("DonHang")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(DonHangView donHang)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+           
             int? id = donHang.id;
             if (id == null)
             {
@@ -1296,80 +1176,7 @@ namespace NhutLongCompany.Controllers
             {
                 return HttpNotFound();
             }
-            //if (donHang.action == 2)
-            //{
-            //    donHang.action = 0;
-            //    donHang.BaoGiaTemView.status = 0;
-            //    donHang.BaoGiaTemView.date_begin = DateTime.Now;
-            //    tbl_OrderTem_BaoGia tbl_OrderTem_BaoGia = new tbl_OrderTem_BaoGia { date_begin = donHang.BaoGiaTemView.date_begin, date_end = donHang.BaoGiaTemView.date_end, id = donHang.BaoGiaTemView.id, order_id = donHang.id, status = donHang.BaoGiaTemView.status, total_money = donHang.BaoGiaTemView.total_money };
-            //    tbl_OrderTem_BaoGia = db.tbl_OrderTem_BaoGia.Add(tbl_OrderTem_BaoGia);
-            //    db.SaveChanges();
-            //    donHang.BaoGiaTemView.id = tbl_OrderTem_BaoGia.id;
-            //    foreach (var item in donHang.BaoGiaTemView.BaoGiaTemDetailViews)
-            //    {
-            //        item.StatusProducts = -1;
-            //        item.CreatedDateProducts = DateTime.Now;
-
-            //        var queryMax = (from u in db.tbl_Products
-            //                        orderby u.ID_Products descending
-            //                        select u).Take(1);
-            //        int maxSP = queryMax.ToList().Count == 0 ? 1 : queryMax.ToList()[0].ID_Products + 1;
-            //        String masp = String.Format("SP{0}", maxSP.ToString("000000"));
-            //        item.CodeProducts = masp;
-            //        tbl_Products itemP = new tbl_Products
-            //        {
-            //            CodeProducts = masp,
-            //            CreatedDateProducts = item.CreatedDateProducts,
-            //            CreateUserProducts = item.CreateUserProducts,
-            //            DanKimProducts = item.DanKimProducts,
-            //            GiaProducts = item.GiaProducts,
-            //            ID_Products = item.ID_Products,
-            //            LoaigiayProducts = item.LoaigiayProducts,
-            //            ModifyDateProducts = item.ModifyDateProducts,
-            //            ModifyUserProducts = item.ModifyUserProducts,
-            //            NameProducts = item.NameProducts,
-            //            OffsetFlexoProducts = item.OffsetFlexoProducts,
-            //            QuyCachProducts = item.QuyCachProducts,
-            //            SolopProducts = item.SolopProducts,
-            //            StatusProducts = item.StatusProducts
-            //        };
-            //        itemP = db.tbl_Products.Add(itemP);
-            //        db.SaveChanges();
-            //        item.ID_Products = itemP.ID_Products;
-            //        tbl_OrderTem_BaoGia_Detail detail = new tbl_OrderTem_BaoGia_Detail { baogia_id = donHang.BaoGiaTemView.id, money = double.Parse(item.GiaProducts), soluong = item.SoLuong, sanpam_id = itemP.ID_Products };
-            //        db.tbl_OrderTem_BaoGia_Detail.Add(detail);
-            //        db.SaveChanges();
-            //    }
-
-            //}
-            //if (donHang.action == 3)
-            //{
-            //    donHang.action = 0;
-
-
-            //    var queryCount = from a in db.tbl_OrderTem_BaoGia_Detail where a.baogia_id.Value.Equals(donHang.BaoGiaTemView.id) select a;
-            //    int countItem = queryCount.ToList().Count();
-
-
-            //    tbl_OrderTem order = db.tbl_OrderTem.Find(donHang.id);
-            //    order.code = order.code + (countItem > 1 ? "01" : "00");
-            //    order.date_deliver = donHang.date_deliver;
-            //    order.address_deliver = donHang.address_deliver;
-            //    order.update_date = DateTime.Now;
-            //    order.update_user = Session["username"].ToString();
-            //    db.Entry(order).State = EntityState.Modified;
-            //    db.SaveChanges();
-
-
-            //    tbl_OrderTem_BaoGia baogia = db.tbl_OrderTem_BaoGia.Find(donHang.BaoGiaTemView.id);
-            //    baogia.status = donHang.BaoGiaTemView.status.Value;
-            //    baogia.commission = donHang.BaoGiaTemView.commission;
-            //    baogia.date_end = DateTime.Now;
-            //    baogia.note = donHang.BaoGiaTemView.note;
-            //    db.Entry(baogia).State = EntityState.Modified;
-            //    db.SaveChanges();
-
-            //}
+          
             if (donHang.action == 4)
             {
                 donHang.action = 0;
@@ -1553,53 +1360,7 @@ namespace NhutLongCompany.Controllers
                     db.tbl_QuyTrinh.Add(qt11);
                     tbl_QuyTrinh qt12 = new tbl_QuyTrinh { ThucHien = 1, ID_BaoGiaDetail = item.id, ThuTu = 12, TrangThai = 0, TenBuoc = "Kết thúc đơn hàng" };
                     db.tbl_QuyTrinh.Add(qt12);
-                    //if (item.OffsetFlexoProducts.Equals("Offset"))
-                    //{
-                    //    tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 0, TrangThai = 0, TenBuoc = "Nhận tờ in offset" };
-                    //    db.tbl_QuyTrinh.Add(qt1);
-                    //    tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
-                    //    db.tbl_QuyTrinh.Add(qt2);
-                    //    tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 2, TrangThai = 0, TenBuoc = "Bồi" };
-                    //    db.tbl_QuyTrinh.Add(qt3);
-                    //    tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 3, TrangThai = 0, TenBuoc = "Bế" };
-                    //    db.tbl_QuyTrinh.Add(qt4);
-                    //    tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 4, TrangThai = 0, TenBuoc = "Bấm kim/dán" };
-                    //    db.tbl_QuyTrinh.Add(qt5);
-                    //    tbl_QuyTrinh qt6 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Đóng gói" };
-                    //    db.tbl_QuyTrinh.Add(qt6);
-                    //    tbl_QuyTrinh qt7 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 6, TrangThai = 0, TenBuoc = "Giao hàng" };
-                    //    db.tbl_QuyTrinh.Add(qt7);
-                    //    tbl_QuyTrinh qt8 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 7, TrangThai = 0, TenBuoc = "Thanh toán" };
-                    //    db.tbl_QuyTrinh.Add(qt8);
-                    //    tbl_QuyTrinh qt9 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Kết thúc đơn hàng" };
-                    //    db.tbl_QuyTrinh.Add(qt9);
-
-                    //    db.SaveChanges();
-
-                    //}
-                    //else
-                    //{
-                    //    tbl_QuyTrinh qt1 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 0, TrangThai = 0, TenBuoc = "Sản xuất giấy tấm" };
-                    //    db.tbl_QuyTrinh.Add(qt1);
-                    //    tbl_QuyTrinh qt2 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 1, TrangThai = 0, TenBuoc = "Xã biên,cán lằn" };
-                    //    db.tbl_QuyTrinh.Add(qt2);
-                    //    tbl_QuyTrinh qt3 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 2, TrangThai = 0, TenBuoc = "In Flexo " };
-                    //    db.tbl_QuyTrinh.Add(qt3);
-                    //    tbl_QuyTrinh qt4 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 3, TrangThai = 0, TenBuoc = "Chạp khoe" };
-                    //    db.tbl_QuyTrinh.Add(qt4);
-                    //    tbl_QuyTrinh qt5 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 4, TrangThai = 0, TenBuoc = "Đóng kim/Dán" };
-                    //    db.tbl_QuyTrinh.Add(qt5);
-                    //    tbl_QuyTrinh qt6 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 5, TrangThai = 0, TenBuoc = "Đóng gói" };
-                    //    db.tbl_QuyTrinh.Add(qt6);
-                    //    tbl_QuyTrinh qt7 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 6, TrangThai = 0, TenBuoc = "Giao hàng" };
-                    //    db.tbl_QuyTrinh.Add(qt7);
-                    //    tbl_QuyTrinh qt8 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 7, TrangThai = 0, TenBuoc = "Thanh toán" };
-                    //    db.tbl_QuyTrinh.Add(qt8);
-                    //    tbl_QuyTrinh qt9 = new tbl_QuyTrinh { ID_BaoGiaDetail = item.id, ThuTu = 8, TrangThai = 0, TenBuoc = "Kết thúc đơn hàng" };
-                    //    db.tbl_QuyTrinh.Add(qt9);
-                    //    db.SaveChanges();
-
-                    //}
+                  
                 }
 
 
@@ -1680,32 +1441,29 @@ namespace NhutLongCompany.Controllers
             return View(d);
         }
 
-        // GET: tbl_OrderTem/Delete/5
+        [ActionAuthorizeAttribute("DonHang")]      
         public ActionResult Delete(int? id)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-
+          
             tbl_OrderTem tbl_OrderTem = db.tbl_OrderTem.Find(id);
             db.tbl_OrderTem.Remove(tbl_OrderTem);
             db.SaveChanges();
             return RedirectToAction("Index", new { id = tbl_OrderTem.customer_id });
         }
+
+        [ActionAuthorizeAttribute("DonHang")]
         public ActionResult DeleteBaoGia(int? id)
         {
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+           
 
             tbl_OrderTem tbl_OrderTem = db.tbl_OrderTem.Find(id);
             db.tbl_OrderTem.Remove(tbl_OrderTem);
             db.SaveChanges();
             return RedirectToAction("IndexBaoGia", new { id = tbl_OrderTem.customer_id });
         }
-        // POST: tbl_OrderTem/Delete/5
+
+
+        [ActionAuthorizeAttribute("BaoGia")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -1725,7 +1483,7 @@ namespace NhutLongCompany.Controllers
             base.Dispose(disposing);
         }
 
-
+        [ActionAuthorizeAttribute("BaoGia,DonHang")]
         public ActionResult PrintOrder(int id)
         {
 
@@ -1765,6 +1523,7 @@ namespace NhutLongCompany.Controllers
 
         }
 
+        [ActionAuthorizeAttribute("BaoGia")]
         [HttpPost]
         public ActionResult UpdateDesign(int id, DateTime date, string loai)
         {
@@ -1779,7 +1538,7 @@ namespace NhutLongCompany.Controllers
             return Json(item);
         }
 
-        
+        [ActionAuthorizeAttribute("BaoGia")]
         public ActionResult IndexDH(int id)
         {
             if (Session["username"] == null)
@@ -1835,6 +1594,7 @@ namespace NhutLongCompany.Controllers
             return View(list);
         }
 
+        [ActionAuthorizeAttribute("DonHang")]
         [HttpPost]
         public JsonResult UpdatePauseOrder(int id, String note, int state)
         {

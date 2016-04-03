@@ -7,9 +7,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NhutLongCompany.Models;
+using System.Web.Security;
+using NhutLongCompany.Attribute;
 
 namespace NhutLongCompany.Controllers
 {
+    [RedirectOnError]
     public class LoginController : Controller
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();
@@ -141,21 +144,42 @@ namespace NhutLongCompany.Controllers
 
             return View();
         }
-
+        public ActionResult NoAuthorize()
+        {
+            ViewData["Message"] = "Bạn không đủ quyền thực hiện chức năng này";
+            return View();
+        }
+        public PartialViewResult AjaxLogin()
+        {
+         
+            return PartialView();
+        }
         [HttpPost]
         public ActionResult Login(string username, string password)
         {
-            Session.Remove("username");
-            Session.Remove("userId");
+       
             Session.Clear();
-            var data = db.tbl_User.Where(x => x.Username == username && x.Password == password).Select(x => new { x.Username,x.FullName,x.IDUser}).FirstOrDefault();
-           
-            Session["userId"] = data.IDUser;
-            Session["username"] = data.Username;
+            var data = db.tbl_User.Where(x => x.Username == username && x.Password == password).Select(x => new { x.Username,x.FullName,x.IDUser,x.RoleName}).FirstOrDefault();
+         
             var qrmenu =(from datamenu in db.AdminMenus where datamenu.IdUser == data.IDUser select datamenu).Select(x => new { x.controller,x.action}).FirstOrDefault();
+        
+          
             if (data != null)
             {
-                return RedirectToAction(qrmenu.action, qrmenu.controller);
+                FormsAuthentication.SetAuthCookie(data.Username, false);
+                String returnUrl = Request.Params["ReturnUrl"];
+                Session["userId"] = data.IDUser;
+                Session["username"] = data.Username;
+                Session["roleName"] = data.RoleName;
+                if (String.IsNullOrEmpty(returnUrl))
+                {
+                    return RedirectToAction("Home", "Home");
+                }
+                else
+                {
+                    return Redirect(returnUrl);
+                }
+              
             }
             return View();
         }
@@ -163,6 +187,7 @@ namespace NhutLongCompany.Controllers
         {
             Session.Remove("username");
             Session.Clear();
+            FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Login");
         }
 
