@@ -15,8 +15,8 @@ namespace NhutLongCompany.Controllers
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();
         // GET: SanXuat
-
-        [ActionAuthorizeAttribute("SanXuat")]
+        
+       // [ActionAuthorizeAttribute("SanXuat")]
         public ActionResult Index()
         {
           
@@ -38,7 +38,7 @@ namespace NhutLongCompany.Controllers
             return View(qr.ToList());
         }
 
-        [ActionAuthorizeAttribute("SanXuat")]
+       // [ActionAuthorizeAttribute("SanXuat")]
         public ActionResult LichSanXuat()
         {
           
@@ -46,7 +46,7 @@ namespace NhutLongCompany.Controllers
             return View();
         }
 
-        [ActionAuthorizeAttribute("SanXuat")]
+       // [ActionAuthorizeAttribute("SanXuat")]
         public ActionResult LichSanXuatOnDay()
         {
          
@@ -54,7 +54,7 @@ namespace NhutLongCompany.Controllers
             return View();
         }
 
-        [ActionAuthorizeAttribute("SanXuat")]
+      //  [ActionAuthorizeAttribute("SanXuat")]
         public PartialViewResult PartialLichSanXuat()
         {
             var querySanPhamSanXuat = from a in db.tbl_OrderTem
@@ -83,18 +83,17 @@ namespace NhutLongCompany.Controllers
             return PartialView(list);
         }
 
-        [ActionAuthorizeAttribute("SanXuat")]
+       // [ActionAuthorizeAttribute("SanXuat")]
         public PartialViewResult PartialLichSanXuatOnDay()
         {
-            DateTime dt = DateTime.Parse( DateTime.Now.ToShortDateString());
-            var querySanPhamSanXuat = from a in db.tbl_OrderTem
+            var querySanPhamSanXuat = (from a in db.tbl_OrderTem
                                       join b in db.tbl_OrderTem_BaoGia on a.id equals b.order_id.Value
                                       join u in db.tbl_OrderTem_BaoGia_Detail on b.id equals u.baogia_id.Value
                                       join y in db.tbl_Products on u.sanpam_id.Value equals y.ID_Products
                                       join z in db.tbl_Stack on u.id equals z.baoGia_detail_id
-                                      where u.date_working.Value.Equals(dt) && (a.status.Value == 3 || a.status.Value == 1) && b.status.Value == 1 && (u.status == 1 || u.status == 0)
+                                      where (a.status.Value == 3 || a.status.Value == 1) && b.status.Value == 1 && (u.status == 1 || u.status == 0)
                                       orderby z.index_view ascending
-                                      select new BaoGiaTemDetailView { pause = a.status_pause, Status_Pause = u.status_pause, Step_Flow = u.step_index, Code_Detail = u.code_detail, Status = u.status, Date_Working = u.date_working, Index_View = z.index_view, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+                                      select new BaoGiaTemDetailView { pause = a.status_pause, Status_Pause = u.status_pause, Step_Flow = u.step_index, Code_Detail = u.code_detail, Status = u.status, Date_Working = u.date_working, Index_View = z.index_view, Timer = 0, date_deliver = a.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts }).Take(5);
             var list = querySanPhamSanXuat.ToList();
             foreach (var item in list)
             {
@@ -202,14 +201,14 @@ namespace NhutLongCompany.Controllers
             return View(qr.ToList());
         }
 
-        [ActionAuthorizeAttribute("SanXuat")]
+       // [ActionAuthorizeAttribute("SanXuat")]
         public ActionResult IndexSanXuat()
         {
 
             return View();
         }
 
-        [ActionAuthorizeAttribute("SanXuat")]
+       // [ActionAuthorizeAttribute("SanXuat")]
         public PartialViewResult IndexSanXuatByDate(DateTime? date,int? update)
         {
          

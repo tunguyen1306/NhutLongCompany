@@ -17,14 +17,14 @@ namespace NhutLongCompany.Controllers
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();
         private int ck { get; set; }
 
-        [ActionAuthorizeAttribute("BaoGia")]
+       // [ActionAuthorizeAttribute("BaoGia")]
         // GET: Customers
         public ActionResult Index()
         {
        
             return View(db.tbl_Customers.ToList());
         }
-        [ActionAuthorizeAttribute("BaoGia")]
+        //[ActionAuthorizeAttribute("BaoGia")]
         public ActionResult DetailCustomers(int id)
         {
            

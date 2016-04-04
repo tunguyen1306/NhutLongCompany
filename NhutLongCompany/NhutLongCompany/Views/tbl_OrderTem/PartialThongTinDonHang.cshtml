@@ -112,8 +112,12 @@
 
             @if (item.status.Value == 4)
             {
-                <span onclick="UpdateQuyTrinhAll(@item.id,10)" class="btn btn-outline btn-default btn-xs" style="cursor:pointer">Giao hàng</span>
-                                            <span onclick="UpdateQuyTrinhAll(@item.id,11)" class="btn btn-outline btn-default btn-xs" style="cursor:pointer">Thanh toán</span>
+            
+              
+                    <span onclick="UpdateQuyTrinhAll(@item.id,10)" class="btn btn-outline btn-default btn-xs disabled" style="cursor:pointer">Giao hàng</span>
+               
+                
+                                           <span onclick="UpdateQuyTrinhAll(@item.id,11)" class="btn btn-outline btn-default btn-xs" style="cursor:pointer">Thanh toán</span>
                                             <span onclick="UpdateQuyTrinhAll(@item.id,12)" class="btn btn-outline btn-default btn-xs" style="cursor:pointer">KT đơn hàng</span>
             }
         </td>

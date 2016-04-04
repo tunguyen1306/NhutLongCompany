@@ -15,7 +15,7 @@ namespace NhutLongCompany.Controllers
     public class tbl_OrderTemController : Controller
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();
-        [ActionAuthorizeAttribute("DonHang")]
+        //[ActionAuthorizeAttribute("DonHang")]
         public PartialViewResult IndexSanXuatByDate(DateTime? date, int? update)
         {
           
@@ -107,7 +107,7 @@ namespace NhutLongCompany.Controllers
             return PartialView(list);
         }
 
-        [ActionAuthorizeAttribute("DonHang")]
+        //[ActionAuthorizeAttribute("DonHang")]
         public ActionResult TheoDoiDonHang()
         {
 
@@ -176,13 +176,14 @@ namespace NhutLongCompany.Controllers
             return RedirectToAction("ThongTinDonHang", "tbl_OrderTem");
         }
 
-        [ActionAuthorizeAttribute("DonHang")]
+        //[ActionAuthorizeAttribute("DonHang")]
         public PartialViewResult PartialThongTinDonHang()
         {
             var qr = (from data in db.tbl_OrderTem
                       join cus in db.tbl_Customers on data.customer_id equals cus.IDCustomers
                       join bgdetail in db.tbl_OrderTem_BaoGia_Detail on data.id equals bgdetail.baogia_id
                       join sp in db.tbl_Products on bgdetail.sanpam_id  equals sp.ID_Products
+                     // join qt in db.tbl_QuyTrinh on bgdetail.id equals qt.ID_BaoGiaDetail
                       where data.status >= 0
                       orderby data.update_date descending
                       select new DonHangView
@@ -195,7 +196,8 @@ namespace NhutLongCompany.Controllers
                           address_deliver = data.address_deliver,
                           status = data.status,
                           pause=data.status_pause,
-                          TblProductses=sp
+                          TblProductses=sp//,
+                         // QuyTrinh = qt
                       });
             List<DonHangView> list = qr.ToList();
             foreach (var itemBG in list)
@@ -219,8 +221,14 @@ namespace NhutLongCompany.Controllers
                     {
                         if (itemSP.Step_Flow.HasValue)
                         {
-                            var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(itemSP.id) orderby u.ThuTu ascending select u;
-                            itemSP.QuyTrinhs = queryQT.ToList<tbl_QuyTrinh>();
+                            
+                            var queryQt = from u in db.tbl_QuyTrinh
+                                where u.ID_BaoGiaDetail.Equals(itemSP.id)
+                                orderby u.ThuTu ascending
+                                select u;
+                           
+                            itemSP.QuyTrinhs = queryQt.ToList<tbl_QuyTrinh>();
+                             temBG.QuyTrinhs=itemSP.QuyTrinhs;
                         }
 
                     }
@@ -451,7 +459,7 @@ namespace NhutLongCompany.Controllers
            
         }
 
-        [ActionAuthorizeAttribute("DonHang")]
+        //[ActionAuthorizeAttribute("DonHang")]
         public ActionResult ThongTinDonHang()
         {
 
@@ -510,7 +518,7 @@ namespace NhutLongCompany.Controllers
 
         }
 
-        [ActionAuthorizeAttribute("DonHang")]
+        //[ActionAuthorizeAttribute("DonHang")]
         public ActionResult Index()
         {
             var qr = (from data in db.tbl_OrderTem
@@ -561,7 +569,7 @@ namespace NhutLongCompany.Controllers
             return View(list);
         }
 
-        [ActionAuthorizeAttribute("BaoGia")]
+       // [ActionAuthorizeAttribute("BaoGia")]
         [HttpPost]
         public ActionResult IndexBaoGia(DonHangView donHang)
         {
@@ -611,7 +619,7 @@ namespace NhutLongCompany.Controllers
            return IndexBaoGia();
         }
 
-        [ActionAuthorizeAttribute("BaoGia")]
+      //  [ActionAuthorizeAttribute("BaoGia")] // all view bao gia
         public ActionResult IndexBaoGia()
         {
            

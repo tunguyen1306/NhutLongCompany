@@ -28,7 +28,7 @@ namespace NhutLongCompany.Models
         public List<int> PrintSoLuong { get; set; }
         public List<double> PrintDonGia { get; set; }
         public List<double> PrintThanhTien { get; set; }
-
+        public List<tbl_QuyTrinh> QuyTrinhs { get; set; }
         public void buildPrint()
         {
             PrintTen = new List<string>();

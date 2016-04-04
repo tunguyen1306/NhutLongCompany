@@ -30,5 +30,6 @@ namespace NhutLongCompany.Models
         }
         public List<tbl_Customers> tbl_Customers { get; set; }
         public tbl_Products TblProductses { get; set; }
+        public tbl_QuyTrinh QuyTrinh { get; set; }
     }
 }
