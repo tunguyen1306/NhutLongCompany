@@ -1105,6 +1105,7 @@
     <Content Include="Views\Navbar\Post.cshtml" />
     <Content Include="Views\Login\NoAuthorize.cshtml" />
     <Content Include="Views\Login\AjaxLogin.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

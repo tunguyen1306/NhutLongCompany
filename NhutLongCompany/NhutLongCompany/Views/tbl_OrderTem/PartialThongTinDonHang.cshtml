@@ -112,13 +112,35 @@
 
             @if (item.status.Value == 4)
             {
-            
-              
+
+                if (item.BaoGiaTemView.StatusQuyTrinhGiaoHang == 2)
+                {
                     <span onclick="UpdateQuyTrinhAll(@item.id,10)" class="btn btn-outline btn-default btn-xs disabled" style="cursor:pointer">Giao hàng</span>
-               
-                
-                                           <span onclick="UpdateQuyTrinhAll(@item.id,11)" class="btn btn-outline btn-default btn-xs" style="cursor:pointer">Thanh toán</span>
-                                            <span onclick="UpdateQuyTrinhAll(@item.id,12)" class="btn btn-outline btn-default btn-xs" style="cursor:pointer">KT đơn hàng</span>
+                }
+                else
+                {
+                    <span onclick="UpdateQuyTrinhAll(@item.id,10)" class="btn btn-outline btn-default btn-xs" style="cursor:pointer">Giao hàng</span>
+                }
+
+                if (item.BaoGiaTemView.StatusQuyTrinhDongGoi == 2)
+                {
+                    <span onclick="UpdateQuyTrinhAll(@item.id,11)" class="btn btn-outline btn-default btn-xs disabled" style="cursor:pointer">Thanh toán</span>
+                }
+                else
+                {
+                    <span onclick="UpdateQuyTrinhAll(@item.id,11)" class="btn btn-outline btn-default btn-xs" style="cursor:pointer">Thanh toán</span>
+                }
+
+                if (item.BaoGiaTemView.StatusQuyTrinhThanhToan == 2)
+                {
+                    <span onclick="UpdateQuyTrinhAll(@item.id,12)" class="btn btn-outline btn-default btn-xs disabled" style="cursor:pointer">KT đơn hàng</span>
+                }
+                else
+                {
+                    <span onclick="UpdateQuyTrinhAll(@item.id,12)" class="btn btn-outline btn-default btn-xs" style="cursor:pointer">KT đơn hàng</span>
+                }
+
+
             }
         </td>
         <td style="text-align: center">

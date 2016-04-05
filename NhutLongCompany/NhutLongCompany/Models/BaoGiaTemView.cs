@@ -29,6 +29,9 @@ namespace NhutLongCompany.Models
         public List<double> PrintDonGia { get; set; }
         public List<double> PrintThanhTien { get; set; }
         public List<tbl_QuyTrinh> QuyTrinhs { get; set; }
+        public int StatusQuyTrinhGiaoHang { get; set; }
+        public int StatusQuyTrinhDongGoi { get; set; }
+        public int StatusQuyTrinhThanhToan { get; set; }
         public void buildPrint()
         {
             PrintTen = new List<string>();

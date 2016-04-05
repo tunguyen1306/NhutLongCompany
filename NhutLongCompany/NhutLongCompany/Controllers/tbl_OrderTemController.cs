@@ -222,20 +222,44 @@ namespace NhutLongCompany.Controllers
                         if (itemSP.Step_Flow.HasValue)
                         {
                             
-                            var queryQt = from u in db.tbl_QuyTrinh
-                                where u.ID_BaoGiaDetail.Equals(itemSP.id)
-                                orderby u.ThuTu ascending
-                                select u;
+                            //var queryQt = from u in db.tbl_QuyTrinh
+                            //              where u.ID_BaoGiaDetail.Equals(itemSP.id) 
+                            //    orderby u.ThuTu ascending
+                            //    select u;
                            
-                            itemSP.QuyTrinhs = queryQt.ToList<tbl_QuyTrinh>();
-                             temBG.QuyTrinhs=itemSP.QuyTrinhs;
+                            //itemSP.QuyTrinhs = queryQt.ToList<tbl_QuyTrinh>();
+                            var listGH =(from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(itemSP.id) && u.ThuTu == 10 orderby u.ThuTu ascending select u).Take(1);
+                            itemSP.QuyTrinhs = listGH.ToList<tbl_QuyTrinh>();
+                            itemBG.BaoGiaTemView.QuyTrinhs = itemSP.QuyTrinhs;
+                            foreach (var itsp in itemBG.BaoGiaTemView.QuyTrinhs)
+                            {
+                                itemBG.BaoGiaTemView.StatusQuyTrinhGiaoHang = (int)itsp.TrangThai;
+                            }
+
+                            var listDG = (from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(itemSP.id) && u.ThuTu == 11 orderby u.ThuTu ascending select u).Take(1);
+                            itemSP.QuyTrinhs = listDG.ToList<tbl_QuyTrinh>();
+                            itemBG.BaoGiaTemView.QuyTrinhs = itemSP.QuyTrinhs;
+                            foreach (var itsp in itemBG.BaoGiaTemView.QuyTrinhs)
+                            {
+                                itemBG.BaoGiaTemView.StatusQuyTrinhDongGoi = (int)itsp.TrangThai;
+                            }
+                            var listTT= (from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(itemSP.id) && u.ThuTu == 12 orderby u.ThuTu ascending select u).Take(1);
+                            itemSP.QuyTrinhs = listTT.ToList<tbl_QuyTrinh>();
+                            itemBG.BaoGiaTemView.QuyTrinhs = itemSP.QuyTrinhs;
+                            foreach (var itsp in itemBG.BaoGiaTemView.QuyTrinhs)
+                            {
+                                itemBG.BaoGiaTemView.StatusQuyTrinhThanhToan = (int)itsp.TrangThai;
+                            }
+                            
+                           
                         }
 
                     }
                     break;
                 }
+                
             }
-
+           
             return PartialView(list);
         }
 
