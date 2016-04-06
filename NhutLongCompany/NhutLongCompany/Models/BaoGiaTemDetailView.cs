@@ -33,6 +33,7 @@ namespace NhutLongCompany.Models
         public Nullable<int> Timer { get; set; }
         public Nullable<System.DateTime> date_deliver { get; set; }
         public string address_deliver { get; set; }
+        public int? datenumber { get; set; }
 
         public Nullable<int> Index_View { get; set; }
         public Nullable<System.DateTime> Date_Working { get; set; }

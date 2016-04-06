@@ -88,7 +88,7 @@
                     }
                 </tr>
                 <tr>
-                    <td>Ofset/Flexo</td>
+                    <td>Quy trình</td>
                     @foreach (var item in Model.BaoGiaTemView.PrintOffset_Flexo)
                     {
                         <td> @item</td>
@@ -140,9 +140,9 @@
         <ul>
             <li>
                 Trong vòng
-                @if (Model.BaoGiaTemView.status.Value == 1 && Model.date_deliver.HasValue)
+                @if ( Model.datenumber.HasValue)
                 {
-                    <span>@((int)Model.date_deliver.Value.Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays)</span>
+                    <span>@((int)Model.datenumber.Value)</span>
                 }
                 else
                 {
@@ -169,7 +169,7 @@
         <div class="row">
             <div class="col-xs-6">
                 <div class="print-signature">
-                    Nguyễn Long Giang
+                   
                 </div>
             </div>
             <div class="col-xs-6">

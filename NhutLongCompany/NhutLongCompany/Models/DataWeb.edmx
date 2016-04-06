@@ -80,6 +80,7 @@
           <Property Name="update_date" Type="datetime" />
           <Property Name="update_user" Type="nvarchar" MaxLength="100" />
           <Property Name="status_pause" Type="int" />
+          <Property Name="datenumber" Type="int" />
         </EntityType>
         <EntityType Name="tbl_OrderTem_BaoGia">
           <Key>
@@ -240,6 +241,7 @@
           <Property Name="update_date" Type="DateTime" Precision="3" />
           <Property Name="update_user" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="status_pause" Type="Int32" />
+          <Property Name="datenumber" Type="Int32" />
         </EntityType>
         <EntityType Name="tbl_OrderTem_BaoGia">
           <Key>
@@ -427,6 +429,7 @@
           <EntitySetMapping Name="tbl_OrderTem">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem">
               <MappingFragment StoreEntitySet="tbl_OrderTem">
+                <ScalarProperty Name="datenumber" ColumnName="datenumber" />
                 <ScalarProperty Name="status_pause" ColumnName="status_pause" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="customer_id" ColumnName="customer_id" />

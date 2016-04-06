@@ -170,7 +170,13 @@
         } else {
             $('.lblNameProducts').addClass('hidden');
         }
-
+        if ($('.datenumber').val() =='') {
+            $('.lbldatenumber').addClass('hidden');
+            $('.datenumber').after('<label class="errorLabel lbldatenumber">Nhập số ngày</label>');
+            m++;
+        } else {
+            $('.lbldatenumber').addClass('hidden');
+        }
 
         if ($('.SolopProducts1').val() <= 0) {
             $('.lblSolopProducts').addClass('hidden');
@@ -481,7 +487,7 @@
                                     Quy Cách (cm)
                                 </th>
                                 <th width="130px" class="date_deliver" align="center" valign="middle">
-                                    Ngày giao hàng
+                                  Giao hàng sau(ngày)
                                 </th>
                                 <th width="130px" class="address_deliver" align="center" valign="middle">
                                     Địa chỉ giao hàng
@@ -587,7 +593,7 @@
 
                                 </td>
                                 <td align="center" class="date_deliver">
-                                    <input class="form-control  date" default-value="" name="date_deliver" type="text">
+                                    <input class="form-control datenumber" default-value="" name="datenumber" type="text">
                                 </td>
                                 <td align="center" class="address_deliver">
                                     <input class="form-control" default-value="" name="address_deliver" type="text">

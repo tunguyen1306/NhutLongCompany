@@ -139,26 +139,13 @@
     }
 
     $(document).ready(function() {
-        $("input[type=number]").keydown(function(e) {
-            // Allow: backspace, delete, tab, escape, enter and .
-            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-                // Allow: Ctrl+A, Command+A
-                (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-                // Allow: home, end, left, right, down, up
-                (e.keyCode >= 35 && e.keyCode <= 40)) {
-                // let it happen, don't do anything
-                return;
-            }
-            // Ensure that it is a number and stop the keypress
-            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-                e.preventDefault();
-            }
-        });
+        updateEvent();
+       
 
     });
     function updateProduct(el) {
 
-
+       
         var m = 0;
         if ($('.NameProducts1').val() == '') {
             $('.lblNameProducts').addClass('hidden');
@@ -212,6 +199,13 @@
         } else {
             $('.lblLoaigiayProducts').addClass('hidden');
         }
+        if ($('.datenumber').val() =='') {
+            $('.lbldatenumber').addClass('hidden');
+            $('.datenumber').after('<label class="errorLabel lbldatenumber">Nhập số ngày</label>');
+            m++;
+        } else {
+            $('.lbldatenumber').addClass('hidden');
+        }
         if (m == 0) {
 
             $('.lblNameProducts').addClass('hidden');
@@ -259,6 +253,7 @@
     }
     function updateEvent() {
         $('.updateSL').on("change", function() {
+          
             updateMoney(this);
         });
         $("input[type=number]").keydown(function(e) {
@@ -445,243 +440,7 @@
     </div>
 
 
-    if (Model.action == 1)
-    {
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="row">
-                    <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count + 2)</span>
-                    <input type="submit" style="float: right; margin-right: 10px" value="Cập nhật" class="btn btn-primary" onclick=" SubmitAddNewBaoGia();return false; " />
-                </div>
-            </div>
-
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-lg-12 form-horizontal">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-4" for="date_begin">Ngày bất đầu</label>
-                                <div class="col-md-8" style="padding-top: 7px">
-                                    <input class="form-control date" data-val="true" data-val-date="The field date_begin must be a date." name="BaoGiaTemView.date_begin" value="@DateTime.Now.ToString("dd/MM/yyyy")" type="hidden">
-                                    @DateTime.Now.ToString("dd/MM/yyyy")
-                                </div>
-
-                            </div>
-
-                            <div class="form-group">
-
-                                <label class="control-label col-md-4" for="total_money">Tổng tiền</label>
-                                <div class="col-md-8" style="padding-top: 7px">
-                                    <input class="form-control BaoGiaTemView_total_money" data-val="true" data-val-number="The field total_money must be a number." name="BaoGiaTemView.total_money" value="@Model.BaoGiaTemView.total_money.Value" type="hidden">
-                                    <span id="BaoGiaTemView_total_money">@(Model.BaoGiaTemView.total_money.Value.ToString("n2"))</span> đ
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-4" for="date_end">Ngày kết thúc</label>
-                                <div class="col-md-8" style="padding-top: 7px">
-                                    <input class="form-control date" data-val="true" data-val-date="The field date_end must be a date." name="BaoGiaTemView.date_end" value="" type="hidden">
-                                    Chờ cập nhật
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-4" for="status">Trạng thái</label>
-                                <div class="col-md-8" style="padding-top: 7px">
-                                    Tạo mới báo giá
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-4">Hoa hồng</label>
-                                <div class="col-md-8" style="padding-top: 7px">
-                                    Chưa cập nhập
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <table class="table table-striped table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th width="150px" align="center" valign="middle">
-
-                                        Tên sản phẩm
-                                    </th>
-                                    <th width="100px" align="center" valign="middle">
-                                        Số lớp
-                                    </th>
-                                    <th width="*" align="center" valign="middle">
-                                        Loại giấy
-                                    </th>
-                                    <th width="100px" align="center" valign="middle">
-                                        Quy trình
-                                    </th>
-                                    @*<th width="130px" align="center" valign="middle">
-                                        Dán/Kim
-                                    </th>*@
-                                    <th width="150px" align="center" valign="middle">
-                                        Quy Cách (cm)
-                                    </th>
-                                    <th width="130px" class="date_deliver" align="center" valign="middle">
-                                        Ngày giao hàng
-                                    </th>
-                                    <th width="130px" class="address_deliver" align="center" valign="middle">
-                                        Địa chỉ giao hàng
-                                    </th>
-                                    <th width="150px" align="center" valign="middle">
-                                        Giá
-                                    </th>
-                                    <th width="100px" align="center" valign="middle">
-                                        Số lượng
-                                    </th>
-                                    <th width="80px" align="center" valign="middle">
-                                        Làm mẫu
-                                    </th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody class="body_data">
-                                <tr>
-                                    <td align="center">
-                                        <input class="form-control text-box single-line NameProducts1" default-value="" name="NameProducts" type="text">
-                                    </td>
-                                    <td align="center">
-                                        <input class="form-control text-box single-line SolopProducts1" value="1" step="2" default-value="1" min="1" name="SolopProducts" type="number">
-                                    </td>
-                                    <td align="center">
-                                        <select name="LoaigiayProducts" default-value="0" class="form-control valid LoaigiayProducts1">
-                                            <option value="0">Chọn loại giấy</option>
-                                            <option value="3 lớp: 2 Vàng 1 Xeo">3 lớp: 2 Vàng 1 Xeo</option>
-                                            <option value="3 lớp: 1 Trắng 1 Xeo 1 Vàng">3 lớp: 1 Trắng 1 Xeo 1 Vàng</option>
-                                            <option value="3 lớp: 1 Đài Loan 1 Xeo 1 Vàng">3 lớp: 1 Đài Loan 1 Xeo 1 Vàng</option>
-                                            <option value="5 lớp: 2 Vàng 3 Xeo">5 lớp: 2 Vàng 3 Xeo</option>
-                                            <option value="5 lớp: 1 Trắng 1 Vàng 3 Xeo">5 lớp: 1 Trắng 1 Vàng 3 Xeo</option>
-                                            <option value="5 lớp: 1 Đài Loan 1 Vàng 3 Xeo">5 lớp: 1 Đài Loan 1 Vàng 3 Xeo</option>
-                                            <option value="2 lớp: 1 Vàng 1 Xeo - sóng E">2 lớp: 1 Vàng 1 Xeo - sóng E</option>
-                                            <option value="2 lớp: 1 Vàng 1 Xeo - sóng C">2 lớp: 1 Vàng 1 Xeo - sóng C</option>
-                                            <option value="2 lớp: 1 Trắng 1 Xeo - sóng E">2 lớp: 1 Trắng 1 Xeo - sóng E</option>
-                                        </select>
-
-                                    </td>
-                                    <td align="center">
-                                        <select name="OffsetFlexoProducts" default-value="Offset" class="form-control">
-                                            <option value="Offset">2</option>
-                                            <option value="Flexo">1</option>
-                                        </select>
-                                    </td>
-                                    @*<td align="center">
-                                        <select name="DanKimProducts" default-value="Dán keo" class="form-control">
-                                            <option value="Dán keo">Dán keo</option>
-                                            <option value="Đóng kim">Đóng kim</option>
-                                        </select>
-                                    </td>*@
-                                    <td align="center" style="width: 15%">
-                                        <div class="row">
-                                            <div class="col-lg-3">
-                                                <input class=" text-box single-line QuyCachProducts1dai cusinputsmall" default-value="" type="text">
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <input class=" text-box single-line QuyCachProducts1rong cusinputsmall" default-value="" type="text">
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <input class="text-box single-line QuyCachProducts1cao cusinputsmall" default-value="" type="text">
-                                                <input class="form-control text-box single-line QuyCachProducts cusinputsmall hidden" default-value="" name="QuyCachProducts" type="text">
-                                            </div>
-                                        </div>
-
-
-
-                                    </td>
-                                    <td align="center" class="date_deliver">
-                                        <input class="form-control  date" default-value="" name="date_deliver" type="text">
-                                    </td>
-                                    <td align="center" class="address_deliver">
-                                        <input class="form-control" default-value="" name="address_deliver" type="text">
-                                    </td>
-                                    <td align="center">
-                                        <input class="form-control text-box single-line GiaProducts1" name="GiaProducts" step="500" min="0" default-value="0" value="0" type="number">
-                                    </td>
-                                    <td align="center">
-                                        <input class="form-control text-box single-line SoLuong1" default-value="1" min="1" name="SoLuong" value="1" type="number">
-                                    </td>
-                                    <td align="center">
-                                        <select name="Design" default-value="0" class="form-control">
-                                            <option value="0">Không</option>
-                                            <option value="1">Có</option>
-                                        </select>
-                                    </td>
-                                    <td align="center"><input type="submit" style="float: left; margin-left: 10px" value="Thêm" class="btn btn-primary" onclick=" updateProduct(this); return false; " /></td>
-
-                                </tr>
-
-                                @foreach (BaoGiaTemDetailView item in Model.BaoGiaTemView.BaoGiaTemDetailViews)
-                                {
-                                    <tr id="ext_@item.ID_Products" class="tr_edit">
-                                        <input type="hidden" value="@item.ID_Products" name="BaoGiaTemView.BaoGiaTemDetailViews.Index">
-                                        <input type="hidden" value="@item.ID_Products" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].ID_Products">
-                                        <td>@item.NameProducts<input type="hidden" value="@item.NameProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].NameProducts" class="NameProducts"></td>
-                                        <td>@item.SolopProducts<input type="hidden" value="@item.SolopProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].SolopProducts" class="SolopProducts"></td>
-                                        <td>@item.LoaigiayProducts<input type="hidden" value="@item.LoaigiayProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].LoaigiayProducts" class="LoaigiayProducts"></td>
-                                        <td>@item.OffsetFlexoProducts<input type="hidden" value="@item.OffsetFlexoProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].OffsetFlexoProducts" class="OffsetFlexoProducts"></td>
-                                      
-                                        <td>@item.QuyCachProducts<input type="hidden" value="@item.QuyCachProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].QuyCachProducts" class="QuyCachProducts"></td>
-                                        <td><input type="text" class="form-control  date_deliver updateSL date" value="@item.date_deliver" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].date_deliver"></td>
-                                        <td><input type="text" class="form-control  address_deliver updateSL " value="@item.address_deliver" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].address_deliver"></td>
-                                        <td><input type="number" min="0" step="500" class="form-control text-box single-line GiaProducts updateSL" value="@item.GiaProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].GiaProducts"></td>
-                                        <td><input type="number" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].SoLuong" value="@item.SoLuong" min="1" class="form-control text-box single-line updateSL SoLuong"></td>
-                                        <td>@if (!item.Design.HasValue || item.Design.Value == 0)
-                                            {
-                                                @("Không")
-                                            }
-                                            else if (item.Design.Value == 2)
-                                            {
-                                                <button type="button" class="btn btn-info btn-outline btn-sm" data-toggle="modal" data-target="#chitietmau_@(item.id)">Chi tiết mẫu</button>
-
-                                                @*if (!String.IsNullOrEmpty(item.Design_Img))
-                                                {
-                                                    <a href="/Upload/ThietKe/@(item.id)_@(item.Design_Img)" target="_blank">@item.Design_Date.Value.ToString("dd/MM/yyyy")</a>
-                                                    }
-                                                else
-                                                {
-                                                    @(item.Design_Date.HasValue ? item.Design_Date.Value.ToString("dd/MM/yyyy") : "Chưa update")
-                                                }*@
-                                            }
-                                            else
-                                            {
-                                                @("Chưa cập nhật")
-                                            }
-                                                                                
-                                            <input type="hidden" value="@item.Design.Value" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].Design" class="Design">                                                                                
-                                            <input type="hidden" value="@item.Design_Img" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].Design_Img" class="Design">
-                                            <input type="hidden" value="@item.Design_Date" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].Design_Date" class="Design">
-                                            <input type="hidden" value="@item.loai_design" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].loai_design" class="Design">
-                                        </td>
-
-
-
-                                        <td><input type="submit" onclick=" delProduct(this); return false; " class="btn btn-primary" value="Xóa" style="float: left; margin-left: 10px"></td>
-                                    </tr>
-                                }
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.col-lg-12 -->
-                </div>
-            </div>
-        </div>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                updateEvent();
-            });
-        </script>
-    }
+ 
 
 
     <div class="panel panel-default">
@@ -691,10 +450,7 @@
                
                 @Html.ActionLink("In báo giá", "PrintOrder", new {Model.BaoGiaTemView.id}, new {@class = "btn btn-primary", @target = "_bank", @style = "float: right; margin-right: 10px"})
                
-                @if (Model.BaoGiaTemView.status.Value == 0)
-                {
-                    <input type="button" data-target="#modal-container" data-toggle="modal" style="float: right; margin-right: 10px" value="Cập nhật kết quả" class="btn btn-primary" />
-                }
+              
                 @if (Model.BaoGiaTemView.status.Value == 2 && Model.action == 0)
                 {
                     <input type="submit" style="float: right; margin-right: 10px" value="Thêm mới báo giá" class="btn btn-primary" onclick=" AddNewBaoGia(); return false; " />
@@ -717,7 +473,9 @@
 
                             <label class="control-label col-md-4" for="total_money">Tổng tiền</label>
                             <div class="col-md-8" style="padding-top: 7px">
-                                @Model.BaoGiaTemView.total_money.Value.ToString("n2") đ
+                                <input class="form-control BaoGiaTemView_total_money" data-val="true" data-val-number="The field total_money must be a number." name="BaoGiaTemView.total_money" value="@Model.BaoGiaTemView.total_money.Value" type="hidden">
+                                <span id="BaoGiaTemView_total_money">@(Model.BaoGiaTemView.total_money.Value.ToString("n2"))</span> đ
+                              
                             </div>
                         </div>
 
@@ -794,8 +552,8 @@
                                 <th>
                                     Quy Cách (cm)
                                 </th>
-                                <th width="130px" class="date_deliver" align="center" valign="middle">
-                                    Ngày giao hàng
+                                <th width="130px" class="datenumber" align="center" valign="middle">
+                                    Giao hàng sau(ngày)
                                 </th>
                                 <th width="130px" class="address_deliver" align="center" valign="middle">
                                     Địa chỉ giao hàng
@@ -817,15 +575,16 @@
                         <tbody class="body_data">
                             @foreach (BaoGiaTemDetailView item in Model.BaoGiaTemView.BaoGiaTemDetailViews)
                             {
-                                <tr>
+                                <tr id="@item.id">
                                     @*<td>@item.NameProducts</td>*@
-                                    
+
                                     <td>
-                                    <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews.Index" value="@item.id"/>
-                                    <input type="text" class="form-control text-box single-line NameProducts1" value="@item.NameProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].NameProducts"></td>
+                                        <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews.Index" value="@item.id" />
+                                        <input type="text" class="form-control text-box single-line NameProducts1" value="@item.NameProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].NameProducts">
+                                    </td>
                                     <td>
-                                    
-                                        <select id="SolopProducts_@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].SolopProducts"  class="form-control valid SolopProducts SolopProducts1">
+
+                                        <select id="SolopProducts_@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].SolopProducts" class="form-control valid SolopProducts SolopProducts1">
                                             <option value="0">Chọn số lớp</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -850,12 +609,13 @@
                                             <option value="2 lớp: 1 Trắng 1 Xeo - sóng E">2 lớp: 1 Trắng 1 Xeo - sóng E</option>
                                         </select>
                                         <script>
-                                           
+
                                             document.getElementById("LoaigiayProducts_@item.id").value= $('<select />').html("@item.LoaigiayProducts").text();
 
                                         </script>
                                     </td>
-                                    <td><select id="OffsetFlexoProducts_@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].OffsetFlexoProducts" onchange="OffsetFlexoProductsUpdate(this); " default-value="Offset" class="form-control">
+                                    <td>
+                                        <select id="OffsetFlexoProducts_@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].OffsetFlexoProducts" onchange="OffsetFlexoProductsUpdate(this); " default-value="Offset" class="form-control">
 
                                             <option value="FLEXO - BẤM KIM">1 - FLEXO - BẤM KIM</option>
                                             <option value="FLEXO - DÁN">2 - FLEXO - DÁN</option>
@@ -864,27 +624,27 @@
                                             <option value="OFFSET -Bế - BK">5 - OFFSET -Bế - BK</option>
                                             <option value="OFFSET - Bế - DÁN">6 - OFFSET - Bế - DÁN</option>
                                         </select>
-                                    
+
                                         <script>
-    document.getElementById("OffsetFlexoProducts_@item.id").value=$('<select />').html("@item.OffsetFlexoProducts").text()
+                                            document.getElementById("OffsetFlexoProducts_@item.id").value = $('<select />').html("@item.OffsetFlexoProducts").text();
 
                                         </script>
                                     </td>
-                                   
-                                  
+
+
                                     <td align="center">
-                                        <input class="form-control text-box single-line QuyCachProducts" value="@item.QuyCachProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].QuyCachProducts" type="text">
+                                        <input class="form-control text-box single-line QuyCachProducts" value="@item.QuyCachProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].QuyCachProducts" type="text">
                                     </td>
-                                    <td><input type="text" class="form-control  date_deliver updateSL date" value="@item.date_deliver" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].date_deliver"></td>
-                                    <td><input type="text" class="form-control  address_deliver updateSL " value="@item.address_deliver" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].address_deliver"></td>
-                                    <td><input type="number" min="0" step="500" class="form-control text-box single-line GiaProducts updateSL" value="@item.GiaProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].GiaProducts"></td>
-                                    <td><input type="number" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.ID_Products].SoLuong" value="@item.SoLuong" min="1" class="form-control text-box single-line updateSL SoLuong"></td>
+                                    <td><input type="text" class="form-control  datenumber" value="@item.datenumber" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].datenumber"></td>
+                                    <td><input type="text" class="form-control  address_deliver" value="@item.address_deliver" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].address_deliver"></td>
+                                    <td><input type="number" min="0" step="500" class="form-control text-box single-line GiaProducts updateSL" value="@item.GiaProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].GiaProducts"></td>
+                                    <td><input type="number" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].SoLuong" value="@item.SoLuong" min="1" class="form-control text-box single-line updateSL SoLuong"></td>
 
                                     @*<td>@double.Parse(item.GiaProducts).ToString("n2") đ</td>
-                                    <td>
-                                        @item.SoLuong
-                                        <input id="id_update_tk_@(item.id)_value" class="input_tk_value" type="hidden" value="@(item.Design.HasValue ? (item.Design.Value + "") : "0")" />
-                                    </td>*@
+                                        <td>
+                                            @item.SoLuong
+                                            <input id="id_update_tk_@(item.id)_value" class="input_tk_value" type="hidden" value="@(item.Design.HasValue ? (item.Design.Value + "") : "0")" />
+                                        </td>*@
                                     <td id="id_update_tk_@item.id">
                                         @if (!item.Design.HasValue || item.Design.Value == 0)
                                         {
@@ -1099,7 +859,7 @@
                                         Quy Cách (cm)
                                     </th>
                                     <th width="130px" class="date_deliver" align="center" valign="middle">
-                                        Ngày giao hàng
+                                       Giao hàng sau (ngày)
                                     </th>
                                     <th width="130px" class="address_deliver" align="center" valign="middle">
                                         Địa chỉ giao hàng
@@ -1126,7 +886,7 @@
                                         <td>@item.OffsetFlexoProducts</td>
                                         @*<td>@item.DanKimProducts</td>*@
                                         <td>@item.QuyCachProducts</td>
-                                        <td>@item.date_deliver</td>
+                                        <td>@item.datenumber</td>
                                         <td>@item.address_deliver</td>
                                         <td>@double.Parse(item.GiaProducts).ToString("n2") đ</td>
                                         <td>@item.SoLuong</td>

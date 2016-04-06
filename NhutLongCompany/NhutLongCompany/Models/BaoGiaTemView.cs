@@ -19,6 +19,8 @@ namespace NhutLongCompany.Models
         public Nullable<double> commission_money { get; set; }
         public string address_deliver { get; set; }
         public Nullable<System.DateTime> date_deliver { get; set; }
+
+        public int? datenumber { get; set; }
         public List<String> PrintTen { get; set; }
         public List<int> PrintSoLop { get; set; }
         public List<String> PrintLoaiGiay { get; set; }
