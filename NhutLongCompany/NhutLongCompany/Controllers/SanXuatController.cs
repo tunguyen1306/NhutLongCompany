@@ -768,11 +768,11 @@ namespace NhutLongCompany.Controllers
                 {
                     if (listNext[i].ThucHien.Value == 1)
                     {
-                        listNext[i].NgayBatDau_TT = DateTime.Now;
-                        listNext[i].TrangThai = 1;
-                        db.Entry(listNext[i]).State = EntityState.Modified;
-                        tbl_OrderTem_BaoGia_Detail.step_index = listNext[i].ThuTu;
-                        db.Entry(tbl_OrderTem_BaoGia_Detail).State = EntityState.Modified;
+                        //listNext[i].NgayBatDau_TT = DateTime.Now;
+                        //listNext[i].TrangThai = 1;
+                        //db.Entry(listNext[i]).State = EntityState.Modified;
+                        //tbl_OrderTem_BaoGia_Detail.step_index = listNext[i].ThuTu;
+                        //db.Entry(tbl_OrderTem_BaoGia_Detail).State = EntityState.Modified;
 
                         break;
                     }

@@ -77,8 +77,58 @@
                 }
             }
 
-                                <td width="@((float)100 / (float)(11))%" class="cusfontsize1 custt" style="color:@color_char;background-color:@color;vertical-align: middle; padding-left: 5px !important;">
+                                <td width="@((float)100 / (float)(11))%" class="cusfontsize1 custt" style="position:relative;color:@color_char;background-color:@color;vertical-align: middle; padding-left: 5px !important;">
+                                    <span data-placement="bottom" data-toggle="popover" data-container="body" data-ref='tooltip_@(item.id)_@itemQT.ID' data-html="true" style="position:absolute;top:1px;right:1px" class="glyphicon glyphicon-info-sign viewToolTip"></span>
 
+                                    <div id="tooltip_@(item.id)_@itemQT.ID" style="display:none">
+                                        <table style="background-color:khaki;color:black;text-align:left;vertical-align:middle;width:330px">
+
+                                            <tr>
+                                                <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Tên sản phẩm</td>
+                                                <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.NameProducts</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Số lớp</td>
+                                                <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.SolopProducts</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Loại giấy</td>
+                                                <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.LoaigiayProducts</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Quy trình</td>
+                                                <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.OffsetFlexoProducts</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Quy Cách (cm)</td>
+                                                <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.QuyCachProducts</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Ngày giao hàng</td>
+                                                <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.date_deliver</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Địa chỉ giao hàng</td>
+                                                <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.address_deliver</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Giá</td>
+                                                <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.GiaProducts</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Số lượng</td>
+                                                <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@item.SoLuong</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Làm mẫu</td>
+                                                <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@((!item.Design.HasValue || item.Design.Value == 0) ? "Không" : "Có")</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="cusfontsize2" width="35%" style="text-align:left;vertical-align:middle;font-weight:bold">Công đoạn</td>
+                                                <td class="cusfontsize2" style="text-align:left;vertical-align:middle">@(itemQT.TenBuoc + " (" + (itemQT.NgayBatDau_TT.HasValue ? itemQT.NgayBatDau_TT.Value.ToString("dd/MM/yyyy") : "bắt đầu") + " - " + (itemQT.NgayKetThuc_TT.HasValue ? itemQT.NgayKetThuc_TT.Value.ToString("dd/MM/yyyy") : "kết thúc") + ")")</td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                     <span>
                                         @if (itemQT.NgayBatDau_TT.HasValue)
                                         {
@@ -105,10 +155,11 @@
 
                                             @*<span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQT.TrangThai.Value==1?"2":"1"),@item.id,@itemQT.ID,2)">Kết thúc</span>*@
 
-                                    
-                                            <span style="cursor:pointer;width:65px" id="item_@itemQT.ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQT.TrangThai.Value==1?"2":"1"),@item.id,@itemQT.ID,2)">Kết thúc</span>
-                                            if (itemQT.TrangThai.Value == 1 && (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
-                                            {
+
+                                        if (itemQT.TrangThai.Value == 1 && (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
+                                        {
+
+                                                <span style="cursor:pointer;width:65px" id="item_@itemQT.ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQT.TrangThai.Value==1?"2":"1"),@item.id,@itemQT.ID,2)">Kết thúc</span>
                                                 <br />
                                                 <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@item.id);">tạm dừng</span>
                                             }
@@ -117,8 +168,13 @@
                                                 
                                                 <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@item.id); onContinue(); return false;">tiếp tục</span>
                                                 <script type="text/javascript">
-                                                    document.getElementById('item_@itemQT.ID').style.display = 'none';
+                                                    if (document.getElementById('item_@itemQT.ID')!=null)
+                                                        document.getElementById('item_@itemQT.ID').style.display = 'none';
                                                 </script>
+                                            }
+                                            else
+                                            {
+                                                @("Kết thúc")
                                             }
                                             if (itemQTBF == null || itemQTBF.TrangThai.Value == 2)
                                             {

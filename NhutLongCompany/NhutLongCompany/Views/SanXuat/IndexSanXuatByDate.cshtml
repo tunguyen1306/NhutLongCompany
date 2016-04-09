@@ -199,7 +199,16 @@
 
                                         if (update.HasValue && update.Value == 1 && (!item.pause.HasValue || item.pause.Value == 0))
                                         {
-                                            <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQTBF==null?"2":(itemQTBF.TrangThai.Value+"")),@item.id,@itemQT.ID,1)">Bất đầu</span>
+                                            if (itemQTBF == null || itemQTBF.TrangThai.Value == 2)
+                                            {
+                                                <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQTBF==null?"2":(itemQTBF.TrangThai.Value+"")),@item.id,@itemQT.ID,1)">Bất đầu</span>
+                                            }
+                                            else
+                                            { 
+                                                @("Bắt đầu")
+
+                                            }
+
                                         }
                                         else
                                         {
@@ -221,9 +230,11 @@
 
                                         if (update.HasValue && update.Value == 1 && (!item.pause.HasValue || item.pause.Value == 0))
                                         {
-                                            <span style="cursor:pointer;width:65px" id="item_@itemQT.ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQT.TrangThai.Value==1?"2":"1"),@item.id,@itemQT.ID,2)">Kết thúc</span>
+                                          
+
                                             if (itemQT.TrangThai.Value == 1 && (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
                                             {
+                                                <span style="cursor:pointer;width:65px" id="item_@itemQT.ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQT.TrangThai.Value==1?"2":"1"),@item.id,@itemQT.ID,2)">Kết thúc</span>
                                                 <br />
                                                 <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@item.id);">tạm dừng</span>
                                             }
@@ -231,8 +242,13 @@
                                             {
                                                 <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@item.id); onContinue(); return false;">tiếp tục</span>
                                                 <script type="text/javascript">
-                                                    document.getElementById('item_@itemQT.ID').style.display = 'none';
+                                                    if (document.getElementById('item_@itemQT.ID')!=null)
+                                                        document.getElementById('item_@itemQT.ID').style.display = 'none';
                                                 </script>
+                                            }
+                                            else
+                                            {
+                                                @("Kết thúc")
                                             }
                                             if (itemQTBF == null || itemQTBF.TrangThai.Value == 2)
                                             {
