@@ -41,8 +41,8 @@
       </mvcSiteMapNode>
       <mvcSiteMapNode title="Thông tin Báo Giá" controller="tbl_OrderTem" action="IndexBaoGia">
         <mvcSiteMapNode title="Thêm báo giá" controller="tbl_OrderTem" action="Create"/>
-        <mvcSiteMapNode title="Sửa báo giá" controller="tbl_OrderTem" action="EditBaoGia" preservedRouteParameters="id"/> 
-  
+        <mvcSiteMapNode title="Sửa báo giá" controller="tbl_OrderTem" action="EditBaoGia" preservedRouteParameters="id"/>
+        <mvcSiteMapNode title="In báo giá" controller="tbl_OrderTem" action="PrintOrder" preservedRouteParameters="id"/>
    
       </mvcSiteMapNode>
     </mvcSiteMapNode>

@@ -13,10 +13,11 @@
 <!-- /.row -->
 @using (Html.BeginForm())
 {
-
+    <a href="javascript:window.print()" class="btn btn-primary">In báo giá</a>
+    <a href="@Url.Action("IndexBaoGia","tbl_OrderTem")" class="btn btn-primary">Trở về</a>
 
     @Html.AntiForgeryToken()
-    <div class="container">
+    <div class="container" style="width:900px!important">
         <div class="row">
             <div class="col-xs-5 print-header print-header-title">
                 Bảng báo giá

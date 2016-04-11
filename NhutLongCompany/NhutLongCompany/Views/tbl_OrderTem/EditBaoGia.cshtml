@@ -448,7 +448,7 @@
             <div class="row">
                 <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count + 1)</span>
                
-                @Html.ActionLink("In báo giá", "PrintOrder", new {Model.BaoGiaTemView.id}, new {@class = "btn btn-primary", @target = "_bank", @style = "float: right; margin-right: 10px"})
+                @Html.ActionLink("In báo giá", "PrintOrder", new {Model.BaoGiaTemView.id}, new {@class = "btn btn-primary",  @style = "float: right; margin-right: 10px"})
                
               
                 @if (Model.BaoGiaTemView.status.Value == 2 && Model.action == 0)
@@ -760,7 +760,7 @@
                 <div class="row">
                     <span style="margin-left: 10px; line-height: 33px">Báo giá lần @(Model.BaoGiaTemViews.Count - i)</span>
 
-                    @Html.ActionLink("In báo giá", "PrintOrder", new {Model.BaoGiaTemViews[i].id}, new {@class = "btn btn-primary", @target = "_bank", @style = "float: right; margin-right: 10px"})
+                    @Html.ActionLink("In báo giá", "PrintOrder", new {Model.BaoGiaTemViews[i].id}, new {@class = "btn btn-primary",  @style = "float: right; margin-right: 10px"})
 
 
 
