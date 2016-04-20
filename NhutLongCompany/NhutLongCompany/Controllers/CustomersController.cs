@@ -75,9 +75,16 @@ namespace NhutLongCompany.Controllers
           
             if (ModelState.IsValid)
             {
-                db.tbl_Customers.Add(tbl_Customers);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+
+                var listCus = from a in db.tbl_Customers where a.CodeCustomers == tbl_Customers.CodeCustomers  select a;
+                if (listCus.ToList().Count == 0)
+                {
+                    db.tbl_Customers.Add(tbl_Customers);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewData["mess"] = "Mã khách hàng đã tồn tại";               
             }
 
             return View(tbl_Customers);
@@ -111,9 +118,14 @@ namespace NhutLongCompany.Controllers
            
             if (ModelState.IsValid)
             {
-                db.Entry(tbl_Customers).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var listCus= from a in db.tbl_Customers where a.CodeCustomers == tbl_Customers.CodeCustomers && a.IDCustomers != tbl_Customers.IDCustomers select a;
+                if (listCus.ToList().Count==0)
+                {
+                    db.Entry(tbl_Customers).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewData["mess"] = "Mã khách hàng đã tồn tại";
             }
             return View(tbl_Customers);
         }
