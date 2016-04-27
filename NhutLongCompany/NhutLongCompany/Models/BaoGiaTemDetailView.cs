@@ -48,5 +48,6 @@ namespace NhutLongCompany.Models
 
         public int? pause { get; set; }
         public tbl_OrderTemPause tbl_OrderTemPause;
+        public String order_code;
     }
 }
