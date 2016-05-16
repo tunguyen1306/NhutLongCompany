@@ -155,7 +155,7 @@
 
             if ($('.selectcustomer').val() == '0') {
                 $('.lblselectcustomer').addClass('hidden');
-                $('.selectcustomer').after('<label class="errorLabel lblselectcustomer">Chọn tên khách hàng</label>');
+                $('.selectcustomer').after('<label class="errorLabel lblselectcustomer">Chọn tên công ty</label>');
 
                 m++;
             } else {
@@ -339,7 +339,7 @@
                                                                   <option value="0">Chọn danh sách</option>
                                                                   @foreach (tbl_Customers item in Model.tbl_Customers)
                                                                   {
-                                                                      <option @((Model.customer_id.HasValue && item.IDCustomers == Model.customer_id.Value) ? "selected=\"selected\"" : "") value="@(item.IDCustomers + "-" + item.CodeCustomers + "-" + item.CongTyCustomers + "-" + item.EmailCustomers + "-" + item.DiaChiCustomers)">@item.NameCustomers</option>
+                                                                      <option @((Model.customer_id.HasValue && item.IDCustomers == Model.customer_id.Value) ? "selected=\"selected\"" : "") value="@(item.IDCustomers + "-" + item.CodeCustomers + "-" + item.CongTyCustomers + "-" + item.EmailCustomers + "-" + item.DiaChiCustomers)">@item.CongTyCustomers</option>
                                                                   }
                                                               </select></div>
                                         <div class="col-lg-6"><a class="btn btn-primary pull-right" href="@Url.Action("Index", "Customers")">Thêm mới khách hàng</a></div>
