@@ -538,7 +538,6 @@ namespace NhutLongCompany.Controllers
             return View(list);
 
             
-            return View();
 
         }
 
@@ -1488,7 +1487,7 @@ namespace NhutLongCompany.Controllers
             tbl_OrderTem tbl_OrderTem = db.tbl_OrderTem.Find(id);
             db.tbl_OrderTem.Remove(tbl_OrderTem);
             db.SaveChanges();
-            return RedirectToAction("Index", new { id = tbl_OrderTem.customer_id });
+            return RedirectToAction("ThongTinDonHang", new { id = tbl_OrderTem.customer_id });
         }
 
         [ActionAuthorizeAttribute("DonHang")]
