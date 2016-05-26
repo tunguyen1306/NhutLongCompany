@@ -44,7 +44,8 @@ namespace NhutLongCompany.Controllers
             List<BaoGiaTemDetailView> list = querySanPhamSanXuat.ToList();
             foreach (var item in list)
             {
-                item.Timer = (int)DateTime.Parse(item.date_deliver.Value.ToShortDateString()).Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays;
+                item.Timer = item.date_deliver.HasValue ? ((int)item.date_deliver.Value.Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays == null ? 0 :
+(int)item.date_deliver.Value.Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays) : 0;
                 var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(item.id)  orderby u.ThuTu ascending select u;
                 item.QuyTrinhs = queryQT.ToList<tbl_QuyTrinh>();
                 var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(item.id) orderby a.id descending select a).Take(1);
