@@ -82,9 +82,9 @@
                     <td class="cusfontsize2" colspan="20" style="position:relative">
 
                         @*<span class="glyphicon glyphicon-menu-up move-up" style="cursor:pointer;position:absolute;right:10px;top:5px;"></span>
-                            <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 10px;top: 15px;"></span>*@
+    <span class="glyphicon glyphicon-menu-down move-down" style="cursor:pointer;position: absolute;right: 10px;top: 15px;"></span>@item.date_deliver.Value.ToString("dd/MM/yyyy")*@
                         @item.Code_Detail - @item.NameProducts <i>
-                            (Số lượng:@(item.SolopProducts.Value) - Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))
+                            (Số lượng:@(item.SolopProducts.Value) - Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:)
                             <input type="hidden" value="@item.id" />
                         </i>
                         @if (colorB == "gray")
