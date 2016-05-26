@@ -10,22 +10,12 @@
 
 <script type="text/javascript">
     $(function () {
-        if ($('.selectQuyCach').val() == "0") {
-            $('.cl3o').removeClass('hidden');
-            $('.cl2o').addClass('hidden');
-
-        } else {
-            $('.cl2o').removeClass('hidden');
-            $('.cl3o').addClass('hidden');
-        }
-        $('.selectQuyCach').change(function() {
-            if ($('.selectQuyCach').val() == "0") {
-                $('.cl3o').removeClass('hidden');
-                $('.cl2o').addClass('hidden');
-               
+        
+        $('.selectQuyCach').change(function () {          
+            if ($(this).val() == 1) {
+                $('.QuyCachProducts1caoLO').eq(0).css('display', 'none');
             } else {
-                $('.cl2o').removeClass('hidden');
-                $('.cl3o').addClass('hidden');
+                $('.QuyCachProducts1caoLO').eq(0).css('display', '');
             }
         });
     });
@@ -105,49 +95,21 @@
         var m = 0;
        
             if ($('.selectQuyCach').val() == "0") {
-                $('.cl3o').removeClass('hidden');
-                $('.cl2o').addClass('hidden');
-
-                if ($('.QuyCachProducts1dai').val() == '') {
-                    $('.lblQuyCachProductsdai').addClass('hidden');
-                    $('.QuyCachProducts1dai').after('<label class="errorLabel lblQuyCachProductsdai">Nhập dài</label>');
-                    m++;
-                } else {
+                if ($('.QuyCachProducts1dai').val() == '' || $('.QuyCachProducts1rong').val() == '' || $('.QuyCachProducts1cao').val() == '') {
                     $('.lblQuyCachProducts').addClass('hidden');
-                }
-                if ($('.QuyCachProducts1rong').val() == '') {
-                    $('.lblQuyCachProductsrong').addClass('hidden');
-                    $('.QuyCachProducts1rong').after('<label class="errorLabel lblQuyCachProductsrong">Nhập rộng</label>');
+                    $('.QuyCachProductsLO').after('<label class="errorLabel lblQuyCachProducts">Nhập quy cách</label>');
                     m++;
-                } else {
+                }  else {
                     $('.lblQuyCachProducts').addClass('hidden');
-                }
-                if ($('.QuyCachProducts1cao').val() == '') {
-                    $('.lblQuyCachProductscao').addClass('hidden');
-                    $('.QuyCachProducts1cao').after('<label class="errorLabel lblQuyCachProductscao">Nhập cao</label>');
-                    m++;
-                } else {
-                    $('.lblQuyCachProductscao').addClass('hidden');
                 }
 
             } else {
-                $('.cl2o').removeClass('hidden');
-                $('.cl3o').addClass('hidden');
-
-
-                if ($('.QuyCachProducts1ngang').val() == '') {
-                    $('.lblQuyCachProductsngang').addClass('hidden');
-                    $('.QuyCachProducts1ngang').after('<label class="errorLabel lblQuyCachProductsngang">Nhập dài</label>');
+                if ($('.QuyCachProducts1dai').val() == '' || $('.QuyCachProducts1rong').val() == '') {
+                    $('.lblQuyCachProducts').addClass('hidden');
+                    $('.QuyCachProductsLO').after('<label class="errorLabel lblQuyCachProducts">Nhập quy cách</label>');
                     m++;
-                } else {
-                    $('.lblQuyCachProductsngang').addClass('hidden');
-                }
-                if ($('.QuyCachProducts1doc').val() == '') {
-                    $('.lblQuyCachProductsdoc').addClass('hidden');
-                    $('.QuyCachProducts1doc').after('<label class="errorLabel lblQuyCachProductsdoc">Nhập rộng</label>');
-                    m++;
-                } else {
-                    $('.lblQuyCachProductsdoc').addClass('hidden');
+                }else {
+                    $('.lblQuyCachProducts').addClass('hidden');
                 }
                
             }
@@ -200,7 +162,8 @@
             $('.lblLoaigiayProducts').addClass('hidden');
         }
         if (m == 0) {
-
+           
+            $('.lblQuyCachProducts').addClass('hidden');
             $('.lblNameProducts').addClass('hidden');
             $('.lblQuyCachProductsdai').addClass('hidden');
             $('.lblQuyCachProductsrong').addClass('hidden');
@@ -227,20 +190,23 @@
             var trdata = "<tr class='tr_edit' id='ext_" + id + "'><input name='BaoGiaTemView.BaoGiaTemDetailViews.Index' value='" + id + "' type='hidden'/><input name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "].ID_Products' value='' type='hidden'/>";
             tr.find('.form-control').each(function() {
 
+                if (this.name != "")
+                {
+                 
+                    if ($(this).attr('name') == 'SoLuong') {
+                        trdata += "<td class='" + this.name + "'><input class='form-control text-box single-line updateSL " + this.name + "'  min='1' value='" + this.value + "' type='number' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "'/></td>";
+                    } else {
+                        var text = this.value;
+                        if ($(this).attr('name') == 'GiaProducts') {
+                            text = numberParse(this.value) + " đ";
+                        }
+                        if ($(this).attr('name') == 'Design') {
+                            text = this.value == 1 ? "có" : "không";
+                        }
 
-                if ($(this).attr('name') == 'SoLuong') {
-                    trdata += "<td class='" + this.name + "'><input class='form-control text-box single-line updateSL " + this.name + "'  min='1' value='" + this.value + "' type='number' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "'/></td>";
-                } else {
-                    var text = this.value;
-                    if ($(this).attr('name') == 'GiaProducts') {
-                        text = numberParse(this.value) + " đ";
+
+                        trdata += "<td class='" + this.name + "'>" + text + "<input class='" + this.name + "' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "' value='" + this.value + "' type='hidden'/></td>";
                     }
-                    if ($(this).attr('name') == 'Design') {
-                        text = this.value == 1 ? "có" : "không";
-                    }
-
-
-                    trdata += "<td class='" + this.name + "'>" + text + "<input class='" + this.name + "' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "' value='" + this.value + "' type='hidden'/></td>";
                 }
                 this.value = $(this).attr('default-value');
             });
@@ -464,7 +430,7 @@
 
                 </div>
             </div>
-            <div class="row">
+            <div class="row" style="min-width:1500px;">
                 <div class="col-lg-12">
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
@@ -498,7 +464,7 @@
                                 <th width="100px" align="center" valign="middle">
                                     Số lượng
                                 </th>
-                                <th width="80px" align="center" valign="middle">
+                                <th width="100px" align="center" valign="middle">
                                     Làm mẫu
                                 </th>
                                 <th></th>
@@ -538,7 +504,7 @@
 
                                 </td>
                                 <td align="center" style="width: 10%">
-                                    <select name="OffsetFlexoProducts" onchange=" OffsetFlexoProductsUpdate(this); " default-value="Offset" class="form-control">
+                                    <select name="OffsetFlexoProducts" onchange="OffsetFlexoProductsUpdate(this); " default-value="Offset" class="form-control">
 
                                         <option value="FLEXO - BẤM KIM">1 - FLEXO - BẤM KIM</option>
                                         <option value="FLEXO - DÁN">2 - FLEXO - DÁN</option>
@@ -549,47 +515,38 @@
                                     </select>
                                 </td>
                              
-                                <td style="width: 20%">
-                                    <div class="row">
-                                      
-                                            <div class="col-lg-2">
-                                                
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select default-value="0" class="selectQuyCach">
+                                <td style="width: 200px;">
+                                   
+
+                                    <table style="width:100%" class="QuyCachProductsLO">
+                                        <tr>
+                                            <td>
+                                                <select class="selectQuyCach form-control valid" default-value="0" >
                                                     <option value="0">chọn dài x rộng x cao</option>
                                                     <option value="1">chọn dài x rộng</option>
                                                 </select>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                
-                                            </div>
-                                       
-                                       
-                                    </div>
-                                    <div class="row cl3o hidden">
-                                        <div class="col-lg-4">
-                                            <input class=" text-box single-line QuyCachProducts1dai cusinputsmall" default-value=""  type="text">
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input class=" text-box single-line QuyCachProducts1rong cusinputsmall" default-value=""  type="text">
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input class="text-box single-line QuyCachProducts1cao cusinputsmall" default-value="" type="text">
-                                           
-                                        </div>
-                                    </div>
-                                    <div class="row cl2o hidden">
-                                        <div class="col-lg-6">
-                                            <input class=" text-box single-line QuyCachProducts1ngang cusinputsmall" default-value="" type="text">
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <input class=" text-box single-line QuyCachProducts1doc cusinputsmall" default-value="" type="text">
-                                        </div>
-                                       
-                                    </div>
-                                    <input class="form-control text-box single-line QuyCachProducts cusinputsmall hidden" default-value="" name="QuyCachProducts" type="text">
+                                            </td>
 
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table style="width:100%">
+                                                    <tr>
+                                                        <td>
+                                                            <input type="number" class="form-control text-box single-line QuyCachProducts1dai cusinputsmall" default-value="0" value="0" style="width:100%">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" class="form-control text-box single-line QuyCachProducts1rong cusinputsmall" default-value="0" value="0" style="width:100%">
+                                                        </td>
+                                                        <td class="QuyCachProducts1caoLO">
+                                                            <input type="number" class="form-control text-box single-line QuyCachProducts1cao cusinputsmall" default-value="0" value="0" style="width:100%">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>                                       
+                                    </table>
+                                    <input type="text" name="QuyCachProducts" default-value="" class="form-control text-box single-line QuyCachProducts cusinputsmall hidden">
 
                                 </td>
                                 <td align="center" class="date_deliver">
