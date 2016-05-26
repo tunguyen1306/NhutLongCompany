@@ -172,17 +172,17 @@
             $('.lblSolopProducts').addClass('hidden');
             $('.lblLoaigiayProducts').addClass('hidden');
             var id = new Date().getTime();
+           
             var dai = $('.QuyCachProducts1dai').val();
             var rong = $('.QuyCachProducts1rong').val();
             var cao = $('.QuyCachProducts1cao').val();
-            var ngang = $('.QuyCachProducts1ngang').val();
-            var doc = $('.QuyCachProducts1doc').val();
+        
             var qc = "";
             if ($('.selectQuyCach').val() == "0") {
                  qc = dai + ' x ' + rong + ' x ' + cao;
 
             } else {
-                qc = ngang + ' x ' + doc;
+                qc = dai + ' x ' + rong;
             }
            
             $('.QuyCachProducts').val(qc);
@@ -550,7 +550,7 @@
 
                                 </td>
                                 <td align="center" class="date_deliver">
-                                    <input class="form-control datenumber" default-value="" name="datenumber" type="text">
+                                    <input class="form-control datenumber" default-value="" name="datenumber"  type="text">
                                 </td>
                                 <td align="center" class="address_deliver">
                                     <input class="form-control" default-value="" name="address_deliver" type="text">

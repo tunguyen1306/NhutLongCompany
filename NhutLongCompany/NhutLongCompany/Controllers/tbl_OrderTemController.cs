@@ -744,7 +744,7 @@ namespace NhutLongCompany.Controllers
             donHang.BaoGiaTemView.id = tbl_OrderTem_BaoGia.id;
 
             int countindex = 0;
-           
+            int maxDateNumber = 0;
             foreach (var item in donHang.BaoGiaTemView.BaoGiaTemDetailViews)
             {
                 countindex++;
@@ -787,10 +787,20 @@ namespace NhutLongCompany.Controllers
                 db.Entry(tblOrderTem).State = EntityState.Modified;
                 db.SaveChanges();
 
-
+                if (item.datenumber.HasValue)
+                {
+                    maxDateNumber = maxDateNumber < item.datenumber.Value ? item.datenumber.Value : maxDateNumber;
+                }
                 tbl_OrderTem_BaoGia_Detail detail = new tbl_OrderTem_BaoGia_Detail { code_detail = code1 + "_" + donHang.code + "_" + countindex.ToString("00"),design = item.Design, baogia_id = donHang.BaoGiaTemView.id, money = double.Parse(item.GiaProducts), soluong = item.SoLuong, sanpam_id = itemP.ID_Products };
                 db.tbl_OrderTem_BaoGia_Detail.Add(detail);
               
+                db.SaveChanges();
+            }
+            if (maxDateNumber>0)
+            {
+                temValue.datenumber = maxDateNumber;
+                temValue.date_deliver = DateTime.Now.AddDays(temValue.datenumber.Value);
+                db.Entry(temValue).State = EntityState.Modified;               
                 db.SaveChanges();
             }
             return RedirectToAction("EditBaoGia", new
@@ -1039,6 +1049,10 @@ namespace NhutLongCompany.Controllers
                     tbl_Products itemP = new tbl_Products();
                     var detail = new tbl_OrderTem_BaoGia_Detail();
                     var tblbaogia = new tbl_OrderTem_BaoGia();
+
+                    int maxDateNumber = 0;
+
+
                     foreach (var item1 in d1.BaoGiaTemView.BaoGiaTemDetailViews)
                     {
                         itemP = db.tbl_Products.Find(item1.ID_Products);
@@ -1063,14 +1077,24 @@ namespace NhutLongCompany.Controllers
                         detail.money = double.Parse(item.GiaProducts);
                         detail.soluong = item.SoLuong;
                         tblbaogia.total_money = double.Parse(item.GiaProducts) * item.SoLuong;
-                        tbl_OrderTem = db.tbl_OrderTem.Find(id);
-                        tbl_OrderTem.date_deliver = item.date_deliver;
+                  
                         tbl_OrderTem.address_deliver = item.address_deliver;
-                        tbl_OrderTem.datenumber = item.datenumber;
+                     
+                        if (item.datenumber.HasValue)
+                        {
+                            maxDateNumber = maxDateNumber < item.datenumber.Value ? item.datenumber.Value : maxDateNumber;
+                        }
+                      
+                    }
+                    if (maxDateNumber > 0)
+                    {
+                        tbl_OrderTem.date_deliver = DateTime.Now.AddDays(tbl_OrderTem.datenumber.Value- maxDateNumber);
+                        tbl_OrderTem.datenumber = maxDateNumber;
                         db.Entry(tbl_OrderTem).State = EntityState.Modified;
                         db.SaveChanges();
-                        return RedirectToAction("IndexBaoGia", "tbl_OrderTem");
                     }
+
+                    return RedirectToAction("IndexBaoGia", "tbl_OrderTem");
                 }
                     
                 

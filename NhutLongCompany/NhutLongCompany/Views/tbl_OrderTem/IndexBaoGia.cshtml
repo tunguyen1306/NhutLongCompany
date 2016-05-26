@@ -84,7 +84,7 @@
 
                                         @if (item.BaoGiaTemView.status == 0)
                                         {
-                                            <input type="button" onclick="loadData(@item.id,@item.BaoGiaTemView.id);" data-target="#modal-container" data-toggle="modal" style="float: right; margin-right: 10px" value="Cập nhật kết quả" class="btn btn-primary" />
+                                            <input type="button" onclick="loadData(@item.id,@item.BaoGiaTemView.id, '@(item.date_deliver.HasValue ? item.date_deliver.Value.ToString("MM/dd/yyyy") : "")','  @(item.date_deliver.HasValue ? item.address_deliver : "")');" data-target="#modal-container" data-toggle="modal" style="float: right; margin-right: 10px" value="Cập nhật kết quả" class="btn btn-primary" />
                                         }
                                         @if (item.BaoGiaTemView.status == 1)
                                         {
@@ -168,10 +168,10 @@
 <!-- /.row -->
 
     <script>
-        function loadData(id,baogiaid)
+        function loadData(id,baogiaid,date,address)
         {
-            $('#date_deliver').val("");
-            $('#address_deliver').val("");
+            $('#date_deliver').val(date);
+            $('#address_deliver').val(address);
             $('#id').val(id);
             $('#baogia_id').val(baogiaid);
             $('#txt_note').val("");
