@@ -44,8 +44,7 @@
             @(item.date_deliver.HasValue ? item.address_deliver : "Chưa cập nhật")
         </td>
         <td style="background:@color ;color:@color_for ;">
-            @(item.date_deliver.HasValue?( (int)item.date_deliver.Value.Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays == null ? 0 : 
-(int)item.date_deliver.Value.Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays):0)
+            @(item.date_deliver.HasValue? (int)item.date_deliver.Value.Subtract((item.date_end.HasValue?item.date_end.Value:DateTime.Now)).TotalDays:0)
         </td>
 
         

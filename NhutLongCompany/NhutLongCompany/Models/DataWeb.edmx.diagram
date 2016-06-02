@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_OrderTem" Width="1.5" PointX="3.5" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_OrderTem_BaoGia" Width="2.375" PointX="3.375" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_OrderTem_BaoGia_Detail" Width="1.5" PointX="6.125" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_Products" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_QuyTrinh" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_User" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_Stack" Width="1.5" PointX="7.375" PointY="8.75" />
@@ -18,6 +17,7 @@
         <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_OrderTemPause" Width="1.5" PointX="9.375" PointY="8.75" />
 
         <EntityTypeShape EntityType="NhutLongCompanyModel.AdminMenu" Width="1.5" PointX="10.375" PointY="4.75" />
+        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_Products" Width="1.5" PointX="5.375" PointY="11.75" />
 
       </Diagram>
     </edmx:Diagrams>

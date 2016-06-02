@@ -168,6 +168,8 @@ namespace NhutLongCompany.Controllers
             {
                 FormsAuthentication.SetAuthCookie(data.Username, false);
                 String returnUrl = Request.Params["ReturnUrl"];
+              
+               
                 Session["userId"] = data.IDUser;
                 Session["username"] = data.Username;
                 Session["roleName"] = data.RoleName;
@@ -177,7 +179,7 @@ namespace NhutLongCompany.Controllers
                 }
                 else
                 {
-                    return Redirect(returnUrl);
+                    return Redirect(Server.UrlDecode( returnUrl));
                 }
               
             }

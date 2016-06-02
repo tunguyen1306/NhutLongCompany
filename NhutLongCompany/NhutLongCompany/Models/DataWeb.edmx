@@ -134,6 +134,8 @@
           <Property Name="NameProducts" Type="nvarchar" MaxLength="500" />
           <Property Name="SolopProducts" Type="int" />
           <Property Name="LoaigiayProducts" Type="nvarchar" MaxLength="500" />
+          <Property Name="LoaiSongProducts" Type="nvarchar" MaxLength="50" />
+          <Property Name="InFlexoProducts" Type="int" />
           <Property Name="OffsetFlexoProducts" Type="nvarchar" MaxLength="500" />
           <Property Name="DanKimProducts" Type="nvarchar" MaxLength="50" />
           <Property Name="GiaProducts" Type="nvarchar" MaxLength="50" />
@@ -276,25 +278,6 @@
           <Property Name="status_pause" Type="Int32" />
           <Property Name="loai_design" Type="String" Unicode="true" MaxLength="250" FixedLength="false" />
         </EntityType>
-        <EntityType Name="tbl_Products">
-          <Key>
-            <PropertyRef Name="ID_Products" />
-          </Key>
-          <Property Name="ID_Products" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="SolopProducts" Type="Int32" />
-          <Property Name="LoaigiayProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="OffsetFlexoProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="DanKimProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GiaProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDateProducts" Type="DateTime" Precision="3" />
-          <Property Name="ModifyDateProducts" Type="DateTime" Precision="3" />
-          <Property Name="CreateUserProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ModifyUserProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="StatusProducts" Type="Int32" />
-          <Property Name="CodeProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="QuyCachProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="tbl_QuyTrinh">
           <Key>
             <PropertyRef Name="ID" />
@@ -330,7 +313,6 @@
           <EntitySet Name="tbl_OrderTem" EntityType="Self.tbl_OrderTem" />
           <EntitySet Name="tbl_OrderTem_BaoGia" EntityType="Self.tbl_OrderTem_BaoGia" />
           <EntitySet Name="tbl_OrderTem_BaoGia_Detail" EntityType="Self.tbl_OrderTem_BaoGia_Detail" />
-          <EntitySet Name="tbl_Products" EntityType="Self.tbl_Products" />
           <EntitySet Name="tbl_QuyTrinh" EntityType="Self.tbl_QuyTrinh" />
           <EntitySet Name="tbl_User" EntityType="Self.tbl_User" />
           <EntitySet Name="tbl_Stack" EntityType="NhutLongCompanyModel.tbl_Stack" />
@@ -339,6 +321,7 @@
           <EntitySet Name="tbl_OrderTemPause" EntityType="NhutLongCompanyModel.tbl_OrderTemPause" />
 
           <EntitySet Name="AdminMenus" EntityType="NhutLongCompanyModel.AdminMenu" />
+          <EntitySet Name="tbl_Products" EntityType="NhutLongCompanyModel.tbl_Products" />
 
 
         </EntityContainer>
@@ -396,6 +379,27 @@
           <Property Name="parentId" Type="Int32" />
           <Property Name="isParent" Type="Boolean" />
           <Property Name="IdUser" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_Products">
+          <Key>
+            <PropertyRef Name="ID_Products" />
+          </Key>
+          <Property Name="ID_Products" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SolopProducts" Type="Int32" />
+          <Property Name="LoaigiayProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LoaiSongProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InFlexoProducts" Type="Int32" />
+          <Property Name="OffsetFlexoProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DanKimProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GiaProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateProducts" Type="DateTime" Precision="3" />
+          <Property Name="ModifyDateProducts" Type="DateTime" Precision="3" />
+          <Property Name="CreateUserProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ModifyUserProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="StatusProducts" Type="Int32" />
+          <Property Name="CodeProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QuyCachProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
 
       </Schema>
@@ -480,26 +484,6 @@
                 <ScalarProperty Name="sanpam_id" ColumnName="sanpam_id" />
                 <ScalarProperty Name="soluong" ColumnName="soluong" />
                 <ScalarProperty Name="money" ColumnName="money" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_Products">
-            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Products">
-              <MappingFragment StoreEntitySet="tbl_Products">
-                <ScalarProperty Name="ID_Products" ColumnName="ID_Products" />
-                <ScalarProperty Name="NameProducts" ColumnName="NameProducts" />
-                <ScalarProperty Name="SolopProducts" ColumnName="SolopProducts" />
-                <ScalarProperty Name="LoaigiayProducts" ColumnName="LoaigiayProducts" />
-                <ScalarProperty Name="OffsetFlexoProducts" ColumnName="OffsetFlexoProducts" />
-                <ScalarProperty Name="DanKimProducts" ColumnName="DanKimProducts" />
-                <ScalarProperty Name="GiaProducts" ColumnName="GiaProducts" />
-                <ScalarProperty Name="CreatedDateProducts" ColumnName="CreatedDateProducts" />
-                <ScalarProperty Name="ModifyDateProducts" ColumnName="ModifyDateProducts" />
-                <ScalarProperty Name="CreateUserProducts" ColumnName="CreateUserProducts" />
-                <ScalarProperty Name="ModifyUserProducts" ColumnName="ModifyUserProducts" />
-                <ScalarProperty Name="StatusProducts" ColumnName="StatusProducts" />
-                <ScalarProperty Name="CodeProducts" ColumnName="CodeProducts" />
-                <ScalarProperty Name="QuyCachProducts" ColumnName="QuyCachProducts" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -592,6 +576,28 @@
                 <ScalarProperty Name="controller" ColumnName="controller" />
                 <ScalarProperty Name="nameOption" ColumnName="nameOption" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Products">
+            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Products">
+              <MappingFragment StoreEntitySet="tbl_Products">
+                <ScalarProperty Name="QuyCachProducts" ColumnName="QuyCachProducts" />
+                <ScalarProperty Name="CodeProducts" ColumnName="CodeProducts" />
+                <ScalarProperty Name="StatusProducts" ColumnName="StatusProducts" />
+                <ScalarProperty Name="ModifyUserProducts" ColumnName="ModifyUserProducts" />
+                <ScalarProperty Name="CreateUserProducts" ColumnName="CreateUserProducts" />
+                <ScalarProperty Name="ModifyDateProducts" ColumnName="ModifyDateProducts" />
+                <ScalarProperty Name="CreatedDateProducts" ColumnName="CreatedDateProducts" />
+                <ScalarProperty Name="GiaProducts" ColumnName="GiaProducts" />
+                <ScalarProperty Name="DanKimProducts" ColumnName="DanKimProducts" />
+                <ScalarProperty Name="OffsetFlexoProducts" ColumnName="OffsetFlexoProducts" />
+                <ScalarProperty Name="InFlexoProducts" ColumnName="InFlexoProducts" />
+                <ScalarProperty Name="LoaiSongProducts" ColumnName="LoaiSongProducts" />
+                <ScalarProperty Name="LoaigiayProducts" ColumnName="LoaigiayProducts" />
+                <ScalarProperty Name="SolopProducts" ColumnName="SolopProducts" />
+                <ScalarProperty Name="NameProducts" ColumnName="NameProducts" />
+                <ScalarProperty Name="ID_Products" ColumnName="ID_Products" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

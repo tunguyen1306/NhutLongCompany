@@ -108,6 +108,12 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<style>
+    tr > td {
+        vertical-align: middle !important;
+    }
+</style>
+
 
 
 <script>
@@ -241,7 +247,7 @@
             var dataindex = $(this).parents(".move_product").eq(0).attr('data-index');
             var item_product = $(this).parents(".move_product")[0];
             var item_next = $(item_product).next();
-
+         
             if (item_next.length == 0) {
                 $(this).css('display', 'none');
             }
