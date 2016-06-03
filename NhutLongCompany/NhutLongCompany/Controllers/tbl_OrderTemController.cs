@@ -1547,15 +1547,11 @@ namespace NhutLongCompany.Controllers
             base.Dispose(disposing);
         }
 
-        [ActionAuthorizeAttribute("BaoGia,DonHang")]
+        //[ActionAuthorizeAttribute("BaoGia,DonHang")]
         public ActionResult PrintOrder(int id)
         {
 
-            if (Session["username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-
+         
             tbl_OrderTem_BaoGia item = db.tbl_OrderTem_BaoGia.Find(id);
             tbl_OrderTem tbl_OrderTem = db.tbl_OrderTem.Find(item.order_id);
             DonHangView d = new DonHangView();
@@ -1588,6 +1584,11 @@ namespace NhutLongCompany.Controllers
             return View(d);
 
         }
+        public ActionResult GeneratePDF()
+        {
+            return new Rotativa.ActionAsPdf("PrintOrder",new { id=1});
+        }
+
 
         [ActionAuthorizeAttribute("BaoGia")]
         [HttpPost]
@@ -1700,6 +1701,7 @@ namespace NhutLongCompany.Controllers
 
             return Json("Success");
         }
+       
 
     }
 }

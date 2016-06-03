@@ -134,6 +134,8 @@
           <Property Name="NameProducts" Type="nvarchar" MaxLength="500" />
           <Property Name="SolopProducts" Type="int" />
           <Property Name="LoaigiayProducts" Type="nvarchar" MaxLength="500" />
+          <Property Name="LoaiSongProducts" Type="nvarchar" MaxLength="50" />
+          <Property Name="InFlexoProducts" Type="int" />
           <Property Name="OffsetFlexoProducts" Type="nvarchar" MaxLength="500" />
           <Property Name="DanKimProducts" Type="nvarchar" MaxLength="50" />
           <Property Name="GiaProducts" Type="nvarchar" MaxLength="50" />
@@ -294,6 +296,8 @@
           <Property Name="StatusProducts" Type="Int32" />
           <Property Name="CodeProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="QuyCachProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LoaiSongProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InFlexoProducts" Type="Int32" />
         </EntityType>
         <EntityType Name="tbl_QuyTrinh">
           <Key>
@@ -486,6 +490,8 @@
           <EntitySetMapping Name="tbl_Products">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Products">
               <MappingFragment StoreEntitySet="tbl_Products">
+                <ScalarProperty Name="InFlexoProducts" ColumnName="InFlexoProducts" />
+                <ScalarProperty Name="LoaiSongProducts" ColumnName="LoaiSongProducts" />
                 <ScalarProperty Name="ID_Products" ColumnName="ID_Products" />
                 <ScalarProperty Name="NameProducts" ColumnName="NameProducts" />
                 <ScalarProperty Name="SolopProducts" ColumnName="SolopProducts" />

@@ -13,7 +13,8 @@
 <!-- /.row -->
 @using (Html.BeginForm())
 {
-    <a href="javascript:window.print()" class="btn btn-primary">In báo giá</a>
+    <a href="javascript:window.print()" class="btn btn-primary">In báo giá</a>  
+      <a href="@Url.Action("GeneratePDF","tbl_OrderTem")" class="btn btn-primary">Xuất PDF</a>
     <a href="@Url.Action("IndexBaoGia","tbl_OrderTem")" class="btn btn-primary">Trở về</a>
 
     @Html.AntiForgeryToken()
