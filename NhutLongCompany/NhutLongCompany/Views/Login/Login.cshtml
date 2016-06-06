@@ -50,6 +50,7 @@
                     </div>
                     @using (@Ajax.BeginForm("Login", "Login", new AjaxOptions { HttpMethod = "Post" }))
                     {
+                        <input  type="hidden" name="ReturnUrl" value="@(Request.Params["ReturnUrl"]==null?"":Request.Params["ReturnUrl"])"/>
                         <div class="panel-body">
                             <form role="form">
                                 <fieldset>

@@ -10,8 +10,8 @@
 
 <script type="text/javascript">
     $(function () {
-        
-        $('.selectQuyCach').change(function () {          
+
+        $('.selectQuyCach').change(function () {
             if ($(this).val() == 1) {
                 $('.QuyCachProducts1caoLO').eq(0).css('display', 'none');
             } else {
@@ -93,7 +93,7 @@
 
 
         var m = 0;
-       
+
             if ($('.selectQuyCach').val() == "0") {
                 if ($('.QuyCachProducts1dai').val() == '' || $('.QuyCachProducts1rong').val() == '' || $('.QuyCachProducts1cao').val() == '') {
                     $('.lblQuyCachProducts').addClass('hidden');
@@ -111,9 +111,9 @@
                 }else {
                     $('.lblQuyCachProducts').addClass('hidden');
                 }
-               
+
             }
-     
+
 
             if ($('.selectcustomer').val() == '0') {
                 $('.lblselectcustomer').addClass('hidden');
@@ -132,13 +132,7 @@
         } else {
             $('.lblNameProducts').addClass('hidden');
         }
-        if ($('.datenumber').val() =='') {
-            $('.lbldatenumber').addClass('hidden');
-            $('.datenumber').after('<label class="errorLabel lbldatenumber">Nhập số ngày</label>');
-            m++;
-        } else {
-            $('.lbldatenumber').addClass('hidden');
-        }
+
 
         if ($('.SolopProducts1').val() <= 0) {
             $('.lblSolopProducts').addClass('hidden');
@@ -147,6 +141,15 @@
         } else {
             $('.lblSolopProducts').addClass('hidden');
         }
+        if ($('.LoaigiayProducts').val() =="") {
+            $('.lblLoaigiayProducts').addClass('hidden');
+            $('.LoaigiayProducts').after('<label class="errorLabel lblSolopProducts">Chọn loại giấy</label>');
+            m++;
+        } else {
+            $('.lblLoaigiayProducts').addClass('hidden');
+        }
+
+
         if ($('.GiaProducts1').val() <= 0) {
             $('.lblGiaProducts').addClass('hidden');
             $('.GiaProducts1').after('<label class="errorLabel lblGiaProducts">Giá phải lớn hơn 0</label>');
@@ -154,15 +157,25 @@
         } else {
             $('.lblGiaProducts').addClass('hidden');
         }
-        if ($('select[name=LoaigiayProducts]').val() == 0) {
-            $('.lblLoaigiayProducts').addClass('hidden');
-            $('.LoaigiayProducts1').after('<label class="errorLabel lblLoaigiayProducts">Chọn loại giấy</label>');
+        if ($('.LoaiSongProducts1').val() == "") {
+            $('.lblLoaiSongProducts').addClass('hidden');
+            $('.LoaiSongProducts1').after('<label class="errorLabel lblLoaigiayProducts">Chọn loại sóng</label>');
             m++;
         } else {
-            $('.lblLoaigiayProducts').addClass('hidden');
+
+            $('.lblLoaiSongProducts').addClass('hidden');
         }
+        if ($('.InFlexoProducts1').val() == "0") {
+            $('.lblInFlexoProducts').addClass('hidden');
+            $('.InFlexoProducts1').after('<label class="errorLabel lblLoaigiayProducts">Chọn loại In Flexo</label>');
+            m++;
+        } else {
+            $('.lblInFlexoProducts').addClass('hidden');
+        }
+
+
         if (m == 0) {
-           
+
             $('.lblQuyCachProducts').addClass('hidden');
             $('.lblNameProducts').addClass('hidden');
             $('.lblQuyCachProductsdai').addClass('hidden');
@@ -170,13 +183,15 @@
             $('.lblQuyCachProductscao').addClass('hidden');
             $('.lblGiaProducts').addClass('hidden');
             $('.lblSolopProducts').addClass('hidden');
+            $('.lblLoaiSongProducts').addClass('hidden');
             $('.lblLoaigiayProducts').addClass('hidden');
+            $('.lblInFlexoProducts').addClass('hidden');
             var id = new Date().getTime();
-           
+
             var dai = $('.QuyCachProducts1dai').val();
             var rong = $('.QuyCachProducts1rong').val();
             var cao = $('.QuyCachProducts1cao').val();
-        
+
             var qc = "";
             if ($('.selectQuyCach').val() == "0") {
                  qc = dai + ' x ' + rong + ' x ' + cao;
@@ -184,15 +199,15 @@
             } else {
                 qc = dai + ' x ' + rong;
             }
-           
+
             $('.QuyCachProducts').val(qc);
             var tr = $(el).parents('tr').eq(0);
             var trdata = "<tr class='tr_edit' id='ext_" + id + "'><input name='BaoGiaTemView.BaoGiaTemDetailViews.Index' value='" + id + "' type='hidden'/><input name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "].ID_Products' value='' type='hidden'/>";
-            tr.find('.form-control').each(function() {
+            tr.find('.dataSubmit').each(function () {
 
                 if (this.name != "")
                 {
-                 
+
                     if ($(this).attr('name') == 'SoLuong') {
                         trdata += "<td class='" + this.name + "'><input class='form-control text-box single-line updateSL " + this.name + "'  min='1' value='" + this.value + "' type='number' name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "]." + this.name + "'/></td>";
                     } else {
@@ -214,6 +229,7 @@
             $(el).parents('tbody').eq(0).append(trdata);
             updateMoney(el);
             updateEvent();
+            onSolopProductsSelect(null, $('.SolopProducts1').val());
 
         }
 
@@ -265,7 +281,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="panel panel-default">
         <div class="panel-heading">
             Thêm báo giá
@@ -276,9 +292,9 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">Mã đơn hàng</label>
-                        <div class="col-md-8" style="padding-top: 7px">
-                            @Html.HiddenFor(model => model.code)
-                            @Model.code
+                        <div style="padding-top: 7px" class="col-md-8">
+                            <input type="hidden" value="N2016T06N02_001" name="code" id="code">
+                            N2016T06N02_001
 
                         </div>
                     </div>
@@ -286,8 +302,8 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label class="control-label col-md-4">Trạng thái</label>
-                        <div class="col-md-8" style="padding-top: 7px">
-                            @Html.HiddenFor(model => model.status)
+                        <div style="padding-top: 7px" class="col-md-8">
+                            <input type="hidden" value="" name="status" id="status" data-val-number="The field status must be a number." data-val="true">
                             Tạo báo giá
                         </div>
                     </div>
@@ -297,21 +313,70 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label class="control-label col-md-2">Thông tin khách hàng</label>
-                        <div class="col-md-10" style="padding-top: 7px">
+                        <div style="padding-top: 7px" class="col-md-10">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <div class="row">
-                                        <div class="col-lg-6"><select style="width: 200px; margin-left: 10px" onchange=" UpdateCustomerInfo(this); " class="form-control valid selectcustomer">
-                                                                  <option value="0">Chọn danh sách</option>
-                                                                  @foreach (tbl_Customers item in Model.tbl_Customers)
-                                                                  {
-                                                                      <option @((Model.customer_id.HasValue && item.IDCustomers == Model.customer_id.Value) ? "selected=\"selected\"" : "") value="@(item.IDCustomers + "-" + item.CodeCustomers + "-" + item.CongTyCustomers + "-" + item.EmailCustomers + "-" + item.DiaChiCustomers)">@item.CongTyCustomers</option>
-                                                                  }
-                                                              </select></div>
-                                        <div class="col-lg-6"><a class="btn btn-primary pull-right" href="@Url.Action("Index", "Customers")">Thêm mới khách hàng</a></div>
-                                        @Html.HiddenFor(model => model.customer_id)
-                                       
-                                       
+                                        <div class="col-lg-6">
+                                            <select class="form-control valid selectcustomer" onchange=" UpdateCustomerInfo(this); " style="width: 200px; margin-left: 10px">
+                                                <option value="0">Chọn danh sách</option>
+                                                <option value="1-NTT-Nhụt Long-daigai@daigia.com-">Nhụt Long</option>
+                                                <option value="6-VIS-Công Ty TNHH Một Thành Viên Việt Nam Kỹ Nghệ Súc Sản (Vissan)-lengochieu20032000@yahoo.com-420 Nơ Trang Long, P.13, Q.Bình Thạnh, Tp.HCM">Công Ty TNHH Một Thành Viên Việt Nam Kỹ Nghệ Súc Sản (Vissan)</option>
+                                                <option value="7-BKT-Anh Đồng--">Anh Đồng</option>
+                                                <option value="8-KMY-DNTN Kim Mỹ-Kimmydesign@vnn.vn-C7/27 B10 Phạm hùng, Huyện Bình Chánh, Tp.HCM">DNTN Kim Mỹ</option>
+                                                <option value="9-SCI-CÔNG TY CỔ PHẦN IN SCITECH--D20/532H Nguyễn Văn Linh, Xã Phong Phú, Huyện Bình Chánh, Tp.HCM">CÔNG TY CỔ PHẦN IN SCITECH</option>
+                                                <option value="10-DVI-CÔNG TY TNHH THƯƠNG MẠI VÀ DỊCH VỤ ĐẠI VINH--129 Gia Phú, Phường 1, Quận 6, Tp.HCM">CÔNG TY TNHH THƯƠNG MẠI VÀ DỊCH VỤ ĐẠI VINH</option>
+                                                <option value="11-ANN-CÔNG TY AN NHÂN--84 Dương Quảng Hàm, P.5, Q.Gò Vấp, Tp.HCM ">CÔNG TY AN NHÂN</option>
+                                                <option value="12-NLC-Công Ty TNHH Nhựt Long-longgiangkti@yahoo.com-103 đường 715 Tạ Quang Bửu, P.4, Q.8, TP.HCM">Công Ty TNHH Nhựt Long</option>
+                                                <option value="13-TBM-CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI TBM MINH PHÁT-loi@tbm.com.vn-141-143 Xóm Đất, P.8, Q.11, Tp.HCM">CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI TBM MINH PHÁT</option>
+                                                <option value="14-GHA-CÔNG TY TNHH SX GIA HÀO--1564 Phạm Thế Hiển, P.6, Q.8, Tp.HCM">CÔNG TY TNHH SX GIA HÀO</option>
+                                                <option value="15-GRA-CÔNG TY CỔ PHẦN BÁNH GIVRAL--Lô II - 1B Lê Trọng Tấn, KCN Tân Bình, P.Tây Thạnh, Q.Tân Phú, Tp.HCM">CÔNG TY CỔ PHẦN BÁNH GIVRAL</option>
+                                                <option value="16-HNS-CÔNG TY TNHH HIỆP NAM SƠN--B4/11B Hương Lộ 11, Ấp 2, Xã Hưng Long, Huyện Bình Chánh, Tp.HCM">CÔNG TY TNHH HIỆP NAM SƠN</option>
+                                                <option value="17-DGI-CÔNG TY TNHH SX KD XNK HÀNG TCMN ĐẶNG GIA-info@danggiahandicrafts.com-69/2 Trần Kế Xương, P.7, Q.Phú Nhuận, Tp.HCM">CÔNG TY TNHH SX KD XNK HÀNG TCMN ĐẶNG GIA</option>
+                                                <option value="18-TTN-CÔNG TY TNHH CÔNG NGHỆ TTN-taikubo@yahoo.com-96 Ấp Đồng Tâm, Xã Long Trạch, Huyện Cần Đước, Tỉnh Long An">CÔNG TY TNHH CÔNG NGHỆ TTN</option>
+                                                <option value="19-DTL-CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI  ĐẠI THÀNH LỢI-daithanhloi88@gmail.com-73A Phan Văn Năm, Phường Phú Thạnh, Quận Tân Phú, Tp.HCM">CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI  ĐẠI THÀNH LỢI</option>
+                                                <option value="20-DTT-CN CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI ĐẠI THUẬN THÀNH-daithuanthanh@gmail.com-216 Tổ 2, Ấp 2, Xã Long Hòa, Huyện Cần Đước, Tỉnh Long An">CN CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI ĐẠI THUẬN THÀNH</option>
+                                                <option value="21-HAN-CÔNG TY TNHH TM DV SX IN HOÀNG AN--816/34 Trường Sa, Phường 14, Quận 3, Tp.HCM">CÔNG TY TNHH TM DV SX IN HOÀNG AN</option>
+                                                <option value="22-HMA-CÔNG TY TNHH HUY MAI-huymaicty@gmail.com-18B/7 Nguyễn Văn Linh, xã Bình Hưng, huyện Bình Chánh, Tp.HCM">CÔNG TY TNHH HUY MAI</option>
+                                                <option value="23-AHA-CÔNG TY TNHH AN HẢO-anhaodesign@gmail.com-220/150/21 Lê Văn Sỹ, P.14, Q.3, Tp.HCM">CÔNG TY TNHH AN HẢO</option>
+                                                <option value="24-KNH-CÔNG TY TNHH KHANG NHI-in,khangnhi@yahoo.com.vn-32/62 Lê Cảnh Tuân, Phường Phú Thọ Hòa, Q.Tân Phú, Tp.HCM">CÔNG TY TNHH KHANG NHI</option>
+                                                <option value="25-LLO-CÔNG TY TNHH MỘT THÀNH VIÊN THƯƠNG MẠI SẢN XUẤT LẠC LONG--Lô Q-4, Đường số 8, KCN Long Hậu mở rộng, Xã Long Hậu, Huyện Cần Giuộc, Tỉnh Long An">CÔNG TY TNHH MỘT THÀNH VIÊN THƯƠNG MẠI SẢN XUẤT LẠC LONG</option>
+                                                <option value="26-LNG-CÔNG TY TNHH THIẾT KẾ VÀ IN BAO BÌ LÊ NGUYỄN-lenguyen_aba@yahoo.com-556/7 Đường TA28, KP 6, P.Thới An, Q.12, Tp.HCM">CÔNG TY TNHH THIẾT KẾ VÀ IN BAO BÌ LÊ NGUYỄN</option>
+                                                <option value="27-NHA-CÔNG TY TNHH CHẾ BIẾN NÔNG HẢI SẢN NAM HẢI-namhai_hcm@yahoo.com-279A Kinh Dương Vương, Phường An Lạc, Quận Bình Tân, Tp.HCM">CÔNG TY TNHH CHẾ BIẾN NÔNG HẢI SẢN NAM HẢI</option>
+                                                <option value="28-NPH-CÔNG TY TNHH SẢN XUẤT NAM PHONG-baobinamphong@yahoo.com.vn-88/28 Đường Bùi Dương Lịch, Phường Bình Hưng Hòa B, Quận Bình Tân, Tp.HCM">CÔNG TY TNHH SẢN XUẤT NAM PHONG</option>
+                                                <option value="29-NAT-NGÔ ANH THÙY-thuyngoanh@gmail.com-Lô B16, đường số 8, KCN Hiệp Phước, Huyện Nhà Bè, Tp.HCM">NGÔ ANH THÙY</option>
+                                                <option value="30-SDA-CHI NHÁNH CÔNG TY CỔ PHẦN HÃNG SƠN ĐÔNG Á (TP.HÀ NỘI)-huong.nguyen@skylightchem.com-89/1B Quốc Lộ 1A, KP2, P.Tân Thới Hiệp, Q.12, Tp.HCM">CHI NHÁNH CÔNG TY CỔ PHẦN HÃNG SƠN ĐÔNG Á (TP.HÀ NỘI)</option>
+                                                <option value="31-SLO-CÔNG TY TNHH MTV SX TM BĐS SONG LONG-hongsonle79@yahoo.com-Tầng 6, Master Building, 41-43 Trần Cao Vân, F.6, Q.3, Tp.HCM">CÔNG TY TNHH MTV SX TM BĐS SONG LONG</option>
+                                                <option value="32-SLI-CÔNG TY TNHH SUN LIGHTING-ngocthanh190577@yahoo.com.vn-Đường N4, KCN Vinatex Tân Tạo (KCN dệt may Nhơn Trạch), X.Phước An, H.Nhơn Trạch, T.Đồng Nai, VN">CÔNG TY TNHH SUN LIGHTING</option>
+                                                <option value="33-TS7-CÔNG TY TNHH CÔNG NGHỆ BAO BÌ TAISHO &amp; 7-ngocdiep@ts7.com.vn-Lô số 26-28 Đường Tân Tạo, KCN Tân Tạo, P.Tân Tạo A, Q.Bình Tân, Tp.HCM">CÔNG TY TNHH CÔNG NGHỆ BAO BÌ TAISHO &amp; 7</option>
+                                                <option value="34-TPH-CÔNG TY TNHH TM DV THÀNH PHÚ-vinaquality.vn@gmail.com-Tầng 2, Số 8-10, Đường 9A, KDC Trung Sơn, Huyện Bình Chánh, Tp.HCM">CÔNG TY TNHH TM DV THÀNH PHÚ</option>
+                                                <option value="35-TVU-CÔNG TY TNHHH IN BAO BÌ THÀNH VƯỢNG-doanloctth@gmail.com-103/33 Hồ Thị Kỷ, Phường 1, Quận 10, Tp.HCM">CÔNG TY TNHHH IN BAO BÌ THÀNH VƯỢNG</option>
+                                                <option value="36-TDD-CÔNG TY TNHH TRẦN ĐẠI DŨNG-trandaidungvn@gmail.com-B4/11B Ấp 2, Xã Hưng Long, Huyện Bình Chánh, Tp.HCM">CÔNG TY TNHH TRẦN ĐẠI DŨNG</option>
+                                                <option value="37-CNV-CHI NHÁNH CÔNG TY VISSAN - CỬA HÀNG KINH DOANH THỰC PHẨM VISSAN SỐ 3--342 Nguyễn Trãi, F.8, Q.5,Tp.HCM">CHI NHÁNH CÔNG TY VISSAN - CỬA HÀNG KINH DOANH THỰC PHẨM VISSAN SỐ 3</option>
+                                                <option value="38-TTH-CÔNG TY TNHH TIẾP THỊ ỨNG DỤNG THÔNG THÁI--102 A-B (Lầu 3) Cống Quỳnh, P. Phạm Ngũ Lão, Q.1, TP.HCM">CÔNG TY TNHH TIẾP THỊ ỨNG DỤNG THÔNG THÁI</option>
+                                                <option value="39-ACH-CÔNG TY CỔ PHẦN HÓA CHẤT Á CHÂU--Lô K4B, KCN Lê Minh Xuân, Đường số 4, Xã Lê Minh Xuân, Huyện Bình Chánh">CÔNG TY CỔ PHẦN HÓA CHẤT Á CHÂU</option>
+                                                <option value="40-JAV-CÔNG TY TNHH JARVIS WALKER INTERNATIONAL VIỆT NAM-hien.jwiv@gmail.com-216 Tổ 2, Ấp 2, Xã Long Hòa, Huyện Cần Đước, Tỉnh Long An">CÔNG TY TNHH JARVIS WALKER INTERNATIONAL VIỆT NAM</option>
+                                                <option value="41-IPN-CÔNG TY CỔ PHẦN THƯƠNG MẠI IN PHƯƠNG NAM--160/7 Đội Cung, Phường 9, Quận 11, Tp.HCM">CÔNG TY CỔ PHẦN THƯƠNG MẠI IN PHƯƠNG NAM</option>
+                                                <option value="42-ILA-CÔNG TY CỔ PHẦN IN LONG AN--409 Quốc Lộ 1, P.4, Tp.Tân An, Tỉnh Long An">CÔNG TY CỔ PHẦN IN LONG AN</option>
+                                                <option value="43-IKL-CÔNG TY TNHH SẢN XUẤT BAO BÌ KIM LOẠI VÀ IN TRÊN KIM LOẠI--Lô số 37, Đường số 3, KCN Tân Tạo, P.Tân Tạo A, Q.Bình Tân, TP.HCM, Việt Nam">CÔNG TY TNHH SẢN XUẤT BAO BÌ KIM LOẠI VÀ IN TRÊN KIM LOẠI</option>
+                                                <option value="44-ELI-CÔNG TY TNHH SẢN XUẤT ELIP--L06B Khu Công Nghiệp Long Hậu, Xã Long Hậu, Huyện Cần Giuộc, Tỉnh Long An">CÔNG TY TNHH SẢN XUẤT ELIP</option>
+                                                <option value="45-DAN-CÔNG TY TNHH DU ÂN NAM-anhtuyetle3110@gmail.com-88/30A Tỉnh Lộ 40, P.Thạnh Lộc, Q.12, Tp.HCM">CÔNG TY TNHH DU ÂN NAM</option>
+                                                <option value="46-BBD-CÔNG TY CỔ PHẦN BAO BÌ DƯỢC--C55/II Đường số 8, KCN Vĩnh Lộc A, Huyện Bình Chánh, TP.HCM">CÔNG TY CỔ PHẦN BAO BÌ DƯỢC</option>
+                                                <option value="47-ALT-CÔNG TY TNHH AN LẠC THÀNH--71/16 Chế Lan Viên, Phường Tây Thạnh, Quận Tân Phú, Tp.HCM">CÔNG TY TNHH AN LẠC THÀNH</option>
+                                                <option value="48-AKH-CÔNG TY TNHH THIẾT KẾ MỸ THUẬT &amp; TIN HỌC HUYNH ĐỆ ANH KHOA-doanthucdl@anhkhoabrother.com-409/16 Nguyễn Trọng Tuyển, P.2, Q.Tân Bình, Tp.HCM">CÔNG TY TNHH THIẾT KẾ MỸ THUẬT &amp; TIN HỌC HUYNH ĐỆ ANH KHOA</option>
+                                                <option value="49-3DS-CÔNG TY TNHH 3D SMART SOLUTIONS--61A Quang Trung, P.Hiệp Phú, Q.9, Tp.HCM ">CÔNG TY TNHH 3D SMART SOLUTIONS</option>
+                                                <option value="50-TNT-TRANG NHẬT TẢO--">TRANG NHẬT TẢO</option>
+                                                <option value="51-MTC-Minh Thư--">Minh Thư</option>
+                                                <option value="52-HPH-HUỆ PHONG--">HUỆ PHONG</option>
+                                                <option value="53-LHE-LIÊN HÊN--">LIÊN HÊN</option>
+                                                <option value="54-BCH-BIO CHEMICAL--">BIO CHEMICAL</option>
+                                                <option value="55--ĐẠI THÀNH LỢI--">ĐẠI THÀNH LỢI</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6"><a href="/Customers/Index" class="btn btn-primary pull-right">Thêm mới khách hàng</a></div>
+                                        <input type="hidden" value="" name="customer_id" id="customer_id" data-val-number="The field customer_id must be a number." data-val="true">
+
+
                                     </div>
                                 </div>
                                 <div class="panel-body">
@@ -321,7 +386,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-4">Mã số</label>
                                                     <div class="col-md-8">
-                                                        <input type="text" disabled class="form-control text-box single-line valid" value="@(Model.Customer != null ? Model.Customer.CodeCustomers : ""  )" id="customer_id_MS">
+                                                        <input type="text" id="customer_id_MS" value="" class="form-control text-box single-line valid" disabled="">
 
                                                     </div>
                                                 </div>
@@ -330,7 +395,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-4">Công ty</label>
                                                     <div class="col-md-8">
-                                                        <input type="text" disabled id="customer_id_Cty" value="@(Model.Customer != null ? Model.Customer.CongTyCustomers : ""  )" class="form-control text-box single-line valid">
+                                                        <input type="text" class="form-control text-box single-line valid" value="" id="customer_id_Cty" disabled="">
 
                                                     </div>
                                                 </div>
@@ -339,7 +404,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-4">Email</label>
                                                     <div class="col-md-8">
-                                                        <input type="text" disabled id="customer_id_Email" value="@(Model.Customer != null ? Model.Customer.EmailCustomers : ""  )" class="form-control text-box single-line valid">
+                                                        <input type="text" class="form-control text-box single-line valid" value="" id="customer_id_Email" disabled="">
 
                                                     </div>
                                                 </div>
@@ -349,7 +414,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-4">Địa chỉ</label>
                                                     <div class="col-md-8">
-                                                        <input type="text" disabled id="customer_id_Address" value="@(Model.Customer != null ? Model.Customer.DiaChiCustomers : ""  )" class="form-control text-box single-line">
+                                                        <input type="text" class="form-control text-box single-line" value="" id="customer_id_Address" disabled="">
 
                                                     </div>
                                                 </div>
@@ -366,7 +431,7 @@
 
 
 
-          
+
             </div>
             <!-- /.row (nested) -->
         </div>
@@ -430,7 +495,7 @@
 
                 </div>
             </div>
-            <div class="row" style="min-width:1500px;">
+            <div class="row" style="min-width:1600px;">
                 <div class="col-lg-12">
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
@@ -445,66 +510,176 @@
                                 <th width="*" align="center" valign="middle">
                                     Loại giấy
                                 </th>
+                                <th width="100px" align="center" valign="middle">
+                                    Loại sóng
+                                </th>
+                                <th width="100px" align="center" valign="middle">
+                                    In Flexo
+                                </th>
                                 <th width="230px" align="center" valign="middle">
                                     Quy trình
                                 </th>
-                               
+
                                 <th width="150px" align="center" valign="middle">
                                     Quy Cách (cm)
                                 </th>
-                                <th width="130px" class="date_deliver" align="center" valign="middle">
-                                  Giao hàng sau(ngày)
-                                </th>
-                                <th width="130px" class="address_deliver" align="center" valign="middle">
-                                    Địa chỉ giao hàng
-                                </th>
+
                                 <th width="150px" align="center" valign="middle">
                                     Giá
                                 </th>
                                 <th width="100px" align="center" valign="middle">
                                     Số lượng
                                 </th>
-                                <th width="100px" align="center" valign="middle">
+                                <th width="120px" align="center" valign="middle">
                                     Làm mẫu
                                 </th>
-                                <th></th>
+                                <th width="80px"></th>
                             </tr>
                         </thead>
                         <tbody class="body_data">
                             <tr>
                                 <td align="center">
-                                    <input class="form-control text-box single-line NameProducts1" default-value="" name="NameProducts" type="text">
+                                    <input class="form-control text-box single-line NameProducts1 dataSubmit" default-value="" name="NameProducts" type="text">
 
                                 </td>
                                 <td align="center">
                                     @*<input class="form-control text-box single-line SolopProducts1" value="1" step="2" default-value="1" min="1" name="SolopProducts" type="number">*@
-                                    <select name="SolopProducts" default-value="0" class="form-control valid SolopProducts1">
+                                    <select name="SolopProducts" onchange="onSolopProductsSelect(this,this.value);" default-value="0" class="form-control valid SolopProducts1 dataSubmit">
                                         <option value="0">Chọn số lớp</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                         <option value="5">5</option>
                                         <option value="7">7</option>
                                     </select>
+                                    <script type="text/javascript">
+                                        function onSolopProductsSelect(el, val) {
+                                            $('.LoaigiayProductCls').css('display', 'none');
+                                            for (var i = 0; i < parseInt(val) ; i++) {
+                                                $('.LoaigiayProducts' + i).css('display', '');
+                                            }
+                                            updateValue();
+                                        }
+                                        function updateValue() {
+                                            var solop = $('.SolopProducts1').eq(0).val();
+                                            var value = "";
+                                            for (var i = 0; i < parseInt(solop) ; i++) {
+                                                if ($('.LoaigiayProducts' + i).css('display') != 'none') {
+                                                    value += $('.LoaigiayProducts' + i).eq(0).val() + "-";
+                                                }
+                                            }
+                                            if (value.length > 0) {
+                                                value = value.substr(0, value.length - 1);
+                                            }
+                                            $('.LoaigiayProducts').eq(0).val(value);
+                                            $('.LoaigiayProducts_Text').eq(0).text(value);
+
+                                        }
+                                    </script>
+                                </td>
+                                <td align="center">
+
+
+
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td>
+                                                <table style="margin: 0 auto;">
+                                                    <tr>
+                                                        @for (int i = 0; i < 4; i++)
+                                                        {
+                                                            <td width="*">
+                                                                <select onchange="updateValue();" default-value="0" style="max-width:100px ;display:none;" class="form-control LoaigiayProductCls LoaigiayProducts@(i)">
+
+                                                                    <option value="Trắng">Trắng</option>
+                                                                    <option value="Vàng">Vàng</option>
+                                                                    <option value="Xeo">Xeo</option>
+                                                                    <option value="Vàng ĐL">Vàng ĐL</option>
+                                                                    <option value="Vàng KT">Vàng KT</option>
+                                                                    <option value="Vàng KP">Vàng KP</option>
+                                                                </select>
+                                                            </td>
+                                                        }
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                        </tr>
+
+
+
+
+                                        <tr>
+                                            <td>
+                                                <table style="margin: 0 auto;">
+                                                    <tr>
+                                                        @for (int i = 4; i < 8; i++)
+                                                        {
+                                                            <td width="*" align="center">
+                                                                <select onchange="updateValue();" default-value="0" style="width:100% ;display:none;" class="form-control LoaigiayProductCls LoaigiayProducts@(i)">
+
+                                                                    <option value="Trắng">Trắng</option>
+                                                                    <option value="Vàng">Vàng</option>
+                                                                    <option value="Xeo">Xeo</option>
+                                                                    <option value="Vàng ĐL">Vàng ĐL</option>
+                                                                    <option value="Vàng KT">Vàng KT</option>
+                                                                    <option value="Vàng KP">Vàng KP</option>
+                                                                </select>
+                                                            </td>
+                                                        }
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+
+
+
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10">
+                                                <p class="LoaigiayProducts_Text"></p>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+
+                                    <input class="form-control text-box single-line dataSubmit LoaigiayProducts" name="LoaigiayProducts" default-value="" type="hidden">
 
                                 </td>
-                                <td align="center" style="width: 13%">
-                                    <select name="LoaigiayProducts" default-value="0" class="form-control valid LoaigiayProducts1">
-                                        <option value="0">Chọn loại giấy</option>
-                                        <option value="3 lớp: 2 Vàng 1 Xeo">3 lớp: 2 Vàng 1 Xeo</option>
-                                        <option value="3 lớp: 1 Trắng 1 Xeo 1 Vàng">3 lớp: 1 Trắng 1 Xeo 1 Vàng</option>
-                                        <option value="3 lớp: 1 Đài Loan 1 Xeo 1 Vàng">3 lớp: 1 Đài Loan 1 Xeo 1 Vàng</option>
-                                        <option value="5 lớp: 2 Vàng 3 Xeo">5 lớp: 2 Vàng 3 Xeo</option>
-                                        <option value="5 lớp: 1 Trắng 1 Vàng 3 Xeo">5 lớp: 1 Trắng 1 Vàng 3 Xeo</option>
-                                        <option value="5 lớp: 1 Đài Loan 1 Vàng 3 Xeo">5 lớp: 1 Đài Loan 1 Vàng 3 Xeo</option>
-                                        <option value="2 lớp: 1 Vàng 1 Xeo - sóng E">2 lớp: 1 Vàng 1 Xeo - sóng E</option>
-                                        <option value="2 lớp: 1 Vàng 1 Xeo - sóng C">2 lớp: 1 Vàng 1 Xeo - sóng C</option>
-                                        <option value="2 lớp: 1 Trắng 1 Xeo - sóng E">2 lớp: 1 Trắng 1 Xeo - sóng E</option>
+
+
+                                <td align="center">
+                                    @*<input class="form-control text-box single-line SolopProducts1" value="1" step="2" default-value="1" min="1" name="SolopProducts" type="number">*@
+                                    <select name="LoaiSongProducts" default-value="" class="form-control valid LoaiSongProducts1 dataSubmit">
+                                        <option value="">Chọn số lớp</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="E">E</option>
+                                        <option value="A-B">A-B</option>
+                                        <option value="A-C">A-C</option>
+                                        <option value="A-E">A-E</option>
+                                        <option value="B-C">B-C</option>
+                                        <option value="B-E">B-E</option>
+                                        <option value="C-E">C-E</option>
+                                        <option value="A-B-E">A-B-E</option>
                                     </select>
 
+                                </td>
+                                <td align="center">
+                                    @*<input class="form-control text-box single-line SolopProducts1" value="1" step="2" default-value="1" min="1" name="SolopProducts" type="number">*@
+                                    <select name="InFlexoProducts" default-value="0" class="form-control valid InFlexoProducts1 dataSubmit">
+                                        <option value="0">Chọn số lớp</option>
+                                        <option value="1">1 màu</option>
+                                        <option value="2">2 màu</option>
+                                        <option value="3">3 màu</option>
+                                        <option value="4">4 màu</option>
+                                        <option value="5">5 màu</option>
+
+                                    </select>
 
                                 </td>
                                 <td align="center" style="width: 10%">
-                                    <select name="OffsetFlexoProducts" onchange="OffsetFlexoProductsUpdate(this); " default-value="Offset" class="form-control">
+                                    <select name="OffsetFlexoProducts" onchange="OffsetFlexoProductsUpdate(this); " default-value="Offset" class="form-control dataSubmit">
 
                                         <option value="FLEXO - BẤM KIM">1 - FLEXO - BẤM KIM</option>
                                         <option value="FLEXO - DÁN">2 - FLEXO - DÁN</option>
@@ -514,14 +689,14 @@
                                         <option value="OFFSET - Bế - DÁN">6 - OFFSET - Bế - DÁN</option>
                                     </select>
                                 </td>
-                             
+
                                 <td style="width: 200px;">
-                                   
+
 
                                     <table style="width:100%" class="QuyCachProductsLO">
                                         <tr>
                                             <td>
-                                                <select class="selectQuyCach form-control valid" default-value="0" >
+                                                <select class="selectQuyCach form-control valid" default-value="0">
                                                     <option value="0">chọn dài x rộng x cao</option>
                                                     <option value="1">chọn dài x rộng</option>
                                                 </select>
@@ -544,31 +719,26 @@
                                                     </tr>
                                                 </table>
                                             </td>
-                                        </tr>                                       
+                                        </tr>
                                     </table>
-                                    <input type="text" name="QuyCachProducts" default-value="" class="form-control text-box single-line QuyCachProducts cusinputsmall hidden">
+                                    <input type="text" name="QuyCachProducts" default-value="" class="form-control text-box single-line QuyCachProducts cusinputsmall hidden dataSubmit">
 
                                 </td>
-                                <td align="center" class="date_deliver">
-                                    <input class="form-control datenumber" default-value="" name="datenumber"  type="text">
-                                </td>
-                                <td align="center" class="address_deliver">
-                                    <input class="form-control" default-value="" name="address_deliver" type="text">
-                                </td>
+
                                 <td align="center">
-                                    <input class="form-control text-box single-line GiaProducts1" name="GiaProducts" step="500" min="0" default-value="0" value="0" type="number">
+                                    <input class="form-control text-box single-line GiaProducts1 dataSubmit" name="GiaProducts" step="500" min="0" default-value="0" value="0" type="number">
 
                                 </td>
                                 <td align="center">
-                                    <input class="form-control text-box single-line" default-value="1" min="1" name="SoLuong" value="1" type="number">
+                                    <input class="form-control text-box single-line dataSubmit" default-value="1" min="1" name="SoLuong" value="1" type="number">
                                 </td>
                                 <td align="center">
-                                    <select name="Design" default-value="0" class="form-control">
+                                    <select name="Design" default-value="0" class="form-control dataSubmit">
                                         <option value="0">Không</option>
                                         <option value="1">Có</option>
                                     </select>
                                 </td>
-                                <td align="center"><input type="submit" style="float: left; margin-left: 10px" value="Thêm" class="btn btn-primary" onclick=" updateProduct(this); return false; " /></td>
+                                <td align="center"><input type="submit" style="float: left; margin-left: 10px" value="Thêm" class="btn btn-primary" onclick="updateProduct(this); return false;" /></td>
 
                             </tr>
                         </tbody>
@@ -585,7 +755,16 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="form-group" style="text-align: center">
-                <input type="submit" value="Tạo báo giá" class="btn btn-primary" />
+                <input type="submit" value="Tạo báo giá" onclick="return onCheckProduct();" class="btn btn-primary" />
+                <script>
+                    function onCheckProduct() {
+                        var chkItems = $('tr.tr_edit').length > 0 ? true : false;
+                        if (!chkItems) {
+                            alert("Vui lòng nhập sản phẩm!")
+                        }
+                       return chkItems;
+                    }
+                </script>
             </div>
 
         </div>
@@ -598,11 +777,19 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 <style>
-    .table td { text-align: center; }
+    .table td {
+        text-align: center;
+    }
 
-    .table th { text-align: center; }
+    .table th {
+        text-align: center;
+    }
 
-    .tr_edit > td { line-height: 34px !important; }
+    .tr_edit > td {
+        line-height: 34px !important;
+    }
 
-    .DanKimProducts { display: none; }
+    .DanKimProducts {
+        display: none;
+    }
 </style>

@@ -29,7 +29,6 @@ namespace NhutLongCompany.Models
         public virtual DbSet<tbl_OrderTem> tbl_OrderTem { get; set; }
         public virtual DbSet<tbl_OrderTem_BaoGia> tbl_OrderTem_BaoGia { get; set; }
         public virtual DbSet<tbl_OrderTem_BaoGia_Detail> tbl_OrderTem_BaoGia_Detail { get; set; }
-        public virtual DbSet<tbl_Products> tbl_Products { get; set; }
         public virtual DbSet<tbl_QuyTrinh> tbl_QuyTrinh { get; set; }
         public virtual DbSet<tbl_User> tbl_User { get; set; }
         public virtual DbSet<tbl_Stack> tbl_Stack { get; set; }
@@ -37,5 +36,6 @@ namespace NhutLongCompany.Models
         public virtual DbSet<tbl_Note> tbl_Note { get; set; }
         public virtual DbSet<tbl_OrderTemPause> tbl_OrderTemPause { get; set; }
         public virtual DbSet<AdminMenu> AdminMenus { get; set; }
+        public virtual DbSet<tbl_Products> tbl_Products { get; set; }
     }
 }

@@ -10,7 +10,27 @@
 
 
 <script type="text/javascript">
+    function OffsetFlexoProductsUpdate(el) {
+        if (el.value == 'FLEXO - BẤM KIM') {
+            $('#DanKimProducts').val("Bấm kim");
+        }
+        if (el.value == 'FLEXO - DÁN') {
+            $('#DanKimProducts').val("Dán keo");
+        }
+        if (el.value == 'FLEXO - Bế') {
+            $('#DanKimProducts').val("");
+        }
+        if (el.value == 'FLEXO - Bế - DÁN') {
+            $('#DanKimProducts').val("Dán keo");
+        }
+        if (el.value == 'OFFSET -Bế - BK') {
+            $('#DanKimProducts').val("Bấm kim");
+        }
+        if (el.value == 'OFFSET - Bế - DÁN') {
+            $('#DanKimProducts').val("Dán keo");
+        }
 
+    }
     function UpdateTK() {
         if ($('#date_tk').val() == "") {
             alert("Vui lòng chọn ngày!");
@@ -192,20 +212,30 @@
         } else {
             $('.lblGiaProducts').addClass('hidden');
         }
-        if ($('select[name=LoaigiayProducts]').val() == 0) {
+        if ($('.LoaigiayProducts').val() =="") {
             $('.lblLoaigiayProducts').addClass('hidden');
-            $('.LoaigiayProducts1').after('<label class="errorLabel lblLoaigiayProducts">Chọn loại giấy</label>');
+            $('.LoaigiayProducts').after('<label class="errorLabel lblSolopProducts">Chọn loại giấy</label>');
             m++;
         } else {
             $('.lblLoaigiayProducts').addClass('hidden');
         }
-        if ($('.datenumber').val() =='') {
-            $('.lbldatenumber').addClass('hidden');
-            $('.datenumber').after('<label class="errorLabel lbldatenumber">Nhập số ngày</label>');
+        if ($('.LoaiSongProducts1').val() == "") {
+            $('.lblLoaiSongProducts').addClass('hidden');
+            $('.LoaiSongProducts1').after('<label class="errorLabel lblLoaigiayProducts">Chọn loại sóng</label>');
             m++;
         } else {
-            $('.lbldatenumber').addClass('hidden');
+            
+            $('.lblLoaiSongProducts').addClass('hidden');
         }
+        if ($('.InFlexoProducts1').val() == "0") {
+            $('.lblInFlexoProducts').addClass('hidden');
+            $('.InFlexoProducts1').after('<label class="errorLabel lblLoaigiayProducts">Chọn loại In Flexo</label>');
+            m++;
+        } else {
+            $('.lblInFlexoProducts').addClass('hidden');
+        }
+        
+       
         if (m == 0) {
 
             $('.lblNameProducts').addClass('hidden');
@@ -214,7 +244,9 @@
             $('.lblQuyCachProductscao').addClass('hidden');
             $('.lblGiaProducts').addClass('hidden');
             $('.lblSolopProducts').addClass('hidden');
+            $('.lblLoaiSongProducts').addClass('hidden');
             $('.lblLoaigiayProducts').addClass('hidden');
+            $('.lblInFlexoProducts').addClass('hidden');
             var id = new Date().getTime();
             //var dai = $('.QuyCachProducts1dai').val();
             //var rong = $('.QuyCachProducts1rong').val();
@@ -223,7 +255,7 @@
             //$('.QuyCachProducts').val(qc);
             var tr = $(el).parents('tr').eq(0);
             var trdata = "<tr class='tr_edit' id='ext_" + id + "'><input name='BaoGiaTemView.BaoGiaTemDetailViews.Index' value='" + id + "' type='hidden'/><input name='BaoGiaTemView.BaoGiaTemDetailViews[" + id + "].ID_Products' value='' type='hidden'/>";
-            tr.find('.form-control').each(function() {
+            tr.find('.dataSubmit').each(function() {
 
 
                 if ($(this).attr('name') == 'SoLuong') {
@@ -527,49 +559,47 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" style="min-width:1600px;">
                 <div class="col-lg-12">
 
 
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>
+                                <th width="150px" align="center" valign="middle">
+
                                     Tên sản phẩm
                                 </th>
-                                <th>
+                                <th width="100px" align="center" valign="middle">
                                     Số lớp
                                 </th>
-                                <th>
+                                <th width="*" align="center" valign="middle">
                                     Loại giấy
                                 </th>
-                                <th>
+                                <th width="100px" align="center" valign="middle">
+                                    Loại sóng
+                                </th>
+                                <th width="100px" align="center" valign="middle">
+                                    In Flexo
+                                </th>
+                                <th width="230px" align="center" valign="middle">
                                     Quy trình
                                 </th>
-                                @*<th>
-                                    Dán/Kim
-                                </th>*@
-                                <th>
+
+                                <th width="150px" align="center" valign="middle">
                                     Quy Cách (cm)
                                 </th>
-                                <th width="130px" class="datenumber" align="center" valign="middle">
-                                    Giao hàng sau(ngày)
-                                </th>
-                                <th width="130px" class="address_deliver" align="center" valign="middle">
-                                    Địa chỉ giao hàng
-                                </th>
-                                <th>
+
+                                <th width="150px" align="center" valign="middle">
                                     Giá
                                 </th>
-                                <th>
+                                <th width="100px" align="center" valign="middle">
                                     Số lượng
                                 </th>
-                                <th>
+                                <th width="120px" align="center" valign="middle">
                                     Làm mẫu
                                 </th>
-                                <th>
-                                   
-                                </th>
+                                <th width="80px"></th>
                             </tr>
                         </thead>
                         <tbody class="body_data">
@@ -580,42 +610,164 @@
 
                                     <td>
                                         <input type="hidden" name="BaoGiaTemView.BaoGiaTemDetailViews.Index" value="@item.id" />
-                                        <input type="text" class="form-control text-box single-line NameProducts1" value="@item.NameProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].NameProducts">
+                                        <input type="text" class="form-control text-box single-line dataSubmit NameProducts1" value="@item.NameProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].NameProducts">
                                     </td>
                                     <td>
 
-                                        <select id="SolopProducts_@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].SolopProducts" class="form-control valid SolopProducts SolopProducts1">
+                                        <select id="SolopProducts_@item.id" onchange="onSolopProductsSelect(this,this.value);" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].SolopProducts" class="form-control dataSubmit valid SolopProducts SolopProducts1">
                                             <option value="0">Chọn số lớp</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="5">5</option>
                                             <option value="7">7</option>
                                         </select>
+                                        <script type="text/javascript">
+                                        function onSolopProductsSelect(el, val) {
+                                            $('.LoaigiayProductCls').css('display', 'none');
+                                            for (var i = 0; i < parseInt(val) ; i++) {
+                                                $('.LoaigiayProducts' + i).css('display', '');
+                                            }
+                                            updateValue();
+                                        }
+                                        function updateValue() {
+                                            var solop = $('.SolopProducts1').eq(0).val();
+                                            var value = "";
+                                            for (var i = 0; i < parseInt(solop) ; i++) {
+                                                if ($('.LoaigiayProducts' + i).css('display') != 'none') {
+                                                    value += $('.LoaigiayProducts' + i).eq(0).val() + "-";
+                                                }
+                                            }
+                                            if (value.length > 0) {
+                                                value = value.substr(0, value.length - 1);
+                                            }
+                                            $('.LoaigiayProducts').eq(0).val(value);
+                                            $('.LoaigiayProducts_Text').eq(0).text(value);
+
+                                        }
+                                        </script>
                                         <script>
                                             document.getElementById("SolopProducts_@item.id").value=@item.SolopProducts.Value;
                                         </script>
                                     </td>
                                     <td>
-                                        <select name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].LoaigiayProducts" id="LoaigiayProducts_@item.id" class="form-control valid LoaigiayProducts1">
-                                            <option value="0">Chọn loại giấy</option>
-                                            <option value="3 lớp: 2 Vàng 1 Xeo">3 lớp: 2 Vàng 1 Xeo</option>
-                                            <option value="3 lớp: 1 Trắng 1 Xeo 1 Vàng">3 lớp: 1 Trắng 1 Xeo 1 Vàng</option>
-                                            <option value="3 lớp: 1 Đài Loan 1 Xeo 1 Vàng">3 lớp: 1 Đài Loan 1 Xeo 1 Vàng</option>
-                                            <option value="5 lớp: 2 Vàng 3 Xeo">5 lớp: 2 Vàng 3 Xeo</option>
-                                            <option value="5 lớp: 1 Trắng 1 Vàng 3 Xeo">5 lớp: 1 Trắng 1 Vàng 3 Xeo</option>
-                                            <option value="5 lớp: 1 Đài Loan 1 Vàng 3 Xeo">5 lớp: 1 Đài Loan 1 Vàng 3 Xeo</option>
-                                            <option value="2 lớp: 1 Vàng 1 Xeo - sóng E">2 lớp: 1 Vàng 1 Xeo - sóng E</option>
-                                            <option value="2 lớp: 1 Vàng 1 Xeo - sóng C">2 lớp: 1 Vàng 1 Xeo - sóng C</option>
-                                            <option value="2 lớp: 1 Trắng 1 Xeo - sóng E">2 lớp: 1 Trắng 1 Xeo - sóng E</option>
+
+
+
+
+
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>
+                                                    <table style="margin: 0 auto;">
+                                                        <tr>
+                                                            @for (int i = 0; i < 4; i++)
+                                                            {
+                                                                <td width="*">
+                                                                    <select id="LoaigiayProducts_@(item.id)_@(i)" onchange="updateValue();" default-value="0" style="max-width:100px ;display:none;" class="form-control LoaigiayProductCls LoaigiayProducts@(i)">
+
+                                                                        <option value="Trắng">Trắng</option>
+                                                                        <option value="Vàng">Vàng</option>
+                                                                        <option value="Xeo">Xeo</option>
+                                                                        <option value="Vàng ĐL">Vàng ĐL</option>
+                                                                        <option value="Vàng KT">Vàng KT</option>
+                                                                        <option value="Vàng KP">Vàng KP</option>
+                                                                    </select>
+                                                                </td>
+                                                            }
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table style="margin: 0 auto;">
+                                                        <tr>
+                                                            @for (int i = 4; i < 8; i++)
+                                                            {
+                                                                <td width="*" align="center">
+                                                                    <select id="LoaigiayProducts_@(item.id)_@(i)" onchange="updateValue();" default-value="0" style="width:100% ;display:none;" class="form-control LoaigiayProductCls LoaigiayProducts@(i)">
+
+                                                                        <option value="Trắng">Trắng</option>
+                                                                        <option value="Vàng">Vàng</option>
+                                                                        <option value="Xeo">Xeo</option>
+                                                                        <option value="Vàng ĐL">Vàng ĐL</option>
+                                                                        <option value="Vàng KT">Vàng KT</option>
+                                                                        <option value="Vàng KP">Vàng KP</option>
+                                                                    </select>
+                                                                </td>
+                                                            }
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+
+
+
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10">
+                                                    <p class="LoaigiayProducts_Text">@item.LoaigiayProducts</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        @if (!String.IsNullOrWhiteSpace(item.LoaigiayProducts))
+                                        {
+                                            for (int i = 0; i < item.LoaigiayProducts.Split('-').Length; i++)
+                                            {
+                                                <script type="text/javascript">
+                                                    document.getElementById('LoaigiayProducts_@(item.id)_@(i)').value=decodeURI('@(Server.UrlEncode( item.LoaigiayProducts.Split('-')[i]))').replace(/[.+]/g, " ");
+                                                    document.getElementById('LoaigiayProducts_@(item.id)_@(i)').style.display="";
+                                                </script>
+
+                                            }
+                                        }
+
+                                       
+                                       
+                                        <input class="form-control text-box single-line dataSubmit LoaigiayProducts" value="@item.LoaigiayProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].LoaigiayProducts" default-value="" type="hidden">
+
+                                    </td>
+                                    <td align="center">
+                                      
+                                        <select id="LoaiSongProducts_@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].LoaiSongProducts" default-value="" class="form-control valid LoaiSongProducts1 dataSubmit">
+                                            <option value="">Chọn số lớp</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="E">E</option>
+                                            <option value="A-B">A-B</option>
+                                            <option value="A-C">A-C</option>
+                                            <option value="A-E">A-E</option>
+                                            <option value="B-C">B-C</option>
+                                            <option value="B-E">B-E</option>
+                                            <option value="C-E">C-E</option>
+                                            <option value="A-B-E">A-B-E</option>
                                         </select>
                                         <script>
 
-                                            document.getElementById("LoaigiayProducts_@item.id").value= $('<select />').html("@item.LoaigiayProducts").text();
+                                            document.getElementById("LoaiSongProducts_@item.id").value= decodeURI('@Server.UrlEncode(item.LoaiSongProducts)');
+
+                                        </script>
+                                    </td>
+                                    <td align="center">
+                                        @*<input class="form-control text-box single-line SolopProducts1" value="1" step="2" default-value="1" min="1" name="SolopProducts" type="number">*@
+                                        <select id="InFlexoProducts_@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].InFlexoProducts" default-value="0" class="form-control valid InFlexoProducts1 dataSubmit">
+                                            <option value="0">Chọn số lớp</option>
+                                            <option value="1">1 màu</option>
+                                            <option value="2">2 màu</option>
+                                            <option value="3">3 màu</option>
+                                            <option value="4">4 màu</option>
+                                            <option value="5">5 màu</option>
+
+                                        </select>
+                                        <script>
+
+                                            document.getElementById("InFlexoProducts_@item.id").value= '@item.InFlexoProducts';
 
                                         </script>
                                     </td>
                                     <td>
-                                        <select id="OffsetFlexoProducts_@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].OffsetFlexoProducts" onchange="OffsetFlexoProductsUpdate(this); " default-value="Offset" class="form-control">
+                                        <select id="OffsetFlexoProducts_@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].OffsetFlexoProducts" onchange="OffsetFlexoProductsUpdate(this); " default-value="Offset" class="form-control dataSubmit">
 
                                             <option value="FLEXO - BẤM KIM">1 - FLEXO - BẤM KIM</option>
                                             <option value="FLEXO - DÁN">2 - FLEXO - DÁN</option>
@@ -626,19 +778,18 @@
                                         </select>
 
                                         <script>
-                                            document.getElementById("OffsetFlexoProducts_@item.id").value = $('<select />').html("@item.OffsetFlexoProducts").text();
+                                            document.getElementById("OffsetFlexoProducts_@item.id").value = decodeURI('@Server.UrlEncode( item.OffsetFlexoProducts)').replace(/[.+]/g, " ");
 
                                         </script>
                                     </td>
 
 
                                     <td align="center">
-                                        <input class="form-control text-box single-line QuyCachProducts" value="@item.QuyCachProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].QuyCachProducts" type="text">
+                                        <input class="form-control text-box single-line QuyCachProducts dataSubmit" value="@item.QuyCachProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].QuyCachProducts" type="text">
                                     </td>
-                                    <td><input type="text" class="form-control  datenumber" value="@item.datenumber" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].datenumber"></td>
-                                    <td><input type="text" class="form-control  address_deliver" value="@item.address_deliver" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].address_deliver"></td>
-                                    <td><input type="number" min="0" step="500" class="form-control text-box single-line GiaProducts updateSL" value="@item.GiaProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].GiaProducts"></td>
-                                    <td><input type="number" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].SoLuong" value="@item.SoLuong" min="1" class="form-control text-box single-line updateSL SoLuong"></td>
+
+                                    <td><input type="number" min="0" step="500" class="form-control text-box single-line GiaProducts updateSL dataSubmit" value="@item.GiaProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].GiaProducts"></td>
+                                    <td><input type="number" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].SoLuong" value="@item.SoLuong" min="1" class="form-control text-box single-line updateSL SoLuong dataSubmit"></td>
 
                                     @*<td>@double.Parse(item.GiaProducts).ToString("n2") đ</td>
                                         <td>

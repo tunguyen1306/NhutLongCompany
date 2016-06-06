@@ -111,7 +111,11 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
-
+<style>
+    tr > td {
+        vertical-align: middle !important;
+    }
+</style>
 <script>
     function UpdateLenhSanXuat(id) {
         var json = JSON.stringify({ 'id': id});

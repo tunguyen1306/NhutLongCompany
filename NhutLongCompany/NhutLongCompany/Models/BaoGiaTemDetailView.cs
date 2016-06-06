@@ -12,6 +12,10 @@ namespace NhutLongCompany.Models
         public string NameProducts { get; set; }
         public Nullable<int> SolopProducts { get; set; }
         public string LoaigiayProducts { get; set; }
+
+        public string LoaiSongProducts { get; set; }
+        public Nullable<int> InFlexoProducts { get; set; }
+
         public string OffsetFlexoProducts { get; set; }
         public string DanKimProducts { get; set; }
         public string GiaProducts { get; set; }

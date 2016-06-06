@@ -171,6 +171,45 @@
 </div>
 
 <script type="text/javascript">
+    function parseDateExtra(val, format) {
+        if (format == "MM/dd/yyyy HH:mm:ss") {
+            var date = val.split(' ')[0];
+            var time = val.split(' ')[1];
+            var MM = parseInt(date.split("/")[0]);
+            var dd = parseInt(date.split("/")[1]);
+            var yyyy = parseInt(date.split("/")[2]);
+            var HH = parseInt(time.split(":")[0]);
+            var mm = parseInt(time.split(":")[1]);
+            var ss = parseInt(time.split(":")[2]);
+            return new Date(yyyy, MM - 1, dd, HH, mm, ss);
+        }
+        if (format == "MM/dd/yyyy") {
+            var date = val.split(' ')[0];
+            var MM = parseInt(date.split("/")[0]);
+            var dd = parseInt(date.split("/")[1]);
+            var yyyy = parseInt(date.split("/")[2]);
+            return new Date(yyyy, MM - 1, dd);
+        }
+        if (format == "dd/MM/yyyy HH:mm:ss") {
+            var date = val.split(' ')[0];
+            var time = val.split(' ')[1];
+            var MM = parseInt(date.split("/")[1]);
+            var dd = parseInt(date.split("/")[0]);
+            var yyyy = parseInt(date.split("/")[2]);
+            var HH = parseInt(time.split(":")[0]);
+            var mm = parseInt(time.split(":")[1]);
+            var ss = parseInt(time.split(":")[2]);
+            return new Date(yyyy, MM - 1, dd, HH, mm, ss);
+        }
+        if (format == "dd/MM/yyyy") {
+            var date = val.split(' ')[0];
+            var MM = parseInt(date.split("/")[1]);
+            var dd = parseInt(date.split("/")[0]);
+            var yyyy = parseInt(date.split("/")[2]);
+            return new Date(yyyy, MM - 1, dd);
+        }
+        return new Date(val);
+    }
     function  updateFlow(el)
     {
         var status = $('#status').val();
@@ -181,13 +220,19 @@
         var id = $('#id').val();
         var dateBegin = $('#begin').val();
         var dateEnd = $('#end').val();
+       
         var layout = $('#ajax_update_' + $('#idBG').val());
         if ($('#end').val() =="" && $('#begin').val() == "")
         {
             alert("Vui lòng cập nhật thời gian!");
             return false;
 
+        }      
+        if (parseDateExtra(dateEnd, 'MM/dd/yyyy HH:mm:ss') < parseDateExtra(dateBegin, 'MM/dd/yyyy HH:mm:ss')) {
+            alert("Vui lòng chọn thời gian kết thúc lớn hơn thời gian bắt đầu!");
+            return false;
         }
+        
         $.ajax({
             url: '@Url.Action("UpdateFlow", "SanXuat")',
             data: { 'idflow': id, 'begin': dateBegin, 'end': dateEnd },

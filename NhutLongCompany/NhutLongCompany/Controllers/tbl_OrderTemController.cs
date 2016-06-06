@@ -166,6 +166,7 @@ namespace NhutLongCompany.Controllers
 
                         }
                         tbl_OrderTem tbl_OrderTem = db.tbl_OrderTem.Find(id);
+                        tbl_OrderTem.date_end = DateTime.Now;
                         tbl_OrderTem.status = 5;
                         db.Entry(tbl_OrderTem).State = EntityState.Modified;
                     }
@@ -625,6 +626,7 @@ namespace NhutLongCompany.Controllers
 
                 }
                 order.date_deliver = donHang.date_deliver;
+                 order.datenumber = (int)donHang.date_deliver.Value.Subtract(DateTime.Now).TotalDays;
                 order.address_deliver = donHang.address_deliver;
                 order.update_date = DateTime.Now;
                 order.update_user = Session["username"].ToString();
@@ -744,7 +746,7 @@ namespace NhutLongCompany.Controllers
             donHang.BaoGiaTemView.id = tbl_OrderTem_BaoGia.id;
 
             int countindex = 0;
-            int maxDateNumber = 0;
+           
             foreach (var item in donHang.BaoGiaTemView.BaoGiaTemDetailViews)
             {
                 countindex++;
@@ -760,7 +762,7 @@ namespace NhutLongCompany.Controllers
                 var tblOrderTem=new tbl_OrderTem();
                 tbl_Products itemP = new tbl_Products
                 {
-                    CodeProducts = "",
+                    CodeProducts = masp,
                     CreatedDateProducts = item.CreatedDateProducts,
                     CreateUserProducts = item.CreateUserProducts,
                     DanKimProducts = item.DanKimProducts,
@@ -774,35 +776,18 @@ namespace NhutLongCompany.Controllers
                     QuyCachProducts = item.QuyCachProducts,
                     SolopProducts = item.SolopProducts,
                     StatusProducts = item.StatusProducts,
+                    LoaiSongProducts=item.LoaiSongProducts,
+                    InFlexoProducts = item.InFlexoProducts
                   
                   
                 };
                 itemP = db.tbl_Products.Add(itemP);
-                db.SaveChanges();
-                item.ID_Products = item.ID_Products;
-                tblOrderTem = db.tbl_OrderTem.Find(temValue.id);
-                tblOrderTem.date_deliver = item.date_deliver;
-                tblOrderTem.address_deliver = item.address_deliver;
-                tblOrderTem.datenumber = item.datenumber;
-                db.Entry(tblOrderTem).State = EntityState.Modified;
-                db.SaveChanges();
-
-                if (item.datenumber.HasValue)
-                {
-                    maxDateNumber = maxDateNumber < item.datenumber.Value ? item.datenumber.Value : maxDateNumber;
-                }
+                db.SaveChanges();              
                 tbl_OrderTem_BaoGia_Detail detail = new tbl_OrderTem_BaoGia_Detail { code_detail = code1 + "_" + donHang.code + "_" + countindex.ToString("00"),design = item.Design, baogia_id = donHang.BaoGiaTemView.id, money = double.Parse(item.GiaProducts), soluong = item.SoLuong, sanpam_id = itemP.ID_Products };
-                db.tbl_OrderTem_BaoGia_Detail.Add(detail);
-              
+                db.tbl_OrderTem_BaoGia_Detail.Add(detail);              
                 db.SaveChanges();
             }
-            if (maxDateNumber>0)
-            {
-                temValue.datenumber = maxDateNumber;
-                temValue.date_deliver = DateTime.Now.AddDays(temValue.datenumber.Value);
-                db.Entry(temValue).State = EntityState.Modified;               
-                db.SaveChanges();
-            }
+           
             return RedirectToAction("EditBaoGia", new
             {
                 id = donHang.id
@@ -865,7 +850,7 @@ namespace NhutLongCompany.Controllers
                 var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
                                      join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
                                      where u.baogia_id.Value.Equals(temBG.id)
-                                     select new BaoGiaTemDetailView { datenumber = d.datenumber, loai_design = u.loai_design, Date_Working = u.date_working, address_deliver = d.address_deliver, date_deliver = d.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+                                     select new BaoGiaTemDetailView {LoaiSongProducts=y.LoaiSongProducts,InFlexoProducts=y.InFlexoProducts, datenumber = d.datenumber, loai_design = u.loai_design, Date_Working = u.date_working, address_deliver = d.address_deliver, date_deliver = d.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
                 temBG.BaoGiaTemDetailViews = queryGiaoGiaCT.ToList<BaoGiaTemDetailView>();
                 d.BaoGiaTemView = temBG;
                 foreach (var itemSP in d.BaoGiaTemView.BaoGiaTemDetailViews)
@@ -921,19 +906,21 @@ namespace NhutLongCompany.Controllers
                         tbl_Products itemP = new tbl_Products
                         {
                             CodeProducts = masp,
-                            CreatedDateProducts = item.CreatedDateProducts,
+                            CreatedDateProducts = item.CreatedDateProducts.HasValue ? item.CreatedDateProducts : DateTime.Now,
                             CreateUserProducts = item.CreateUserProducts,
                             DanKimProducts = item.DanKimProducts,
                             GiaProducts = item.GiaProducts,
                             ID_Products = item.ID_Products,
                             LoaigiayProducts = item.LoaigiayProducts,
-                            ModifyDateProducts = item.ModifyDateProducts,
-                            ModifyUserProducts = item.ModifyUserProducts,
+                          //  ModifyDateProducts = item.ModifyDateProducts,
+                          //  ModifyUserProducts = item.ModifyUserProducts,
                             NameProducts = item.NameProducts,
                             OffsetFlexoProducts = item.OffsetFlexoProducts,
                             QuyCachProducts = item.QuyCachProducts,
                             SolopProducts = item.SolopProducts,
-                            StatusProducts = item.StatusProducts
+                            StatusProducts = item.StatusProducts,
+                            LoaiSongProducts = item.LoaiSongProducts,
+                            InFlexoProducts = item.InFlexoProducts
                         };
                         itemP = db.tbl_Products.Add(itemP);
                         db.SaveChanges();
@@ -1049,50 +1036,34 @@ namespace NhutLongCompany.Controllers
                     tbl_Products itemP = new tbl_Products();
                     var detail = new tbl_OrderTem_BaoGia_Detail();
                     var tblbaogia = new tbl_OrderTem_BaoGia();
-
-                    int maxDateNumber = 0;
-
-
                     foreach (var item1 in d1.BaoGiaTemView.BaoGiaTemDetailViews)
                     {
                         itemP = db.tbl_Products.Find(item1.ID_Products);
                         detail = db.tbl_OrderTem_BaoGia_Detail.Find(item1.id);
                         tblbaogia = db.tbl_OrderTem_BaoGia.Find(id);
-                        itemP.CreatedDateProducts = item.CreatedDateProducts;
-                        itemP.CreateUserProducts = item.CreateUserProducts;
+                    //   itemP.CreatedDateProducts = item.CreatedDateProducts;
+                     //   itemP.CreateUserProducts = item.CreateUserProducts;
                         itemP.DanKimProducts = item.DanKimProducts;
                         itemP.GiaProducts = item.GiaProducts;
                         itemP.LoaigiayProducts = item.LoaigiayProducts;
-                        itemP.ModifyDateProducts = item.ModifyDateProducts;
+                        itemP.ModifyDateProducts = item.ModifyDateProducts.HasValue? item.ModifyDateProducts:DateTime.Now;
                         itemP.ModifyUserProducts = item.ModifyUserProducts;
                         itemP.NameProducts = item.NameProducts;
                         itemP.OffsetFlexoProducts = item.OffsetFlexoProducts;
                         itemP.QuyCachProducts = item.QuyCachProducts;
                         itemP.SolopProducts = item.SolopProducts;
                         itemP.StatusProducts = item.StatusProducts;
-
-                        db.Entry(itemP).State = EntityState.Modified;
-                        db.SaveChanges();
-
+                        itemP.LoaiSongProducts = item.LoaiSongProducts;
+                        itemP.InFlexoProducts = item.InFlexoProducts;
+                        db.Entry(itemP).State = EntityState.Modified;   
                         detail.money = double.Parse(item.GiaProducts);
                         detail.soluong = item.SoLuong;
                         tblbaogia.total_money = double.Parse(item.GiaProducts) * item.SoLuong;
                   
-                        tbl_OrderTem.address_deliver = item.address_deliver;
-                     
-                        if (item.datenumber.HasValue)
-                        {
-                            maxDateNumber = maxDateNumber < item.datenumber.Value ? item.datenumber.Value : maxDateNumber;
-                        }
+                        
                       
                     }
-                    if (maxDateNumber > 0)
-                    {
-                        tbl_OrderTem.date_deliver = DateTime.Now.AddDays(tbl_OrderTem.datenumber.Value- maxDateNumber);
-                        tbl_OrderTem.datenumber = maxDateNumber;
-                        db.Entry(tbl_OrderTem).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
+                    db.SaveChanges();
 
                     return RedirectToAction("IndexBaoGia", "tbl_OrderTem");
                 }
@@ -1141,7 +1112,7 @@ namespace NhutLongCompany.Controllers
                 var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
                                      join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
                                      where u.baogia_id.Value.Equals(temBG.id)
-                                     select new BaoGiaTemDetailView { datenumber = d.datenumber, loai_design = u.loai_design, Date_Working = u.date_working, address_deliver = d.address_deliver, date_deliver = d.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+                                     select new BaoGiaTemDetailView { LoaiSongProducts=y.LoaiSongProducts,InFlexoProducts=y.InFlexoProducts,datenumber = d.datenumber, loai_design = u.loai_design, Date_Working = u.date_working, address_deliver = d.address_deliver, date_deliver = d.date_deliver, Design = u.design, Design_Date = u.design_date, Design_Img = u.design_img, id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
                 temBG.BaoGiaTemDetailViews = queryGiaoGiaCT.ToList<BaoGiaTemDetailView>();
                 d.BaoGiaTemView = temBG;
                 foreach (var itemSP in d.BaoGiaTemView.BaoGiaTemDetailViews)
@@ -1566,7 +1537,7 @@ namespace NhutLongCompany.Controllers
             d.date_deliver = tbl_OrderTem.date_deliver;
             d.address_deliver = tbl_OrderTem.address_deliver;
             d.datenumber = tbl_OrderTem.datenumber ;
-
+         
 
 
 
@@ -1574,7 +1545,7 @@ namespace NhutLongCompany.Controllers
             var queryGiaoGiaCT = from u in db.tbl_OrderTem_BaoGia_Detail
                                  join y in db.tbl_Products on u.sanpam_id equals y.ID_Products
                                  where u.baogia_id.Value.Equals(temBG.id)
-                                 select new BaoGiaTemDetailView { loai_design =u.loai_design,id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
+                                 select new BaoGiaTemDetailView {InFlexoProducts=y.InFlexoProducts,LoaiSongProducts=y.LoaiSongProducts, loai_design =u.loai_design,id = u.id, ID_Products = u.sanpam_id.Value, CodeProducts = y.CodeProducts, CreatedDateProducts = y.CreatedDateProducts, CreateUserProducts = y.CreateUserProducts, DanKimProducts = y.DanKimProducts, GiaProducts = u.money.Value.ToString(), LoaigiayProducts = y.LoaigiayProducts, ModifyDateProducts = y.ModifyDateProducts, ModifyUserProducts = y.ModifyUserProducts, NameProducts = y.NameProducts, OffsetFlexoProducts = y.OffsetFlexoProducts, QuyCachProducts = y.QuyCachProducts, SolopProducts = y.SolopProducts, SoLuong = u.soluong.Value, StatusProducts = y.StatusProducts };
             temBG.BaoGiaTemDetailViews = queryGiaoGiaCT.ToList<BaoGiaTemDetailView>();
 
             d.BaoGiaTemView = temBG;
