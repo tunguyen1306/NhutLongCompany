@@ -6,10 +6,28 @@
 
 @{
     ViewBag.Title = "PrintOrder";
+<<<<<<< HEAD
     //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @*@Html.Partial("ViewPrint",Model)*@
+=======
+    Layout = null;
+}
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+
+<!-- DataTables CSS -->
+<link href="@Url.Content("~/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css")" rel="stylesheet" type="text/css" />
+<!-- DataTables Responsive CSS -->
+<link href="@Url.Content("~/bower_components/datatables-responsive/css/dataTables.responsive.css")" rel="stylesheet" type="text/css" />
+
+<link href="@Url.Content("~/bower_components/morrisjs/morris.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/bower_components/font-awesome/css/font-awesome.min.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/bootstrap-datetimepicker.css")" rel="stylesheet" type="text/css" />
+
+>>>>>>> 9c82708f34980360d39e283528b3f4b61e7e42a9
 <!-- /.row -->
 @using (Html.BeginForm())
 {
@@ -177,22 +195,10 @@
         </div>
         <ul>
             <li>
-                @*Trong vòng
-                    @if ( Model.datenumber.HasValue)
-                    {
-                        <span>@((int)Model.datenumber.Value)</span>
-                    }
-                    else
-                    {
-                        @("(chưa cập nhật)")
-                    } ngày kể từ ngày Quý khách hàng ký duyệt mẫu*@
 
-                - Trong vòng 7 ngày kể từ ngày Quý khách hàng ký duyệt mẫu.
+                - Trong vòng 7 ngày kể từ ngày Quý khách hàng ký duyệt mẫu.</li></ul>
 
-
-            </li>
-            @*<li>Nhận hàng tại @Model.BaoGiaTemView.address_deliver</li>*@
-        </ul>
+             
 
         <div class="print-section">
             Phương thức thanh toán:
@@ -203,40 +209,39 @@
             <li>Thanh toán bằng tiền mặt hoặc chuyển khoản</li>
 
         </ul>
-        <div class="page-break"></div>
+      
         <div class="print-thank">
             Xin cám ơn sự quan tâm của Quý Công ty và mong sớm nhận được đơn đặt hàng từ Quý Công ty<br>
             Trân trọng kính chào.
         </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="print-signature">
 
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="print-signature">
-
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="print-stamp">
+                            Quý khách hàng vui lòng ký xác nhận<br>
+                            đặt hàng và fax: 072 3722 095<br>
+                            Ngày ..... tháng ..... năm 2015<br> <br><br><br>
+                            Họ tên: .............................................
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="print-stamp">
-                    Quý khách hàng vui lòng ký xác nhận<br>
-                    đặt hàng và fax: 072 3722 095<br>
-                    Ngày ..... tháng ..... năm 2015<br> <br><br><br>
-                    Họ tên: .............................................
+                <div class="row">
+                    <div class="col-xs-12 print-line"></div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 print-line"></div>
-        </div>
-        <div class="print-footer">
-            <div class="print-footer-company">
-                Công ty TNHH MINH VIỆT LONG
-            </div>
-            <div class="print-footer-address">
-                Nhà máy: 255, Ấp Đồng Tâm, Xã Long Trạch, Huyện Cần Đước, Tỉnh Long An Tel: 072 3722 095 Fax: 072 3722 095<br>
-                Văn phòng: 103 đường 715 Tạ Quang Bửu, Q.8, TP. HCM Tel: 08 3852 0166 Fax: 08 3852 0266<br>
-                Email: baobiminhvietlong@gmail.com Web: thungbaobi.com
-            </div>
-        </div>
+                <div class="print-footer">
+                    <div class="print-footer-company">
+                        Công ty TNHH MINH VIỆT LONG
+                    </div>
+                    <div class="print-footer-address">
+                        Nhà máy: 255, Ấp Đồng Tâm, Xã Long Trạch, Huyện Cần Đước, Tỉnh Long An Tel: 072 3722 095 Fax: 072 3722 095<br>
+                        Văn phòng: 103 đường 715 Tạ Quang Bửu, Q.8, TP. HCM Tel: 08 3852 0166 Fax: 08 3852 0266<br>
+                        Email: baobiminhvietlong@gmail.com Web: thungbaobi.com
+                    </div>
+                </div>
     </div>
 }
 

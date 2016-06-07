@@ -31,6 +31,6 @@ namespace NhutLongCompany.Models
         public string CodeProducts { get; set; }
         public string QuyCachProducts { get; set; }
       
- 
+
     }
 }
