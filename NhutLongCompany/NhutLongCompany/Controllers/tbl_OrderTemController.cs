@@ -1555,9 +1555,9 @@ namespace NhutLongCompany.Controllers
             return View(d);
 
         }
-        public ActionResult GeneratePDF()
+        public ActionResult GeneratePDF(int id)
         {
-            return new Rotativa.ActionAsPdf("PrintOrder",new { id=1});
+            return new Rotativa.ActionAsPdf("PrintOrder",new { id=id});
         }
 
 

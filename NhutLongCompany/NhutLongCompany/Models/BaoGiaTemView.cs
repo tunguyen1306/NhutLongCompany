@@ -23,6 +23,8 @@ namespace NhutLongCompany.Models
         public int? datenumber { get; set; }
         public List<String> PrintTen { get; set; }
         public List<int> PrintSoLop { get; set; }
+        public List<String> PrintLoaiSong { get; set; }
+        public List<int?> PrintInFlexo { get; set; }
         public List<String> PrintLoaiGiay { get; set; }
         public List<String> PrintOffset_Flexo { get; set; }
         public List<String> PrintDan_Kim { get; set; }
@@ -39,6 +41,8 @@ namespace NhutLongCompany.Models
             PrintTen = new List<string>();
             PrintSoLop = new List<int>();
             PrintLoaiGiay = new List<string>();
+            PrintLoaiSong = new List<string>();
+            PrintInFlexo = new List<int?>();
             PrintOffset_Flexo = new List<string>();
             PrintDan_Kim = new List<string>();
             PrintQuyCach = new List<string>();
@@ -51,6 +55,8 @@ namespace NhutLongCompany.Models
                 PrintTen.Add(item.NameProducts);
                 PrintSoLop.Add(item.SolopProducts.Value);
                 PrintLoaiGiay.Add(item.LoaigiayProducts);
+                PrintLoaiSong.Add(item.LoaiSongProducts);
+                PrintInFlexo.Add(item.InFlexoProducts);
                 PrintOffset_Flexo.Add(item.OffsetFlexoProducts);
                 PrintDan_Kim.Add(item.DanKimProducts);
                 PrintQuyCach.Add(item.QuyCachProducts);

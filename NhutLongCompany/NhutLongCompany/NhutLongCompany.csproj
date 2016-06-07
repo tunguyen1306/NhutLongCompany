@@ -1112,6 +1112,7 @@
     <Content Include="Views\Login\NoAuthorize.cshtml" />
     <Content Include="Views\Login\AjaxLogin.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\tbl_OrderTem\ViewPrint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

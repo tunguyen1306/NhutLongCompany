@@ -403,7 +403,7 @@
           <Property Name="isParent" Type="Boolean" />
           <Property Name="IdUser" Type="Int32" />
         </EntityType>
-        <EntityType Name="tbl_Products">
+        <!--<EntityType Name="tbl_Products">
           <Key>
             <PropertyRef Name="ID_Products" />
           </Key>
@@ -423,7 +423,7 @@
           <Property Name="StatusProducts" Type="Int32" />
           <Property Name="CodeProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="QuyCachProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
+        </EntityType>-->
 
       </Schema>
     </edmx:ConceptualModels>

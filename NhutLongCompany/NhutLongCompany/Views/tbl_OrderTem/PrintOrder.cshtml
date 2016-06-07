@@ -6,15 +6,15 @@
 
 @{
     ViewBag.Title = "PrintOrder";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+@*@Html.Partial("ViewPrint",Model)*@
 <!-- /.row -->
 @using (Html.BeginForm())
 {
-    <a href="javascript:window.print()" class="btn btn-primary">In báo giá</a>  
-      <a href="@Url.Action("GeneratePDF","tbl_OrderTem")" class="btn btn-primary">Xuất PDF</a>
+    <a href="javascript:window.print()" class="btn btn-primary">In báo giá</a>
+    <a href="@Url.Action("GeneratePDF","tbl_OrderTem",new { id=Model.BaoGiaTemView.id})" class="btn btn-primary">Xuất PDF</a>
     <a href="@Url.Action("IndexBaoGia","tbl_OrderTem")" class="btn btn-primary">Trở về</a>
 
     @Html.AntiForgeryToken()
@@ -83,6 +83,42 @@
                     }
                 </tr>
                 <tr>
+                    <td>Loại sóng</td>
+                    @foreach (var item in Model.BaoGiaTemView.PrintLoaiSong)
+                    {
+                        <td> @item</td>
+                    }
+                </tr>
+                <tr>
+                    <td>Inflexo</td>
+                    @foreach (var item in Model.BaoGiaTemView.PrintInFlexo)
+                    {
+                        <td>
+                            @if (item == 1)
+                            {
+                                @("1 màu")
+                            }
+                            @if (item == 2)
+                            {
+                                @("2 màu")
+                            }
+                            @if (item == 3)
+                            {
+                                @("3 màu")
+                            }
+                            @if (item == 4)
+                            {
+                                @("4 màu")
+                            }
+                            @if (item == 5)
+                            {
+                                @("5 màu")
+                            }
+                        </td>
+                    }
+                </tr>
+                <tr>
+                <tr>
                     <td>Loại giấy</td>
                     @foreach (var item in Model.BaoGiaTemView.PrintLoaiGiay)
                     {
@@ -90,7 +126,7 @@
                     }
                 </tr>
                 <tr>
-                    <td>Quy trình</td>
+                    <td>Thành phẩm</td>
                     @foreach (var item in Model.BaoGiaTemView.PrintOffset_Flexo)
                     {
                         <td> @item</td>
@@ -141,17 +177,21 @@
         </div>
         <ul>
             <li>
-                Trong vòng
-                @if ( Model.datenumber.HasValue)
-                {
-                    <span>@((int)Model.datenumber.Value)</span>
-                }
-                else
-                {
-                    @("(chưa cập nhật)")
-                } ngày kể từ ngày Quý khách hàng ký duyệt mẫu
+                @*Trong vòng
+                    @if ( Model.datenumber.HasValue)
+                    {
+                        <span>@((int)Model.datenumber.Value)</span>
+                    }
+                    else
+                    {
+                        @("(chưa cập nhật)")
+                    } ngày kể từ ngày Quý khách hàng ký duyệt mẫu*@
+
+                - Trong vòng 7 ngày kể từ ngày Quý khách hàng ký duyệt mẫu.
+
+
             </li>
-            <li>Nhận hàng tại @Model.BaoGiaTemView.address_deliver</li>
+            @*<li>Nhận hàng tại @Model.BaoGiaTemView.address_deliver</li>*@
         </ul>
 
         <div class="print-section">
@@ -159,8 +199,9 @@
         </div>
         <ul>
             <li>Bên bán xuất hoá đơn VAT cho bên mua</li>
-            <li>Thanh toán trong vòng 8 ngày kể từ ngày giao hàng</li>
+            <li>Thanh toán trong vòng 07 ngày kể từ ngày giao hàng</li>
             <li>Thanh toán bằng tiền mặt hoặc chuyển khoản</li>
+
         </ul>
         <div class="page-break"></div>
         <div class="print-thank">
@@ -171,7 +212,7 @@
         <div class="row">
             <div class="col-xs-6">
                 <div class="print-signature">
-                   
+
                 </div>
             </div>
             <div class="col-xs-6">
@@ -198,3 +239,4 @@
         </div>
     </div>
 }
+
