@@ -59,6 +59,7 @@
       <mvcSiteMapNode title="Sản phầm đang sản xuất" controller="Sanxuat" action="IndexSanXuat"/>
       <mvcSiteMapNode title="Lịch sản xuất" controller="Sanxuat" action="LichSanXuat"/>
       <mvcSiteMapNode title="Sản xuất trong ngày" controller="Sanxuat" action="LichSanXuatOnDay"/>
+     <mvcSiteMapNode title="Báo cáo" controller="tbl_OrderTem" action="Report"/>
     </mvcSiteMapNode>
 
 

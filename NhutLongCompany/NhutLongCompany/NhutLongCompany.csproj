@@ -176,6 +176,7 @@
     <Compile Include="Models\DonHangView.cs" />
     <Compile Include="Models\LoaiGiay.cs" />
     <Compile Include="Models\Navbar.cs" />
+    <Compile Include="Models\Report.cs" />
     <Compile Include="Models\SendMail.cs" />
     <Compile Include="Models\tbl_Customers.cs">
       <DependentUpon>DataWeb.tt</DependentUpon>
@@ -1113,6 +1114,7 @@
     <Content Include="Views\Login\AjaxLogin.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\tbl_OrderTem\ViewPrint.cshtml" />
+    <Content Include="Views\tbl_OrderTem\Report.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
