@@ -41,5 +41,13 @@ namespace NhutLongCompany.Models
         [System.ComponentModel.DataAnnotations.Display(Name = " Kết thúc đơn hàng")]
         public int? KetThucDonHang { get; set; }
       
-    }
+    public int? SoLop { get; set; }
+    public string LoaiSong { get; set; }
+    public string LoaiGiay { get; set; }
+    public string InFlexoProduct { get; set; }
+    public string QuyCach { get; set; }
+    public int? SoLuong { get; set; }
+    public double? Money { get; set; }
+
+}
 }

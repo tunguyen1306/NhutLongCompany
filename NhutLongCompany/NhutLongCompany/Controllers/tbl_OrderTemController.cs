@@ -1770,12 +1770,20 @@ SELECT tbl_OrderTem.code'codeProducts',tbl_Products.NameProducts'nameProducts',
   left join tbl_Products  tbl_Products13 on tbl_Products13.ID_Products=tbl_OrderTem_BaoGia_Detail13.sanpam_id
   left join tbl_OrderTem tbl_OrderTem13 on tbl_OrderTem13.id=tbl_OrderTem_BaoGia_Detail13.baogia_id
   where  tbl_QuyTrinh13.TenBuoc in(N'Kết thúc đơn hàng')and tbl_QuyTrinh13.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'KetThucDonHang'
+  )'KetThucDonHang',
+  tbl_Products.SolopProducts'SoLop',
+  tbl_Products.LoaiSongProducts'LoaiSong',
+  LoaigiayProducts'LoaiGiay',
+  case when InFlexoProducts =1 then '1 màu' when InFlexoProducts =2 then '2 màu' when InFlexoProducts =3 then ' 3 màu'  when InFlexoProducts =4 then '4 màu' when InFlexoProducts =5 then '5 màu' end    'InFlexoProduct',
+  QuyCachProducts'QuyCach',
+  tbl_OrderTem_BaoGia_Detail.soluong'SoLuong',
+  tbl_OrderTem_BaoGia_Detail.[money]'Money'
   FROM tbl_QuyTrinh
   left join tbl_OrderTem_BaoGia_Detail on tbl_QuyTrinh.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail.id
   left join tbl_Products on tbl_Products.ID_Products=tbl_OrderTem_BaoGia_Detail.sanpam_id
   left join tbl_OrderTem  on tbl_OrderTem.id=tbl_OrderTem_BaoGia_Detail.baogia_id
-  group by tbl_OrderTem.code,tbl_Products.NameProducts,tbl_QuyTrinh.ID_BaoGiaDetail
+
+  group by tbl_OrderTem.code,tbl_Products.NameProducts,tbl_QuyTrinh.ID_BaoGiaDetail,tbl_Products.SolopProducts,tbl_Products.LoaiSongProducts,LoaigiayProducts,InFlexoProducts,QuyCachProducts,tbl_OrderTem_BaoGia_Detail.soluong,tbl_OrderTem_BaoGia_Detail.[money]
   order by tbl_Products.NameProducts desc").ToList();
             return View(model);
         }
@@ -1875,12 +1883,20 @@ SELECT tbl_OrderTem.code'codeProducts',tbl_Products.NameProducts'nameProducts',
   left join tbl_Products  tbl_Products13 on tbl_Products13.ID_Products=tbl_OrderTem_BaoGia_Detail13.sanpam_id
   left join tbl_OrderTem tbl_OrderTem13 on tbl_OrderTem13.id=tbl_OrderTem_BaoGia_Detail13.baogia_id
   where  tbl_QuyTrinh13.TenBuoc in(N'Kết thúc đơn hàng')and tbl_QuyTrinh13.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'KetThucDonHang'
+  )'KetThucDonHang',
+  tbl_Products.SolopProducts'SoLop',
+  tbl_Products.LoaiSongProducts'LoaiSong',
+  LoaigiayProducts'LoaiGiay',
+  case when InFlexoProducts =1 then '1 màu' when InFlexoProducts =2 then '2 màu' when InFlexoProducts =3 then ' 3 màu'  when InFlexoProducts =4 then '4 màu' when InFlexoProducts =5 then '5 màu' end    'InFlexoProduct',
+  QuyCachProducts'QuyCach',
+  tbl_OrderTem_BaoGia_Detail.soluong'SoLuong',
+  tbl_OrderTem_BaoGia_Detail.[money]'Money'
   FROM tbl_QuyTrinh
   left join tbl_OrderTem_BaoGia_Detail on tbl_QuyTrinh.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail.id
   left join tbl_Products on tbl_Products.ID_Products=tbl_OrderTem_BaoGia_Detail.sanpam_id
   left join tbl_OrderTem  on tbl_OrderTem.id=tbl_OrderTem_BaoGia_Detail.baogia_id
-  group by tbl_OrderTem.code,tbl_Products.NameProducts,tbl_QuyTrinh.ID_BaoGiaDetail
+
+  group by tbl_OrderTem.code,tbl_Products.NameProducts,tbl_QuyTrinh.ID_BaoGiaDetail,tbl_Products.SolopProducts,tbl_Products.LoaiSongProducts,LoaigiayProducts,InFlexoProducts,QuyCachProducts,tbl_OrderTem_BaoGia_Detail.soluong,tbl_OrderTem_BaoGia_Detail.[money]
   order by tbl_Products.NameProducts desc").ToList();
             GridView gv = new GridView();
             gv.DataSource = model;
@@ -1893,6 +1909,7 @@ SELECT tbl_OrderTem.code'codeProducts',tbl_Products.NameProducts'nameProducts',
             StringWriter sw = new StringWriter();
             HtmlTextWriter htw = new HtmlTextWriter(sw);
             gv.RenderControl(htw);
+            Response.ContentEncoding = System.Text.Encoding.UTF8;
             Response.Output.Write(sw.ToString());
             Response.Flush();
             Response.End();
