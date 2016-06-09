@@ -15,31 +15,31 @@ namespace NhutLongCompany.Models
         [System.ComponentModel.DataAnnotations.Display(Name = "Tên sản phẩm")]
         public string nameProducts { get; set; }
         [System.ComponentModel.DataAnnotations.Display(Name = "Nhận tờ in offset")]
-        public int? qt1 { get; set; }
+        public int? NhanToInOffset { get; set; }
         [System.ComponentModel.DataAnnotations.Display(Name = "Sản xuất giấy tấm")]
-        public int? qt2 { get; set; }
+        public int? SanXuatGiayTam { get; set; }
         [System.ComponentModel.DataAnnotations.Display(Name = "Bồi")]
-        public int? qt3 { get; set; }
+        public int? Boi { get; set; }
         [System.ComponentModel.DataAnnotations.Display(Name = "Xả biến, cán lằn")]
-        public int? qt4 { get; set; }
+        public int? XaBienCanLan { get; set; }
         [System.ComponentModel.DataAnnotations.Display(Name = "In FLEXO")]
-        public int? qt5 { get; set; }
+        public int? InFlexo { get; set; }
         [System.ComponentModel.DataAnnotations.Display(Name = "Bế")]
-        public int? qt6 { get; set; }
+        public int? Be { get; set; }
         [System.ComponentModel.DataAnnotations.Display(Name = "Chập khe")]
-        public int? qt7 { get; set; }
+        public int? ChapKhe { get; set; }
         [System.ComponentModel.DataAnnotations.Display(Name = "Bấm kim")]
-        public int? qt8 { get; set; }
+        public int? BamKim { get; set; }
         [System.ComponentModel.DataAnnotations.Display(Name = "Dán")]
-        public int? qt9 { get; set; }
+        public int? Dan { get; set; }
         [System.ComponentModel.DataAnnotations.Display(Name = "Đóng gói")]
-        public int? qt10 { get; set; }
+        public int? DongGoi { get; set; }
         [System.ComponentModel.DataAnnotations.Display(Name = "Giao hàng")]
-        public int? qt11 { get; set; }
+        public int? GiaoHang { get; set; }
         [System.ComponentModel.DataAnnotations.Display(Name = "Thanh toán")]
-        public int? qt12 { get; set; }
+        public int? ThanhToan { get; set; }
         [System.ComponentModel.DataAnnotations.Display(Name = " Kết thúc đơn hàng")]
-        public int? qt13 { get; set; }
+        public int? KetThucDonHang { get; set; }
       
     }
 }
