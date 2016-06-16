@@ -167,7 +167,7 @@
         }
         if ($('.InFlexoProducts1').val() == "0") {
             $('.lblInFlexoProducts').addClass('hidden');
-            $('.InFlexoProducts1').after('<label class="errorLabel lblLoaigiayProducts">Chọn loại In Flexo</label>');
+            $('.InFlexoProducts1').after('<label class="errorLabel lblLoaigiayProducts">Chọn số màu in</label>');
             m++;
         } else {
             $('.lblInFlexoProducts').addClass('hidden');
@@ -317,7 +317,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        @*<div class="col-lg-6">
                                             <select class="form-control valid selectcustomer" onchange=" UpdateCustomerInfo(this); " style="width: 200px; margin-left: 10px">
                                                 <option value="0">Chọn danh sách</option>
                                                 <option value="1-NTT-Nhụt Long-daigai@daigia.com-">Nhụt Long</option>
@@ -374,10 +374,24 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-6"><a href="/Customers/Index" class="btn btn-primary pull-right">Thêm mới khách hàng</a></div>
-                                        <input type="hidden" value="" name="customer_id" id="customer_id" data-val-number="The field customer_id must be a number." data-val="true">
+                                        <input type="hidden" value="" name="customer_id" id="customer_id" data-val-number="The field customer_id must be a number." data-val="true">*@
+                                        <div class="col-lg-6">
+                                          
+                                                <select style="width: 200px; margin-left: 10px" onchange=" UpdateCustomerInfo(this); " class="form-control valid selectcustomer">
+                                                    <option value="0">Chọn danh sách</option>
+                                                    @foreach (tbl_Customers item in Model.tbl_Customers)
+                                                                  {
+                                                        <option @((Model.customer_id.HasValue && item.IDCustomers == Model.customer_id.Value) ? "selected=\"selected\"" : "") value="@(item.IDCustomers + "-" + item.CodeCustomers + "-" + item.CongTyCustomers + "-" + item.EmailCustomers + "-" + item.DiaChiCustomers)">@item.CongTyCustomers</option>
+                                                                  }
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-6"><a class="btn btn-primary pull-right" href="@Url.Action("Index", "Customers")">Thêm mới khách hàng</a></div>
+                                            @Html.HiddenFor(model => model.customer_id)
 
 
-                                    </div>
+
+
+                                        </div>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
@@ -650,7 +664,7 @@
                                 <td align="center">
                                     @*<input class="form-control text-box single-line SolopProducts1" value="1" step="2" default-value="1" min="1" name="SolopProducts" type="number">*@
                                     <select name="LoaiSongProducts" default-value="" class="form-control valid LoaiSongProducts1 dataSubmit">
-                                        <option value="">Chọn số lớp</option>
+                                        <option value="">Chọn loại sóng</option>
                                         <option value="A">A</option>
                                         <option value="B">B</option>
                                         <option value="C">C</option>
@@ -668,7 +682,8 @@
                                 <td align="center">
                                     @*<input class="form-control text-box single-line SolopProducts1" value="1" step="2" default-value="1" min="1" name="SolopProducts" type="number">*@
                                     <select name="InFlexoProducts" default-value="0" class="form-control valid InFlexoProducts1 dataSubmit">
-                                        <option value="0">Chọn số lớp</option>
+                                        <option value="0">Chọn số màu in</option>
+                                        <option value="6">Không in</option>
                                         <option value="1">1 màu</option>
                                         <option value="2">2 màu</option>
                                         <option value="3">3 màu</option>

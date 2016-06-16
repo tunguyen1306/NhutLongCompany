@@ -229,7 +229,7 @@
         }
         if ($('.InFlexoProducts1').val() == "0") {
             $('.lblInFlexoProducts').addClass('hidden');
-            $('.InFlexoProducts1').after('<label class="errorLabel lblLoaigiayProducts">Chọn loại In Flexo</label>');
+            $('.InFlexoProducts1').after('<label class="errorLabel lblLoaigiayProducts">Chọn số màu in</label>');
             m++;
         } else {
             $('.lblInFlexoProducts').addClass('hidden');
@@ -730,7 +730,7 @@
                                     <td align="center">
                                       
                                         <select id="LoaiSongProducts_@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].LoaiSongProducts" default-value="" class="form-control valid LoaiSongProducts1 dataSubmit">
-                                            <option value="">Chọn số lớp</option>
+                                            <option value="">Chọn loại sóng</option>
                                             <option value="A">A</option>
                                             <option value="B">B</option>
                                             <option value="C">C</option>
@@ -752,7 +752,8 @@
                                     <td align="center">
                                         @*<input class="form-control text-box single-line SolopProducts1" value="1" step="2" default-value="1" min="1" name="SolopProducts" type="number">*@
                                         <select id="InFlexoProducts_@item.id" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].InFlexoProducts" default-value="0" class="form-control valid InFlexoProducts1 dataSubmit">
-                                            <option value="0">Chọn số lớp</option>
+                                            <option value="0">Chọn số màu in</option>
+                                            <option value="6">Không in</option>
                                             <option value="1">1 màu</option>
                                             <option value="2">2 màu</option>
                                             <option value="3">3 màu</option>
