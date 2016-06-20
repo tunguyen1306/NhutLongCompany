@@ -251,11 +251,9 @@
                                             {
                                                 @("Kết thúc")
                                             }
-                                            if (itemQTBF == null || itemQTBF.TrangThai.Value == 2)
-                                            {
-                                                <br />
-                                                <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-updateFlow" data-toggle="modal" onclick="viewUpdateFlow(@itemQT.ID_BaoGiaDetail,@itemQT.ID,'@(itemQT.NgayBatDau_TT.HasValue?itemQT.NgayBatDau_TT.Value.ToString("MM/dd/yyyy HH:mm:ss"):null)','@(itemQT.NgayKetThuc_TT.HasValue?itemQT.NgayKetThuc_TT.Value.ToString("MM/dd/yyyy HH:mm:ss"):null)',@itemQT.TrangThai.Value);">update</span>
-                                            }
+                                            //if (itemQTBF == null || itemQTBF.TrangThai.Value == 2)
+                                            //{
+                                            //     }
 
 
                                         }
@@ -268,6 +266,10 @@
 
                                         }
                                     </span>
+                                    <br />
+                                    <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs"
+                                          data-target="#modal-container-updateFlow" data-toggle="modal" onclick="viewUpdateFlow(@itemQT.ID_BaoGiaDetail,@itemQT.ID,'@(itemQT.NgayBatDau_TT.HasValue?itemQT.NgayBatDau_TT.Value.ToString("MM/dd/yyyy HH:mm:ss"):null)','@(itemQT.NgayKetThuc_TT.HasValue?itemQT.NgayKetThuc_TT.Value.ToString("MM/dd/yyyy HH:mm:ss"):null)',@itemQT.TrangThai.Value);">update</span>
+
                                 </td>
 
                             }
