@@ -1,0 +1,51 @@
+﻿@model NhutLongCompany.Models.tbl_Config_Step
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbl_Config_Step</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenCongDoan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenCongDoan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DienGiai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DienGiai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThuTu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThuTu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

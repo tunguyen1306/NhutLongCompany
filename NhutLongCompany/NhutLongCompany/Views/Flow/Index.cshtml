@@ -1,0 +1,107 @@
+﻿@using NhutLongCompany.Models
+@model IEnumerable<NhutLongCompany.Models.tbl_Config_FlowName>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header">Thông Tin Quy Trình</h3>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                @Html.ActionLink("Thêm quy trình", "Create", "", new { @class = "btn btn-primary" })
+                @Html.ActionLink("Cấu hình quy trình", "Config", "", new { @class = "btn btn-primary" })
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+
+                <div class="dataTable_wrapper">
+
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+
+                                <th>
+                                   Tên quy trình
+                                </th>
+                                <th>
+                                    Diễn giải
+                                </th>
+                                <th>
+                                    Thứ tự 
+                                </th>
+                                <th>
+                                    Trạng thái
+                                </th>
+                                <th width="200px">
+                                    
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (tbl_Config_FlowName item in Model)
+                            {
+                                <tr>
+
+                                    <td>
+
+                                        @Html.DisplayFor(modelItem => item.TenQuyTrinh)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DienGiai)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.ThuTu)
+
+                                    </td>
+                                    <td>
+                                        @(item.TrangThai==1?"Hoạt đông":"Không hoạt động")
+                                    </td>
+                                    <td style="text-align: center">
+                                        @Html.ActionLink("Cập nhật", "Edit", new { id = item.ID }, htmlAttributes: new { @class = "btn btn-outline btn-primary btn-xs" }) |
+                                        @Html.ActionLink("Chi tiết", "Details", new { id = item.ID }, htmlAttributes: new { @class = "btn btn-outline btn-primary btn-xs" }) |
+                                        @Html.ActionLink("Xóa", "Delete", new { id = item.ID }, htmlAttributes: new { @class = "btn btn-outline btn-primary btn-xs" })
+
+
+
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<!-- Modal -->
+
+
+
+
+
+
+
+
+

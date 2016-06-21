@@ -1,0 +1,52 @@
+﻿@model IEnumerable<NhutLongCompany.Models.tbl_Config_Step>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TenCongDoan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DienGiai)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ThuTu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenCongDoan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DienGiai)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ThuTu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TrangThai)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

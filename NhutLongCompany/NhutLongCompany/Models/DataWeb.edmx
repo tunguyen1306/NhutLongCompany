@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="NhutLongCompanyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="NhutLongCompanyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AdminMenu">
           <Key>
             <PropertyRef Name="Id" />
@@ -19,6 +19,36 @@
           <Property Name="parentId" Type="int" />
           <Property Name="isParent" Type="bit" />
           <Property Name="IdUser" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_Config_FlowName">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenQuyTrinh" Type="nvarchar" MaxLength="200" />
+          <Property Name="DienGiai" Type="nvarchar" MaxLength="500" />
+          <Property Name="ThuTu" Type="int" />
+          <Property Name="TrangThai" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_Config_Step">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenCongDoan" Type="nvarchar" MaxLength="200" />
+          <Property Name="DienGiai" Type="nvarchar" MaxLength="500" />
+          <Property Name="ThuTu" Type="int" />
+          <Property Name="TrangThai" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_Config_StepInFlow">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Step" Type="int" />
+          <Property Name="ID_Flow" Type="int" />
+          <Property Name="TrangThai" Type="int" />
+          <Property Name="DienGiai" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="tbl_Customers">
           <Key>
@@ -187,6 +217,9 @@
         </EntityType>
         <EntityContainer Name="NhutLongCompanyModelStoreContainer">
           <EntitySet Name="AdminMenu" EntityType="Self.AdminMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Config_FlowName" EntityType="Self.tbl_Config_FlowName" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Config_Step" EntityType="Self.tbl_Config_Step" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Config_StepInFlow" EntityType="Self.tbl_Config_StepInFlow" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Customers" EntityType="Self.tbl_Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_FlowPauseTime" EntityType="Self.tbl_FlowPauseTime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Note" EntityType="Self.tbl_Note" Schema="dbo" store:Type="Tables" />
@@ -203,6 +236,69 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NhutLongCompanyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+
+        <EntityContainer Name="NhutLongCompanyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdminMenus" EntityType="NhutLongCompanyModel.AdminMenu" />
+          <EntitySet Name="tbl_Config_FlowName" EntityType="NhutLongCompanyModel.tbl_Config_FlowName" />
+          <EntitySet Name="tbl_Config_Step" EntityType="NhutLongCompanyModel.tbl_Config_Step" />
+          <EntitySet Name="tbl_Config_StepInFlow" EntityType="NhutLongCompanyModel.tbl_Config_StepInFlow" />
+          <EntitySet Name="tbl_Customers" EntityType="NhutLongCompanyModel.tbl_Customers" />
+          <EntitySet Name="tbl_FlowPauseTime" EntityType="NhutLongCompanyModel.tbl_FlowPauseTime" />
+          <EntitySet Name="tbl_Note" EntityType="NhutLongCompanyModel.tbl_Note" />
+          <EntitySet Name="tbl_OrderTem" EntityType="NhutLongCompanyModel.tbl_OrderTem" />
+          <EntitySet Name="tbl_OrderTem_BaoGia" EntityType="NhutLongCompanyModel.tbl_OrderTem_BaoGia" />
+          <EntitySet Name="tbl_OrderTem_BaoGia_Detail" EntityType="NhutLongCompanyModel.tbl_OrderTem_BaoGia_Detail" />
+          <EntitySet Name="tbl_OrderTemPause" EntityType="NhutLongCompanyModel.tbl_OrderTemPause" />
+          <EntitySet Name="tbl_Products" EntityType="NhutLongCompanyModel.tbl_Products" />
+          <EntitySet Name="tbl_QuyTrinh" EntityType="NhutLongCompanyModel.tbl_QuyTrinh" />
+          <EntitySet Name="tbl_Stack" EntityType="NhutLongCompanyModel.tbl_Stack" />
+          <EntitySet Name="tbl_User" EntityType="NhutLongCompanyModel.tbl_User" />
+        </EntityContainer>
+        <EntityType Name="AdminMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameOption" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="controller" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="imageClass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Boolean" />
+          <Property Name="orderId" Type="Int32" />
+          <Property Name="parentId" Type="Int32" />
+          <Property Name="isParent" Type="Boolean" />
+          <Property Name="IdUser" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_Config_FlowName">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenQuyTrinh" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DienGiai" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ThuTu" Type="Int32" />
+          <Property Name="TrangThai" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_Config_Step">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenCongDoan" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DienGiai" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ThuTu" Type="Int32" />
+          <Property Name="TrangThai" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_Config_StepInFlow">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Step" Type="Int32" />
+          <Property Name="ID_Flow" Type="Int32" />
+          <Property Name="TrangThai" Type="Int32" />
+          <Property Name="DienGiai" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="tbl_Customers">
           <Key>
             <PropertyRef Name="IDCustomers" />
@@ -223,6 +319,26 @@
           <Property Name="CreateUserCustomers" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifyUserCustomers" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NoteCustomer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_FlowPauseTime">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="baoGia_detail_id" Type="Int32" />
+          <Property Name="date_begin" Type="DateTime" Precision="3" />
+          <Property Name="date_end" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="index_step" Type="Int32" />
+          <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_Note">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="NoteDisible" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tbl_OrderTem">
           <Key>
@@ -276,9 +392,19 @@
           <Property Name="status" Type="Int32" />
           <Property Name="code_detail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="status_pause" Type="Int32" />
-          <Property Name="loai_design" Type="String" Unicode="true" MaxLength="250" FixedLength="false" />
+          <Property Name="loai_design" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
-
+        <EntityType Name="tbl_OrderTemPause">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="Int32" />
+          <Property Name="date_begin" Type="DateTime" Precision="3" />
+          <Property Name="date_end" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="tbl_Products">
           <Key>
             <PropertyRef Name="ID_Products" />
@@ -287,6 +413,8 @@
           <Property Name="NameProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="SolopProducts" Type="Int32" />
           <Property Name="LoaigiayProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LoaiSongProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InFlexoProducts" Type="Int32" />
           <Property Name="OffsetFlexoProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="DanKimProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="GiaProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -297,10 +425,7 @@
           <Property Name="StatusProducts" Type="Int32" />
           <Property Name="CodeProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="QuyCachProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="LoaiSongProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="InFlexoProducts" Type="Int32" />
         </EntityType>
-
         <EntityType Name="tbl_QuyTrinh">
           <Key>
             <PropertyRef Name="ID" />
@@ -316,6 +441,14 @@
           <Property Name="NgayKetThuc_TT" Type="DateTime" Precision="3" />
           <Property Name="ThucHien" Type="Int32" />
         </EntityType>
+        <EntityType Name="tbl_Stack">
+          <Key>
+            <PropertyRef Name="baoGia_detail_id" />
+          </Key>
+          <Property Name="baoGia_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="index_view" Type="Int32" />
+          <Property Name="date_create" Type="DateTime" Precision="0" />
+        </EntityType>
         <EntityType Name="tbl_User">
           <Key>
             <PropertyRef Name="IDUser" />
@@ -330,78 +463,6 @@
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityContainer Name="NhutLongCompanyEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tbl_Customers" EntityType="Self.tbl_Customers" />
-          <EntitySet Name="tbl_OrderTem" EntityType="Self.tbl_OrderTem" />
-          <EntitySet Name="tbl_OrderTem_BaoGia" EntityType="Self.tbl_OrderTem_BaoGia" />
-          <EntitySet Name="tbl_OrderTem_BaoGia_Detail" EntityType="Self.tbl_OrderTem_BaoGia_Detail" />
-          <EntitySet Name="tbl_QuyTrinh" EntityType="Self.tbl_QuyTrinh" />
-          <EntitySet Name="tbl_User" EntityType="Self.tbl_User" />
-          <EntitySet Name="tbl_Stack" EntityType="NhutLongCompanyModel.tbl_Stack" />
-          <EntitySet Name="tbl_FlowPauseTime" EntityType="NhutLongCompanyModel.tbl_FlowPauseTime" />
-          <EntitySet Name="tbl_Note" EntityType="NhutLongCompanyModel.tbl_Note" />
-          <EntitySet Name="tbl_OrderTemPause" EntityType="NhutLongCompanyModel.tbl_OrderTemPause" />
-
-          <EntitySet Name="AdminMenus" EntityType="NhutLongCompanyModel.AdminMenu" />
-          <EntitySet Name="tbl_Products" EntityType="NhutLongCompanyModel.tbl_Products" />
-
-
-        </EntityContainer>
-        <EntityType Name="tbl_Stack">
-          <Key>
-            <PropertyRef Name="baoGia_detail_id" />
-          </Key>
-          <Property Name="baoGia_detail_id" Type="Int32" Nullable="false" />
-          <Property Name="index_view" Type="Int32" />
-          <Property Name="date_create" Type="DateTime" Precision="0" />
-        </EntityType>
-        <EntityType Name="tbl_FlowPauseTime">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" />
-          <Property Name="baoGia_detail_id" Type="Int32" />
-          <Property Name="date_begin" Type="DateTime" Precision="3" />
-          <Property Name="date_end" Type="DateTime" Precision="3" />
-          <Property Name="status" Type="Int32" />
-          <Property Name="index_step" Type="Int32" />
-          <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tbl_Note">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerID" Type="Int32" />
-          <Property Name="NoteDisible" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tbl_OrderTemPause">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="order_id" Type="Int32" />
-          <Property Name="date_begin" Type="DateTime" Precision="3" />
-          <Property Name="date_end" Type="DateTime" Precision="3" />
-          <Property Name="status" Type="Int32" />
-          <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
-
-        <EntityType Name="AdminMenu">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nameOption" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="controller" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="imageClass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="status" Type="Boolean" />
-          <Property Name="orderId" Type="Int32" />
-          <Property Name="parentId" Type="Int32" />
-          <Property Name="isParent" Type="Boolean" />
-          <Property Name="IdUser" Type="Int32" />
         </EntityType>
         <!--<EntityType Name="tbl_Products">
           <Key>
@@ -431,147 +492,74 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="NhutLongCompanyModelStoreContainer" CdmEntityContainer="NhutLongCompanyEntities">
+          <EntitySetMapping Name="AdminMenus">
+            <EntityTypeMapping TypeName="NhutLongCompanyModel.AdminMenu">
+              <MappingFragment StoreEntitySet="AdminMenu">
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="isParent" ColumnName="isParent" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="orderId" ColumnName="orderId" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="imageClass" ColumnName="imageClass" />
+                <ScalarProperty Name="action" ColumnName="action" />
+                <ScalarProperty Name="controller" ColumnName="controller" />
+                <ScalarProperty Name="nameOption" ColumnName="nameOption" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Config_FlowName">
+            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Config_FlowName">
+              <MappingFragment StoreEntitySet="tbl_Config_FlowName">
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="ThuTu" ColumnName="ThuTu" />
+                <ScalarProperty Name="DienGiai" ColumnName="DienGiai" />
+                <ScalarProperty Name="TenQuyTrinh" ColumnName="TenQuyTrinh" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Config_Step">
+            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Config_Step">
+              <MappingFragment StoreEntitySet="tbl_Config_Step">
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="ThuTu" ColumnName="ThuTu" />
+                <ScalarProperty Name="DienGiai" ColumnName="DienGiai" />
+                <ScalarProperty Name="TenCongDoan" ColumnName="TenCongDoan" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Config_StepInFlow">
+            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Config_StepInFlow">
+              <MappingFragment StoreEntitySet="tbl_Config_StepInFlow">
+                <ScalarProperty Name="DienGiai" ColumnName="DienGiai" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="ID_Flow" ColumnName="ID_Flow" />
+                <ScalarProperty Name="ID_Step" ColumnName="ID_Step" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbl_Customers">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Customers">
               <MappingFragment StoreEntitySet="tbl_Customers">
                 <ScalarProperty Name="NoteCustomer" ColumnName="NoteCustomer" />
-                <ScalarProperty Name="IDCustomers" ColumnName="IDCustomers" />
-                <ScalarProperty Name="NameCustomers" ColumnName="NameCustomers" />
-                <ScalarProperty Name="ChucvuCustomers" ColumnName="ChucvuCustomers" />
-                <ScalarProperty Name="CongTyCustomers" ColumnName="CongTyCustomers" />
-                <ScalarProperty Name="CodeCustomers" ColumnName="CodeCustomers" />
-                <ScalarProperty Name="EmailCustomers" ColumnName="EmailCustomers" />
-                <ScalarProperty Name="PhoneCustomers" ColumnName="PhoneCustomers" />
-                <ScalarProperty Name="FaxCustomers" ColumnName="FaxCustomers" />
-                <ScalarProperty Name="DiaChiCustomers" ColumnName="DiaChiCustomers" />
-                <ScalarProperty Name="MasothueCustomers" ColumnName="MasothueCustomers" />
-                <ScalarProperty Name="StatusCustomers" ColumnName="StatusCustomers" />
-                <ScalarProperty Name="CreateDateCustomers" ColumnName="CreateDateCustomers" />
-                <ScalarProperty Name="ModifyDateCustomers" ColumnName="ModifyDateCustomers" />
-                <ScalarProperty Name="CreateUserCustomers" ColumnName="CreateUserCustomers" />
                 <ScalarProperty Name="ModifyUserCustomers" ColumnName="ModifyUserCustomers" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_OrderTem">
-            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem">
-              <MappingFragment StoreEntitySet="tbl_OrderTem">
-                <ScalarProperty Name="datenumber" ColumnName="datenumber" />
-                <ScalarProperty Name="status_pause" ColumnName="status_pause" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
-                <ScalarProperty Name="code" ColumnName="code" />
-                <ScalarProperty Name="date_begin" ColumnName="date_begin" />
-                <ScalarProperty Name="date_end" ColumnName="date_end" />
-                <ScalarProperty Name="date_begin_plan" ColumnName="date_begin_plan" />
-                <ScalarProperty Name="date_end_plan" ColumnName="date_end_plan" />
-                <ScalarProperty Name="date_deliver" ColumnName="date_deliver" />
-                <ScalarProperty Name="address_deliver" ColumnName="address_deliver" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="create_user" ColumnName="create_user" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="update_user" ColumnName="update_user" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_OrderTem_BaoGia">
-            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem_BaoGia">
-              <MappingFragment StoreEntitySet="tbl_OrderTem_BaoGia">
-                <ScalarProperty Name="commission_monney" ColumnName="commission_monney" />
-                <ScalarProperty Name="commission" ColumnName="commission" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="order_id" ColumnName="order_id" />
-                <ScalarProperty Name="total_money" ColumnName="total_money" />
-                <ScalarProperty Name="date_begin" ColumnName="date_begin" />
-                <ScalarProperty Name="date_end" ColumnName="date_end" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="note" ColumnName="note" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_OrderTem_BaoGia_Detail">
-            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem_BaoGia_Detail">
-              <MappingFragment StoreEntitySet="tbl_OrderTem_BaoGia_Detail">
-                <ScalarProperty Name="loai_design" ColumnName="loai_design" />
-                <ScalarProperty Name="status_pause" ColumnName="status_pause" />
-                <ScalarProperty Name="code_detail" ColumnName="code_detail" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="date_working" ColumnName="date_working" />
-                <ScalarProperty Name="step_index" ColumnName="step_index" />
-                <ScalarProperty Name="design_date" ColumnName="design_date" />
-                <ScalarProperty Name="design_img" ColumnName="design_img" />
-                <ScalarProperty Name="design" ColumnName="design" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="baogia_id" ColumnName="baogia_id" />
-                <ScalarProperty Name="sanpam_id" ColumnName="sanpam_id" />
-                <ScalarProperty Name="soluong" ColumnName="soluong" />
-                <ScalarProperty Name="money" ColumnName="money" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-
-          <EntitySetMapping Name="tbl_Products">
-            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Products">
-              <MappingFragment StoreEntitySet="tbl_Products">
-                <ScalarProperty Name="InFlexoProducts" ColumnName="InFlexoProducts" />
-                <ScalarProperty Name="LoaiSongProducts" ColumnName="LoaiSongProducts" />
-                <ScalarProperty Name="ID_Products" ColumnName="ID_Products" />
-                <ScalarProperty Name="NameProducts" ColumnName="NameProducts" />
-                <ScalarProperty Name="SolopProducts" ColumnName="SolopProducts" />
-                <ScalarProperty Name="LoaigiayProducts" ColumnName="LoaigiayProducts" />
-                <ScalarProperty Name="OffsetFlexoProducts" ColumnName="OffsetFlexoProducts" />
-                <ScalarProperty Name="DanKimProducts" ColumnName="DanKimProducts" />
-                <ScalarProperty Name="GiaProducts" ColumnName="GiaProducts" />
-                <ScalarProperty Name="CreatedDateProducts" ColumnName="CreatedDateProducts" />
-                <ScalarProperty Name="ModifyDateProducts" ColumnName="ModifyDateProducts" />
-                <ScalarProperty Name="CreateUserProducts" ColumnName="CreateUserProducts" />
-                <ScalarProperty Name="ModifyUserProducts" ColumnName="ModifyUserProducts" />
-                <ScalarProperty Name="StatusProducts" ColumnName="StatusProducts" />
-                <ScalarProperty Name="CodeProducts" ColumnName="CodeProducts" />
-                <ScalarProperty Name="QuyCachProducts" ColumnName="QuyCachProducts" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-
-          <EntitySetMapping Name="tbl_QuyTrinh">
-            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_QuyTrinh">
-              <MappingFragment StoreEntitySet="tbl_QuyTrinh">
-                <ScalarProperty Name="ThucHien" ColumnName="ThucHien" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ID_BaoGiaDetail" ColumnName="ID_BaoGiaDetail" />
-                <ScalarProperty Name="TenBuoc" ColumnName="TenBuoc" />
-                <ScalarProperty Name="ThuTu" ColumnName="ThuTu" />
-                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
-                <ScalarProperty Name="NgayBatDau_DK" ColumnName="NgayBatDau_DK" />
-                <ScalarProperty Name="NgayKetThuc_DK" ColumnName="NgayKetThuc_DK" />
-                <ScalarProperty Name="NgayBatDau_TT" ColumnName="NgayBatDau_TT" />
-                <ScalarProperty Name="NgayKetThuc_TT" ColumnName="NgayKetThuc_TT" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_User">
-            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_User">
-              <MappingFragment StoreEntitySet="tbl_User">
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="IDUser" ColumnName="IDUser" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_Stack">
-            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Stack">
-              <MappingFragment StoreEntitySet="tbl_Stack">
-                <ScalarProperty Name="date_create" ColumnName="date_create" />
-                <ScalarProperty Name="index_view" ColumnName="index_view" />
-                <ScalarProperty Name="baoGia_detail_id" ColumnName="baoGia_detail_id" />
+                <ScalarProperty Name="CreateUserCustomers" ColumnName="CreateUserCustomers" />
+                <ScalarProperty Name="ModifyDateCustomers" ColumnName="ModifyDateCustomers" />
+                <ScalarProperty Name="CreateDateCustomers" ColumnName="CreateDateCustomers" />
+                <ScalarProperty Name="StatusCustomers" ColumnName="StatusCustomers" />
+                <ScalarProperty Name="MasothueCustomers" ColumnName="MasothueCustomers" />
+                <ScalarProperty Name="DiaChiCustomers" ColumnName="DiaChiCustomers" />
+                <ScalarProperty Name="FaxCustomers" ColumnName="FaxCustomers" />
+                <ScalarProperty Name="PhoneCustomers" ColumnName="PhoneCustomers" />
+                <ScalarProperty Name="EmailCustomers" ColumnName="EmailCustomers" />
+                <ScalarProperty Name="CodeCustomers" ColumnName="CodeCustomers" />
+                <ScalarProperty Name="CongTyCustomers" ColumnName="CongTyCustomers" />
+                <ScalarProperty Name="ChucvuCustomers" ColumnName="ChucvuCustomers" />
+                <ScalarProperty Name="NameCustomers" ColumnName="NameCustomers" />
+                <ScalarProperty Name="IDCustomers" ColumnName="IDCustomers" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -597,6 +585,63 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbl_OrderTem">
+            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem">
+              <MappingFragment StoreEntitySet="tbl_OrderTem">
+                <ScalarProperty Name="datenumber" ColumnName="datenumber" />
+                <ScalarProperty Name="status_pause" ColumnName="status_pause" />
+                <ScalarProperty Name="update_user" ColumnName="update_user" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="create_user" ColumnName="create_user" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="address_deliver" ColumnName="address_deliver" />
+                <ScalarProperty Name="date_deliver" ColumnName="date_deliver" />
+                <ScalarProperty Name="date_end_plan" ColumnName="date_end_plan" />
+                <ScalarProperty Name="date_begin_plan" ColumnName="date_begin_plan" />
+                <ScalarProperty Name="date_end" ColumnName="date_end" />
+                <ScalarProperty Name="date_begin" ColumnName="date_begin" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_OrderTem_BaoGia">
+            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem_BaoGia">
+              <MappingFragment StoreEntitySet="tbl_OrderTem_BaoGia">
+                <ScalarProperty Name="commission_monney" ColumnName="commission_monney" />
+                <ScalarProperty Name="commission" ColumnName="commission" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="date_end" ColumnName="date_end" />
+                <ScalarProperty Name="date_begin" ColumnName="date_begin" />
+                <ScalarProperty Name="total_money" ColumnName="total_money" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_OrderTem_BaoGia_Detail">
+            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem_BaoGia_Detail">
+              <MappingFragment StoreEntitySet="tbl_OrderTem_BaoGia_Detail">
+                <ScalarProperty Name="loai_design" ColumnName="loai_design" />
+                <ScalarProperty Name="status_pause" ColumnName="status_pause" />
+                <ScalarProperty Name="code_detail" ColumnName="code_detail" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="date_working" ColumnName="date_working" />
+                <ScalarProperty Name="step_index" ColumnName="step_index" />
+                <ScalarProperty Name="design_date" ColumnName="design_date" />
+                <ScalarProperty Name="design_img" ColumnName="design_img" />
+                <ScalarProperty Name="design" ColumnName="design" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="soluong" ColumnName="soluong" />
+                <ScalarProperty Name="sanpam_id" ColumnName="sanpam_id" />
+                <ScalarProperty Name="baogia_id" ColumnName="baogia_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbl_OrderTemPause">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTemPause">
               <MappingFragment StoreEntitySet="tbl_OrderTemPause">
@@ -606,23 +651,6 @@
                 <ScalarProperty Name="date_begin" ColumnName="date_begin" />
                 <ScalarProperty Name="order_id" ColumnName="order_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-
-          <EntitySetMapping Name="AdminMenus">
-            <EntityTypeMapping TypeName="NhutLongCompanyModel.AdminMenu">
-              <MappingFragment StoreEntitySet="AdminMenu">
-                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-                <ScalarProperty Name="isParent" ColumnName="isParent" />
-                <ScalarProperty Name="parentId" ColumnName="parentId" />
-                <ScalarProperty Name="orderId" ColumnName="orderId" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="imageClass" ColumnName="imageClass" />
-                <ScalarProperty Name="action" ColumnName="action" />
-                <ScalarProperty Name="controller" ColumnName="controller" />
-                <ScalarProperty Name="nameOption" ColumnName="nameOption" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -648,7 +676,47 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-
+          <EntitySetMapping Name="tbl_QuyTrinh">
+            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_QuyTrinh">
+              <MappingFragment StoreEntitySet="tbl_QuyTrinh">
+                <ScalarProperty Name="ThucHien" ColumnName="ThucHien" />
+                <ScalarProperty Name="NgayKetThuc_TT" ColumnName="NgayKetThuc_TT" />
+                <ScalarProperty Name="NgayBatDau_TT" ColumnName="NgayBatDau_TT" />
+                <ScalarProperty Name="NgayKetThuc_DK" ColumnName="NgayKetThuc_DK" />
+                <ScalarProperty Name="NgayBatDau_DK" ColumnName="NgayBatDau_DK" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="ThuTu" ColumnName="ThuTu" />
+                <ScalarProperty Name="TenBuoc" ColumnName="TenBuoc" />
+                <ScalarProperty Name="ID_BaoGiaDetail" ColumnName="ID_BaoGiaDetail" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Stack">
+            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_Stack">
+              <MappingFragment StoreEntitySet="tbl_Stack">
+                <ScalarProperty Name="date_create" ColumnName="date_create" />
+                <ScalarProperty Name="index_view" ColumnName="index_view" />
+                <ScalarProperty Name="baoGia_detail_id" ColumnName="baoGia_detail_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_User">
+            <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_User">
+              <MappingFragment StoreEntitySet="tbl_User">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

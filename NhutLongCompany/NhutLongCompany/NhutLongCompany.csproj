@@ -140,11 +140,13 @@
     <Compile Include="Controllers\BaoCaoController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
+    <Compile Include="Controllers\FlowController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NavbarController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\SanXuatController.cs" />
+    <Compile Include="Controllers\StepController.cs" />
     <Compile Include="Controllers\tbl_OrderTemController.cs" />
     <Compile Include="Controllers\tbl_OrderTem_BaoGiaController.cs" />
     <Compile Include="Controllers\tbl_OrderTem_BaoGia_DetailController.cs" />
@@ -158,6 +160,7 @@
     <Compile Include="Models\BaoGiaColumn.cs" />
     <Compile Include="Models\BaoGiaTemDetailView.cs" />
     <Compile Include="Models\BaoGiaTemView.cs" />
+    <Compile Include="Models\ConfigStepInFlow.cs" />
     <Compile Include="Models\DataWeb.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -178,6 +181,15 @@
     <Compile Include="Models\Navbar.cs" />
     <Compile Include="Models\Report.cs" />
     <Compile Include="Models\SendMail.cs" />
+    <Compile Include="Models\tbl_Config_FlowName.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Config_Step.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Config_StepInFlow.cs">
+      <DependentUpon>DataWeb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_Customers.cs">
       <DependentUpon>DataWeb.tt</DependentUpon>
     </Compile>
@@ -1115,6 +1127,17 @@
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\tbl_OrderTem\ViewPrint.cshtml" />
     <Content Include="Views\tbl_OrderTem\Report.cshtml" />
+    <Content Include="Views\Step\Create.cshtml" />
+    <Content Include="Views\Step\Delete.cshtml" />
+    <Content Include="Views\Step\Details.cshtml" />
+    <Content Include="Views\Step\Edit.cshtml" />
+    <Content Include="Views\Step\Index.cshtml" />
+    <Content Include="Views\Flow\Create.cshtml" />
+    <Content Include="Views\Flow\Delete.cshtml" />
+    <Content Include="Views\Flow\Details.cshtml" />
+    <Content Include="Views\Flow\Edit.cshtml" />
+    <Content Include="Views\Flow\Index.cshtml" />
+    <Content Include="Views\Flow\Config.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1146,6 +1169,8 @@
           <DevelopmentServerPort>29128</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:29128/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:29128/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

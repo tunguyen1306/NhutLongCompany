@@ -5,20 +5,21 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d39930e6e91042689f76bd45d188c917" Name="Diagram1">
-        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_Customers" Width="1.5" PointX="1.375" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_OrderTem" Width="1.5" PointX="3.5" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_OrderTem_BaoGia" Width="2.375" PointX="3.375" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_OrderTem_BaoGia_Detail" Width="1.5" PointX="6.125" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_QuyTrinh" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_User" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_Stack" Width="1.5" PointX="7.375" PointY="8.75" />
-        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_FlowPauseTime" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_Note" Width="1.5" PointX="3.375" PointY="9.75" />
-        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_OrderTemPause" Width="1.5" PointX="9.375" PointY="8.75" />
-
-        <EntityTypeShape EntityType="NhutLongCompanyModel.AdminMenu" Width="1.5" PointX="10.375" PointY="4.75" />
-        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_Products" Width="1.5" PointX="5.375" PointY="11.75" />
-
+        <EntityTypeShape EntityType="NhutLongCompanyModel.AdminMenu" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_Config_FlowName" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_Config_Step" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_Config_StepInFlow" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_Customers" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_FlowPauseTime" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_Note" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_OrderTem" Width="1.5" PointX="6.75" PointY="4.75" />
+        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_OrderTem_BaoGia" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_OrderTem_BaoGia_Detail" Width="1.5" PointX="2.75" PointY="8.75" />
+        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_OrderTemPause" Width="1.5" PointX="8.75" PointY="4.75" />
+        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_Products" Width="1.5" PointX="8.75" PointY="7.75" />
+        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_QuyTrinh" Width="1.5" PointX="4.75" PointY="9.75" />
+        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_Stack" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NhutLongCompanyModel.tbl_User" Width="1.5" PointX="10.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

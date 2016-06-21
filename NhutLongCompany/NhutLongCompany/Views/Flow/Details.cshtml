@@ -1,0 +1,103 @@
+﻿@model NhutLongCompany.Models.tbl_Config_FlowName
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Chi tiết thông tin quy trình</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Form Elements
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.ID)
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Tên quy trình</label>
+                                    @Html.EditorFor(model => model.TenQuyTrinh, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.TenQuyTrinh, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="form-group">
+                                    <label>Thứ tự</label>
+
+                                    @Html.EditorFor(model => model.ThuTu, new { htmlAttributes = new { @class = "form-control", @type = "number", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.ThuTu, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Diễn giải</label>
+
+                                    @Html.EditorFor(model => model.DienGiai, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.DienGiai, "", new { @class = "text-danger" })
+
+
+                                </div>
+                                <div class="form-group">
+                                    <label>Trạng thái</label>
+
+                                    @Html.DropDownListFor(model => model.TrangThai, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{Text="Hoạt động",Value="1"},
+                                        new SelectListItem{Text="Không hoạt động",Value="0"}
+                                    }, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12" style="text-align: center;">
+                            <div class="form-group">
+
+                              
+                                @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-primary", @style = "width: 100px" })
+                                @Html.ActionLink("Quay về", "Index", "",htmlAttributes: new { @class = "btn btn-primary", @style = "width: 100px" })
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+    <!-- /.panel-body -->
+            }
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+
+
+
+

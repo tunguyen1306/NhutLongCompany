@@ -30,7 +30,5 @@ namespace NhutLongCompany.Models
         public Nullable<int> StatusProducts { get; set; }
         public string CodeProducts { get; set; }
         public string QuyCachProducts { get; set; }
-      
-
     }
 }

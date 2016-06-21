@@ -874,7 +874,7 @@ namespace NhutLongCompany.Controllers
         public ActionResult EditBaoGia(DonHangView donHang)
         {
             int? id = donHang.id;
-            if (id == null)
+            if (!id.HasValue)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -1679,225 +1679,225 @@ namespace NhutLongCompany.Controllers
         public ActionResult Report()
         {
             var model = db.Database.SqlQuery<Report>(@"
-SELECT tbl_OrderTem.code'codeProducts',tbl_Products.NameProducts'nameProducts',
-(SELECT  DATEDIFF(MI,tbl_QuyTrinh1.NgayBatDau_TT,tbl_QuyTrinh1.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh1
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail1 on tbl_QuyTrinh1.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail1.id
-  left join tbl_Products  tbl_Products1 on tbl_Products1.ID_Products=tbl_OrderTem_BaoGia_Detail1.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem1 on tbl_OrderTem1.id=tbl_OrderTem_BaoGia_Detail1.baogia_id
-  where  tbl_QuyTrinh1.TenBuoc in(N'Nhận tờ in offset') and tbl_QuyTrinh1.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'NhanToInOffset',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh2.NgayBatDau_TT,tbl_QuyTrinh2.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh2
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail2 on tbl_QuyTrinh2.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail2.id
-  left join tbl_Products  tbl_Products2 on tbl_Products2.ID_Products=tbl_OrderTem_BaoGia_Detail2.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem2 on tbl_OrderTem2.id=tbl_OrderTem_BaoGia_Detail2.baogia_id
-  where  tbl_QuyTrinh2.TenBuoc in(N'Sản xuất giấy tấm')and tbl_QuyTrinh2.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'SanXuatGiayTam',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh3.NgayBatDau_TT,tbl_QuyTrinh3.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh3
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail3 on tbl_QuyTrinh3.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail3.id
-  left join tbl_Products  tbl_Products3 on tbl_Products3.ID_Products=tbl_OrderTem_BaoGia_Detail3.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem3 on tbl_OrderTem3.id=tbl_OrderTem_BaoGia_Detail3.baogia_id
-  where  tbl_QuyTrinh3.TenBuoc in(N'Bồi')and tbl_QuyTrinh3.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'Boi',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh4.NgayBatDau_TT,tbl_QuyTrinh4.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh4
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail4 on tbl_QuyTrinh4.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail4.id
-  left join tbl_Products  tbl_Products4 on tbl_Products4.ID_Products=tbl_OrderTem_BaoGia_Detail4.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem4 on tbl_OrderTem4.id=tbl_OrderTem_BaoGia_Detail4.baogia_id
-  where  tbl_QuyTrinh4.TenBuoc in(N'Xả biến, cán lằn')and tbl_QuyTrinh4.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'XaBienCanLan',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh5.NgayBatDau_TT,tbl_QuyTrinh5.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh5
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail5 on tbl_QuyTrinh5.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail5.id
-  left join tbl_Products  tbl_Products5 on tbl_Products5.ID_Products=tbl_OrderTem_BaoGia_Detail5.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem5 on tbl_OrderTem5.id=tbl_OrderTem_BaoGia_Detail5.baogia_id
-  where tbl_QuyTrinh5.TenBuoc in(N'In FLEXO')and tbl_QuyTrinh5.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'InFlexo',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh6.NgayBatDau_TT,tbl_QuyTrinh6.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh6
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail6 on tbl_QuyTrinh6.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail6.id
-  left join tbl_Products  tbl_Products6 on tbl_Products6.ID_Products=tbl_OrderTem_BaoGia_Detail6.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem6 on tbl_OrderTem6.id=tbl_OrderTem_BaoGia_Detail6.baogia_id
-  where tbl_QuyTrinh6.TenBuoc in(N'Bế')and tbl_QuyTrinh6.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'Be',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh7.NgayBatDau_TT,tbl_QuyTrinh7.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh7
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail7 on tbl_QuyTrinh7.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail7.id
-  left join tbl_Products  tbl_Products7 on tbl_Products7.ID_Products=tbl_OrderTem_BaoGia_Detail7.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem7 on tbl_OrderTem7.id=tbl_OrderTem_BaoGia_Detail7.baogia_id
-  where  tbl_QuyTrinh7.TenBuoc in(N'Chập khe')and tbl_QuyTrinh7.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'ChapKhe',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh8.NgayBatDau_TT,tbl_QuyTrinh8.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh8
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail8 on tbl_QuyTrinh8.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail8.id
-  left join tbl_Products  tbl_Products8 on tbl_Products8.ID_Products=tbl_OrderTem_BaoGia_Detail8.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem8 on tbl_OrderTem8.id=tbl_OrderTem_BaoGia_Detail8.baogia_id
-  where  tbl_QuyTrinh8.TenBuoc in(N'Bấm kim')and tbl_QuyTrinh8.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'BamKim',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh9.NgayBatDau_TT,tbl_QuyTrinh9.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh9
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail9 on tbl_QuyTrinh9.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail9.id
-  left join tbl_Products  tbl_Products9 on tbl_Products9.ID_Products=tbl_OrderTem_BaoGia_Detail9.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem9 on tbl_OrderTem9.id=tbl_OrderTem_BaoGia_Detail9.baogia_id
-  where  tbl_QuyTrinh9.TenBuoc in(N'Dán')and tbl_QuyTrinh9.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'Dan',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh10.NgayBatDau_TT,tbl_QuyTrinh10.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh10
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail10 on tbl_QuyTrinh10.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail10.id
-  left join tbl_Products  tbl_Products10 on tbl_Products10.ID_Products=tbl_OrderTem_BaoGia_Detail10.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem10 on tbl_OrderTem10.id=tbl_OrderTem_BaoGia_Detail10.baogia_id
-  where  tbl_QuyTrinh10.TenBuoc in(N'Đóng gói')and tbl_QuyTrinh10.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'DongGoi',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh11.NgayBatDau_TT,tbl_QuyTrinh11.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh11
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail11 on tbl_QuyTrinh11.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail11.id
-  left join tbl_Products  tbl_Products11 on tbl_Products11.ID_Products=tbl_OrderTem_BaoGia_Detail11.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem11 on tbl_OrderTem11.id=tbl_OrderTem_BaoGia_Detail11.baogia_id
-  where  tbl_QuyTrinh11.TenBuoc in(N'Giao hàng')and tbl_QuyTrinh11.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'GiaoHang',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh12.NgayBatDau_TT,tbl_QuyTrinh12.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh12
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail12 on tbl_QuyTrinh12.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail12.id
-  left join tbl_Products  tbl_Products12 on tbl_Products12.ID_Products=tbl_OrderTem_BaoGia_Detail12.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem12 on tbl_OrderTem12.id=tbl_OrderTem_BaoGia_Detail12.baogia_id
-  where tbl_QuyTrinh12.TenBuoc in(N'Thanh toán')and tbl_QuyTrinh12.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'ThanhToan',
-    (SELECT DATEDIFF(MI,tbl_QuyTrinh13.NgayBatDau_TT,tbl_QuyTrinh13.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh13
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail13 on tbl_QuyTrinh13.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail13.id
-  left join tbl_Products  tbl_Products13 on tbl_Products13.ID_Products=tbl_OrderTem_BaoGia_Detail13.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem13 on tbl_OrderTem13.id=tbl_OrderTem_BaoGia_Detail13.baogia_id
-  where  tbl_QuyTrinh13.TenBuoc in(N'Kết thúc đơn hàng')and tbl_QuyTrinh13.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'KetThucDonHang',
-  tbl_Products.SolopProducts'SoLop',
-  tbl_Products.LoaiSongProducts'LoaiSong',
-  LoaigiayProducts'LoaiGiay',
-  case when InFlexoProducts =1 then '1 màu' when InFlexoProducts =2 then '2 màu' when InFlexoProducts =3 then ' 3 màu'  when InFlexoProducts =4 then '4 màu' when InFlexoProducts =5 then '5 màu' when InFlexoProducts =6 then 'Không in' end    'InFlexoProduct',
-  QuyCachProducts'QuyCach',
-  tbl_OrderTem_BaoGia_Detail.soluong'SoLuong',
-  tbl_OrderTem_BaoGia_Detail.[money]'Money'
-  FROM tbl_QuyTrinh
-  left join tbl_OrderTem_BaoGia_Detail on tbl_QuyTrinh.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail.id
-  left join tbl_Products on tbl_Products.ID_Products=tbl_OrderTem_BaoGia_Detail.sanpam_id
-  left join tbl_OrderTem  on tbl_OrderTem.id=tbl_OrderTem_BaoGia_Detail.baogia_id
+        SELECT tbl_OrderTem.code'codeProducts',tbl_Products.NameProducts'nameProducts',
+        (SELECT  DATEDIFF(MI,tbl_QuyTrinh1.NgayBatDau_TT,tbl_QuyTrinh1.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh1
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail1 on tbl_QuyTrinh1.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail1.id
+          left join tbl_Products  tbl_Products1 on tbl_Products1.ID_Products=tbl_OrderTem_BaoGia_Detail1.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem1 on tbl_OrderTem1.id=tbl_OrderTem_BaoGia_Detail1.baogia_id
+          where  tbl_QuyTrinh1.TenBuoc in(N'Nhận tờ in offset') and tbl_QuyTrinh1.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'NhanToInOffset',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh2.NgayBatDau_TT,tbl_QuyTrinh2.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh2
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail2 on tbl_QuyTrinh2.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail2.id
+          left join tbl_Products  tbl_Products2 on tbl_Products2.ID_Products=tbl_OrderTem_BaoGia_Detail2.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem2 on tbl_OrderTem2.id=tbl_OrderTem_BaoGia_Detail2.baogia_id
+          where  tbl_QuyTrinh2.TenBuoc in(N'Sản xuất giấy tấm')and tbl_QuyTrinh2.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'SanXuatGiayTam',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh3.NgayBatDau_TT,tbl_QuyTrinh3.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh3
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail3 on tbl_QuyTrinh3.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail3.id
+          left join tbl_Products  tbl_Products3 on tbl_Products3.ID_Products=tbl_OrderTem_BaoGia_Detail3.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem3 on tbl_OrderTem3.id=tbl_OrderTem_BaoGia_Detail3.baogia_id
+          where  tbl_QuyTrinh3.TenBuoc in(N'Bồi')and tbl_QuyTrinh3.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'Boi',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh4.NgayBatDau_TT,tbl_QuyTrinh4.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh4
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail4 on tbl_QuyTrinh4.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail4.id
+          left join tbl_Products  tbl_Products4 on tbl_Products4.ID_Products=tbl_OrderTem_BaoGia_Detail4.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem4 on tbl_OrderTem4.id=tbl_OrderTem_BaoGia_Detail4.baogia_id
+          where  tbl_QuyTrinh4.TenBuoc in(N'Xả biến, cán lằn')and tbl_QuyTrinh4.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'XaBienCanLan',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh5.NgayBatDau_TT,tbl_QuyTrinh5.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh5
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail5 on tbl_QuyTrinh5.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail5.id
+          left join tbl_Products  tbl_Products5 on tbl_Products5.ID_Products=tbl_OrderTem_BaoGia_Detail5.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem5 on tbl_OrderTem5.id=tbl_OrderTem_BaoGia_Detail5.baogia_id
+          where tbl_QuyTrinh5.TenBuoc in(N'In FLEXO')and tbl_QuyTrinh5.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'InFlexo',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh6.NgayBatDau_TT,tbl_QuyTrinh6.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh6
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail6 on tbl_QuyTrinh6.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail6.id
+          left join tbl_Products  tbl_Products6 on tbl_Products6.ID_Products=tbl_OrderTem_BaoGia_Detail6.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem6 on tbl_OrderTem6.id=tbl_OrderTem_BaoGia_Detail6.baogia_id
+          where tbl_QuyTrinh6.TenBuoc in(N'Bế')and tbl_QuyTrinh6.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'Be',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh7.NgayBatDau_TT,tbl_QuyTrinh7.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh7
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail7 on tbl_QuyTrinh7.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail7.id
+          left join tbl_Products  tbl_Products7 on tbl_Products7.ID_Products=tbl_OrderTem_BaoGia_Detail7.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem7 on tbl_OrderTem7.id=tbl_OrderTem_BaoGia_Detail7.baogia_id
+          where  tbl_QuyTrinh7.TenBuoc in(N'Chập khe')and tbl_QuyTrinh7.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'ChapKhe',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh8.NgayBatDau_TT,tbl_QuyTrinh8.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh8
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail8 on tbl_QuyTrinh8.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail8.id
+          left join tbl_Products  tbl_Products8 on tbl_Products8.ID_Products=tbl_OrderTem_BaoGia_Detail8.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem8 on tbl_OrderTem8.id=tbl_OrderTem_BaoGia_Detail8.baogia_id
+          where  tbl_QuyTrinh8.TenBuoc in(N'Bấm kim')and tbl_QuyTrinh8.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'BamKim',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh9.NgayBatDau_TT,tbl_QuyTrinh9.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh9
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail9 on tbl_QuyTrinh9.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail9.id
+          left join tbl_Products  tbl_Products9 on tbl_Products9.ID_Products=tbl_OrderTem_BaoGia_Detail9.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem9 on tbl_OrderTem9.id=tbl_OrderTem_BaoGia_Detail9.baogia_id
+          where  tbl_QuyTrinh9.TenBuoc in(N'Dán')and tbl_QuyTrinh9.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'Dan',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh10.NgayBatDau_TT,tbl_QuyTrinh10.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh10
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail10 on tbl_QuyTrinh10.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail10.id
+          left join tbl_Products  tbl_Products10 on tbl_Products10.ID_Products=tbl_OrderTem_BaoGia_Detail10.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem10 on tbl_OrderTem10.id=tbl_OrderTem_BaoGia_Detail10.baogia_id
+          where  tbl_QuyTrinh10.TenBuoc in(N'Đóng gói')and tbl_QuyTrinh10.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'DongGoi',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh11.NgayBatDau_TT,tbl_QuyTrinh11.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh11
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail11 on tbl_QuyTrinh11.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail11.id
+          left join tbl_Products  tbl_Products11 on tbl_Products11.ID_Products=tbl_OrderTem_BaoGia_Detail11.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem11 on tbl_OrderTem11.id=tbl_OrderTem_BaoGia_Detail11.baogia_id
+          where  tbl_QuyTrinh11.TenBuoc in(N'Giao hàng')and tbl_QuyTrinh11.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'GiaoHang',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh12.NgayBatDau_TT,tbl_QuyTrinh12.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh12
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail12 on tbl_QuyTrinh12.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail12.id
+          left join tbl_Products  tbl_Products12 on tbl_Products12.ID_Products=tbl_OrderTem_BaoGia_Detail12.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem12 on tbl_OrderTem12.id=tbl_OrderTem_BaoGia_Detail12.baogia_id
+          where tbl_QuyTrinh12.TenBuoc in(N'Thanh toán')and tbl_QuyTrinh12.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'ThanhToan',
+            (SELECT DATEDIFF(MI,tbl_QuyTrinh13.NgayBatDau_TT,tbl_QuyTrinh13.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh13
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail13 on tbl_QuyTrinh13.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail13.id
+          left join tbl_Products  tbl_Products13 on tbl_Products13.ID_Products=tbl_OrderTem_BaoGia_Detail13.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem13 on tbl_OrderTem13.id=tbl_OrderTem_BaoGia_Detail13.baogia_id
+          where  tbl_QuyTrinh13.TenBuoc in(N'Kết thúc đơn hàng')and tbl_QuyTrinh13.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'KetThucDonHang',
+          tbl_Products.SolopProducts'SoLop',
+          tbl_Products.LoaiSongProducts'LoaiSong',
+          LoaigiayProducts'LoaiGiay',
+          case when InFlexoProducts =1 then '1 màu' when InFlexoProducts =2 then '2 màu' when InFlexoProducts =3 then ' 3 màu'  when InFlexoProducts =4 then '4 màu' when InFlexoProducts =5 then '5 màu' when InFlexoProducts =6 then 'Không in' end    'InFlexoProduct',
+          QuyCachProducts'QuyCach',
+          tbl_OrderTem_BaoGia_Detail.soluong'SoLuong',
+          tbl_OrderTem_BaoGia_Detail.[money]'Money'
+          FROM tbl_QuyTrinh
+          left join tbl_OrderTem_BaoGia_Detail on tbl_QuyTrinh.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail.id
+          left join tbl_Products on tbl_Products.ID_Products=tbl_OrderTem_BaoGia_Detail.sanpam_id
+          left join tbl_OrderTem  on tbl_OrderTem.id=tbl_OrderTem_BaoGia_Detail.baogia_id
 
-  group by tbl_Products.CreatedDateProducts, tbl_OrderTem.code,tbl_Products.NameProducts,tbl_QuyTrinh.ID_BaoGiaDetail,tbl_Products.SolopProducts,tbl_Products.LoaiSongProducts,LoaigiayProducts,InFlexoProducts,QuyCachProducts,tbl_OrderTem_BaoGia_Detail.soluong,tbl_OrderTem_BaoGia_Detail.[money]
-  order by tbl_Products.CreatedDateProducts desc").ToList();
-            return View(model);
-        }
+          group by tbl_Products.CreatedDateProducts, tbl_OrderTem.code,tbl_Products.NameProducts,tbl_QuyTrinh.ID_BaoGiaDetail,tbl_Products.SolopProducts,tbl_Products.LoaiSongProducts,LoaigiayProducts,InFlexoProducts,QuyCachProducts,tbl_OrderTem_BaoGia_Detail.soluong,tbl_OrderTem_BaoGia_Detail.[money]
+          order by tbl_Products.CreatedDateProducts desc").ToList();
+                    return View(model);
+                }
 
 
- public ActionResult ExportReport()
-        {
-            var model = db.Database.SqlQuery<Report>(@"
-SELECT tbl_OrderTem.code'codeProducts',tbl_Products.NameProducts'nameProducts',
-(SELECT  DATEDIFF(MI,tbl_QuyTrinh1.NgayBatDau_TT,tbl_QuyTrinh1.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh1
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail1 on tbl_QuyTrinh1.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail1.id
-  left join tbl_Products  tbl_Products1 on tbl_Products1.ID_Products=tbl_OrderTem_BaoGia_Detail1.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem1 on tbl_OrderTem1.id=tbl_OrderTem_BaoGia_Detail1.baogia_id
-  where  tbl_QuyTrinh1.TenBuoc in(N'Nhận tờ in offset') and tbl_QuyTrinh1.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'NhanToInOffset',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh2.NgayBatDau_TT,tbl_QuyTrinh2.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh2
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail2 on tbl_QuyTrinh2.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail2.id
-  left join tbl_Products  tbl_Products2 on tbl_Products2.ID_Products=tbl_OrderTem_BaoGia_Detail2.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem2 on tbl_OrderTem2.id=tbl_OrderTem_BaoGia_Detail2.baogia_id
-  where  tbl_QuyTrinh2.TenBuoc in(N'Sản xuất giấy tấm')and tbl_QuyTrinh2.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'SanXuatGiayTam',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh3.NgayBatDau_TT,tbl_QuyTrinh3.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh3
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail3 on tbl_QuyTrinh3.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail3.id
-  left join tbl_Products  tbl_Products3 on tbl_Products3.ID_Products=tbl_OrderTem_BaoGia_Detail3.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem3 on tbl_OrderTem3.id=tbl_OrderTem_BaoGia_Detail3.baogia_id
-  where  tbl_QuyTrinh3.TenBuoc in(N'Bồi')and tbl_QuyTrinh3.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'Boi',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh4.NgayBatDau_TT,tbl_QuyTrinh4.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh4
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail4 on tbl_QuyTrinh4.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail4.id
-  left join tbl_Products  tbl_Products4 on tbl_Products4.ID_Products=tbl_OrderTem_BaoGia_Detail4.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem4 on tbl_OrderTem4.id=tbl_OrderTem_BaoGia_Detail4.baogia_id
-  where  tbl_QuyTrinh4.TenBuoc in(N'Xả biến, cán lằn')and tbl_QuyTrinh4.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'XaBienCanLan',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh5.NgayBatDau_TT,tbl_QuyTrinh5.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh5
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail5 on tbl_QuyTrinh5.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail5.id
-  left join tbl_Products  tbl_Products5 on tbl_Products5.ID_Products=tbl_OrderTem_BaoGia_Detail5.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem5 on tbl_OrderTem5.id=tbl_OrderTem_BaoGia_Detail5.baogia_id
-  where tbl_QuyTrinh5.TenBuoc in(N'In FLEXO')and tbl_QuyTrinh5.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'InFlexo',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh6.NgayBatDau_TT,tbl_QuyTrinh6.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh6
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail6 on tbl_QuyTrinh6.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail6.id
-  left join tbl_Products  tbl_Products6 on tbl_Products6.ID_Products=tbl_OrderTem_BaoGia_Detail6.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem6 on tbl_OrderTem6.id=tbl_OrderTem_BaoGia_Detail6.baogia_id
-  where tbl_QuyTrinh6.TenBuoc in(N'Bế')and tbl_QuyTrinh6.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'Be',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh7.NgayBatDau_TT,tbl_QuyTrinh7.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh7
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail7 on tbl_QuyTrinh7.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail7.id
-  left join tbl_Products  tbl_Products7 on tbl_Products7.ID_Products=tbl_OrderTem_BaoGia_Detail7.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem7 on tbl_OrderTem7.id=tbl_OrderTem_BaoGia_Detail7.baogia_id
-  where  tbl_QuyTrinh7.TenBuoc in(N'Chập khe')and tbl_QuyTrinh7.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'ChapKhe',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh8.NgayBatDau_TT,tbl_QuyTrinh8.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh8
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail8 on tbl_QuyTrinh8.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail8.id
-  left join tbl_Products  tbl_Products8 on tbl_Products8.ID_Products=tbl_OrderTem_BaoGia_Detail8.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem8 on tbl_OrderTem8.id=tbl_OrderTem_BaoGia_Detail8.baogia_id
-  where  tbl_QuyTrinh8.TenBuoc in(N'Bấm kim')and tbl_QuyTrinh8.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'BamKim',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh9.NgayBatDau_TT,tbl_QuyTrinh9.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh9
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail9 on tbl_QuyTrinh9.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail9.id
-  left join tbl_Products  tbl_Products9 on tbl_Products9.ID_Products=tbl_OrderTem_BaoGia_Detail9.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem9 on tbl_OrderTem9.id=tbl_OrderTem_BaoGia_Detail9.baogia_id
-  where  tbl_QuyTrinh9.TenBuoc in(N'Dán')and tbl_QuyTrinh9.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'Dan',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh10.NgayBatDau_TT,tbl_QuyTrinh10.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh10
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail10 on tbl_QuyTrinh10.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail10.id
-  left join tbl_Products  tbl_Products10 on tbl_Products10.ID_Products=tbl_OrderTem_BaoGia_Detail10.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem10 on tbl_OrderTem10.id=tbl_OrderTem_BaoGia_Detail10.baogia_id
-  where  tbl_QuyTrinh10.TenBuoc in(N'Đóng gói')and tbl_QuyTrinh10.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'DongGoi',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh11.NgayBatDau_TT,tbl_QuyTrinh11.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh11
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail11 on tbl_QuyTrinh11.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail11.id
-  left join tbl_Products  tbl_Products11 on tbl_Products11.ID_Products=tbl_OrderTem_BaoGia_Detail11.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem11 on tbl_OrderTem11.id=tbl_OrderTem_BaoGia_Detail11.baogia_id
-  where  tbl_QuyTrinh11.TenBuoc in(N'Giao hàng')and tbl_QuyTrinh11.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'GiaoHang',
-  (SELECT DATEDIFF(MI,tbl_QuyTrinh12.NgayBatDau_TT,tbl_QuyTrinh12.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh12
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail12 on tbl_QuyTrinh12.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail12.id
-  left join tbl_Products  tbl_Products12 on tbl_Products12.ID_Products=tbl_OrderTem_BaoGia_Detail12.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem12 on tbl_OrderTem12.id=tbl_OrderTem_BaoGia_Detail12.baogia_id
-  where tbl_QuyTrinh12.TenBuoc in(N'Thanh toán')and tbl_QuyTrinh12.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'ThanhToan',
-    (SELECT DATEDIFF(MI,tbl_QuyTrinh13.NgayBatDau_TT,tbl_QuyTrinh13.NgayKetThuc_TT)
-  FROM tbl_QuyTrinh tbl_QuyTrinh13
-  left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail13 on tbl_QuyTrinh13.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail13.id
-  left join tbl_Products  tbl_Products13 on tbl_Products13.ID_Products=tbl_OrderTem_BaoGia_Detail13.sanpam_id
-  left join tbl_OrderTem tbl_OrderTem13 on tbl_OrderTem13.id=tbl_OrderTem_BaoGia_Detail13.baogia_id
-  where  tbl_QuyTrinh13.TenBuoc in(N'Kết thúc đơn hàng')and tbl_QuyTrinh13.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
-  )'KetThucDonHang',
-  tbl_Products.SolopProducts'SoLop',
-  tbl_Products.LoaiSongProducts'LoaiSong',
-  LoaigiayProducts'LoaiGiay',
-  case when InFlexoProducts =1 then '1 màu' when InFlexoProducts =2 then '2 màu' when InFlexoProducts =3 then ' 3 màu'  when InFlexoProducts =4 then '4 màu' when InFlexoProducts =5 then '5 màu' when InFlexoProducts =6 then 'Không in' end    'InFlexoProduct',
-  QuyCachProducts'QuyCach',
-  tbl_OrderTem_BaoGia_Detail.soluong'SoLuong',
-  tbl_OrderTem_BaoGia_Detail.[money]'Money'
-  FROM tbl_QuyTrinh
-  left join tbl_OrderTem_BaoGia_Detail on tbl_QuyTrinh.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail.id
-  left join tbl_Products on tbl_Products.ID_Products=tbl_OrderTem_BaoGia_Detail.sanpam_id
-  left join tbl_OrderTem  on tbl_OrderTem.id=tbl_OrderTem_BaoGia_Detail.baogia_id
+         public ActionResult ExportReport()
+                {
+                    var model = db.Database.SqlQuery<Report>(@"
+        SELECT tbl_OrderTem.code'codeProducts',tbl_Products.NameProducts'nameProducts',
+        (SELECT  DATEDIFF(MI,tbl_QuyTrinh1.NgayBatDau_TT,tbl_QuyTrinh1.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh1
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail1 on tbl_QuyTrinh1.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail1.id
+          left join tbl_Products  tbl_Products1 on tbl_Products1.ID_Products=tbl_OrderTem_BaoGia_Detail1.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem1 on tbl_OrderTem1.id=tbl_OrderTem_BaoGia_Detail1.baogia_id
+          where  tbl_QuyTrinh1.TenBuoc in(N'Nhận tờ in offset') and tbl_QuyTrinh1.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'NhanToInOffset',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh2.NgayBatDau_TT,tbl_QuyTrinh2.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh2
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail2 on tbl_QuyTrinh2.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail2.id
+          left join tbl_Products  tbl_Products2 on tbl_Products2.ID_Products=tbl_OrderTem_BaoGia_Detail2.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem2 on tbl_OrderTem2.id=tbl_OrderTem_BaoGia_Detail2.baogia_id
+          where  tbl_QuyTrinh2.TenBuoc in(N'Sản xuất giấy tấm')and tbl_QuyTrinh2.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'SanXuatGiayTam',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh3.NgayBatDau_TT,tbl_QuyTrinh3.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh3
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail3 on tbl_QuyTrinh3.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail3.id
+          left join tbl_Products  tbl_Products3 on tbl_Products3.ID_Products=tbl_OrderTem_BaoGia_Detail3.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem3 on tbl_OrderTem3.id=tbl_OrderTem_BaoGia_Detail3.baogia_id
+          where  tbl_QuyTrinh3.TenBuoc in(N'Bồi')and tbl_QuyTrinh3.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'Boi',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh4.NgayBatDau_TT,tbl_QuyTrinh4.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh4
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail4 on tbl_QuyTrinh4.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail4.id
+          left join tbl_Products  tbl_Products4 on tbl_Products4.ID_Products=tbl_OrderTem_BaoGia_Detail4.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem4 on tbl_OrderTem4.id=tbl_OrderTem_BaoGia_Detail4.baogia_id
+          where  tbl_QuyTrinh4.TenBuoc in(N'Xả biến, cán lằn')and tbl_QuyTrinh4.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'XaBienCanLan',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh5.NgayBatDau_TT,tbl_QuyTrinh5.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh5
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail5 on tbl_QuyTrinh5.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail5.id
+          left join tbl_Products  tbl_Products5 on tbl_Products5.ID_Products=tbl_OrderTem_BaoGia_Detail5.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem5 on tbl_OrderTem5.id=tbl_OrderTem_BaoGia_Detail5.baogia_id
+          where tbl_QuyTrinh5.TenBuoc in(N'In FLEXO')and tbl_QuyTrinh5.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'InFlexo',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh6.NgayBatDau_TT,tbl_QuyTrinh6.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh6
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail6 on tbl_QuyTrinh6.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail6.id
+          left join tbl_Products  tbl_Products6 on tbl_Products6.ID_Products=tbl_OrderTem_BaoGia_Detail6.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem6 on tbl_OrderTem6.id=tbl_OrderTem_BaoGia_Detail6.baogia_id
+          where tbl_QuyTrinh6.TenBuoc in(N'Bế')and tbl_QuyTrinh6.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'Be',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh7.NgayBatDau_TT,tbl_QuyTrinh7.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh7
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail7 on tbl_QuyTrinh7.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail7.id
+          left join tbl_Products  tbl_Products7 on tbl_Products7.ID_Products=tbl_OrderTem_BaoGia_Detail7.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem7 on tbl_OrderTem7.id=tbl_OrderTem_BaoGia_Detail7.baogia_id
+          where  tbl_QuyTrinh7.TenBuoc in(N'Chập khe')and tbl_QuyTrinh7.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'ChapKhe',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh8.NgayBatDau_TT,tbl_QuyTrinh8.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh8
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail8 on tbl_QuyTrinh8.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail8.id
+          left join tbl_Products  tbl_Products8 on tbl_Products8.ID_Products=tbl_OrderTem_BaoGia_Detail8.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem8 on tbl_OrderTem8.id=tbl_OrderTem_BaoGia_Detail8.baogia_id
+          where  tbl_QuyTrinh8.TenBuoc in(N'Bấm kim')and tbl_QuyTrinh8.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'BamKim',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh9.NgayBatDau_TT,tbl_QuyTrinh9.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh9
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail9 on tbl_QuyTrinh9.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail9.id
+          left join tbl_Products  tbl_Products9 on tbl_Products9.ID_Products=tbl_OrderTem_BaoGia_Detail9.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem9 on tbl_OrderTem9.id=tbl_OrderTem_BaoGia_Detail9.baogia_id
+          where  tbl_QuyTrinh9.TenBuoc in(N'Dán')and tbl_QuyTrinh9.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'Dan',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh10.NgayBatDau_TT,tbl_QuyTrinh10.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh10
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail10 on tbl_QuyTrinh10.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail10.id
+          left join tbl_Products  tbl_Products10 on tbl_Products10.ID_Products=tbl_OrderTem_BaoGia_Detail10.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem10 on tbl_OrderTem10.id=tbl_OrderTem_BaoGia_Detail10.baogia_id
+          where  tbl_QuyTrinh10.TenBuoc in(N'Đóng gói')and tbl_QuyTrinh10.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'DongGoi',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh11.NgayBatDau_TT,tbl_QuyTrinh11.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh11
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail11 on tbl_QuyTrinh11.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail11.id
+          left join tbl_Products  tbl_Products11 on tbl_Products11.ID_Products=tbl_OrderTem_BaoGia_Detail11.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem11 on tbl_OrderTem11.id=tbl_OrderTem_BaoGia_Detail11.baogia_id
+          where  tbl_QuyTrinh11.TenBuoc in(N'Giao hàng')and tbl_QuyTrinh11.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'GiaoHang',
+          (SELECT DATEDIFF(MI,tbl_QuyTrinh12.NgayBatDau_TT,tbl_QuyTrinh12.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh12
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail12 on tbl_QuyTrinh12.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail12.id
+          left join tbl_Products  tbl_Products12 on tbl_Products12.ID_Products=tbl_OrderTem_BaoGia_Detail12.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem12 on tbl_OrderTem12.id=tbl_OrderTem_BaoGia_Detail12.baogia_id
+          where tbl_QuyTrinh12.TenBuoc in(N'Thanh toán')and tbl_QuyTrinh12.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'ThanhToan',
+            (SELECT DATEDIFF(MI,tbl_QuyTrinh13.NgayBatDau_TT,tbl_QuyTrinh13.NgayKetThuc_TT)
+          FROM tbl_QuyTrinh tbl_QuyTrinh13
+          left join tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail13 on tbl_QuyTrinh13.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail13.id
+          left join tbl_Products  tbl_Products13 on tbl_Products13.ID_Products=tbl_OrderTem_BaoGia_Detail13.sanpam_id
+          left join tbl_OrderTem tbl_OrderTem13 on tbl_OrderTem13.id=tbl_OrderTem_BaoGia_Detail13.baogia_id
+          where  tbl_QuyTrinh13.TenBuoc in(N'Kết thúc đơn hàng')and tbl_QuyTrinh13.ID_BaoGiaDetail=tbl_QuyTrinh.ID_BaoGiaDetail
+          )'KetThucDonHang',
+          tbl_Products.SolopProducts'SoLop',
+          tbl_Products.LoaiSongProducts'LoaiSong',
+          LoaigiayProducts'LoaiGiay',
+          case when InFlexoProducts =1 then '1 màu' when InFlexoProducts =2 then '2 màu' when InFlexoProducts =3 then ' 3 màu'  when InFlexoProducts =4 then '4 màu' when InFlexoProducts =5 then '5 màu' when InFlexoProducts =6 then 'Không in' end    'InFlexoProduct',
+          QuyCachProducts'QuyCach',
+          tbl_OrderTem_BaoGia_Detail.soluong'SoLuong',
+          tbl_OrderTem_BaoGia_Detail.[money]'Money'
+          FROM tbl_QuyTrinh
+          left join tbl_OrderTem_BaoGia_Detail on tbl_QuyTrinh.ID_BaoGiaDetail=tbl_OrderTem_BaoGia_Detail.id
+          left join tbl_Products on tbl_Products.ID_Products=tbl_OrderTem_BaoGia_Detail.sanpam_id
+          left join tbl_OrderTem  on tbl_OrderTem.id=tbl_OrderTem_BaoGia_Detail.baogia_id
 
-  group by tbl_Products.CreatedDateProducts, tbl_OrderTem.code,tbl_Products.NameProducts,tbl_QuyTrinh.ID_BaoGiaDetail,tbl_Products.SolopProducts,tbl_Products.LoaiSongProducts,LoaigiayProducts,InFlexoProducts,QuyCachProducts,tbl_OrderTem_BaoGia_Detail.soluong,tbl_OrderTem_BaoGia_Detail.[money]
-  order by tbl_Products.CreatedDateProducts desc").ToList();
+          group by tbl_Products.CreatedDateProducts, tbl_OrderTem.code,tbl_Products.NameProducts,tbl_QuyTrinh.ID_BaoGiaDetail,tbl_Products.SolopProducts,tbl_Products.LoaiSongProducts,LoaigiayProducts,InFlexoProducts,QuyCachProducts,tbl_OrderTem_BaoGia_Detail.soluong,tbl_OrderTem_BaoGia_Detail.[money]
+          order by tbl_Products.CreatedDateProducts desc").ToList();
             GridView gv = new GridView();
             gv.DataSource = model;
             gv.DataBind();

@@ -19,7 +19,7 @@ namespace NhutLongCompany.Controllers
             var data = new Data();
             var idu = Convert.ToInt32(Session["userId"]);
             ViewBag.ten = Session["username"];
-            var qr = (from dataMenu in db.AdminMenus where dataMenu.status == true && dataMenu.IdUser == idu select dataMenu).ToList()
+          /*  var qr = (from dataMenu in db.AdminMenus where dataMenu.status == true && dataMenu.IdUser == idu select dataMenu).ToList()
                     .Select(x => new Navbar
                     {
                         Id=x.Id,
@@ -31,7 +31,7 @@ namespace NhutLongCompany.Controllers
                         parentId = x.parentId,
                         isParent = (bool) x.isParent,
                         isOrder = x.orderId
-                    });
+                    });*/
             return PartialView("_Navbar", new Data().navbarItems());
         }
 
