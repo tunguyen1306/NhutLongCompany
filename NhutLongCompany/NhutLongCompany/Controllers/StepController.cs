@@ -101,7 +101,10 @@ namespace NhutLongCompany.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tbl_config_step);
+         
+            db.tbl_Config_Step.Remove(tbl_config_step);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // POST: /Step/Delete/5
