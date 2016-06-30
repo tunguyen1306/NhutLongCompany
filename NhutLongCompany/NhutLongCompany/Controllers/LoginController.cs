@@ -161,7 +161,8 @@ namespace NhutLongCompany.Controllers
             Session.Clear();
             var data = db.tbl_User.Where(x => x.Username == username && x.Password == password).Select(x => new { x.Username,x.FullName,x.IDUser,x.RoleName}).FirstOrDefault();
          
-            var qrmenu =(from datamenu in db.AdminMenus where datamenu.IdUser == data.IDUser select datamenu).Select(x => new { x.controller,x.action}).FirstOrDefault();
+
+            //var qrmenu =(from datamenu in db.AdminMenus where datamenu.IdUser == data.IDUser select datamenu).Select(x => new { x.controller,x.action}).FirstOrDefault();
         
           
             if (data != null)

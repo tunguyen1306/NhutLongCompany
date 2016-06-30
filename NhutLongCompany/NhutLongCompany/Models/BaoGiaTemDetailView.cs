@@ -6,7 +6,7 @@ using System.Web;
 namespace NhutLongCompany.Models
 {
     public class BaoGiaTemDetailView
-    {
+    { 
         public int id { get; set; }
         public int ID_Products { get; set; }
         public string NameProducts { get; set; }
@@ -48,10 +48,14 @@ namespace NhutLongCompany.Models
 
         public Nullable<int> Status_Pause { get; set; }
 
-        public tbl_FlowPauseTime Current_FlowPauseTime;
+        public List<tbl_FlowPauseTime> Current_FlowPauseTime;
 
         public int? pause { get; set; }
         public tbl_OrderTemPause tbl_OrderTemPause;
         public String order_code;
+
+       
+
+    
     }
 }

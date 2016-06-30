@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +17,14 @@ namespace NhutLongCompany
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            CultureInfo cInf = new CultureInfo("en-US");
+
+            cInf.DateTimeFormat.DateSeparator = "/";
+            cInf.DateTimeFormat.ShortDatePattern = "MM/dd/yyyy";
+            cInf.DateTimeFormat.LongDatePattern = "MM/dd/yyyy HH:mm:ss";
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = cInf;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = cInf;
         }
     }
 }

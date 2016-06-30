@@ -1,4 +1,6 @@
 ﻿
+@using NhutLongCompany.Helper
+@using NhutLongCompany.Models
 @model IEnumerable<NhutLongCompany.Models.BaoGiaTemDetailView>
 
 @{ var update = (int?)ViewData["Update"]; }
@@ -87,9 +89,14 @@
                             (Số lượng:@(item.SolopProducts.Value) - Working:@(item.Date_Working.Value.ToString("dd/MM/yyyy")) - Deliver:@item.date_deliver.Value.ToString("dd/MM/yyyy"))
                             <input type="hidden" value="@item.id" />
                         </i>
-                        @if (colorB == "gray")
+                        @if (colorB == "gray" && @item.Current_FlowPauseTime!=null)
                         {
-                            <b style="color:red">(Đang ngưng sản xuất - @item.Current_FlowPauseTime.note - @item.Current_FlowPauseTime.date_begin.Value.ToString("dd/MM/yyyy HH:mm:ss"))</b>
+                            foreach (var itemPause in @item.Current_FlowPauseTime)
+                            {
+
+                                    tbl_QuyTrinh quyTrinh = FlowUnity.QuyTrinhByID(itemPause.id_flow.Value);
+                                 <br /><b class="cusfontsize2" style="color:red">(@quyTrinh.TenBuoc - Đang ngưng sản xuất - @itemPause.note - @itemPause.date_begin.Value.ToString("dd/MM/yyyy HH:mm:ss"))</b>
+                            }
                         }
 
                     </td>
@@ -222,28 +229,41 @@
 
                                         @*<span style="cursor:pointer" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQT.TrangThai.Value==1?"2":"1"),@item.id,@itemQT.ID,2)">Kết thúc</span>*@
 
-                                    if (update.HasValue && update.Value == 1)
-                                    {
-                                        <span style="cursor:pointer;width:65px" id="item_@itemQT.ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQT.TrangThai.Value==1?"2":"1"),@item.id,@itemQT.ID,2)">Kết thúc</span>
-                                        if (itemQT.TrangThai.Value == 1 && (!item.Status_Pause.HasValue || (item.Status_Pause.HasValue && item.Status_Pause.Value == 0)))
-                                        {
-                                            <br />
-                                                <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@item.id);">tạm dừng</span>
-                                        }
-                                        else if (item.Status_Pause.HasValue && item.Status_Pause.Value == 1 && item.Current_FlowPauseTime.index_step.Value == itemQT.ThuTu.Value)
-                                        {
-                                            <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@item.id); onContinue(); return false;">tiếp tục</span>
-                                                <script type="text/javascript">
-                                                    document.getElementById('item_@itemQT.ID').style.display = 'none';
-                                                </script>
-                                        }
+                                       if (update.HasValue && update.Value == 1)
+                                            {
+                                                tbl_FlowPauseTime timePauseTime = FlowUnity.FlowPauseTime(item.id, itemQT.ID);
+
+                                                if (timePauseTime == null && itemQT.TrangThai==1)
+                                                {
+                                                    <span style="cursor:pointer;width:65px" id="item_@itemQT.ID" class="btn btn-outline btn-default btn-xs" onclick="UpdateQuyTrinh(@(itemQT.TrangThai.Value==1?"2":"1"),@item.id,@itemQT.ID,2)">Kết thúc</span>
+                                                    <br />
+                                                    <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-note" data-toggle="modal" onclick="return setValuePause(@item.id,@itemQT.ID);">tạm dừng</span>
+                                                }
+                                                else if (timePauseTime != null && timePauseTime.status ==  1)
+                                                {
+                                                    <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" onclick="setValuePause(@item.id,@itemQT.ID); onContinue(); return false;">tiếp tục</span>
+                                                    <script type="text/javascript">
+                                                        if (document.getElementById('item_@itemQT.ID')!=null)
+                                                            document.getElementById('item_@itemQT.ID').style.display = 'none';
+                                                    </script>
+                                                }
+                                                else
+                                                {
+                                                    @("Kết thúc")
+                                                }
+                                                if (timePauseTime == null &&  (itemQTBF == null || itemQTBF.TrangThai.Value == 2))
+                                                {
+                                                    <br />
+                                                    <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-updateFlow" data-toggle="modal" onclick="viewUpdateFlow(@itemQT.ID_BaoGiaDetail,@itemQT.ID,'@(itemQT.NgayBatDau_TT.HasValue?itemQT.NgayBatDau_TT.Value.ToString("MM/dd/yyyy HH:mm:ss"):null)','@(itemQT.NgayKetThuc_TT.HasValue?itemQT.NgayKetThuc_TT.Value.ToString("MM/dd/yyyy HH:mm:ss"):null)',@itemQT.TrangThai.Value);">update</span>
+                                                }
 
 
-                                    }
-                                    else
-                                    {
-                                        @("Kết thúc")
-                                        }
+
+                                            }
+                                            else
+                                            {
+                                                @("Kết thúc")
+                                            }
 
 
 

@@ -21,5 +21,6 @@ namespace NhutLongCompany.Models
         public Nullable<int> status { get; set; }
         public Nullable<int> index_step { get; set; }
         public string note { get; set; }
+        public Nullable<int> id_flow { get; set; }
     }
 }
