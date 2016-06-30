@@ -82,6 +82,7 @@
           <Property Name="status" Type="int" />
           <Property Name="index_step" Type="int" />
           <Property Name="note" Type="nvarchar" MaxLength="500" />
+          <Property Name="id_flow" Type="int" />
         </EntityType>
         <EntityType Name="tbl_Note">
           <Key>
@@ -191,6 +192,8 @@
           <Property Name="NgayBatDau_TT" Type="datetime" />
           <Property Name="NgayKetThuc_TT" Type="datetime" />
           <Property Name="ThucHien" Type="int" />
+          <Property Name="ID_Step" Type="int" />
+          <Property Name="SongSong" Type="int" />
         </EntityType>
         <EntityType Name="tbl_Stack">
           <Key>
@@ -331,6 +334,7 @@
           <Property Name="status" Type="Int32" />
           <Property Name="index_step" Type="Int32" />
           <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="id_flow" Type="Int32" />
         </EntityType>
         <EntityType Name="tbl_Note">
           <Key>
@@ -440,6 +444,8 @@
           <Property Name="NgayBatDau_TT" Type="DateTime" Precision="3" />
           <Property Name="NgayKetThuc_TT" Type="DateTime" Precision="3" />
           <Property Name="ThucHien" Type="Int32" />
+          <Property Name="ID_Step" Type="Int32" />
+          <Property Name="SongSong" Type="Int32" />
         </EntityType>
         <EntityType Name="tbl_Stack">
           <Key>
@@ -566,6 +572,7 @@
           <EntitySetMapping Name="tbl_FlowPauseTime">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_FlowPauseTime">
               <MappingFragment StoreEntitySet="tbl_FlowPauseTime">
+                <ScalarProperty Name="id_flow" ColumnName="id_flow" />
                 <ScalarProperty Name="note" ColumnName="note" />
                 <ScalarProperty Name="index_step" ColumnName="index_step" />
                 <ScalarProperty Name="status" ColumnName="status" />
@@ -679,6 +686,8 @@
           <EntitySetMapping Name="tbl_QuyTrinh">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_QuyTrinh">
               <MappingFragment StoreEntitySet="tbl_QuyTrinh">
+                <ScalarProperty Name="SongSong" ColumnName="SongSong" />
+                <ScalarProperty Name="ID_Step" ColumnName="ID_Step" />
                 <ScalarProperty Name="ThucHien" ColumnName="ThucHien" />
                 <ScalarProperty Name="NgayKetThuc_TT" ColumnName="NgayKetThuc_TT" />
                 <ScalarProperty Name="NgayBatDau_TT" ColumnName="NgayBatDau_TT" />

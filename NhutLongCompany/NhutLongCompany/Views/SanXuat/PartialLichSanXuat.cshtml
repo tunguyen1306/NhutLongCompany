@@ -1,4 +1,6 @@
-﻿@model IEnumerable<NhutLongCompany.Models.BaoGiaTemDetailView>
+﻿@using NhutLongCompany.Helper
+@using NhutLongCompany.Models
+@model IEnumerable<NhutLongCompany.Models.BaoGiaTemDetailView>
 @for (int i = 0; i < Model.ToList().Count; i++)
 {
     var itemCT = Model.ToList()[i];
@@ -39,7 +41,13 @@
             @itemCT.NameProducts
             @if (colorB == "gray")
             {
-                <br /><b class="cusfontsize2" style="color:red">(Đang ngưng sản xuất - @itemCT.Current_FlowPauseTime.note - @itemCT.Current_FlowPauseTime.date_begin.Value.ToString("dd/MM/yyyy HH:mm:ss"))</b>
+                foreach (var itemPause in @itemCT.Current_FlowPauseTime)
+                {
+
+                        tbl_QuyTrinh quyTrinh = FlowUnity.QuyTrinhByID(itemPause.id_flow.Value);
+                     <br /><b class="cusfontsize2" style="color:red">(@quyTrinh.TenBuoc - Đang ngưng sản xuất - @itemPause.note - @itemPause.date_begin.Value.ToString("dd/MM/yyyy HH:mm:ss"))</b>
+                }
+               
             }
         </td>
         <td>
@@ -57,7 +65,7 @@
         <td>
             @if (itemCT.Step_Flow.HasValue)
             {
-                @(itemCT.QuyTrinhs[0].TenBuoc + " - ( " + itemCT.QuyTrinhs[0].NgayBatDau_TT.Value.ToString("dd/MM/yyyy") + " - " + (itemCT.QuyTrinhs[0].NgayKetThuc_TT.HasValue ? itemCT.QuyTrinhs[0].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy") : "Updating") + " )")
+                @(itemCT.QuyTrinhs[0].TenBuoc + " - ( " + (itemCT.QuyTrinhs[0].NgayBatDau_TT.HasValue ? itemCT.QuyTrinhs[0].NgayBatDau_TT.Value.ToString("dd/MM/yyyy") : "Updating") + " - " + (itemCT.QuyTrinhs[0].NgayKetThuc_TT.HasValue ? itemCT.QuyTrinhs[0].NgayKetThuc_TT.Value.ToString("dd/MM/yyyy") : "Updating") + " )")
             }
             else
             {

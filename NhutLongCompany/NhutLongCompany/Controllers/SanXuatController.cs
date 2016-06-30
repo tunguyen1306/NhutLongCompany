@@ -73,11 +73,11 @@ namespace NhutLongCompany.Controllers
                     var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(item.id) && u.ThuTu.Value.Equals(item.Step_Flow.Value)  orderby u.ThuTu ascending select u;
                     item.QuyTrinhs = queryQT.ToList<tbl_QuyTrinh>();
                 }
-                var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(item.id)  orderby a.id descending select a).Take(1);
+                var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(item.id)  && a.status==1 orderby a.id descending select a);
                 var listFlowPause = query.ToList();
                 if (listFlowPause.Count > 0)
                 {
-                    item.Current_FlowPauseTime = listFlowPause[0];
+                    item.Current_FlowPauseTime = listFlowPause;
                 }
             }
             return PartialView(list);
@@ -102,11 +102,11 @@ namespace NhutLongCompany.Controllers
                     var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(item.id) && u.ThuTu.Value.Equals(item.Step_Flow.Value) orderby u.ThuTu ascending select u;
                     item.QuyTrinhs = queryQT.ToList<tbl_QuyTrinh>();
                 }
-                var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(item.id) orderby a.id descending select a).Take(1);
+                var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(item.id) && a.status == 1 orderby a.id descending select a);
                 var listFlowPause = query.ToList();
                 if (listFlowPause.Count > 0)
                 {
-                    item.Current_FlowPauseTime = listFlowPause[0];
+                    item.Current_FlowPauseTime = listFlowPause;
                 }
             }
             return PartialView(list);
@@ -240,11 +240,11 @@ namespace NhutLongCompany.Controllers
                 item.Timer = (int)DateTime.Parse(item.date_deliver.Value.ToShortDateString()).Subtract(DateTime.Parse(DateTime.Now.ToShortDateString())).TotalDays;
                 var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(item.id) && u.ThuTu<10 orderby u.ThuTu ascending select u;
                 item.QuyTrinhs = queryQT.ToList<tbl_QuyTrinh>();
-                var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(item.id) orderby a.id descending select a).Take(1);
+                var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(item.id) && a.status == 1 orderby a.id descending select a);
                 var listFlowPause = query.ToList();
-                if (listFlowPause.Count>0)
+                if (listFlowPause.Count > 0)
                 {
-                    item.Current_FlowPauseTime = listFlowPause[0];
+                    item.Current_FlowPauseTime = listFlowPause;
                 }
                 
             }
@@ -376,7 +376,7 @@ namespace NhutLongCompany.Controllers
                 return RedirectToAction("LichSanXuat", "SanXuat");
 
             }
-            if (donHang.action == 6)
+           /* if (donHang.action == 6)
             {
                 foreach (var item in donHang.BaoGiaTemView.BaoGiaTemDetailViews)
                 {
@@ -391,8 +391,8 @@ namespace NhutLongCompany.Controllers
                     }
                     db.SaveChanges();
                 }
-            }
-            if (donHang.action == 7)
+            }*/
+           /* if (donHang.action == 7)
             {
                 foreach (var item in donHang.BaoGiaTemView.BaoGiaTemDetailViews)
                 {
@@ -436,7 +436,7 @@ namespace NhutLongCompany.Controllers
                   
                     db.SaveChanges();
                 }
-            }
+            }*/
             DonHangView d = new DonHangView();
             d.address_deliver = tbl_OrderTem.address_deliver;
             d.date_deliver = tbl_OrderTem.date_deliver;
@@ -503,19 +503,24 @@ namespace NhutLongCompany.Controllers
             if (status == 2)
             {
                 tbQT.NgayKetThuc_TT = DateTime.Now;
-                var queryNext = from a in db.tbl_QuyTrinh where a.ID_BaoGiaDetail == tbQT.ID_BaoGiaDetail && a.ThuTu.Value > tbQT.ThuTu.Value select a;
-                var listNext = queryNext.ToList<tbl_QuyTrinh>();
-                for (int i = 0; i < listNext.Count; i++)
+                var queryPrev = from a in db.tbl_QuyTrinh where a.ID_BaoGiaDetail == tbQT.ID_BaoGiaDetail && a.ThuTu.Value <= tbQT.ThuTu.Value  && a.TrangThai !=2 && tbQT.ID!=idflow select a;
+                if (queryPrev.ToList().Count==0)
                 {
-                    if (listNext[i].ThucHien.Value == 1)
+                    var queryNext = from a in db.tbl_QuyTrinh where a.ID_BaoGiaDetail == tbQT.ID_BaoGiaDetail && a.ThuTu.Value > tbQT.ThuTu.Value select a;
+                    var listNext = queryNext.ToList<tbl_QuyTrinh>();
+                    for (int i = 0; i < listNext.Count; i++)
                     {
-                        break;
+                        if (listNext[i].ThucHien.Value == 1)
+                        {
+                            break;
+                        }
+                        listNext[i].NgayBatDau_TT = DateTime.Now;
+                        listNext[i].NgayKetThuc_TT = DateTime.Now;
+                        listNext[i].TrangThai = 2;
+                        db.Entry(listNext[i]).State = EntityState.Modified;
                     }
-                    listNext[i].NgayBatDau_TT = DateTime.Now;
-                    listNext[i].NgayKetThuc_TT = DateTime.Now;
-                    listNext[i].TrangThai = 2;
-                    db.Entry(listNext[i]).State = EntityState.Modified;
                 }
+                
             }
             tbQT.TrangThai = status;
             if (tbQT.ThucHien==0)
@@ -524,19 +529,24 @@ namespace NhutLongCompany.Controllers
                 tbQT.NgayKetThuc_TT = DateTime.Now;
             }
             db.Entry(tbQT).State = EntityState.Modified;
-
+            db.SaveChanges();
+            List<tbl_QuyTrinh> listData = db.tbl_QuyTrinh.Where(T => T.ID_BaoGiaDetail == tbQT.ID_BaoGiaDetail && T.ThuTu <= 9 && T.TrangThai!=2).ToList();
             tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail = db.tbl_OrderTem_BaoGia_Detail.Find(id);
-            if (!tbl_OrderTem_BaoGia_Detail.step_index.HasValue || tbl_OrderTem_BaoGia_Detail.step_index.Value <= tbQT.ThuTu)
+            if (listData.Count==0)
             {
                 if (tbQT.ThucHien == 1)
                 {
-                    tbl_OrderTem_BaoGia_Detail.step_index = tbQT.ThuTu;
+                    tbl_OrderTem_BaoGia_Detail.step_index = tbl_OrderTem_BaoGia_Detail.step_index > tbQT.ThuTu ? tbl_OrderTem_BaoGia_Detail.step_index : tbQT.ThuTu;
                 }                
-                if (status == 2 && tbQT.ThuTu == 9)
+                if (status == 2 )
                 {
-                    tbl_Stack tbl_Stack = db.tbl_Stack.Find(tbl_OrderTem_BaoGia_Detail.id);
-                    db.Entry(tbl_Stack).State = EntityState.Deleted;
-                    tbl_OrderTem_BaoGia_Detail.status = 2;
+                    if (listData.Count==0)
+                    {
+                        tbl_Stack tbl_Stack = db.tbl_Stack.Find(tbl_OrderTem_BaoGia_Detail.id);
+                        db.Entry(tbl_Stack).State = EntityState.Deleted;
+                        tbl_OrderTem_BaoGia_Detail.status = 2;
+                    }
+                   
 
                 }
 
@@ -560,7 +570,7 @@ namespace NhutLongCompany.Controllers
                 db.Entry(order).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            if (tbQT.ThuTu.Value == 9 && status == 2)
+            if (listData.Count == 0 && status == 2)
             {
                 order.status = 4;
                 db.Entry(order).State = EntityState.Modified;
@@ -614,19 +624,24 @@ namespace NhutLongCompany.Controllers
                 tbQT.NgayKetThuc_TT = DateTime.Now;
             }
             db.Entry(tbQT).State = EntityState.Modified;
-
+            db.SaveChanges();
+         
+            List<tbl_QuyTrinh> listData = db.tbl_QuyTrinh.Where(T => T.ID_BaoGiaDetail == tbQT.ID_BaoGiaDetail && T.ThuTu <= 9 && T.TrangThai != 2).ToList();
             tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail = db.tbl_OrderTem_BaoGia_Detail.Find(tbQT.ID_BaoGiaDetail);
-            if (!tbl_OrderTem_BaoGia_Detail.step_index.HasValue || tbl_OrderTem_BaoGia_Detail.step_index.Value <= tbQT.ThuTu)
+            if (listData.Count==0)
             {
                 if (tbQT.ThucHien == 1)
                 {
-                    tbl_OrderTem_BaoGia_Detail.step_index = tbQT.ThuTu;
+                    tbl_OrderTem_BaoGia_Detail.step_index = tbl_OrderTem_BaoGia_Detail.step_index > tbQT.ThuTu ? tbl_OrderTem_BaoGia_Detail.step_index : tbQT.ThuTu;
                 }
-                if (tbQT.TrangThai == 2 && tbQT.ThuTu == 9)
+                if (tbQT.TrangThai == 2)
                 {
-                    tbl_Stack tbl_Stack = db.tbl_Stack.Find(tbl_OrderTem_BaoGia_Detail.id);
-                    db.Entry(tbl_Stack).State = EntityState.Deleted;
-                    tbl_OrderTem_BaoGia_Detail.status = 2;
+                    if (listData.Count == 0)
+                    {
+                        tbl_Stack tbl_Stack = db.tbl_Stack.Find(tbl_OrderTem_BaoGia_Detail.id);
+                        db.Entry(tbl_Stack).State = EntityState.Deleted;
+                        tbl_OrderTem_BaoGia_Detail.status = 2;
+                    }
 
                 }
 
@@ -650,7 +665,7 @@ namespace NhutLongCompany.Controllers
                 db.Entry(order).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            if (tbQT.ThuTu.Value == 9 && tbQT.TrangThai == 2)
+            if (listData.Count == 0 && tbQT.TrangThai == 2)
             {
                 order.status = 4;
                 db.Entry(order).State = EntityState.Modified;
@@ -680,12 +695,12 @@ namespace NhutLongCompany.Controllers
             {
                 var queryQT = from u in db.tbl_QuyTrinh where u.ID_BaoGiaDetail.Equals(itemSP.id) && u.ThuTu<10 orderby u.ThuTu ascending select u;
                 itemSP.QuyTrinhs = queryQT.ToList<tbl_QuyTrinh>();
-                var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(itemSP.id) orderby a.id descending select a).Take(1);
+               /* var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(itemSP.id) && a.status == 1 orderby a.id descending select a);
                 var listFlowPause = query.ToList();
                 if (listFlowPause.Count > 0)
                 {
-                    itemSP.Current_FlowPauseTime = listFlowPause[0];
-                }
+                    itemSP.Current_FlowPauseTime = listFlowPause;
+                }*/
             }
           
 
@@ -714,13 +729,13 @@ namespace NhutLongCompany.Controllers
 
         [ActionAuthorizeAttribute("SanXuat")]
         [HttpPost]
-        public JsonResult UpdateStateFlow(int id, String note,int state)
+        public JsonResult UpdateStateFlow(int id,int idflow, String note,int state)
         {
             try
             {
                 if (state==2)
                 {
-                    var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value.Equals(id) orderby a.id descending select a).Take(1);
+                    var query = (from a in db.tbl_FlowPauseTime where a.baoGia_detail_id.Value== id && a.id_flow== idflow orderby a.id descending select a).Take(1);
                     var list = query.ToList();
                     if (list.Count>0)
                     {
@@ -739,7 +754,8 @@ namespace NhutLongCompany.Controllers
                     tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail = db.tbl_OrderTem_BaoGia_Detail.Find(id);
                     tbl_OrderTem_BaoGia_Detail.status_pause = 1;
                     db.Entry(tbl_OrderTem_BaoGia_Detail).State = EntityState.Modified;
-                    tbl_FlowPauseTime citem = new tbl_FlowPauseTime { baoGia_detail_id = id, date_begin = DateTime.Now, index_step = tbl_OrderTem_BaoGia_Detail.step_index, note = note, status = 1 };
+                    tbl_FlowPauseTime citem = new tbl_FlowPauseTime {id_flow = idflow, baoGia_detail_id = id, date_begin = DateTime.Now, index_step = tbl_OrderTem_BaoGia_Detail.step_index, note = note, status = 1 };
+                    
                     db.tbl_FlowPauseTime.Add(citem);
                     db.SaveChanges();
                 }

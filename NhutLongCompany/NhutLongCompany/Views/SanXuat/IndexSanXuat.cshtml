@@ -124,6 +124,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <input type="hidden" id="id"/>
+                    <input type="hidden" id="idflow" />
                     <textarea class="form-control" id="note" placeholder="Try to input multiple lines here..."></textarea>
 
                 </div>
@@ -316,8 +317,9 @@
     function onContinue() {
         var layout = $('#layout_reload');
         var id = document.getElementById('id').value;
+        var idflow = document.getElementById('idflow').value;
         var note = document.getElementById('note').value;      
-        var json = JSON.stringify({ 'id': id, 'note': note, 'state': 2 });
+        var json = JSON.stringify({ 'id': id, 'idflow': idflow, 'note': note, 'state': 2 });
         $.ajax({
             url: '@Url.Action("UpdateStateFlow", "SanXuat")',
             data: json,
@@ -335,8 +337,9 @@
     function onPause() {
         var layout = $('#layout_reload');
         var id = document.getElementById('id').value;
+        var idflow = document.getElementById('idflow').value;
         var note = document.getElementById('note').value;    
-        var json = JSON.stringify({ 'id': id, 'note': note, 'state': 1 });
+        var json = JSON.stringify({ 'id': id, 'idflow': idflow, 'note': note, 'state': 1 });
         $.ajax({
             url: '@Url.Action("UpdateStateFlow", "SanXuat")',
             data: json,
@@ -353,9 +356,10 @@
             }
         });
     }
-    function setValuePause(id) {
+    function setValuePause(id,idflow) {
         document.getElementById('note').value = "";
         document.getElementById('id').value = id;
+        document.getElementById('idflow').value = idflow;
         return false;
     }
 
