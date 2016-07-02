@@ -268,6 +268,8 @@
 
 
                                     }
+                                    <br />
+                                    <span style="cursor:pointer;width:65px" class="btn btn-outline btn-default btn-xs" data-target="#modal-container-updateFlow" data-toggle="modal" onclick="viewUpdateFlow(@itemQT.ID_BaoGiaDetail,@itemQT.ID,'@(itemQT.NgayBatDau_TT.HasValue?itemQT.NgayBatDau_TT.Value.ToString("MM/dd/yyyy HH:mm:ss"):null)','@(itemQT.NgayKetThuc_TT.HasValue?itemQT.NgayKetThuc_TT.Value.ToString("MM/dd/yyyy HH:mm:ss"):null)',@itemQT.TrangThai.Value);">update</span>
                                 </span>
                             </td>
 
@@ -311,3 +313,118 @@
 
 
 
+                      <div id="modal-container-updateFlow" class="modal fade" tabindex="-1" role="dialog">
+                          <div class="modal-dialog" style="width:400px" role="document">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      Cập nhật thời gian kế hoạch
+                                  </div>
+                                  <div class="modal-body" style="margin: 15px;">
+                                      <div class="form-group">
+                                          <label for="usr">Ngày bắt đầu :</label>
+                                          <input type="text" class="form-control datetime" value="" id="begin" />
+                                          <input type="hidden" value="" id="id" />
+                                          <input type="hidden" value="" id="status" />
+                                          <input type="hidden" value="" id="idBG" />
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="pwd">Ngày kết thúc :</label>
+                                          <input type="text" class="form-control datetime" value="" id="end" />
+                                      </div>
+
+                                  </div>
+                                  <div class="modal-footer">
+                                      <div class="bootstrap-dialog-footer-buttons">
+                                          <button class="btn btn-primary" onclick="updateFlow(this);">Lưu</button>
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <script type="text/javascript">
+    function parseDateExtra(val, format) {
+        if (format == "MM/dd/yyyy HH:mm:ss") {
+            var date = val.split(' ')[0];
+            var time = val.split(' ')[1];
+            var MM = parseInt(date.split("/")[0]);
+            var dd = parseInt(date.split("/")[1]);
+            var yyyy = parseInt(date.split("/")[2]);
+            var HH = parseInt(time.split(":")[0]);
+            var mm = parseInt(time.split(":")[1]);
+            var ss = parseInt(time.split(":")[2]);
+            return new Date(yyyy, MM - 1, dd, HH, mm, ss);
+        }
+        if (format == "MM/dd/yyyy") {
+            var date = val.split(' ')[0];
+            var MM = parseInt(date.split("/")[0]);
+            var dd = parseInt(date.split("/")[1]);
+            var yyyy = parseInt(date.split("/")[2]);
+            return new Date(yyyy, MM - 1, dd);
+        }
+        if (format == "dd/MM/yyyy HH:mm:ss") {
+            var date = val.split(' ')[0];
+            var time = val.split(' ')[1];
+            var MM = parseInt(date.split("/")[1]);
+            var dd = parseInt(date.split("/")[0]);
+            var yyyy = parseInt(date.split("/")[2]);
+            var HH = parseInt(time.split(":")[0]);
+            var mm = parseInt(time.split(":")[1]);
+            var ss = parseInt(time.split(":")[2]);
+            return new Date(yyyy, MM - 1, dd, HH, mm, ss);
+        }
+        if (format == "dd/MM/yyyy") {
+            var date = val.split(' ')[0];
+            var MM = parseInt(date.split("/")[1]);
+            var dd = parseInt(date.split("/")[0]);
+            var yyyy = parseInt(date.split("/")[2]);
+            return new Date(yyyy, MM - 1, dd);
+        }
+        return new Date(val);
+    }
+    function  updateFlow(el)
+    {
+        var status = $('#status').val();
+        if (status == '1' && $('#begin').val() == "") {
+            alert("Vui lòng cập nhật thời gian bắt đầu!");
+            return false;
+        }
+        var id = $('#id').val();
+        var dateBegin = $('#begin').val();
+        var dateEnd = $('#end').val();
+
+        var layout = $('#ajax_update_' + $('#idBG').val());
+        if ($('#end').val() =="" && $('#begin').val() == "")
+        {
+            alert("Vui lòng cập nhật thời gian!");
+            return false;
+
+        }
+        if (parseDateExtra(dateEnd, 'MM/dd/yyyy HH:mm:ss') < parseDateExtra(dateBegin, 'MM/dd/yyyy HH:mm:ss')) {
+            alert("Vui lòng chọn thời gian kết thúc lớn hơn thời gian bắt đầu!");
+            return false;
+        }
+
+        $.ajax({
+            url: '@Url.Action("UpdateFlow", "SanXuat")',
+            data: { 'idflow': id, 'begin': dateBegin, 'end': dateEnd },
+            cache: false,
+            type: "POST",
+            dataType: "html",
+            success: function (data, textStatus, XMLHttpRequest) {
+                $('#modal-container-updateFlow').modal('hide');
+                layout.html(data);
+                reLoadEvent();
+            }
+        });
+    }
+    function viewUpdateFlow(idBG,id, bd, kt, status)
+    {
+        $('#id').val(id);
+        $('#idBG').val(idBG);
+        $('#status').val(status);
+        $('#begin').val(bd);
+        $('#end').val(kt);
+    }
+                      </script>

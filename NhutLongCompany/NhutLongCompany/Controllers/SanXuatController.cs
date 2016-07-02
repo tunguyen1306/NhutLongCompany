@@ -639,8 +639,12 @@ namespace NhutLongCompany.Controllers
                     if (listData.Count == 0)
                     {
                         tbl_Stack tbl_Stack = db.tbl_Stack.Find(tbl_OrderTem_BaoGia_Detail.id);
-                        db.Entry(tbl_Stack).State = EntityState.Deleted;
-                        tbl_OrderTem_BaoGia_Detail.status = 2;
+                        if (tbl_Stack != null)
+                        {
+                            db.Entry(tbl_Stack).State = EntityState.Deleted;
+                            tbl_OrderTem_BaoGia_Detail.status = 2;
+                        }
+                     
                     }
 
                 }
