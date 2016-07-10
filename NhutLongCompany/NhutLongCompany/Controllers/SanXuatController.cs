@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -10,7 +11,7 @@ using NhutLongCompany.Attribute;
 
 namespace NhutLongCompany.Controllers
 {
-    [RedirectOnError]
+    /*[RedirectOnError]*/
     public class SanXuatController : Controller
     {
         private NhutLongCompanyEntities db = new NhutLongCompanyEntities();
@@ -587,7 +588,7 @@ namespace NhutLongCompany.Controllers
 
         [ActionAuthorizeAttribute("SanXuat")]
         [HttpPost]
-        public PartialViewResult UpdateFlow(int idflow, DateTime? begin,DateTime? end)
+        public PartialViewResult UpdateFlow(int idflow, DateTime? begin, DateTime? end, String dataPause)
         {
             tbl_QuyTrinh tbQT = db.tbl_QuyTrinh.Find(idflow);
            
@@ -680,6 +681,46 @@ namespace NhutLongCompany.Controllers
                 order.status = 5;
                 db.Entry(order).State = EntityState.Modified;
                 db.SaveChanges();
+            }
+            try
+            {
+                if (dataPause!=null)
+                {
+                    String[] array = dataPause.Split('|');
+                    foreach (var str in array)
+                    {
+                        if (str.Trim().Length>0)
+                        {
+                            String[] flowPauseData = str.Split(';');
+                            int idPasue = int.Parse(flowPauseData[0]);
+                            int statusPause = int.Parse(flowPauseData[1]);
+                            String dateBeginPasue =flowPauseData[2];
+                            String dateEndPasue = flowPauseData[3];
+                            DateTime? beginP=null;
+                            DateTime? endP = null;
+                            if (dateBeginPasue.Trim().Length>0)
+                            {
+                                beginP = DateTime.ParseExact(dateBeginPasue.Trim(),  "MM/dd/yyyy HH:mm:ss",new CultureInfo("en"));
+                            }
+                            if (dateEndPasue.Trim().Length > 0)
+                            {
+                                endP = DateTime.ParseExact(dateEndPasue.Trim(), "MM/dd/yyyy HH:mm:ss", new CultureInfo("en"));
+                            }
+                            tbl_FlowPauseTime itemPause = db.tbl_FlowPauseTime.Find(idPasue);
+                            if (itemPause!=null)
+                            {
+                                itemPause.date_begin = beginP;
+                                itemPause.date_end = endP;
+                            }
+                            db.Entry(itemPause).State = EntityState.Modified;
+                        }
+                    }
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+               
             }
             return PartialView(tbl_OrderTem_BaoGia_Detail);
         }
@@ -814,8 +855,6 @@ namespace NhutLongCompany.Controllers
 
             return Json("Success");
         }
-
-
 
         public ActionResult EditFlow(int? id)
         {
@@ -1053,6 +1092,11 @@ namespace NhutLongCompany.Controllers
             return View(d);
         }
 
-
+        public PartialViewResult ViewPauseFlow(int? id)
+        {
+            //
+            var listPause = db.tbl_FlowPauseTime.Where(T => T.id_flow == id).ToList();
+            return PartialView(listPause);
+        }
     }
 }
