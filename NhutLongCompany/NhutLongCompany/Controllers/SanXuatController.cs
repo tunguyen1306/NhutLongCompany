@@ -820,8 +820,18 @@ namespace NhutLongCompany.Controllers
         {
             try
             {
+                tbl_OrderTem item = (from a in db.tbl_OrderTem
+                    join b in db.tbl_OrderTem_BaoGia on a.id equals b.order_id
+                    join c in db.tbl_OrderTem_BaoGia_Detail on b.id equals c.baogia_id
+                    where  c.id==id
+                    select a).FirstOrDefault();
+                item.status = 3;
+                db.Entry(item).State = EntityState.Modified;
+                 
+                
+
                 tbl_OrderTem_BaoGia_Detail tbl_OrderTem_BaoGia_Detail = db.tbl_OrderTem_BaoGia_Detail.Find(id);
-                tbl_OrderTem_BaoGia_Detail.status = 1;
+                tbl_OrderTem_BaoGia_Detail.status =1;
                 tbl_OrderTem_BaoGia_Detail.date_working = DateTime.Now;
                 db.Entry(tbl_OrderTem_BaoGia_Detail).State = EntityState.Modified;
 
