@@ -1,0 +1,17 @@
+﻿@model IEnumerable<NhutLongCompany.Models.tbl_FlowPauseTime>
+
+    @foreach (var item in Model)
+{
+    <div class="form-group flowPause" data-ref="@(item.id)" data-status="@(item.status)">
+        <div class="col-lg-12">
+            <div class="col-lg-6">
+                <input type="text" class="form-control customDate begin" value="@(item.date_begin.HasValue?item.date_begin.Value.ToString("MM/dd/yyyy HH:mm:ss"):"")"/>
+            </div>
+            <div class="col-lg-6">
+                <input type="text" class="form-control customDate end" value="@(item.date_end.HasValue ? item.date_end.Value.ToString("MM/dd/yyyy HH:mm:ss") : "")" />
+
+            </div>
+        </div>
+    </div>
+}
+    

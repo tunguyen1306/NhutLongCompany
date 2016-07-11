@@ -1139,6 +1139,7 @@
     <Content Include="Views\Flow\Edit.cshtml" />
     <Content Include="Views\Flow\Index.cshtml" />
     <Content Include="Views\Flow\Config.cshtml" />
+    <Content Include="Views\SanXuat\ViewPauseFlow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
