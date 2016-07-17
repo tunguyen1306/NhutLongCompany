@@ -1,3 +1,12 @@
 ﻿@model NhutLongCompany.Models.tbl_OrderTem_BaoGia_Detail
-@{Html.RenderAction("ViewFlowProduct", "SanXuat", new { id = Model.id });}
+@if (int.Parse(ViewData["type"].ToString()) == 0)
+{
+    Html.RenderAction("ViewFlowProduct", "SanXuat", new { id = Model.id });
+}
+else
+{
+    Html.RenderAction("IndexSanXuatByDate_DonHang", "tbl_OrderTem", new { update = 0 ,id=Model.id});
+}
+
+
 

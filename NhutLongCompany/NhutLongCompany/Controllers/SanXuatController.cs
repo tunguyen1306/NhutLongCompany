@@ -588,7 +588,7 @@ namespace NhutLongCompany.Controllers
 
         [ActionAuthorizeAttribute("SanXuat")]
         [HttpPost]
-        public PartialViewResult UpdateFlow(int idflow, DateTime? begin, DateTime? end, String dataPause)
+        public PartialViewResult UpdateFlow(int idflow, DateTime? begin, DateTime? end, String dataPause,int type=0 )
         {
             tbl_QuyTrinh tbQT = db.tbl_QuyTrinh.Find(idflow);
            
@@ -698,6 +698,7 @@ namespace NhutLongCompany.Controllers
                             String dateEndPasue = flowPauseData[3];
                             DateTime? beginP=null;
                             DateTime? endP = null;
+                            int stautsRemmove = int.Parse(flowPauseData[4]);
                             if (dateBeginPasue.Trim().Length>0)
                             {
                                 beginP = DateTime.ParseExact(dateBeginPasue.Trim(),  "MM/dd/yyyy HH:mm:ss",new CultureInfo("en"));
@@ -712,7 +713,39 @@ namespace NhutLongCompany.Controllers
                                 itemPause.date_begin = beginP;
                                 itemPause.date_end = endP;
                             }
-                            db.Entry(itemPause).State = EntityState.Modified;
+                            else
+                            {
+                                itemPause = new tbl_FlowPauseTime();
+                                itemPause.id = 0;
+                                itemPause.date_begin = beginP;
+                                itemPause.date_end = endP;
+                                itemPause.status = 1;
+                                itemPause.id_flow = idflow;
+                            }
+                            if (beginP != null && endP!=null)
+                            {
+                                itemPause.status = 2;
+                            }
+                            else
+                            {
+                                itemPause.status = 1;
+                            }
+                            if (stautsRemmove == 1 && itemPause != null)
+                            {
+                                db.Entry(itemPause).State = EntityState.Deleted;
+                            }
+                            else
+                            {
+                                if (itemPause != null && itemPause.id>0)
+                                {
+                                    db.Entry(itemPause).State = EntityState.Modified;
+                                }
+                                else
+                                {
+                                    db.Entry(itemPause).State = EntityState.Added;
+                                }
+                            }
+                          
                         }
                     }
                     db.SaveChanges();
@@ -722,6 +755,7 @@ namespace NhutLongCompany.Controllers
             {
                
             }
+            ViewData["type"] = type;
             return PartialView(tbl_OrderTem_BaoGia_Detail);
         }
 
