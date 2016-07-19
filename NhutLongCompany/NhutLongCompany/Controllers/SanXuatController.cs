@@ -588,19 +588,33 @@ namespace NhutLongCompany.Controllers
 
         [ActionAuthorizeAttribute("SanXuat")]
         [HttpPost]
-        public PartialViewResult UpdateFlow(int idflow, DateTime? begin, DateTime? end, String dataPause,int type=0 )
+        public PartialViewResult UpdateFlow(int idflow, String begin, String end, String dataPause, int type = 0)
         {
+
+
+
+            DateTime? _begin = null;
+            DateTime? _end= null;
+            if (begin != null && begin.Trim().Length > 0)
+            {
+                _begin = DateTime.ParseExact(begin, "MM/dd/yyyy HH:mm:ss", new CultureInfo("en"));
+            }
+            if (end!=null && end.Trim().Length>0)
+            {
+                _end = DateTime.ParseExact(end, "MM/dd/yyyy HH:mm:ss", new CultureInfo("en"));
+            }
+
             tbl_QuyTrinh tbQT = db.tbl_QuyTrinh.Find(idflow);
            
-            tbQT.NgayBatDau_TT = begin;          
-            tbQT.NgayKetThuc_TT = end;
+            tbQT.NgayBatDau_TT = _begin;          
+            tbQT.NgayKetThuc_TT = _end;
 
-            if (begin.HasValue)
+            if (_begin.HasValue)
             {
                 tbQT.TrangThai = 1;
 
             }
-            if (end.HasValue)
+            if (_end.HasValue)
             {
                 tbQT.TrangThai = 2;
 
@@ -729,6 +743,11 @@ namespace NhutLongCompany.Controllers
                             else
                             {
                                 itemPause.status = 1;
+                            }
+                            if (itemPause.status==1 && tbQT.TrangThai==2)
+                            {
+                                itemPause.status = 2;
+                                itemPause.date_end = tbQT.NgayKetThuc_TT;
                             }
                             if (stautsRemmove == 1 && itemPause != null)
                             {

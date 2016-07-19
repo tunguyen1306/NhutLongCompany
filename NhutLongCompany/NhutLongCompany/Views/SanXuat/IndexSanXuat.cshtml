@@ -237,7 +237,7 @@
 
         }
         if (dateEnd=="" ) {
-            dateEnd = new Date().getMonth() + "/" + new Date().getDate() + "/" + new Date().getFullYear() + " " + new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds();
+            dateEnd = (new Date().getMonth()+1) + "/" + new Date().getDate() + "/" + new Date().getFullYear() + " " + new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds();
         }
         if ( parseDateExtra(dateEnd, 'MM/dd/yyyy HH:mm:ss') < parseDateExtra(dateBegin, 'MM/dd/yyyy HH:mm:ss')) {
             alert("Vui lòng chọn thời gian kết thúc lớn hơn thời gian bắt đầu!");
@@ -302,7 +302,7 @@
         dateEnd = $('#end').val();
         $.ajax({
             url: '@Url.Action("UpdateFlow", "SanXuat")',
-            data: { 'idflow': id, 'begin': dateBegin, 'end': dateEnd, 'dataPause': stringItem,'type':0 },
+            data: { 'idflow': id, 'begin': $('#begin').val(), 'end': $('#end').val(), 'dataPause': stringItem, 'type': 0 },
             cache: false,
             type: "POST",
             dataType: "html",
