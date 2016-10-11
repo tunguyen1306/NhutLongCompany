@@ -120,6 +120,7 @@
           @if (itemCT.Status.Value == 0)
           {
             <a href="#lsx" class="btn btn-outline btn-primary btn-xs" onclick="UpdateLenhSanXuat(@itemCT.id);" >Lệnh sản xuất</a>
+            <a target="_blank" href="@Url.Action("InSanXuat","SanXuat",new { id=itemCT.idOrderTem })" class="btn btn-outline btn-primary btn-xs">In lệnh sản xuất</a>
           }
 
             @if (itemCT.Status.Value == 1)
