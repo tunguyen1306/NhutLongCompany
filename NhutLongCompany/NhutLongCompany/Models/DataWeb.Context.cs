@@ -40,6 +40,9 @@ namespace NhutLongCompany.Models
         public virtual DbSet<tbl_QuyTrinh> tbl_QuyTrinh { get; set; }
         public virtual DbSet<tbl_Stack> tbl_Stack { get; set; }
         public virtual DbSet<tbl_User> tbl_User { get; set; }
+
         public virtual DbSet<tbl_ProductionCommand> tbl_ProductionCommand { get; set; }
+
+        public virtual DbSet<tblPrint> tblPrints { get; set; }
     }
 }

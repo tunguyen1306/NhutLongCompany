@@ -596,6 +596,9 @@
                                 <th width="100px" align="center" valign="middle">
                                     Số lượng
                                 </th>
+                                <th width="100px" align="center" valign="middle">
+                              Bù hao
+                                </th>
                                 <th width="120px" align="center" valign="middle">
                                     Làm mẫu
                                 </th>
@@ -791,6 +794,7 @@
 
                                     <td><input type="number" min="0" step="500" class="form-control text-box single-line GiaProducts updateSL dataSubmit" value="@item.GiaProducts" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].GiaProducts"></td>
                                     <td><input type="number" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].SoLuong" value="@item.SoLuong" min="1" class="form-control text-box single-line updateSL SoLuong dataSubmit"></td>
+                                    <td><input type="number" name="BaoGiaTemView.BaoGiaTemDetailViews[@item.id].BuHao" value="@item.BuHao" min="1" class="form-control text-box single-line updateSL BuHao dataSubmit"></td>
 
                                     @*<td>@double.Parse(item.GiaProducts).ToString("n2") đ</td>
                                         <td>

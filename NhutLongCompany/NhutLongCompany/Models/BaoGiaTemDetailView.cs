@@ -8,6 +8,7 @@ namespace NhutLongCompany.Models
     public class BaoGiaTemDetailView
     { 
         public int id { get; set; }
+        public int idOrderTem { get; set; }
         public int ID_Products { get; set; }
         public string NameProducts { get; set; }
         public Nullable<int> SolopProducts { get; set; }
@@ -27,6 +28,7 @@ namespace NhutLongCompany.Models
         public string CodeProducts { get; set; }
         public string QuyCachProducts { get; set; }
         public int SoLuong { get; set; }
+        public float BuHao { get; set; }
         public List<tbl_QuyTrinh> QuyTrinhs { get; set; }
         public string loai_design { get; set; }
 
@@ -53,9 +55,11 @@ namespace NhutLongCompany.Models
         public int? pause { get; set; }
         public tbl_OrderTemPause tbl_OrderTemPause;
         public String order_code;
+        public Nullable<System.DateTime> Date_Begin { get; set; }
+        public string name_customer { get; set; }
+        public List<tblPrint> tblPrint { get; set; }
 
-       
 
-    
+
     }
 }

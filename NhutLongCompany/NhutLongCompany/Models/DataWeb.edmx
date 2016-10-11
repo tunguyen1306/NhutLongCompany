@@ -145,6 +145,7 @@
           <Property Name="code_detail" Type="nvarchar" MaxLength="200" />
           <Property Name="status_pause" Type="int" />
           <Property Name="loai_design" Type="nvarchar" MaxLength="250" />
+          <Property Name="buhao" Type="float" />
         </EntityType>
         <EntityType Name="tbl_OrderTemPause">
           <Key>
@@ -253,6 +254,45 @@
           <Property Name="Password" Type="nvarchar" MaxLength="250" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="tblPrint">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="IdOrderTem" Type="int" />
+          <Property Name="CodeProducts" Type="varchar" MaxLength="50" />
+          <Property Name="NameProducts" Type="nvarchar" MaxLength="500" />
+          <Property Name="KhoDonDoi" Type="nvarchar" MaxLength="50" />
+          <Property Name="SoLop" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoaiSong" Type="nvarchar" MaxLength="50" />
+          <Property Name="KhoGiaySX" Type="nvarchar" MaxLength="50" />
+          <Property Name="SoLuongSX" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoaiGiay1" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoaiGiay2" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoaiGiay3" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoaiGiay4" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoaiGiay5" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoaiGiay6" Type="nvarchar" MaxLength="50" />
+          <Property Name="DinhLuong" Type="nvarchar" MaxLength="50" />
+          <Property Name="DinhLuong1" Type="nvarchar" MaxLength="50" />
+          <Property Name="DinhLuong2" Type="nvarchar" MaxLength="50" />
+          <Property Name="DinhLuong3" Type="nvarchar" MaxLength="50" />
+          <Property Name="DinhLuong4" Type="nvarchar" MaxLength="50" />
+          <Property Name="DinhLuong5" Type="nvarchar" MaxLength="50" />
+          <Property Name="DinhLuong6" Type="nvarchar" MaxLength="50" />
+          <Property Name="KhoCuon1" Type="nvarchar" MaxLength="50" />
+          <Property Name="KhoCuon2" Type="nvarchar" MaxLength="50" />
+          <Property Name="KhoCuon3" Type="nvarchar" MaxLength="50" />
+          <Property Name="KhoCuon4" Type="nvarchar" MaxLength="50" />
+          <Property Name="KhoCuon5" Type="nvarchar" MaxLength="50" />
+          <Property Name="KhoCuon6" Type="nvarchar" MaxLength="50" />
+          <Property Name="DxRxC1" Type="nvarchar" MaxLength="50" />
+          <Property Name="DxRxC2" Type="nvarchar" MaxLength="50" />
+          <Property Name="DxRxC3" Type="nvarchar" MaxLength="50" />
+          <Property Name="SoLuong" Type="nvarchar" MaxLength="50" />
+          <Property Name="InFlexo" Type="nvarchar" MaxLength="50" />
+          <Property Name="ThanhPham" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityContainer Name="NhutLongCompanyModelStoreContainer">
           <EntitySet Name="AdminMenu" EntityType="Self.AdminMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Config_FlowName" EntityType="Self.tbl_Config_FlowName" Schema="dbo" store:Type="Tables" />
@@ -270,6 +310,7 @@
           <EntitySet Name="tbl_QuyTrinh" EntityType="Self.tbl_QuyTrinh" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Stack" EntityType="Self.tbl_Stack" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_User" EntityType="Self.tbl_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPrint" EntityType="Self.tblPrint" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -292,7 +333,11 @@
           <EntitySet Name="tbl_QuyTrinh" EntityType="NhutLongCompanyModel.tbl_QuyTrinh" />
           <EntitySet Name="tbl_Stack" EntityType="NhutLongCompanyModel.tbl_Stack" />
           <EntitySet Name="tbl_User" EntityType="NhutLongCompanyModel.tbl_User" />
+
           <EntitySet Name="tbl_ProductionCommand" EntityType="NhutLongCompanyModel.tbl_ProductionCommand" />
+
+          <EntitySet Name="tblPrints" EntityType="NhutLongCompanyModel.tblPrint" />
+
         </EntityContainer>
         <EntityType Name="AdminMenu">
           <Key>
@@ -434,6 +479,7 @@
           <Property Name="code_detail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="status_pause" Type="Int32" />
           <Property Name="loai_design" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="buhao" Type="Double" />
         </EntityType>
         <EntityType Name="tbl_OrderTemPause">
           <Key>
@@ -507,6 +553,7 @@
           <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
+
         <EntityType Name="tbl_ProductionCommand">
           <Key>
             <PropertyRef Name="Id" />
@@ -541,6 +588,45 @@
           <Property Name="KhoGiay" Type="Double" />
           <Property Name="NguoiLap" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="NgayLap" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="tblPrint">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="IdOrderTem" Type="Int32" />
+          <Property Name="CodeProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NameProducts" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="KhoDonDoi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SoLop" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoaiSong" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KhoGiaySX" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SoLuongSX" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoaiGiay1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoaiGiay2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoaiGiay3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoaiGiay4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoaiGiay5" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoaiGiay6" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DinhLuong" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DinhLuong1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DinhLuong2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DinhLuong3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DinhLuong4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DinhLuong5" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DinhLuong6" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KhoCuon1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KhoCuon2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KhoCuon3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KhoCuon4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KhoCuon5" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KhoCuon6" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DxRxC1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DxRxC2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DxRxC3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SoLuong" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InFlexo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ThanhPham" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <!--<EntityType Name="tbl_Products">
           <Key>
@@ -704,6 +790,7 @@
           <EntitySetMapping Name="tbl_OrderTem_BaoGia_Detail">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_OrderTem_BaoGia_Detail">
               <MappingFragment StoreEntitySet="tbl_OrderTem_BaoGia_Detail">
+                <ScalarProperty Name="buhao" ColumnName="buhao" />
                 <ScalarProperty Name="loai_design" ColumnName="loai_design" />
                 <ScalarProperty Name="status_pause" ColumnName="status_pause" />
                 <ScalarProperty Name="code_detail" ColumnName="code_detail" />
@@ -798,6 +885,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+
           <EntitySetMapping Name="tbl_ProductionCommand">
             <EntityTypeMapping TypeName="NhutLongCompanyModel.tbl_ProductionCommand">
               <MappingFragment StoreEntitySet="tbl_ProductionCommand">
@@ -808,19 +896,35 @@
                 <ScalarProperty Name="Rong" ColumnName="Rong" />
                 <ScalarProperty Name="Dai" ColumnName="Dai" />
                 <ScalarProperty Name="KhoCuon7" ColumnName="KhoCuon7" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPrints">
+            <EntityTypeMapping TypeName="NhutLongCompanyModel.tblPrint">
+              <MappingFragment StoreEntitySet="tblPrint">
+                <ScalarProperty Name="ThanhPham" ColumnName="ThanhPham" />
+                <ScalarProperty Name="InFlexo" ColumnName="InFlexo" />
+                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+                <ScalarProperty Name="DxRxC3" ColumnName="DxRxC3" />
+                <ScalarProperty Name="DxRxC2" ColumnName="DxRxC2" />
+                <ScalarProperty Name="DxRxC1" ColumnName="DxRxC1" />
+
                 <ScalarProperty Name="KhoCuon6" ColumnName="KhoCuon6" />
                 <ScalarProperty Name="KhoCuon5" ColumnName="KhoCuon5" />
                 <ScalarProperty Name="KhoCuon4" ColumnName="KhoCuon4" />
                 <ScalarProperty Name="KhoCuon3" ColumnName="KhoCuon3" />
                 <ScalarProperty Name="KhoCuon2" ColumnName="KhoCuon2" />
                 <ScalarProperty Name="KhoCuon1" ColumnName="KhoCuon1" />
+
                 <ScalarProperty Name="DinhLuong7" ColumnName="DinhLuong7" />
+
                 <ScalarProperty Name="DinhLuong6" ColumnName="DinhLuong6" />
                 <ScalarProperty Name="DinhLuong5" ColumnName="DinhLuong5" />
                 <ScalarProperty Name="DinhLuong4" ColumnName="DinhLuong4" />
                 <ScalarProperty Name="DinhLuong3" ColumnName="DinhLuong3" />
                 <ScalarProperty Name="DinhLuong2" ColumnName="DinhLuong2" />
                 <ScalarProperty Name="DinhLuong1" ColumnName="DinhLuong1" />
+
                 <ScalarProperty Name="SoLuongSX" ColumnName="SoLuongSX" />
                 <ScalarProperty Name="Loai7" ColumnName="Loai7" />
                 <ScalarProperty Name="Loai6" ColumnName="Loai6" />
@@ -830,6 +934,23 @@
                 <ScalarProperty Name="Loai2" ColumnName="Loai2" />
                 <ScalarProperty Name="Loai1" ColumnName="Loai1" />
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
+
+                <ScalarProperty Name="DinhLuong" ColumnName="DinhLuong" />
+                <ScalarProperty Name="LoaiGiay6" ColumnName="LoaiGiay6" />
+                <ScalarProperty Name="LoaiGiay5" ColumnName="LoaiGiay5" />
+                <ScalarProperty Name="LoaiGiay4" ColumnName="LoaiGiay4" />
+                <ScalarProperty Name="LoaiGiay3" ColumnName="LoaiGiay3" />
+                <ScalarProperty Name="LoaiGiay2" ColumnName="LoaiGiay2" />
+                <ScalarProperty Name="LoaiGiay1" ColumnName="LoaiGiay1" />
+                <ScalarProperty Name="SoLuongSX" ColumnName="SoLuongSX" />
+                <ScalarProperty Name="KhoGiaySX" ColumnName="KhoGiaySX" />
+                <ScalarProperty Name="LoaiSong" ColumnName="LoaiSong" />
+                <ScalarProperty Name="SoLop" ColumnName="SoLop" />
+                <ScalarProperty Name="KhoDonDoi" ColumnName="KhoDonDoi" />
+                <ScalarProperty Name="NameProducts" ColumnName="NameProducts" />
+                <ScalarProperty Name="CodeProducts" ColumnName="CodeProducts" />
+                <ScalarProperty Name="IdOrderTem" ColumnName="IdOrderTem" />
+
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
