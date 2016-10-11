@@ -1,0 +1,183 @@
+﻿@using Antlr.Runtime.Tree
+@model NhutLongCompany.Models.ProductionCommand
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    String[] quyCach = Model.Product.QuyCachProducts.Trim().Split('x').Where(T => T.Trim().Length > 0).Select(T => T.Trim()).ToArray();
+    String[] loaiGiay = Model.Product.LoaigiayProducts.Trim().Split('-').Where(T => T.Trim().Length > 0).Select(T => T.Trim()).ToArray();
+   
+}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('input[name="KhoGiay"]').change(function () {
+            updateData();
+        });
+        $('input[name="BuHao"]').change(function () {
+            updateData();
+        });
+    });
+    function updateData() {
+        var khoGiay = $('input[name="KhoGiay"]').val();
+        var soLuong = $('input[name="BuHao"]').val();
+        $.ajax({
+            url:"@Url.Action("Edit",new { id=Model.Detail.id})",
+            type: "GET", //send it through get method
+            data: { "khoGiay": khoGiay, "buhao": soLuong },
+            success: function (response) {
+                //Do Something               
+                $('.table-bordered input[type="text"]').each(function() {
+                    $(this).attr('value', $(this).val());
+                });
+                
+                var htmlLoaiGiay = $('.table-bordered').eq(0).find('.loaiGiay').html();
+                var htmlDinhLuong = $('.table-bordered').eq(0).find('.dinhLuong').html();
+                var htmlLapLenh = $('.table-bordered').eq(0).find('.ngayLapLenh').html();
+                $('.table-bordered').eq(0).html($(response).find('.table-bordered').eq(0).html());
+                
+                $('.table-bordered').eq(0).find('.loaiGiay').html(htmlLoaiGiay);
+                $('.table-bordered').eq(0).find('.dinhLuong').html(htmlDinhLuong);
+                $('.table-bordered').eq(0).find('.ngayLapLenh').html(htmlLapLenh);
+                $('input[name="KhoGiay"]').change(function () {
+                    updateData();
+                });
+                $('input[name="BuHao"]').change(function () {
+                    updateData();
+                });
+            },
+            error: function (xhr) {
+                //Do Something to handle error
+            }
+        });
+    }
+
+</script>
+@using (Html.BeginForm())
+{
+    <input type="hidden" name="product_id" value="@(Model.Detail.id)" />
+    <input type="hidden" name="Id" value="@(Model.Command.Id)" />
+    <input type="hidden" name="dataID" value="@(Model.Detail.id)" />
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Thông Tin lệnh sản xuất</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    <table class="table table-bordered">
+                       
+                        <tbody>
+                            <tr>
+                                <td colspan="2">Sản phẩm</td>
+                                <td colspan="2">@Model.Product.NameProducts</td>
+                                <td colspan="2">Khổ giấy SX</td>
+                                <td colspan="2">D:@(Model.Command.Dai) x R:@(Model.Command.Rong)
+                                    <input type="hidden" name="Dai" value="@(Model.Command.Dai)" />
+                                    <input type="hidden" name="Rong" value="@(Model.Command.Rong)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Số lớp</td>
+                                <td colspan="2">@Model.Product.SolopProducts</td>
+                                <td colspan="2">Khổ đơn đôi</td>
+                                <td colspan="2"><input type="number" class="form-control" name="KhoGiay" value="@Model.Command.KhoGiay" style="width: 100%" /> </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Loại sóng</td>
+                                <td colspan="2">@Model.Product.LoaiSongProducts</td>
+                                <td>Bù hao</td>
+                                <td><input type="number" class="form-control" name="BuHao" value="@Model.Command.BuHao" style="width: 100%" /></td>
+                                <td>Số lượng sản xuất (tấm)</td>
+                                <td>@((Model.Detail.soluong + Model.Command.BuHao) / Model.Command.KhoGiay)</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Mặt</td>
+                                <td>Sóng</td>
+                                <td>Giữa</td>
+                                <td>Sóng</td>
+                                <td>Giữa</td>
+                                <td>Sóng</td>
+                                <td>Đáy</td>
+                            </tr>
+                            <tr class="loaiGiay">
+                                <td>Loại giấy</td>
+                                <td><input type="text" @(loaiGiay.Length > 0 && (0 < loaiGiay.Length - 1) ? "" : "disabled") class=" form-control" name="Loai1" value="@Model.Command.Loai1" style="width: 100%" /></td>
+                                <td><input type="text" @(loaiGiay.Length > 1 && (1 < loaiGiay.Length - 1) ? "" : "disabled") class="form-control" name="Loai2" value="@Model.Command.Loai2" style="width: 100%" /></td>
+                                <td><input type="text" @(loaiGiay.Length > 2 && (2 < loaiGiay.Length - 1) ? "" : "disabled") class="form-control" name="Loai3" value="@Model.Command.Loai3" style="width: 100%" /></td>
+                                <td><input type="text" @(loaiGiay.Length > 3 && (3 < loaiGiay.Length - 1) ? "" : "disabled") class="form-control" name="Loai4" value="@Model.Command.Loai4" style="width: 100%" /></td>
+                                <td><input type="text" @(loaiGiay.Length > 4 && (4 < loaiGiay.Length - 1) ? "" : "disabled") class="form-control" name="Loai5" value="@Model.Command.Loai5" style="width: 100%" /></td>
+                                <td><input type="text" @(loaiGiay.Length > 5 && (5 < loaiGiay.Length - 1) ? "" : "disabled") class="form-control" name="Loai6" value="@Model.Command.Loai6" style="width: 100%" /></td>
+                                <td><input type="text" class="form-control" name="Loai7" value="@Model.Command.Loai7" style="width: 100%" /></td>
+                            </tr>
+                            <tr class="dinhLuong">
+                                <td>Định lượng</td>
+                                <td><input type="text" @(loaiGiay.Length > 0 && (0 < loaiGiay.Length - 1) ? "" : "disabled") class=" form-control" name="DinhLuong1" value="@Model.Command.DinhLuong1" style="width: 100%" /></td>
+                                <td><input type="text" @(loaiGiay.Length > 1 && (1 < loaiGiay.Length - 1) ? "" : "disabled") class="form-control" name="DinhLuong2" value="@Model.Command.DinhLuong2" style="width: 100%" /></td>
+                                <td><input type="text" @(loaiGiay.Length > 2 && (2 < loaiGiay.Length - 1) ? "" : "disabled") class="form-control" name="DinhLuong3" value="@Model.Command.DinhLuong3" style="width: 100%" /></td>
+                                <td><input type="text" @(loaiGiay.Length > 3 && (3 < loaiGiay.Length - 1) ? "" : "disabled") class="form-control" name="DinhLuong4" value="@Model.Command.DinhLuong4" style="width: 100%" /></td>
+                                <td><input type="text" @(loaiGiay.Length > 4 && (4 < loaiGiay.Length - 1) ? "" : "disabled") class="form-control" name="DinhLuong5" value="@Model.Command.DinhLuong5" style="width: 100%" /></td>
+                                <td><input type="text" @(loaiGiay.Length > 5 && (5 < loaiGiay.Length - 1) ? "" : "disabled") class="form-control" name="DinhLuong6" value="@Model.Command.DinhLuong6" style="width: 100%" /></td>
+                                <td><input type="text" class="form-control" name="DinhLuong7" value="@Model.Command.DinhLuong7" style="width: 100%" /></td>
+                            </tr>
+                            <tr>
+                                <td>Khổ cuộn</td>
+                                <td><input type="text" @(loaiGiay.Length > 0 && (0 < loaiGiay.Length - 1) ? "" : "disabled") class=" form-control" name="KhoCuon1" value="@Model.Command.KhoCuon1" style="width: 100%" /></td>
+                                <td><input type="text" @(loaiGiay.Length > 1 && (1 < loaiGiay.Length - 1) ? "" : "disabled") class="form-control" name="KhoCuon2" value="@Model.Command.KhoCuon2" style="width: 100%" /></td>
+                                <td><input type="text" @(loaiGiay.Length > 2 && (2 < loaiGiay.Length - 1) ? "" : "disabled") class="form-control" name="KhoCuon3" value="@Model.Command.KhoCuon3" style="width: 100%" /></td>
+                                <td><input type="text" @(loaiGiay.Length > 3 && (3 < loaiGiay.Length - 1) ? "" : "disabled") class="form-control" name="KhoCuon4" value="@Model.Command.KhoCuon4" style="width: 100%" /></td>
+                                <td><input type="text" @(loaiGiay.Length > 4 && (4 < loaiGiay.Length - 1) ? "" : "disabled") class="form-control" name="KhoCuon5" value="@Model.Command.KhoCuon5" style="width: 100%" /></td>
+                                <td><input type="text" @(loaiGiay.Length > 5 && (5 < loaiGiay.Length - 1) ? "" : "disabled") class="form-control" name="KhoCuon6" value="@Model.Command.KhoCuon6" style="width: 100%" /></td>
+                                <td><input type="text" class="form-control" name="KhoCuon7" value="@Model.Command.KhoCuon7" style="width: 100%" /></td>
+                            </tr>
+                            <tr>
+                                <td>@(quyCach.Length == 3 ? "DxRxC" : "DxR") (cm)</td>
+                                <td>@(quyCach[0])</td>
+                                <td>@(quyCach[1])</td>
+                                <td>@(quyCach.Length==3?quyCach[2]:"")</td>
+                                <td colspan="2">In Flexo</td>
+                                <td colspan="2">@(Model.Product.InFlexoProducts == 6 ? "Không in" : Model.Product.InFlexoProducts+" màu")</td>
+                              
+                            </tr>
+                            <tr>
+                                <td>Số lượng</td>
+                                <td colspan="3">@(Model.Detail.soluong + Model.Command.BuHao)</td>
+                                <td colspan="2">Thành phẩm</td>
+                                <td colspan="2">@Model.Product.OffsetFlexoProducts</td>
+
+                            </tr>
+                            <tr class="ngayLapLenh">
+                                <td colspan="2">Người lập lệnh:</td>
+                                <td colspan="2"><input type="text" class=" form-control" name="NguoiLap" value="@Model.Command.NguoiLap" style="width: 100%" /></td>
+                                <td colspan="2">Ngày lập lệnh:</td>
+                                <td colspan="2">@(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")) <input type="hidden" value="@Model.Command.NgayLap.Value.ToString("yyyy-MM-dd HH:mm:ss")" name="NgayLap" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" style="margin: 0px auto">
+                        <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                      
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+    
+    
+}
+<style>
+    .table td {
+        line-height: 30px !important;
+    }
+</style>
